@@ -15,5 +15,30 @@ package frc.robot;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+
   }
+
+  public static final class HangerConstants {
+		public static final int kHangerLeftPivotFollowerPort = 9;
+		public static final int kHangerRightPivotPort = 10;
+
+    // pivoting gearbox = 1:125 
+    public static final double kPivotingGearRatio = 1.0 / 125.0;
+    public static final double kAnglePerRevolution = kPivotingGearRatio * 3.14;
+		public static final double kHangerRightSize = 0;
+    public static final double kEncoderOffset = 0;
+
+    //If needed.
+    public static double kP = 0;
+    public static double kI = 0;
+    public static double kD = 0;
+
+    public static final int kCurrentLimit = 0;
+    public static final int kStallLimit = 0;
+
+    public static final double kPivotArmSpeed = 0; //Assign Speed
+    //Sets the position for the arm when neutral
+    public static final double kLeftPivotArmNeutral = 0; //Arms neutral position
+    public static final double kRightPivotArmNeutral = 0;
+	}
 }
