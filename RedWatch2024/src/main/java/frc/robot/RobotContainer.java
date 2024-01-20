@@ -31,16 +31,14 @@ import frc.robot.commands.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
+  private final LEDs m_LEDs = new LEDs();
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final XboxController m_driver = new XboxController(Constants.LEDConstants.kDriverControllerPort);
+  XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-
-  private final LEDs m_LEDs;
-
   public RobotContainer() {
     // Configure the trigger bindings
-    m_LEDs = new LEDs();
     configureBindings();
   }
 
@@ -54,9 +52,8 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-       new JoystickButton(m_driver, Button.kA.value).onTrue(new SetLEDColor(m_LEDs, kNoteIn));
-
+    // Run Intake Until Beam break
+    new JoystickButton(m_driverController, Button.kA.value).onTrue(new SetLEDColor(m_LEDs, kNoteIn));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
