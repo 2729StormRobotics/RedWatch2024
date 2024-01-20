@@ -8,7 +8,6 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.Intake.EjectNote;
 import frc.robot.commands.Intake.IntakeItem;
-import frc.robot.commands.Intake.RunIntake;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -50,8 +49,6 @@ public class RobotContainer {
   private void configureBindings() {
     // Run Intake Until Beam break
     new JoystickButton(m_driverController, Button.kA.value).onTrue(new IntakeItem(m_intake));
-    // Run intake
-    new JoystickButton(m_driverController, Button.kB.value).onTrue(new RunIntake(m_intake));
     // Stop Intake
     new JoystickButton(m_driverController, Button.kX.value).onTrue(new StopIntake(m_intake));
     // Eject Note
