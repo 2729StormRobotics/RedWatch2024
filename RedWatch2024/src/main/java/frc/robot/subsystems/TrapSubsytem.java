@@ -53,8 +53,8 @@ public class Trap extends SubsystemBase {
         
     }
 
-    // Arm
-    //Ask about motor speeds
+    // Arm Motor
+    //Need to work on motor speeds and constants
     public void setArmSpeed(double speed) {
         m_ArmMotor.set(speed);
     }
@@ -63,9 +63,13 @@ public class Trap extends SubsystemBase {
         m_ArmMotor.set(0);
     }
 
-    // Hand
-    public void setHandSpeed(double speed) {
+    // Hand Motor
+    public void handIntake(double speed) {
         m_HandMotor.set(speed);
+    }
+
+    public void handOuttake(double speed) {
+        m_HandMotor.set(-speed);
     }
 
     public void stopHandMotor() {
