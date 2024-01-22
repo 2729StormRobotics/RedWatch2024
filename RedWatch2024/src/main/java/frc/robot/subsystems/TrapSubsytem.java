@@ -107,6 +107,10 @@ public class Trap extends SubsystemBase {
         return stringPot.get();
     }
 
+    public double getPotDifference(double potDist) {
+        return Math.abs(getPotValue() - potDist);
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
