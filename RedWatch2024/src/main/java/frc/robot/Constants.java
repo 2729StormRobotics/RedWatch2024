@@ -16,4 +16,18 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class ShooterConstants {
+    public static final int kLeftPivotID = 999;
+    public static final int kRightPivotID = 999;
+    public static final int kLeftFlywheelID = 999;
+    public static final int kRightFlywheelID = 999;
+    public static final int kCurrentLimit = 45;
+    public static final boolean kLeftFlywheelInverted = false;
+    public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
+    public static final boolean kLeftPivot = false;
+    public static final boolean kRightPivot = !kLeftPivot;
+    public static final double kLeftPivotOffset = 0;
+    public static final double kRightPivotOffset = 0;
+  }
 }
