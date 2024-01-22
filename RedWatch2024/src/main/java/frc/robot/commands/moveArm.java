@@ -12,6 +12,7 @@ public class moveArm extends CommandBase {
     /** Initialize */
     private final TrapSubsystem m_Trap;
     private final double potDistance;
+    private final double potDifference;
 
 
     public moveArm(double distance, TrapSubsystem trap) {
@@ -28,6 +29,10 @@ public class moveArm extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        potDifference = m_Trap.getPotDifference(potDistance);
+
+        // 
+        // Speed values are placeholders
         if (m_Trap.getPotValue() < potDistance) {
             m_Trap.setSpeed(1);
         } 
@@ -44,9 +49,10 @@ public class moveArm extends CommandBase {
     }
 
     // Returns true when the command should end.
+    // Get units for the arm
     @Override
     public boolean isFinished() {
-        if (m_Trap.getPotValue() == potDistance){
+        if (potDifference <= potDistance){
             return true;
         }
         return false;
