@@ -72,23 +72,35 @@ public class Trap extends SubsystemBase {
         m_HandMotor.set(0);
     }
 
-    // Encoder
-    // Ask about the encoders and motors
-    public double getSpeed() {
-        return m_encoder.getVelocity();
+    // Arm Encoder
+    public double getArmSpeed() {
+        return m_ArmEncoder.getVelocity();
     }
 
-    public double getPosition() {
-        return m_encoder.getPosition();
+    public double getArmPosition() {
+        return m_ArmEncoder.getPosition();
     }
 
-    public void resetPosition() {
-        m_encoder.setPosition(0);
+    public void resetArmPosition() {
+        m_ArmEncoder.setPosition(0);
+    }
+
+    // Hand Encoder
+    public double getHandSpeed() {
+        return m_HandEncoder.getVelocity();
+    }
+
+    public double getHandPosition() {
+        return m_HandEncoder.getPosition();
+    }
+
+    public void resetHandPosition() {
+        m_HandEncoder.setPosition(0);
     }
 
     // Potentiometer
     public double getPotValue() {
-        return pot.get();
+        return stringPot.get();
     }
 
     @Override
