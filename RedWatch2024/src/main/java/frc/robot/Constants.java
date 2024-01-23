@@ -29,5 +29,11 @@ public final class Constants {
     public static final boolean kRightPivot = !kLeftPivot;
     public static final double kLeftPivotOffset = 0;
     public static final double kRightPivotOffset = 0;
+
+    public static final double kPPivot = 0;
+    public static final double kIPivot = 0;
+    public static final double kDPivot = 0;
+    public static final double kMaxPivotVelocity = 0; // Measured in degrees/s
+    public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
   }
 }
