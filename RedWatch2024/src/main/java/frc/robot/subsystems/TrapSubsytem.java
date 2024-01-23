@@ -4,34 +4,30 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import com.revrobotics.RelativeEncoder;
 
 
-public class Trap extends SubsystemBase {
+public class TrapSubsytem extends SubsystemBase {
 
     /* Initialize Trap Subsystem */
     
     // Telescoping arm components
-    private final com.revrobotics.CANSparkMax m_ArmMotor;
+    private final CANSparkMax m_ArmMotor;
     private final RelativeEncoder m_ArmEncoder;
     private final AnalogPotentiometer stringPot = new AnalogPotentiometer(0, 180, 30);
 
     // Intake components
-    private final com.revrobotics.CANSparkMax m_HandMotor;
-    private final RelativeEncoder m_HandEncoder;
+    private final CANSparkMax m_HandMotor;
+    private final com.revrobotics.RelativeEncoder m_HandEncoder;
 
 
 
     // Constructor
-    public Trap () {
+    public TrapSubsytem () {
         // Initialize telescoping arm
         // Need to assign motor ports
         m_Armmotor = new com.revrobotics.CANSparkMax(Constants.kMotorPort, MotorType.kBrushless);
