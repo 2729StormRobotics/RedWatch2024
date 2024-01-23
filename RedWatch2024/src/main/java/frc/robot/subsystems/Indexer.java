@@ -13,44 +13,37 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
-  public final CANSparkMax m_bottomMotor;
-
+  public final CANSparkMax motor;
   public final DigitalInput noteDetecter;
 
 
-
-  public Indexer() {
-    noteDetecter = new DigitalInput(kBeamBreakPort);
-    m_bottomMotor  = new com.revrobotics.CANSparkMax(kIndexMotorPort, MotorType.kBrushless);
-    motorInit(m_bottomMotor, false);
-
-
-
+  /**
+   * Creates a new Indexer.
+   */
+  public Indexer(kBeamBreakPort, kIndexMotorPort) {
+      noteDetecter = new DigitalInput(kBeamBreakPort);
+      motor = new com.revrobotics.CANSparkMax(kIndexMotorPort, MotorType.kBrushless);
   }
 
   public boolean isNotePresent() {
-    return !noteDetecter.get();
-
+      return !noteDetecter.get();
   }
     
-  public void motorInit(CANSparkMax motor, boolean invert){
-    motor.restoreFactoryDefaults();
-    motor.setIdleMode(IdleMode.kCoast);
-    motor.setSmartCurrentLimit(kCurrentLimit);
-    motor.setInverted(invert);
-    motor.setSmartCurrentLimit(kStallLimit);
-
-
+  public void initMotor(boolean invert){
+    this.motor.restoreFactoryDefaults();
+    this.motor.setIdleMode(IdleMode.kCoast);
+    this.motor.setSmartCurrentLimit(kCurrentLimit);
+    this.motor.setInverted(invert);
+    this.motor.setSmartCurrentLimit(kStallLimit);
   }
 
   public void setSpeedMotor(speed) {
     //speed in percent
-    m_bottomMotor.set(speed);
+    motor.set(speed);
   }
 
   public void stop() {
-    m_bottomMotor.set(0)
-
+    motor.set(0)
   }
     
 
