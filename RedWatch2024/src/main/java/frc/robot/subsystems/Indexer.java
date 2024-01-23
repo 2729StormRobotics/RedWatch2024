@@ -14,19 +14,19 @@ import com.revrobotics.CANSparkMax.IdleMode;
 public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
   public final CANSparkMax motor;
-  public final DigitalInput noteDetecter;
+  public final DigitalInput noteDetector;
 
 
   /**
    * Creates a new Indexer.
    */
   public Indexer(kBeamBreakPort, kIndexMotorPort) {
-      noteDetecter = new DigitalInput(kBeamBreakPort);
+      noteDetector = new DigitalInput(kBeamBreakPort);
       motor = new com.revrobotics.CANSparkMax(kIndexMotorPort, MotorType.kBrushless);
   }
 
   public boolean isNotePresent() {
-      return !noteDetecter.get();
+      return !noteDetector.get();
   }
     
   public void initMotor(boolean invert){
