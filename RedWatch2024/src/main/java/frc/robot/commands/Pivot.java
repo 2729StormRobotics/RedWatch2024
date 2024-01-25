@@ -10,6 +10,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
+/*
+ * Will pivot the shooter to the specified angle
+ * Works based off of a profiledPID controller
+ */
+
 public class Pivot extends Command {
   private final Shooter m_shooter;
   private final double m_angle;

@@ -35,5 +35,9 @@ public final class Constants {
     public static final double kDPivot = 0;
     public static final double kMaxPivotVelocity = 0; // Measured in degrees/s
     public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
+
+    public static final double kMaxRPM = 5000;
+    public static final double kPShoot = 0;
+    public static final double kShooterRPMTolerance = 50;
   }
 }
