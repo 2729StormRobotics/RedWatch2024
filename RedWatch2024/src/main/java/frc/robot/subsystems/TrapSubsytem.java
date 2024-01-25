@@ -73,7 +73,7 @@ public class TrapSubsytem extends SubsystemBase {
     }
 
     public void handOuttake(double speed) {
-        m_HandMotor.set(-speed);
+        m_HandMotor.set(-1 * speed);
     }
 
     public void stopHandMotor() {
