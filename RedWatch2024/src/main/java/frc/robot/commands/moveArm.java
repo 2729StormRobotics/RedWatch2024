@@ -33,10 +33,10 @@ public class moveArm extends Command {
         // 
         // Speed values are placeholders
         if (m_Trap.getPotValue() < (potDistance - Constants.TrapConstants.kTolerance)) {
-            m_Trap.setSpeed(Constants.TrapConstants.kArmMotorID);
+            m_Trap.setSpeed(Constants.TrapConstants.kArmMotorSpeed);
         } 
         else if (m_Trap.getPotValue() > (potDistance + Constants.TrapConstants.kTolerance)) {
-            m_Trap.setSpeed(-1 * Constants.TrapConstants.kArmMotorID);
+            m_Trap.setSpeed(-1 * Constants.TrapConstants.kArmMotorSpeed);
         }
 
     }
