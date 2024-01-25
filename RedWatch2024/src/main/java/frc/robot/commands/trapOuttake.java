@@ -24,7 +24,7 @@ public class trapOuttake extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_Trap.handOuttake();
+        m_Trap.handOuttake(kHandMotorSpeed);
 
     }
 
