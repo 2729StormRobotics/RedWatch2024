@@ -16,4 +16,19 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+
+  public static final class IndexerConstants {
+    public static final int kIndexMotorPort = 6;
+    public static final int kBeamBreakPort = 0;
+    public static final int kDriveAmperagePeakDuration = 100;
+    public static final int kCanTimeoutSetup = 500;
+    public static final int kDriveAmperageLimitPeak = 50;
+    public static final int kDriveAmperageLimitContinuous = 35;
+    public static final double kIndexerSpeed = 0.5;
+    public static final int kStallLimit = 45;
+    public static final int kCurrentLimit = 60;
+  
+  }
 }
+

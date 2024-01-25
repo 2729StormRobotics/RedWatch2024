@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.IndexerConstants.*;
 import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import frc.robot.Constants;
 
 public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
@@ -20,7 +20,7 @@ public class Indexer extends SubsystemBase {
   /**
    * Creates a new Indexer.
    */
-  public Indexer(kBeamBreakPort, kIndexMotorPort) {
+  public Indexer() {
       noteDetector = new DigitalInput(kBeamBreakPort);
       motor = new com.revrobotics.CANSparkMax(kIndexMotorPort, MotorType.kBrushless);
   }
@@ -31,19 +31,19 @@ public class Indexer extends SubsystemBase {
     
   public void initMotor(boolean invert){
     this.motor.restoreFactoryDefaults();
-    this.motor.setIdleMode(IdleMode.kCoast);
+    this.motor.setIdleMode(com.revrobotics.CANSparkMax.IdleMode.kCoast);
     this.motor.setSmartCurrentLimit(kCurrentLimit);
     this.motor.setInverted(invert);
     this.motor.setSmartCurrentLimit(kStallLimit);
   }
 
-  public void setSpeedMotor(speed) {
+  public void setSpeedMotor(double speed) {
     //speed in percent
     motor.set(speed);
   }
 
   public void stop() {
-    motor.set(0)
+    motor.set(0);
   }
     
 
@@ -52,3 +52,8 @@ public class Indexer extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  public void load(double d) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'load'");
+  }
+}
