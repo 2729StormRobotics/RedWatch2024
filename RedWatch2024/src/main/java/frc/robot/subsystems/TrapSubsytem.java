@@ -2,13 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.CANSparkMax;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import com.revrobotics.RelativeEncoder;
+
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 
 public class TrapSubsytem extends SubsystemBase {
@@ -16,13 +24,13 @@ public class TrapSubsytem extends SubsystemBase {
     /* Initialize Trap Subsystem */
     
     // Telescoping arm components
-    private final CANSparkMax m_ArmMotor;
-    private final RelativeEncoder m_ArmEncoder;
+    public final CANSparkMax m_ArmMotor;
+    public final RelativeEncoder m_ArmEncoder;
     private final AnalogPotentiometer stringPot = new AnalogPotentiometer(0, 180, 30);
 
     // Intake components
     private final CANSparkMax m_HandMotor;
-    private final com.revrobotics.RelativeEncoder m_HandEncoder;
+    private final RelativeEncoder m_HandEncoder;
 
 
 
@@ -30,7 +38,7 @@ public class TrapSubsytem extends SubsystemBase {
     public TrapSubsytem () {
         // Initialize telescoping arm
         // Need to assign motor ports
-        m_Armmotor = new com.revrobotics.CANSparkMax(Constants.kMotorPort, MotorType.kBrushless);
+        m_Armmotor = new CANSparkMax(Constants.TrapConstants.kArmMotorID, MotorType.kBrushless);
         m_ArmMotor.restoreFactoryDefaults();
         m_ArmMotor.setIdleMode(IdleMode.kBrake);
         m_ArmMotor.setSmartCurrentLimit(45);
@@ -39,7 +47,7 @@ public class TrapSubsytem extends SubsystemBase {
         m_ArmEncoder.setPosition(0);
 
         // Initialize hand components
-        m_HandMotor = new com.revrobotics.CANSparkMax(Constants.kMotorPort, MotorType.kBrushless);
+        m_HandMotor = new CANSparkMax(Constants.TrapConstants.kHandMotorID, MotorType.kBrushless);
         m_HandMotor.restoreFactoryDefaults();
         m_HandMotor.setIdleMode(IdleMode.kBrake);
         m_HandMotor.setSmartCurrentLimit(45);
