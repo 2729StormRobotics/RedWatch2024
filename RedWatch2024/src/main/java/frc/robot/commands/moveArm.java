@@ -32,11 +32,11 @@ public class moveArm extends Command {
 
         // 
         // Speed values are placeholders
-        if (m_Trap.getPotValue() < potDistance) {
-            m_Trap.setSpeed(1);
+        if (m_Trap.getPotValue() < (potDistance - Constants.TrapConstants.kTolerance)) {
+            m_Trap.setSpeed(Constants.TrapConstants.kArmMotorID);
         } 
-        else if (m_Trap.getPotValue() > potDistance) {
-            m_Trap.setSpeed(-1);
+        else if (m_Trap.getPotValue() > (potDistance + Constants.TrapConstants.kTolerance)) {
+            m_Trap.setSpeed(-1 * Constants.TrapConstants.kArmMotorID);
         }
 
     }
@@ -51,7 +51,7 @@ public class moveArm extends Command {
     // Get units for the arm
     @Override
     public boolean isFinished() {
-        if (potDifference <= potDistance){
+        if (potDifference <= Constants.TrapConstants.kTolerance){
             return true;
         }
         return false;
