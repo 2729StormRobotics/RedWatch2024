@@ -24,7 +24,7 @@ public class SetRPM extends Command {
   public SetRPM(Shooter shooter, double rpm) {
     m_shooter = shooter;
     m_controller = new PIDController(Constants.ShooterConstants.kPShoot, 0, 0); // only uses P
-    m_controller.setTolerance(Constants.ShooterConstants.kShooterRPMTolerance); // sets tolerance for PID controller to end
+    m_controller.setTolerance(Constants.ShooterConstants.kRPMTolerance); // sets tolerance for PID controller to end
     m_targetRPM = rpm;
     m_ff = m_targetRPM/Constants.ShooterConstants.kMaxRPM; // turn RPM into a value between 0-1
 

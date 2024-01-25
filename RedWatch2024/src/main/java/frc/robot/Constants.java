@@ -18,6 +18,7 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
+    // Motor ID/initialization valuess
     public static final int kLeftPivotID = 999;
     public static final int kRightPivotID = 999;
     public static final int kLeftFlywheelID = 999;
@@ -30,14 +31,17 @@ public final class Constants {
     public static final double kLeftPivotOffset = 0;
     public static final double kRightPivotOffset = 0;
 
+    // Pivot PID values
     public static final double kPPivot = 0;
     public static final double kIPivot = 0;
     public static final double kDPivot = 0;
     public static final double kMaxPivotVelocity = 0; // Measured in degrees/s
     public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
+    public static final double kPivotTolerance = 2; // degrees
 
+    // Flywheel PID values
     public static final double kMaxRPM = 5000;
     public static final double kPShoot = 0;
-    public static final double kShooterRPMTolerance = 50;
+    public static final double kRPMTolerance = 50;
   }
 }

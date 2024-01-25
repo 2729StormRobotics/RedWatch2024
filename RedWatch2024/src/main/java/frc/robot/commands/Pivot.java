@@ -34,6 +34,7 @@ public class Pivot extends Command {
     m_controller = new ProfiledPIDController(Constants.ShooterConstants.kPPivot,
     Constants.ShooterConstants.kIPivot, Constants.ShooterConstants.kDPivot, m_constraints);
     m_controller.setGoal(m_angle);
+    m_controller.setTolerance(Constants.ShooterConstants.kPivotTolerance);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
   }
