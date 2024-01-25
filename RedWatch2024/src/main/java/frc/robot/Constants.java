@@ -24,6 +24,8 @@ public final class Constants {
     public static final double kHandMotorSpeed = 0.4;
     public static final double kArmMotorSpeed = 0.1;
     public static final double kTolerance = 0.0;
+    public static final double testDist = 2.0;
+    public static final double intakeDist = 20.0;
   }
   
 }

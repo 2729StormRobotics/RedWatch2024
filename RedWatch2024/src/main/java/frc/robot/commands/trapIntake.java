@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TrapSubsystem;
+import frc.robot.Constants;
 
-public class intakeCommand extends Command {
+public class trapIntake extends Command {
     /** Initialize */
     private final TrapSubsystem m_Trap;
 
-    public intakeCommand(TrapSubsystem trap) {
+    public trapIntake(TrapSubsystem trap) {
         // Use addRequirements() here to declare subsystem dependencies.
         m_Trap = trap;
         addRequirements(m_Trap);
@@ -37,6 +38,7 @@ public class intakeCommand extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
+        return false;
         
     }
 }

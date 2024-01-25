@@ -5,21 +5,18 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 
-public class TrapSubsytem extends SubsystemBase {
+public class TrapSubsystem extends SubsystemBase {
 
     /* Initialize Trap Subsystem */
     
@@ -35,15 +32,15 @@ public class TrapSubsytem extends SubsystemBase {
 
 
     // Constructor
-    public TrapSubsytem () {
+    public TrapSubsystem () {
         // Initialize telescoping arm
         // Need to assign motor ports
-        m_Armmotor = new CANSparkMax(Constants.TrapConstants.kArmMotorID, MotorType.kBrushless);
+        m_ArmMotor = new CANSparkMax(Constants.TrapConstants.kArmMotorID, MotorType.kBrushless);
         m_ArmMotor.restoreFactoryDefaults();
         m_ArmMotor.setIdleMode(IdleMode.kBrake);
         m_ArmMotor.setSmartCurrentLimit(45);
 
-        m_ArmEncoder = m_motor.getEncoder();
+        m_ArmEncoder = m_ArmMotor.getEncoder();
         m_ArmEncoder.setPosition(0);
 
         // Initialize hand components
@@ -52,7 +49,7 @@ public class TrapSubsytem extends SubsystemBase {
         m_HandMotor.setIdleMode(IdleMode.kBrake);
         m_HandMotor.setSmartCurrentLimit(45);
 
-        m_HandEncoder = m_motor.getEncoder();
+        m_HandEncoder = m_HandMotor.getEncoder();
         m_HandEncoder.setPosition(0);
         
     }

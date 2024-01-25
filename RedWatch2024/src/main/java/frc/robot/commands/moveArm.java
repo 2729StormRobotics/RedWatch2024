@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TrapSubsystem;
+import frc.robot.Constants;
 
 public class moveArm extends Command {
     /** Initialize */
     private final TrapSubsystem m_Trap;
     private final double potDistance;
-    private final double potDifference;
+    private double potDifference;
 
 
     public moveArm(double distance, TrapSubsystem trap) {
@@ -33,18 +34,20 @@ public class moveArm extends Command {
         // 
         // Speed values are placeholders
         if (m_Trap.getPotValue() < (potDistance - Constants.TrapConstants.kTolerance)) {
-            m_Trap.setSpeed(Constants.TrapConstants.kArmMotorSpeed);
+            m_Trap.setArmSpeed(Constants.TrapConstants.kArmMotorSpeed);
         } 
         else if (m_Trap.getPotValue() > (potDistance + Constants.TrapConstants.kTolerance)) {
-            m_Trap.setSpeed(-1 * Constants.TrapConstants.kArmMotorSpeed);
+            m_Trap.setArmSpeed(-1 * Constants.TrapConstants.kArmMotorSpeed);
         }
+        
 
     }
+    
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        m_Trap.stopMotor();
+        m_Trap.stopArmMotor();
     }
 
     // Returns true when the command should end.
