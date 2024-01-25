@@ -24,7 +24,7 @@ public class intakeCommand extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        m_Trap.handIntake();
+        m_Trap.handIntake(kHandMotorSpeed);
 
     }
 
