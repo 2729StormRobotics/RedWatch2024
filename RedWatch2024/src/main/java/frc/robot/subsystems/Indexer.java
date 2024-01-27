@@ -13,6 +13,8 @@ import frc.robot.Constants;
 
 public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
+ 
+  //Spark used for indexer motor
   public final CANSparkMax motor;
   public final DigitalInput noteDetector;
 
@@ -24,11 +26,12 @@ public class Indexer extends SubsystemBase {
       noteDetector = new DigitalInput(kBeamBreakPort);
       motor = new com.revrobotics.CANSparkMax(kIndexMotorPort, MotorType.kBrushless);
   }
-
+    // checks for note
   public boolean isNotePresent() {
       return !noteDetector.get();
   }
-    
+   
+  //PID of motor
   public void initMotor(boolean invert){
     this.motor.restoreFactoryDefaults();
     this.motor.setIdleMode(com.revrobotics.CANSparkMax.IdleMode.kCoast);
@@ -43,6 +46,7 @@ public class Indexer extends SubsystemBase {
   }
 
   public void stop() {
+    //Stops motor
     motor.set(0);
   }
     

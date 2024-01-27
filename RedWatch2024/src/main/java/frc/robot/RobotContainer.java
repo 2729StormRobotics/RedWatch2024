@@ -27,6 +27,7 @@ import frc.robot.subsystems.Indexer;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  // Initializes Indexer 
   private final Indexer m_Indexer = new Indexer();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -56,6 +57,7 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
+    // configures Button A on controller to Indexer
     new JoystickButton(m_driverController, Button.kA.value).toggleOnTrue(new feed(m_Indexer));
   }
 
