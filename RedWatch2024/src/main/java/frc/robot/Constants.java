@@ -19,8 +19,8 @@ public final class Constants {
 
 
   public static final class IndexerConstants {
-    public static final int kIndexMotorPort = 6;
-    public static final int kBeamBreakPort = 0;
+    public static final int kIndexMotorPort = 4;
+    public static final int kBeamBreakPort = 1;
     public static final double kIndexerSpeed = 0.5;
     public static final int kStallLimit = 45;
     public static final int kCurrentLimit = 60;
