@@ -115,7 +115,7 @@ public class TrapSubsystem extends SubsystemBase {
     // Initialize the shuffleboard.
     private void shuffleboardInit() {
         m_controlPanelStatus.addNumber("Arm Length", () -> getPotValue());
-
+        m_controlPanelStatus.addBoolean("Beam Break", () -> isNotePresent());
 
     }
 
