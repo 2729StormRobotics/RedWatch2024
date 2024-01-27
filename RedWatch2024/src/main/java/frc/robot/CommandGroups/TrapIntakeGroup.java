@@ -14,12 +14,12 @@ import frc.robot.commands.trapIntake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class TrapIntake extends SequentialCommandGroup {
+public class TrapIntakeGroup extends SequentialCommandGroup {
   // Initialize objects
   private final TrapSubsystem m_Trap;
   
   /** Creates a new TrapIntake. */
-  public TrapIntake(TrapSubsystem trap) {
+  public TrapIntakeGroup(TrapSubsystem trap) {
     m_Trap = trap;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());

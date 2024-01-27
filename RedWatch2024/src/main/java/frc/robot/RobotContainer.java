@@ -64,10 +64,11 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kX.value).toggleOnTrue(new trapIntake(m_TrapSubsystem));
     // If y is pressed, run the outtake command while toggled
     new JoystickButton(m_driverController, Button.kY.value).toggleOnTrue(new trapOuttake(m_TrapSubsystem));
-    // If y is pressed, run the outtake command while toggled
-    new JoystickButton(m_driverController, Button.kY.value).toggleOnTrue(new moveArm(Constants.TrapConstants.testDist, m_TrapSubsystem));
+    // If B is pressed, run the outtake command while toggled
+    new JoystickButton(m_driverController, Button.kB.value).toggleOnTrue(new moveArm(Constants.TrapConstants.testDist, m_TrapSubsystem));
     
     // Command Groups
+    // If a is pressed, run the intake command
     new JoystickButton(m_driverController, Button.kA.value).toggleOnTrue(new TrapIntakeGroup(m_TrapSubsystem));
 
   }
