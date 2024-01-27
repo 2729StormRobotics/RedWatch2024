@@ -20,7 +20,8 @@ public class trapIntake extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
@@ -38,8 +39,12 @@ public class trapIntake extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        // Checks if note is present in hand and will stop once detected
-        return m_Trap.isNotePresent();
-        
+        // Checks to see if the Note is in the intake using the beam break
+        if (m_Trap.isNotePresent())
+            return true;
+
+        return false;
+
     }
+
 }

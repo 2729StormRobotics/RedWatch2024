@@ -14,7 +14,6 @@ public class moveArm extends Command {
     private final double potDistance;
     private double potDifference;
 
-
     public moveArm(double distance, TrapSubsystem trap) {
         // Use addRequirements() here to declare subsystem dependencies.
         m_Trap = trap;
@@ -24,7 +23,8 @@ public class moveArm extends Command {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
@@ -34,14 +34,11 @@ public class moveArm extends Command {
         // Moves arm to height
         if (m_Trap.getPotValue() < (potDistance - Constants.TrapConstants.kTolerance)) {
             m_Trap.setArmSpeed(Constants.TrapConstants.kArmMotorSpeed);
-        } 
-        else if (m_Trap.getPotValue() > (potDistance + Constants.TrapConstants.kTolerance)) {
+        } else if (m_Trap.getPotValue() > (potDistance + Constants.TrapConstants.kTolerance)) {
             m_Trap.setArmSpeed(-1 * Constants.TrapConstants.kArmMotorSpeed);
         }
-        
 
     }
-    
 
     // Called once the command ends or is interrupted.
     @Override
@@ -53,7 +50,7 @@ public class moveArm extends Command {
     @Override
     public boolean isFinished() {
         // Ends until the arm reaches the height +- the tolerance (0.5")
-        if (potDifference <= Constants.TrapConstants.kTolerance){
+        if (potDifference <= Constants.TrapConstants.kTolerance) {
             return true;
         }
         return false;

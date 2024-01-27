@@ -2,7 +2,6 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
@@ -24,23 +23,22 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
-
 public class TrapSubsystem extends SubsystemBase {
 
     /* Initialize Trap Subsystem */
-    
+
     // Telescoping arm components
-        // NEO
+    // NEO
     public final CANSparkMax m_ArmMotor;
     public final RelativeEncoder m_ArmEncoder;
-        // String Potentiometer
+    // String Potentiometer
     private final AnalogPotentiometer stringPot = new AnalogPotentiometer(0, 180, 30);
 
     // Intake components
-        // NEO 550
+    // NEO 550
     private final CANSparkMax m_HandMotor;
     private final RelativeEncoder m_HandEncoder;
-        // Beam Break
+    // Beam Break
     private final DigitalInput m_NoteDetector;
 
     // Shuffleboard and Smartdashboard
@@ -48,7 +46,7 @@ public class TrapSubsystem extends SubsystemBase {
     private final ShuffleboardTab m_controlPanelTab;
 
     // Constructor
-    public TrapSubsystem () {
+    public TrapSubsystem() {
         // Initialize telescoping arm
         m_ArmMotor = new CANSparkMax(Constants.TrapConstants.kArmMotorID, MotorType.kBrushless);
         m_ArmMotor.restoreFactoryDefaults();
@@ -72,16 +70,15 @@ public class TrapSubsystem extends SubsystemBase {
         // Shuffleboard and Smartdashboard
         m_controlPanelTab = Shuffleboard.getTab("stringpot");
         m_controlPanelStatus = m_controlPanelTab.getLayout("String Pot", BuiltInLayouts.kList)
-        .withSize(3, 3)
-        .withProperties(Map.of("Label position", "TOP"));
+                .withSize(3, 3)
+                .withProperties(Map.of("Label position", "TOP"));
 
         shuffleboardInit();
 
-        
     }
 
-    /*SETTER Methods */
-        // Arm Motor
+    /* SETTER Methods */
+    // Arm Motor
     public void setArmSpeed(double speed) {
         m_ArmMotor.set(speed);
     }
@@ -90,7 +87,7 @@ public class TrapSubsystem extends SubsystemBase {
         m_ArmMotor.set(0);
     }
 
-        // Hand Motor
+    // Hand Motor
     public void handIntake(double speed) {
         m_HandMotor.set(speed);
     }
@@ -103,11 +100,11 @@ public class TrapSubsystem extends SubsystemBase {
         m_HandMotor.set(0);
     }
 
-        // Encoders
+    // Encoders
     public void resetArmPosition() {
         m_ArmEncoder.setPosition(0);
     }
-    
+
     public void resetHandPosition() {
         m_HandEncoder.setPosition(0);
     }
@@ -120,7 +117,7 @@ public class TrapSubsystem extends SubsystemBase {
     }
 
     /* GETTER Methods */
-        // Arm Encoder
+    // Arm Encoder
     public double getArmSpeed() {
         return m_ArmEncoder.getVelocity();
     }
@@ -138,7 +135,7 @@ public class TrapSubsystem extends SubsystemBase {
         return m_HandEncoder.getPosition();
     }
 
-        // Potentiometer
+    // Potentiometer
     public double getPotValue() {
         return stringPot.get();
     }
@@ -147,14 +144,14 @@ public class TrapSubsystem extends SubsystemBase {
         return Math.abs(getPotValue() - potDist);
     }
 
-        // Beam Break
-        // Checks if note is present
-    public boolean isNotePresent(){
+    // Beam Break
+    // Checks if note is present
+    public boolean isNotePresent() {
         return !m_NoteDetector.get();
-      }
+    }
 
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-    } 
+    }
 }
