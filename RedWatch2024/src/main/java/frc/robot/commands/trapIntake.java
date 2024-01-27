@@ -39,12 +39,7 @@ public class trapIntake extends Command {
     @Override
     public boolean isFinished() {
         // Checks if note is present in hand and will stop once detected
-        if (m_Trap.isNotePresent()) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return m_Trap.isNotePresent();
         
     }
 }
