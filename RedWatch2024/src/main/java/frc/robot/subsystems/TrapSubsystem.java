@@ -6,6 +6,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.RelativeEncoder;
+
+import java.util.Map;
+
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
@@ -15,6 +18,11 @@ import frc.robot.Constants;
 import frc.robot.Constants.TrapConstants;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
+
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 
 public class TrapSubsystem extends SubsystemBase {
@@ -35,7 +43,9 @@ public class TrapSubsystem extends SubsystemBase {
         // Beam Break
     private final DigitalInput m_NoteDetector;
 
-
+    // Shuffleboard and Smartdashboard
+    private final ShuffleboardLayout m_controlPanelStatus;
+    private final ShuffleboardTab m_controlPanelTab;
 
     // Constructor
     public TrapSubsystem () {
@@ -58,6 +68,14 @@ public class TrapSubsystem extends SubsystemBase {
         m_HandEncoder.setPosition(0);
 
         m_NoteDetector = new DigitalInput(TrapConstants.kBeamBreakPortID);
+
+        // Shuffleboard and Smartdashboard
+        m_controlPanelTab = Shuffleboard.getTab("stringpot");
+        m_controlPanelStatus = m_controlPanelTab.getLayout("String Pot", BuiltInLayouts.kList)
+        .withSize(3, 3)
+        .withProperties(Map.of("Label position", "TOP"));
+
+        shuffleboardInit();
 
         
     }
@@ -92,6 +110,13 @@ public class TrapSubsystem extends SubsystemBase {
     
     public void resetHandPosition() {
         m_HandEncoder.setPosition(0);
+    }
+
+    // Initialize the shuffleboard.
+    private void shuffleboardInit() {
+        m_controlPanelStatus.addNumber("Arm Length", () -> getPotValue());
+
+
     }
 
     /* GETTER Methods */
