@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
   // Motor for pivoting for the shooter
@@ -112,6 +113,62 @@ public class Shooter extends SubsystemBase {
 
   public double getAverageAngle() {
     return (getLeftAngle() + getRightAngle())/2;
+  }
+
+  /*
+   * Command will return the optimal angle to shoot at
+   * Derivation of the Formula can be seen here:
+   * https://drive.google.com/file/d/1dcSJj9QoYHzQPaUIWQf76gtZUhYFJNyI/view?usp=drive_link
+   * The graph of this (including Taylor Series approximation):
+   * https://www.desmos.com/calculator/fsfd7xb0pe
+   * The Newton Method is used to approximate the solutions
+   */
+
+  // F(x) and F'(x) functions needed for getOptimalAngle() method
+  public static double f(double x, double dist) {
+    // Renaming constants so that they are easier to follow and the code looks less scary
+    double l = Constants.ShooterConstants.shooterLength;
+    double h = Constants.ShooterConstants.goalHeight;
+    double k = Constants.ShooterConstants.k;
+  
+    // Coefficients of the Polynomial
+    double a = 2*dist/15;
+    double b = (-h/3 + Math.pow(l, 2)/3 * k - k*dist*l/12);
+    double c = -2*dist/3;
+    double d = k*dist*l + h - Math.pow(l, 2)*k;
+    double e = dist;
+    double f = k*Math.pow(dist, 2) - 2*k*dist*l - h + Math.pow(l, 2)*k;
+
+    // Evaluating f(x)
+    return a*Math.pow(x, 5) + b*Math.pow(x, 4) + c*Math.pow(x, 3) + d*Math.pow(x, 2) + e*x + f;
+  }
+
+  public static double f_prime(double x, double dist) {
+    // Renaming constants so that they are easier to follow and the code looks less scary
+    double l = Constants.ShooterConstants.shooterLength;
+    double h = Constants.ShooterConstants.goalHeight;
+    double k = Constants.ShooterConstants.k;
+  
+    // Coefficients of the Polynomial
+    double a = 2*dist/15;
+    double b = (-h/3 + Math.pow(l, 2)/3 * k - k*dist*l/12);
+    double c = -2*dist/3;
+    double d = k*dist*l + h - Math.pow(l, 2)*k;
+    double e = dist;
+    double f = k*Math.pow(dist, 2) - 2*k*dist*l - h + Math.pow(l, 2)*k;
+
+    // Evaluating f'(x)
+    return 5*a*Math.pow(x, 4) + 4*b*Math.pow(x, 3) + 3*c*Math.pow(x, 2) + 2*d*x + e;
+  }
+
+  // Newton's Method (recursive)
+  public double getOptimalAngle(double init, double dist) {
+    double x0 = 0;
+    double x1 = x0 - f(x0, dist)/f_prime(x0, dist);
+    if (Math.abs(x1 - x0) < 1e-2) {
+      return x1;
+    }
+    return getOptimalAngle(x1, dist);
   }
 
   @Override

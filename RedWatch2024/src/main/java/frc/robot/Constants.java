@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.util.Units;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -43,5 +45,27 @@ public final class Constants {
     public static final double kMaxRPM = 5000;
     public static final double kPShoot = 0;
     public static final double kRPMTolerance = 50;
+
+    // Field and Robot Measurements
+    // All units are in meters
+    public static final double goalHeight = Units.inchesToMeters(78.129);
+    public static final double shooterLength = Units.inchesToMeters(12.01);
+    public static final double exitVelocity = 15;
+    public static final double g = 9.81;
+    public static final double k = -g/(2*Math.pow(exitVelocity, 2));
+
+    
+  }
+
+  public static class VisionConstants {
+    public static final double kAprilTagPipeline = 1;
+    public static final double kLightOffValue = 0;
+    public static final double kDistanceTolerance = 0;
+    public static final double kPX = 0;
+    public static final double kSDrive = 0;
+    public static final double kPY = 0;
+    public static final double kTolerance = 0;
+    public static final double kPTurn = 0;
+    public static final double kSTurn = 0;
   }
 }
