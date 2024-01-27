@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants;
+import frc.robot.Constants.IndexerConstants;
 
 public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
@@ -23,8 +24,8 @@ public class Indexer extends SubsystemBase {
    * Creates a new Indexer.
    */
   public Indexer() {
-      noteDetector = new DigitalInput(kBeamBreakPort);
-      motor = new com.revrobotics.CANSparkMax(kIndexMotorPort, MotorType.kBrushless);
+      noteDetector = new DigitalInput(IndexerConstants.kBeamBreakPort);
+      motor = new com.revrobotics.CANSparkMax(IndexerConstants.kIndexMotorPort, MotorType.kBrushless);
   }
     // checks for note
   public boolean isNotePresent() {
@@ -40,9 +41,13 @@ public class Indexer extends SubsystemBase {
     this.motor.setSmartCurrentLimit(kStallLimit);
   }
 
-  public void setSpeedMotor(double speed) {
+  public void runIndexer(double speed) {
     //speed in percent
     motor.set(speed);
+  }
+
+  public void runNoteThrough() {
+    runIndexer(IndexerConstants.kIndexerSpeed);
   }
 
   public void stop() {

@@ -10,37 +10,41 @@ import static frc.robot.Constants.IndexerConstants.*;
 
 public class feed extends Command {
   /** Creates a new feed. */
-  private final Indexer indexer; 
+  private final Indexer m_indexer; 
     // Use addRequirements() here to declare subsystem dependencies.
 
-    public feed(Indexer index) {
-      // Use addRequirements() here to declare subsystem dependencies.
-      // initializes index 
-      indexer = index;
-      addRequirements(indexer);
+  public feed(Indexer indexer) {
+    // initializes index 
+    m_indexer = indexer;
+    // Use addRequirements() here to declare subsystem dependencies.    
+    addRequirements(indexer);
+   }
+      
     
-    }
 
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_indexer.runNoteThrough();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    indexer.load(kIndexerSpeed);
-  }
+  public void execute() {}
+  
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    indexer.load(0.0);
-
+    m_indexer.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    if (m_indexer.isNotePresent())
+      return true;
+    return false;
+
   }
 }
