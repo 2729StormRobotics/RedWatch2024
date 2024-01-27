@@ -22,13 +22,17 @@ public class TrapSubsystem extends SubsystemBase {
     /* Initialize Trap Subsystem */
     
     // Telescoping arm components
+        // NEO
     public final CANSparkMax m_ArmMotor;
     public final RelativeEncoder m_ArmEncoder;
+        // String Potentiometer
     private final AnalogPotentiometer stringPot = new AnalogPotentiometer(0, 180, 30);
 
     // Intake components
+        // NEO 550
     private final CANSparkMax m_HandMotor;
     private final RelativeEncoder m_HandEncoder;
+        // Beam Break
     private final DigitalInput m_NoteDetector;
 
 
@@ -36,7 +40,6 @@ public class TrapSubsystem extends SubsystemBase {
     // Constructor
     public TrapSubsystem () {
         // Initialize telescoping arm
-        // Need to assign motor ports
         m_ArmMotor = new CANSparkMax(Constants.TrapConstants.kArmMotorID, MotorType.kBrushless);
         m_ArmMotor.restoreFactoryDefaults();
         m_ArmMotor.setIdleMode(IdleMode.kBrake);
@@ -59,8 +62,8 @@ public class TrapSubsystem extends SubsystemBase {
         
     }
 
-    // Arm Motor
-    //Need to work on motor speeds and constants
+    /*SETTER Methods */
+        // Arm Motor
     public void setArmSpeed(double speed) {
         m_ArmMotor.set(speed);
     }
@@ -69,7 +72,7 @@ public class TrapSubsystem extends SubsystemBase {
         m_ArmMotor.set(0);
     }
 
-    // Hand Motor
+        // Hand Motor
     public void handIntake(double speed) {
         m_HandMotor.set(speed);
     }
@@ -82,17 +85,23 @@ public class TrapSubsystem extends SubsystemBase {
         m_HandMotor.set(0);
     }
 
-    // Arm Encoder
+        // Encoders
+    public void resetArmPosition() {
+        m_ArmEncoder.setPosition(0);
+    }
+    
+    public void resetHandPosition() {
+        m_HandEncoder.setPosition(0);
+    }
+
+    /* GETTER Methods */
+        // Arm Encoder
     public double getArmSpeed() {
         return m_ArmEncoder.getVelocity();
     }
 
     public double getArmPosition() {
         return m_ArmEncoder.getPosition();
-    }
-
-    public void resetArmPosition() {
-        m_ArmEncoder.setPosition(0);
     }
 
     // Hand Encoder
@@ -104,11 +113,7 @@ public class TrapSubsystem extends SubsystemBase {
         return m_HandEncoder.getPosition();
     }
 
-    public void resetHandPosition() {
-        m_HandEncoder.setPosition(0);
-    }
-
-    // Potentiometer
+        // Potentiometer
     public double getPotValue() {
         return stringPot.get();
     }
@@ -117,8 +122,8 @@ public class TrapSubsystem extends SubsystemBase {
         return Math.abs(getPotValue() - potDist);
     }
 
-    // Beam Break
-    // Checks if note is present
+        // Beam Break
+        // Checks if note is present
     public boolean isNotePresent(){
         return !m_NoteDetector.get();
       }

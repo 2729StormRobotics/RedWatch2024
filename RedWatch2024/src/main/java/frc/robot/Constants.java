@@ -18,12 +18,14 @@ public final class Constants {
   }
 
   public static class TrapConstants {
-    // Need to add proper port numbers and tolerance
+    // Ports
     public static final int kHandMotorID = 0;
     public static final int kArmMotorID = 1;
     public static final int kBeamBreakPortID = 2;
+    // Speed
     public static final double kHandMotorSpeed = 0.4;
     public static final double kArmMotorSpeed = 0.1;
+    // Distance
     public static final double kTolerance = 0.0;
     public static final double testDist = 2.0;
     public static final double sourceDist = 26.0;

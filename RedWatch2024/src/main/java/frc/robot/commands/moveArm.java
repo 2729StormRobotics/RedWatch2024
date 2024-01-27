@@ -31,8 +31,7 @@ public class moveArm extends Command {
     public void execute() {
         potDifference = m_Trap.getPotDifference(potDistance);
 
-        // 
-        // Speed values are placeholders
+        // Moves arm to height
         if (m_Trap.getPotValue() < (potDistance - Constants.TrapConstants.kTolerance)) {
             m_Trap.setArmSpeed(Constants.TrapConstants.kArmMotorSpeed);
         } 
@@ -51,9 +50,9 @@ public class moveArm extends Command {
     }
 
     // Returns true when the command should end.
-    // Get units for the arm
     @Override
     public boolean isFinished() {
+        // Ends until the arm reaches the height +- the tolerance (0.5")
         if (potDifference <= Constants.TrapConstants.kTolerance){
             return true;
         }
