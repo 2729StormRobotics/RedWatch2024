@@ -13,8 +13,9 @@ public class feed extends Command {
   private final Indexer indexer; 
     // Use addRequirements() here to declare subsystem dependencies.
 
-    public feed(Indexer indexer) {
+    public feed(Indexer index) {
       // Use addRequirements() here to declare subsystem dependencies.
+      indexer = index;
       addRequirements(indexer);
     
     }
