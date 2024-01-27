@@ -19,7 +19,7 @@ public final class Constants {
   }
 
   public static final class HangerConstants {
-		public static final int kHangerLeftPivotFollowerPort = 9;
+		public static final int kHangerLeftPivotFollowerPort = 4;
 		public static final int kHangerRightPivotPort = 10;
 
     // pivoting gearbox = 1:125 
