@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.CommandGroups.TrapIntakeGroup;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
@@ -58,12 +59,17 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
 
+    // Individual Commands
     // If x is pressed, run the intake command while toggled
     new JoystickButton(m_driverController, Button.kX.value).toggleOnTrue(new trapIntake(m_TrapSubsystem));
     // If y is pressed, run the outtake command while toggled
     new JoystickButton(m_driverController, Button.kY.value).toggleOnTrue(new trapOuttake(m_TrapSubsystem));
     // If y is pressed, run the outtake command while toggled
     new JoystickButton(m_driverController, Button.kY.value).toggleOnTrue(new moveArm(Constants.TrapConstants.testDist, m_TrapSubsystem));
+    
+    // Command Groups
+    new JoystickButton(m_driverController, Button.kA.value).toggleOnTrue(new TrapIntakeGroup(m_TrapSubsystem));
+
   }
 
   /**

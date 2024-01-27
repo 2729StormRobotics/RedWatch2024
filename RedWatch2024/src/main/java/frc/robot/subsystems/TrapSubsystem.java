@@ -12,8 +12,9 @@ import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
+import frc.robot.Constants.TrapConstants;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 
 public class TrapSubsystem extends SubsystemBase {
@@ -28,6 +29,7 @@ public class TrapSubsystem extends SubsystemBase {
     // Intake components
     private final CANSparkMax m_HandMotor;
     private final RelativeEncoder m_HandEncoder;
+    private final DigitalInput m_NoteDetector;
 
 
 
@@ -51,6 +53,9 @@ public class TrapSubsystem extends SubsystemBase {
 
         m_HandEncoder = m_HandMotor.getEncoder();
         m_HandEncoder.setPosition(0);
+
+        m_NoteDetector = new DigitalInput(TrapConstants.kBeamBreakPortID);
+
         
     }
 
@@ -111,6 +116,12 @@ public class TrapSubsystem extends SubsystemBase {
     public double getPotDifference(double potDist) {
         return Math.abs(getPotValue() - potDist);
     }
+
+    // Beam Break
+    // Checks if note is present
+    public boolean isNotePresent(){
+        return !m_NoteDetector.get();
+      }
 
     @Override
     public void periodic() {
