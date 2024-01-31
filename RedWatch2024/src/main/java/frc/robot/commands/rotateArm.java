@@ -30,17 +30,28 @@ public class RotateArm extends Command {
   @Override
   public void execute() {
 
+    // Rotate arm to angle
+    if (m_Trap.getAnglePosition() < (finAngle + 5)) {
+      m_Trap.setAngleSpeed(Constants.TrapConstants.kArmMotorSpeed);
+  } else if (m_Trap.getAnglePosition() > (finAngle - 5)) {
+      m_Trap.setAngleSpeed(-1 * Constants.TrapConstants.kArmMotorSpeed);
+  }
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    m_Trap.stopAngleMotor();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    // Ends until the arm reaches the angle +- the tolerance (0.5")
+        if (Math.abs(m_Trap.getAnglePosition() - finAngle) <= 5) {
+            return true;
+        }
+        return false;
   }
 }
