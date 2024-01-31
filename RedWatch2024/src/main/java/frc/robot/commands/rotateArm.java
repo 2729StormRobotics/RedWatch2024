@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.Constants;
 
-public class rotateArm extends Command {
+public class RotateArm extends Command {
   /* Initialize */
   private final TrapSubsystem m_Trap;
-  private final double finAngle;
+  private double finAngle;
   
   /** Creates a new rotateArm. */
-  public rotateArm(TrapSubsystem trap, double angle) {
+  public RotateArm(TrapSubsystem trap, double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     // Use addRequirements() here to declare subsystem dependencies.
     m_Trap = trap;
-    finAngle = distance;
+    finAngle = angle;
     addRequirements(m_Trap);
   }
 
@@ -29,7 +29,7 @@ public class rotateArm extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Trap.shuffleboardInit();
+
   }
 
   // Called once the command ends or is interrupted.

@@ -38,8 +38,6 @@ public class MoveArm extends Command {
             m_Trap.setArmSpeed(-1 * Constants.TrapConstants.kArmMotorSpeed);
         }
 
-        m_Trap.shuffleboardInit();
-
     }
 
     // Called once the command ends or is interrupted.

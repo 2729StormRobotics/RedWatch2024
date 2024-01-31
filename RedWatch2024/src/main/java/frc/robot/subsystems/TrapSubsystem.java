@@ -10,6 +10,8 @@ import java.util.Map;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,7 +35,7 @@ public class TrapSubsystem extends SubsystemBase {
     public final RelativeEncoder m_ArmEncoder;
     // NEO for rotation
     public final CANSparkMax m_AngleMotor;
-    public final RelativeEncoder m_AngleEncoder;
+    public final AbsoluteEncoder m_AngleEncoder;
     // String Potentiometer
     private final AnalogPotentiometer stringPot = new AnalogPotentiometer(0, 180, 30);
 
@@ -65,8 +67,7 @@ public class TrapSubsystem extends SubsystemBase {
         m_AngleMotor.setIdleMode(IdleMode.kBrake);
         m_AngleMotor.setSmartCurrentLimit(45);
 
-        m_AngleEncoder = m_AngleMotor.getEncoder();
-        m_AngleEncoder.setPosition(0);
+        m_AngleEncoder = m_AngleMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
         // Initialize hand components
         m_HandMotor = new CANSparkMax(Constants.TrapConstants.kHandMotorID, MotorType.kBrushless);
@@ -124,14 +125,6 @@ public class TrapSubsystem extends SubsystemBase {
     // Encoders
     public void resetArmPosition() {
         m_ArmEncoder.setPosition(0);
-    }
-
-    public void resetAnglePosition() {
-        m_AngleEncoder.setPosition(0);
-    }
-
-    public void setAnglePosition(double angle) {
-        m_AngleEncoder.setPosition(angle);
     }
 
     public void resetHandPosition() {
