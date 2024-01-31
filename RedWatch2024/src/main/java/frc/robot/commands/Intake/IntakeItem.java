@@ -48,9 +48,9 @@ public class IntakeItem extends Command {
   @Override
   public boolean isFinished() {
     // Checks to see if the Note is in the intake using the beam break
-    if (m_intake.isNotePresent())
+    // if (m_intake.isNotePresent())
       
-      return true;
+    //   return true;
     
     return false;
   }

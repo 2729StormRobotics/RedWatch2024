@@ -83,13 +83,12 @@ public class Intake extends SubsystemBase {
     motor.setInverted(inverse);
   }
 
-  public boolean isNotePresent(){
-    //checks for Note
-    return !m_noteDetector.get();
-  }
+  // public boolean isNotePresent(){
+  //   //checks for Note
+  //   return !m_noteDetector.get();
+  // }
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Intake Velocity", getVelocity());
     // This method will be called once per scheduler run
   }
 }
