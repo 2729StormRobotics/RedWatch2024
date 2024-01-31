@@ -7,8 +7,8 @@ package frc.robot.CommandGroups;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.Constants;
-import frc.robot.commands.moveArm;
-import frc.robot.commands.trapIntake;
+import frc.robot.commands.MoveArm;
+import frc.robot.commands.TrapIntake;
 
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -26,11 +26,11 @@ public class TrapIntakeGroup extends SequentialCommandGroup {
 
     addCommands(
       // Telescoping arm will extend to the source's height
-      new moveArm(Constants.TrapConstants.sourceDist, m_Trap),
+      new MoveArm(Constants.TrapConstants.sourceDist, m_Trap),
       // Hand will begin to spin to intake note and will stop once it detects it
-      new trapIntake(m_Trap), 
+      new TrapIntake(m_Trap), 
       // Telescoping arm will completely retract
-      new moveArm(Constants.TrapConstants.baseDist, m_Trap)
+      new MoveArm(Constants.TrapConstants.baseDist, m_Trap)
     );
   }
 }

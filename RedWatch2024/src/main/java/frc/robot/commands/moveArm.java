@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.Constants;
 
-public class moveArm extends Command {
+public class MoveArm extends Command {
     /** Initialize */
     private final TrapSubsystem m_Trap;
     private final double potDistance;
     private double potDifference;
 
-    public moveArm(double distance, TrapSubsystem trap) {
+    public MoveArm(double distance, TrapSubsystem trap) {
         // Use addRequirements() here to declare subsystem dependencies.
         m_Trap = trap;
         potDistance = distance;

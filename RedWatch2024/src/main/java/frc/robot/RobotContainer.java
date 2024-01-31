@@ -8,9 +8,9 @@ import frc.robot.CommandGroups.TrapIntakeGroup;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.moveArm;
-import frc.robot.commands.trapIntake;
-import frc.robot.commands.trapOuttake;
+import frc.robot.commands.MoveArm;
+import frc.robot.commands.TrapIntake;
+import frc.robot.commands.TrapOuttake;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.TrapSubsystem;
 import edu.wpi.first.wpilibj.XboxController;
@@ -70,12 +70,12 @@ public class RobotContainer {
 
     // Individual Commands
     // If x is pressed, run the intake command while toggled
-    new JoystickButton(m_driverController, Button.kX.value).toggleOnTrue(new trapIntake(m_TrapSubsystem));
+    new JoystickButton(m_driverController, Button.kX.value).toggleOnTrue(new TrapIntake(m_TrapSubsystem));
     // If y is pressed, run the outtake command while toggled
-    new JoystickButton(m_driverController, Button.kY.value).toggleOnTrue(new trapOuttake(m_TrapSubsystem));
+    new JoystickButton(m_driverController, Button.kY.value).toggleOnTrue(new TrapOuttake(m_TrapSubsystem));
     // If B is pressed, run the arm command while toggled
     new JoystickButton(m_driverController, Button.kB.value)
-        .toggleOnTrue(new moveArm(Constants.TrapConstants.testDist, m_TrapSubsystem));
+        .toggleOnTrue(new MoveArm(Constants.TrapConstants.testDist, m_TrapSubsystem));
 
     // Command Groups
     // If a is pressed, run the intake command

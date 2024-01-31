@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TrapSubsystem;
 import frc.robot.Constants;
 
-public class trapIntake extends Command {
+public class TrapIntake extends Command {
     /** Initialize */
     private final TrapSubsystem m_Trap;
 
-    public trapIntake(TrapSubsystem trap) {
+    public TrapIntake(TrapSubsystem trap) {
         // Use addRequirements() here to declare subsystem dependencies.
         m_Trap = trap;
         addRequirements(m_Trap);
