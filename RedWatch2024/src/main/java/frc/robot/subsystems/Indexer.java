@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import frc.robot.Constants;
 import frc.robot.Constants.IndexerConstants;
 
 public class Indexer extends SubsystemBase {
