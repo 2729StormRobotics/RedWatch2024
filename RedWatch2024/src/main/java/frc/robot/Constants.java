@@ -20,16 +20,20 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    // Motor ID/initialization valuess
+    // Motor ID/initialization values
     public static final int kLeftPivotID = 999;
     public static final int kRightPivotID = 999;
     public static final int kLeftFlywheelID = 999;
     public static final int kRightFlywheelID = 999;
     public static final int kCurrentLimit = 45;
+
+    // Make sure that the two pivot motors and two shooting motors rotate in opposite directions
     public static final boolean kLeftFlywheelInverted = false;
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
     public static final boolean kLeftPivot = false;
     public static final boolean kRightPivot = !kLeftPivot;
+
+    // Absolute encoder offsets
     public static final double kLeftPivotOffset = 0;
     public static final double kRightPivotOffset = 0;
 
@@ -52,14 +56,17 @@ public final class Constants {
     public static final double shooterLength = Units.inchesToMeters(12.01);
     public static final double exitVelocity = 15;
     public static final double g = 9.81;
-    public static final double k = -g/(2*Math.pow(exitVelocity, 2));
+    public static final double k = -g/(2*Math.pow(exitVelocity, 2)); // substitution used in angle calculation
 
     
   }
 
   public static class VisionConstants {
+    // Camera configuration
     public static final double kAprilTagPipeline = 1;
     public static final double kLightOffValue = 0;
+
+    // PID values for driving with vision
     public static final double kDistanceTolerance = 0;
     public static final double kPX = 0;
     public static final double kSDrive = 0;

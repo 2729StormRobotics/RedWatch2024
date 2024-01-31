@@ -16,23 +16,30 @@ import frc.robot.subsystems.Shooter;
  */
 
 public class Pivot extends Command {
+  // initialize shooter, angle, and PID constraints/controllers
   private final Shooter m_shooter;
   private final double m_angle;
-  public double timeElapsed = 0;
 
   private final TrapezoidProfile.Constraints m_constraints;
   private final ProfiledPIDController m_controller;
+
+  public double timeElapsed = 0; // Keep track of time
 
   /** Creates a new Pivot. */
   public Pivot(Shooter shooter, double angle) {
     m_shooter = shooter;
     m_angle = angle;
 
+    // ProfiledPID Constraints
     m_constraints = new TrapezoidProfile.Constraints(
       Constants.ShooterConstants.kMaxPivotVelocity,
       Constants.ShooterConstants.kMaxPivotAcceleration);
+
+    // PID Controller
     m_controller = new ProfiledPIDController(Constants.ShooterConstants.kPPivot,
     Constants.ShooterConstants.kIPivot, Constants.ShooterConstants.kDPivot, m_constraints);
+
+    // Set the goal and tolerances of the PID Controller
     m_controller.setGoal(m_angle);
     m_controller.setTolerance(Constants.ShooterConstants.kPivotTolerance);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -48,19 +55,22 @@ public class Pivot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    timeElapsed += 0.02;
-    m_shooter.setPivotSpeed(m_controller.calculate(m_shooter.getAverageAngle()));
+    timeElapsed += 0.02; // this updates every 20 ms
+    // Set pivot speed to the value calculated by the PID Controller
+    m_shooter.setPivotSpeed(m_controller.calculate(m_shooter.getPivotAngle()));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    // Stop pivot motors
     m_shooter.stopPivotMotors();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    // Finish command when shooter is at the setpoint
+    return m_controller.atSetpoint();
   }
 }

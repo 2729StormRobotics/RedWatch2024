@@ -17,20 +17,19 @@ import frc.robot.Constants;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
-  // Motor for pivoting for the shooter
+  // Motors and absolute encoder for pivoting for the shooter
   public final CANSparkMax m_leftPivot;
-  public final AbsoluteEncoder m_leftPivotEncoder;
-
   public final CANSparkMax m_rightPivot;
-  public final AbsoluteEncoder m_rightPivotEncoder;
+  public final AbsoluteEncoder m_PivotEncoder;
 
-  // Motors for the flywheels
+
+  // Motors and encoders for the flywheels
   public final CANSparkMax m_leftFlywheel;
   public final RelativeEncoder m_leftFlywheelEncoder;
   public final CANSparkMax m_rightFlywheel;
   public final RelativeEncoder m_rightFlywheelEncoder;
 
-
+  public static double iterations = 0; // counter used for the number of iteration in Newton's Method
   
   /** Creates a new Shooter. */
   public Shooter() {
@@ -46,11 +45,10 @@ public class Shooter extends SubsystemBase {
     motorInit(m_rightPivot, Constants.ShooterConstants.kRightPivot);
 
 
-    // Pivot encoder
-    m_leftPivotEncoder = m_leftPivot.getAbsoluteEncoder(Type.kDutyCycle);
-    m_rightPivotEncoder = m_rightPivot.getAbsoluteEncoder(Type.kDutyCycle);
+    // Pivot encoder initialization
+    m_PivotEncoder = m_leftPivot.getAbsoluteEncoder(Type.kDutyCycle);
 
-    // Flywheel encoder
+    // Flywheel encoder initialization
     m_leftFlywheelEncoder = m_leftFlywheel.getEncoder();
     m_rightFlywheelEncoder = m_rightFlywheel.getEncoder();
     
@@ -67,11 +65,13 @@ public class Shooter extends SubsystemBase {
    * SETTERS
    */
 
+  // Sets pivot speed in a percentage, from 0-1
   public void setPivotSpeed(double power) {
     m_leftPivot.set(power);
     m_rightPivot.set(power);
   }
 
+  // Sets shooter speed in a percentage, from 0-1
   public void setShooterSpeed(double power) {
     m_leftFlywheel.set(power);
     m_rightFlywheel.set(power);
@@ -91,35 +91,31 @@ public class Shooter extends SubsystemBase {
    * GETTERS
    */
 
+  // returns rpm of left shooter motor
   public double getLeftRPM() {
     return m_leftFlywheelEncoder.getVelocity();
   }
 
+  // returms rpm of right shooter motor
   public double getRightRPM() {
     return m_rightFlywheelEncoder.getVelocity();
   }
 
+  // returns average rpm between both shooter motors
   public double getAverageRPM() {
     return (getLeftRPM() + getRightRPM())/2;
   }
 
-  public double getLeftAngle() {
-    return m_leftPivotEncoder.getPosition() - Constants.ShooterConstants.kLeftPivotOffset;
-  }
-
-  public double getRightAngle() {
-    return m_rightPivotEncoder.getPosition() - Constants.ShooterConstants.kRightPivotOffset;
-  }
-
-  public double getAverageAngle() {
-    return (getLeftAngle() + getRightAngle())/2;
+  // returns pivot angle of shooter in degrees
+  public double getPivotAngle() {
+    return m_PivotEncoder.getPosition();
   }
 
   /*
    * Command will return the optimal angle to shoot at
    * Derivation of the Formula can be seen here:
    * https://drive.google.com/file/d/1dcSJj9QoYHzQPaUIWQf76gtZUhYFJNyI/view?usp=drive_link
-   * The graph of this (including Taylor Series approximation):
+   * The graph of this (including Taylor Series approximation that is used here):
    * https://www.desmos.com/calculator/fsfd7xb0pe
    * The Newton Method is used to approximate the solutions
    */
@@ -162,19 +158,31 @@ public class Shooter extends SubsystemBase {
   }
 
   // Newton's Method (recursive)
+  // explanation: https://calcworkshop.com/derivatives/newtons-method/#:~:text=Newton's%20Method%2C%20also%20known%20as,us%20to%20solve%20by%20hand.
   public double getOptimalAngle(double init, double dist) {
     double x0 = 0;
     double x1 = x0 - f(x0, dist)/f_prime(x0, dist);
-    if (Math.abs(x1 - x0) < 1e-2) {
+    if (Math.abs(x1 - x0) < 1e-2) { // stops recursion once obtaining an answer with < 0.01 error
+      iterations = 0;
       return x1;
     }
+
+    // If it has run for more than 5 iterations and has not found a solution yet, 
+    // then there is no solution with the given shooter speed and distance (it will take 2-3 iterations most the time)
+    // return the current angle in this case
+    if (iterations > 5) {
+      iterations = 0;
+      return getPivotAngle();
+    }
+
+    iterations += 1;
     return getOptimalAngle(x1, dist);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // Put RPM and pivot angle on shuffleboard
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
-    SmartDashboard.putNumber("Shooter Angle", getAverageAngle());
+    SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
   }
 }

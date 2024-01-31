@@ -17,7 +17,7 @@ public class AutoPivot extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Pivot(shooter, shooter.getOptimalAngle(0, vision.getZ()))
+      new Pivot(shooter, shooter.getOptimalAngle(0, vision.getZ())) // Pivot to the angle returned by the getOptimalAngle() method
     );
   }
 }
