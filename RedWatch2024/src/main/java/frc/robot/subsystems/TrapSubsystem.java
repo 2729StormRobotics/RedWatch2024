@@ -28,9 +28,12 @@ public class TrapSubsystem extends SubsystemBase {
     /* Initialize Trap Subsystem */
 
     // Telescoping arm components
-    // NEO
+    // NEO for vertical movement
     public final CANSparkMax m_ArmMotor;
     public final RelativeEncoder m_ArmEncoder;
+    // NEO for rotation
+    public final CANSparkMax m_AngleMotor;
+    public final RelativeEncoder m_AngleEncoder;
     // String Potentiometer
     private final AnalogPotentiometer stringPot = new AnalogPotentiometer(0, 180, 30);
 
@@ -55,6 +58,15 @@ public class TrapSubsystem extends SubsystemBase {
 
         m_ArmEncoder = m_ArmMotor.getEncoder();
         m_ArmEncoder.setPosition(0);
+
+        //
+        m_AngleMotor = new CANSparkMax(Constants.TrapConstants.kAngleMotorID, MotorType.kBrushless);
+        m_AngleMotor.restoreFactoryDefaults();
+        m_AngleMotor.setIdleMode(IdleMode.kBrake);
+        m_AngleMotor.setSmartCurrentLimit(45);
+
+        m_AngleEncoder = m_AngleMotor.getEncoder();
+        m_AngleEncoder.setPosition(0);
 
         // Initialize hand components
         m_HandMotor = new CANSparkMax(Constants.TrapConstants.kHandMotorID, MotorType.kBrushless);
@@ -87,6 +99,15 @@ public class TrapSubsystem extends SubsystemBase {
         m_ArmMotor.set(0);
     }
 
+    // Arm angle motor
+    public void setAngleSpeed(double speed) {
+        m_AngleMotor.set(speed);
+    }
+
+    public void stopAngleMotor() {
+        m_AngleMotor.set(0);
+    }
+
     // Hand Motor
     public void handIntake(double speed) {
         m_HandMotor.set(speed);
@@ -105,13 +126,25 @@ public class TrapSubsystem extends SubsystemBase {
         m_ArmEncoder.setPosition(0);
     }
 
+    public void resetAnglePosition() {
+        m_AngleEncoder.setPosition(0);
+    }
+
+    public void setAnglePosition(double angle) {
+        m_AngleEncoder.setPosition(angle);
+    }
+
     public void resetHandPosition() {
         m_HandEncoder.setPosition(0);
     }
 
     // Initialize the shuffleboard.
     private void shuffleboardInit() {
+        // Arm
         m_controlPanelStatus.addNumber("Arm Length", () -> getPotValue());
+        m_controlPanelStatus.addNumber("Angle Encoder", () -> getAnglePosition());
+
+        // Hand
         m_controlPanelStatus.addBoolean("Beam Break", () -> isNotePresent());
 
     }
@@ -124,6 +157,15 @@ public class TrapSubsystem extends SubsystemBase {
 
     public double getArmPosition() {
         return m_ArmEncoder.getPosition();
+    }
+
+    // Angle Encoder
+    public double getAngleSpeed() {
+        return m_AngleEncoder.getVelocity();
+    }
+
+    public double getAnglePosition() {
+        return m_AngleEncoder.getPosition();
     }
 
     // Hand Encoder

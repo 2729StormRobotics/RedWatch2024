@@ -25,6 +25,7 @@ public final class Constants {
     // Ports
     public static final int kHandMotorID = 4;
     public static final int kArmMotorID = 9;
+    public static final int kAngleMotorID = 5;
     public static final int kBeamBreakPortID = 0;
     // Speed
     public static final double kHandMotorSpeed = 0.1;

@@ -27,7 +27,7 @@ public class trapIntake extends Command {
     @Override
     public void execute() {
         m_Trap.handIntake(Constants.TrapConstants.kHandMotorSpeed);
-
+        m_Trap.shuffleboardInit();
     }
 
     // Called once the command ends or is interrupted.
