@@ -19,15 +19,15 @@ import frc.robot.Constants.ShooterConstants;
 public class Shooter extends SubsystemBase {
   // Motors and absolute encoder for pivoting for the shooter
   public final CANSparkMax m_leftPivot;
-  public final CANSparkMax m_rightPivot;
+  // public final CANSparkMax m_rightPivot;
   public final AbsoluteEncoder m_PivotEncoder;
 
 
   // Motors and encoders for the flywheels
-  public final CANSparkMax m_leftFlywheel;
-  public final RelativeEncoder m_leftFlywheelEncoder;
-  public final CANSparkMax m_rightFlywheel;
-  public final RelativeEncoder m_rightFlywheelEncoder;
+  // public final CANSparkMax m_leftFlywheel;
+  // public final RelativeEncoder m_leftFlywheelEncoder;
+  // public final CANSparkMax m_rightFlywheel;
+  // public final RelativeEncoder m_rightFlywheelEncoder;
 
   public static double iterations = 0; // counter used for the number of iteration in Newton's Method
   
@@ -35,22 +35,22 @@ public class Shooter extends SubsystemBase {
   public Shooter() {
     // All motors initialization
     m_leftPivot = new CANSparkMax(Constants.ShooterConstants.kLeftPivotID, MotorType.kBrushless);
-    m_rightPivot = new CANSparkMax(Constants.ShooterConstants.kRightPivotID, MotorType.kBrushless);
-    m_leftFlywheel = new CANSparkMax(Constants.ShooterConstants.kLeftFlywheelID, MotorType.kBrushless);
-    m_rightFlywheel = new CANSparkMax(Constants.ShooterConstants.kRightFlywheelID, MotorType.kBrushless);
+    // m_rightPivot = new CANSparkMax(Constants.ShooterConstants.kRightPivotID, MotorType.kBrushless);
+    // m_leftFlywheel = new CANSparkMax(Constants.ShooterConstants.kLeftFlywheelID, MotorType.kBrushless);
+    // m_rightFlywheel = new CANSparkMax(Constants.ShooterConstants.kRightFlywheelID, MotorType.kBrushless);
 
-    motorInit(m_leftFlywheel, Constants.ShooterConstants.kLeftFlywheelInverted);
-    motorInit(m_rightFlywheel, Constants.ShooterConstants.kRightFlywheelInverted);
+    // motorInit(m_leftFlywheel, Constants.ShooterConstants.kLeftFlywheelInverted);
+    // motorInit(m_rightFlywheel, Constants.ShooterConstants.kRightFlywheelInverted);
     motorInit(m_leftPivot, Constants.ShooterConstants.kLeftPivot);
-    motorInit(m_rightPivot, Constants.ShooterConstants.kRightPivot);
+    // motorInit(m_rightPivot, Constants.ShooterConstants.kRightPivot);
 
 
     // Pivot encoder initialization
     m_PivotEncoder = m_leftPivot.getAbsoluteEncoder(Type.kDutyCycle);
 
     // Flywheel encoder initialization
-    m_leftFlywheelEncoder = m_leftFlywheel.getEncoder();
-    m_rightFlywheelEncoder = m_rightFlywheel.getEncoder();
+    // m_leftFlywheelEncoder = m_leftFlywheel.getEncoder();
+    // m_rightFlywheelEncoder = m_rightFlywheel.getEncoder();
     
   }
 
@@ -68,43 +68,43 @@ public class Shooter extends SubsystemBase {
   // Sets pivot speed in a percentage, from 0-1
   public void setPivotSpeed(double power) {
     m_leftPivot.set(power);
-    m_rightPivot.set(power);
+    // m_rightPivot.set(power);
   }
 
   // Sets shooter speed in a percentage, from 0-1
-  public void setShooterSpeed(double power) {
-    m_leftFlywheel.set(power);
-    m_rightFlywheel.set(power);
-  }
+  // public void setShooterSpeed(double power) {
+  //   m_leftFlywheel.set(power);
+  //   m_rightFlywheel.set(power);
+  // }
 
   public void stopPivotMotors() {
     m_leftPivot.set(0);
-    m_rightPivot.set(0);
+    // m_rightPivot.set(0);
   }
 
-  public void stopShooterMotors() {
-    m_leftFlywheel.set(0);
-    m_rightPivot.set(0);
-  }
+  // public void stopShooterMotors() {
+  //   m_leftFlywheel.set(0);
+  //   m_rightPivot.set(0);
+  // }
 
   /*
    * GETTERS
    */
 
   // returns rpm of left shooter motor
-  public double getLeftRPM() {
-    return m_leftFlywheelEncoder.getVelocity();
-  }
+  // public double getLeftRPM() {
+  //   return m_leftFlywheelEncoder.getVelocity();
+  // }
 
-  // returms rpm of right shooter motor
-  public double getRightRPM() {
-    return m_rightFlywheelEncoder.getVelocity();
-  }
+  // // returms rpm of right shooter motor
+  // public double getRightRPM() {
+  //   return m_rightFlywheelEncoder.getVelocity();
+  // }
 
-  // returns average rpm between both shooter motors
-  public double getAverageRPM() {
-    return (getLeftRPM() + getRightRPM())/2;
-  }
+  // // returns average rpm between both shooter motors
+  // public double getAverageRPM() {
+  //   return (getLeftRPM() + getRightRPM())/2;
+  // }
 
   // returns pivot angle of shooter in degrees
   public double getPivotAngle() {
@@ -182,7 +182,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // Put RPM and pivot angle on shuffleboard
-    SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
+    // SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
     SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
   }
 }
