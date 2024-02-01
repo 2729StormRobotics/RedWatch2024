@@ -22,7 +22,7 @@ public class Pivot extends Command {
   private final double m_angle;
 
   private final TrapezoidProfile.Constraints m_constraints;
-  private final PIDController m_controller;
+  private final ProfiledPIDController m_controller;
 
   public double timeElapsed = 0; // Keep track of time
 
@@ -37,12 +37,12 @@ public class Pivot extends Command {
       Constants.ShooterConstants.kMaxPivotAcceleration);
 
     // PID Controller
-    m_controller = new PIDController(Constants.ShooterConstants.kPPivot,
-    Constants.ShooterConstants.kIPivot, Constants.ShooterConstants.kDPivot);
+    m_controller = new ProfiledPIDController(Constants.ShooterConstants.kPPivot,
+    Constants.ShooterConstants.kIPivot, Constants.ShooterConstants.kDPivot, m_constraints);
 
     // Set the goal and tolerances of the PID Controller
-    // m_controller.setGoal(m_angle);
-    // m_controller.setTolerance(Constants.ShooterConstants.kPivotTolerance);
+    m_controller.setGoal(m_angle);
+    m_controller.setTolerance(Constants.ShooterConstants.kPivotTolerance);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
   }

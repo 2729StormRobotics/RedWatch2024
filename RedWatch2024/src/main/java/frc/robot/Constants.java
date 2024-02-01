@@ -43,7 +43,7 @@ public final class Constants {
     public static final double kDPivot = 0;
     public static final double kMaxPivotVelocity = 10; // Measured in degrees/s
     public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
-    public static final double kPivotTolerance = 5; // degrees
+    public static final double kPivotTolerance = 1; // degrees
 
     // Flywheel PID values
     public static final double kMaxRPM = 5000;
