@@ -16,14 +16,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
-  public static class LEDConstants {
-    public static final int kBlinkinDriverPort = 2;
-    public static final double kDisabled = 0.61;
-    public static final double kLEDsOff = 0.99;
-    public static final double kNoteIn = 0.67;
-    public static final double kDefaultColor = -0.99;
-    public static final double kParty = -0.99;
-    public static final double kFlash = 0.00; //TODO Find the flashy flashy double
-    public static final int kDriverControllerPort = 0;
-  }
+  public static final class LightsConstants {
+    public static final int CANDLE_PORT = 17;
+}
 }
