@@ -82,7 +82,7 @@ public class RobotContainer {
 
     // Command Groups
     // If a is pressed, run the intake command
-    // new JoystickButton(m_driverController, Button.kA.value).toggleOnTrue(new TrapIntakeGroup(m_TrapSubsystem));
+    //new JoystickButton(m_driverController, Button.kA.value).toggleOnTrue(new TrapIntakeGroup(m_TrapSubsystem));
 
   }
 
