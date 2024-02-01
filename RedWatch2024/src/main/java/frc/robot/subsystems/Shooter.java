@@ -26,8 +26,8 @@ public class Shooter extends SubsystemBase {
   // Motors for the flywheels
   public final CANSparkMax m_leftFlywheel;
   public final RelativeEncoder m_leftFlywheelEncoder;
-  // public final CANSparkMax m_rightFlywheel;
-  // public final RelativeEncoder m_rightFlywheelEncoder;
+  public final CANSparkMax m_rightFlywheel;
+  public final RelativeEncoder m_rightFlywheelEncoder;
 
 
   
@@ -37,10 +37,10 @@ public class Shooter extends SubsystemBase {
     // m_leftPivot = new CANSparkMax(Constants.ShooterConstants.kLeftPivotID, MotorType.kBrushless);
     // m_rightPivot = new CANSparkMax(Constants.ShooterConstants.kRightPivotID, MotorType.kBrushless);
     m_leftFlywheel = new CANSparkMax(Constants.ShooterConstants.kLeftFlywheelID, MotorType.kBrushless);
-    // m_rightFlywheel = new CANSparkMax(Constants.ShooterConstants.kRightFlywheelID, MotorType.kBrushless);
+    m_rightFlywheel = new CANSparkMax(Constants.ShooterConstants.kRightFlywheelID, MotorType.kBrushless);
 
     motorInit(m_leftFlywheel, Constants.ShooterConstants.kLeftFlywheelInverted);
-    // motorInit(m_rightFlywheel, Constants.ShooterConstants.kRightFlywheelInverted);
+    motorInit(m_rightFlywheel, Constants.ShooterConstants.kRightFlywheelInverted);
     // motorInit(m_leftPivot, Constants.ShooterConstants.kLeftPivot);
     // motorInit(m_rightPivot, Constants.ShooterConstants.kRightPivot);
 
@@ -51,7 +51,7 @@ public class Shooter extends SubsystemBase {
 
     // Flywheel encoder
     m_leftFlywheelEncoder = m_leftFlywheel.getEncoder();
-    // m_rightFlywheelEncoder = m_rightFlywheel.getEncoder();
+    m_rightFlywheelEncoder = m_rightFlywheel.getEncoder();
     
   }
 
@@ -71,9 +71,9 @@ public class Shooter extends SubsystemBase {
   //   m_rightPivot.set(power);
   // }
 
-  public void setShooterSpeed(double power) {
-    m_leftFlywheel.set(power);
-    // m_rightFlywheel.set(power);
+  public void setShooterSpeed(double leftPower, double rightPower) {
+    m_leftFlywheel.set(leftPower);
+    m_rightFlywheel.set(rightPower);
   }
 
   // public void stopPivotMotors() {

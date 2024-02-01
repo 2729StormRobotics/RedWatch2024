@@ -18,8 +18,8 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static final int kLeftPivotID = 999;
-    public static final int kRightPivotID = 999;
+    public static final int kLeftPivotID = 4;
+    public static final int kRightPivotID = 5;
     public static final int kLeftFlywheelID = 999;
     public static final int kRightFlywheelID = 999;
     public static final int kCurrentLimit = 45;
