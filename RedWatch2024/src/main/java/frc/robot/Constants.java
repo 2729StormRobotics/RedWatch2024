@@ -32,9 +32,10 @@ public final class Constants {
     public static final double kHandMotorSpeed = 0.1;
     public static final double kArmMotorSpeed = 0.1;
     // Distance
-    public static final double kTolerance = 0.0;
+    public static final double kTolerance = 0.5;
     public static final double testDist = 5.0;
     public static final double sourceDist = 26.0;
+    public static final double maxDist = 45.0;
     public static final double baseDist = 0.0;
   }
 
