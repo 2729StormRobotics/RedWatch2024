@@ -52,9 +52,11 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(new Pivot(m_shooter, 45/360));
+    m_driverController.y().whileTrue(new Pivot(m_shooter, 45));
     m_driverController.a().whileTrue(new RunCommand(() -> m_shooter.stopPivotMotors()));
     m_driverController.x().whileTrue(new RunCommand(() -> m_shooter.setPivotSpeed(0.3)));
+    m_driverController.b().whileTrue(new RunCommand(() -> m_shooter.setPivotSpeed(-0.3)));
+
 
 
   }

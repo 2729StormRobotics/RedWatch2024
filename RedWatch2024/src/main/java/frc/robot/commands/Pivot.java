@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,7 +22,7 @@ public class Pivot extends Command {
   private final double m_angle;
 
   private final TrapezoidProfile.Constraints m_constraints;
-  private final ProfiledPIDController m_controller;
+  private final PIDController m_controller;
 
   public double timeElapsed = 0; // Keep track of time
 
@@ -36,12 +37,12 @@ public class Pivot extends Command {
       Constants.ShooterConstants.kMaxPivotAcceleration);
 
     // PID Controller
-    m_controller = new ProfiledPIDController(Constants.ShooterConstants.kPPivot,
-    Constants.ShooterConstants.kIPivot, Constants.ShooterConstants.kDPivot, m_constraints);
+    m_controller = new PIDController(Constants.ShooterConstants.kPPivot,
+    Constants.ShooterConstants.kIPivot, Constants.ShooterConstants.kDPivot);
 
     // Set the goal and tolerances of the PID Controller
-    m_controller.setGoal(m_angle);
-    m_controller.setTolerance(Constants.ShooterConstants.kPivotTolerance);
+    // m_controller.setGoal(m_angle);
+    // m_controller.setTolerance(Constants.ShooterConstants.kPivotTolerance);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
   }
@@ -57,7 +58,7 @@ public class Pivot extends Command {
   public void execute() {
     timeElapsed += 0.02; // this updates every 20 ms
     // Set pivot speed to the value calculated by the PID Controller
-    m_shooter.setPivotSpeed(m_controller.calculate(m_shooter.getPivotAngle()));
+    m_shooter.setPivotSpeed(m_controller.calculate(m_shooter.getPivotAngle(), m_angle));
   }
 
   // Called once the command ends or is interrupted.
@@ -72,5 +73,6 @@ public class Pivot extends Command {
   public boolean isFinished() {
     // Finish command when shooter is at the setpoint
     return m_controller.atSetpoint();
+    // return false;
   }
 }
