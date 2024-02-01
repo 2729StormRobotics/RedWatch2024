@@ -81,8 +81,8 @@ public class TrapSubsystem extends SubsystemBase {
         m_NoteDetector = new DigitalInput(TrapConstants.kBeamBreakPortID);
 
         // Shuffleboard and Smartdashboard
-        m_controlPanelTab = Shuffleboard.getTab("stringpot");
-        m_controlPanelStatus = m_controlPanelTab.getLayout("String Pot", BuiltInLayouts.kList)
+        m_controlPanelTab = Shuffleboard.getTab("Trap");
+        m_controlPanelStatus = m_controlPanelTab.getLayout("Trap Arm", BuiltInLayouts.kList)
                 .withSize(3, 3)
                 .withProperties(Map.of("Label position", "TOP"));
 
@@ -136,7 +136,6 @@ public class TrapSubsystem extends SubsystemBase {
         // Arm
         m_controlPanelStatus.addNumber("Arm Length", () -> getPotValue());
         m_controlPanelStatus.addNumber("Angle Encoder", () -> getAnglePosition());
-
         // Hand
         m_controlPanelStatus.addBoolean("Beam Break", () -> isNotePresent());
 
@@ -175,18 +174,16 @@ public class TrapSubsystem extends SubsystemBase {
         return stringPot.get();
     }
 
-    public double getPotDifference(double potDist) {
-        return Math.abs(getPotValue() - potDist);
-    }
-
     // Beam Break
     // Checks if note is present
     public boolean isNotePresent() {
         return !m_NoteDetector.get();
     }
 
+    // This method will be called once per scheduler run
     @Override
     public void periodic() {
-        // This method will be called once per scheduler run
+        //Update Shuffleboard values
+        shuffleboardInit();
     }
 }

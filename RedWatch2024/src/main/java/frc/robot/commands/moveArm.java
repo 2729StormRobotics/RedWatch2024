@@ -29,7 +29,7 @@ public class MoveArm extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        potDifference = m_Trap.getPotDifference(potDistance);
+        potDifference = Math.abs(m_Trap.getPotValue() - potDistance);
 
         // Moves arm to height
         if (m_Trap.getPotValue() < (potDistance - Constants.TrapConstants.kTolerance)) {
