@@ -31,6 +31,14 @@ import frc.robot.Constants.LightsConstants;
  * 
  * To use a SPECIFIC color do:
  * new Color(0, 0, 0) as a parameter
+ * 
+ * Request Note: setColor(orange)
+ * Aligning to speaker: setColor(red)
+ * Aligned to speaker: setColor(green)
+ * Default: setFadeAnimation(red)
+ * Partymode: setRainbowAnimation(1)
+ * 
+ * 
  */
 
 public class LEDs extends SubsystemBase {
@@ -39,6 +47,7 @@ public class LEDs extends SubsystemBase {
     // Team colors
     public static final Color red = new Color(255, 0, 0);
     public static final Color black = new Color(0, 0, 0);
+    public static final Color brown = new Color(139,69,19);
 
     // Game piece colors
     public static final Color yellow = new Color(242, 60, 0);
@@ -74,9 +83,7 @@ public class LEDs extends SubsystemBase {
             // LEDSegment.BoomEncoderIndicator.fullClear();
             // LEDSegment.WristEncoderIndicator.fullClear();
             // Uncomment these lines once we start testing LEDs
-            LEDSegment.MainStrip.setColor(red);
-            LEDSegment.strip2.setFlowAnimation(red, 0.5);
-            LEDSegment.strip3.setStrobeAnimation(red, 0.7);
+            LEDSegment.MainStrip.setColor(orange);
     });
     }
 
@@ -99,9 +106,7 @@ public class LEDs extends SubsystemBase {
         // WristEncoderIndicator(6, 1, -1),
         // DriverStationIndicator(7, 1, -1),
         // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
-        MainStrip(0, 2, 0),
-        strip2(2, 2, 1),
-        strip3(4,300, 2);
+        MainStrip(0, 300, 0);
         // MAIN STRIP SHOULD BE STARTING AT INDEX 8, leave at 0 when testing
 
         public final int startIndex;
@@ -148,7 +153,7 @@ public class LEDs extends SubsystemBase {
 
         public void setBandAnimation(Color color, double speed) {
             setAnimation(new LarsonAnimation(
-                    color.red, color.green, color.blue, 0, speed, segmentSize, BounceMode.Front, 3, startIndex));
+                    color.red, color.green, color.blue, 0, speed, segmentSize, BounceMode.Center, 20, startIndex));
         }
 
         public void setStrobeAnimation(Color color, double speed) {
