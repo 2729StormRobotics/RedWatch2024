@@ -17,43 +17,45 @@ public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
  
   //Spark used for indexer motor
-  public final CANSparkMax motor;
-  public final DigitalInput noteDetector;
+  public final CANSparkMax m_IndexerMotor;
+  public final DigitalInput m_NoteDectector;
 
 
   /**
    * Creates a new Indexer.
    */
   public Indexer() {
-      noteDetector = new DigitalInput(IndexerConstants.kBeamBreakPort);
-      motor = new com.revrobotics.CANSparkMax(IndexerConstants.kIndexMotorPort, MotorType.kBrushless);
+      // Creates an note dectector instance
+      m_NoteDectector = new DigitalInput(IndexerConstants.kBeamBreakPort);
+      // Creates an indexer motor instance
+      m_IndexerMotor = new com.revrobotics.CANSparkMax(IndexerConstants.kIndexMotorPort, MotorType.kBrushless);
   }
-    // checks for note
+    // Determines whether note is detected or not
   public boolean isNotePresent() {
-      return !noteDetector.get();
+      return !m_NoteDectector.get();
   }
    
   //PID of motor
   public void initMotor(boolean invert){
-    this.motor.restoreFactoryDefaults();
-    this.motor.setIdleMode(com.revrobotics.CANSparkMax.IdleMode.kCoast);
-    this.motor.setSmartCurrentLimit(kCurrentLimit);
-    this.motor.setInverted(invert);
-    this.motor.setSmartCurrentLimit(kStallLimit);
+    this.m_IndexerMotor.restoreFactoryDefaults();
+    this.m_IndexerMotor.setIdleMode(com.revrobotics.CANSparkMax.IdleMode.kCoast);
+    this.m_IndexerMotor.setSmartCurrentLimit(kCurrentLimit);
+    this.m_IndexerMotor.setInverted(invert);
+    this.m_IndexerMotor.setSmartCurrentLimit(kStallLimit);
   }
 
   public void runIndexer(double speed) {
     //speed in percent
-    motor.set(speed);
+    m_IndexerMotor.set(speed);
   }
-
+    //Sets motor at indexer speed, 50%, (runs motor)
   public void runNoteThrough() {
     runIndexer(IndexerConstants.kIndexerSpeed);
   }
 
   public void stop() {
-    //Stops motor
-    motor.set(0);
+    //Sets motor at speed 0 (stops running the motor)
+    m_IndexerMotor.set(0);
   }
     
 

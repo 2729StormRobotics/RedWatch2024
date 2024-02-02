@@ -24,6 +24,7 @@ public class Feed extends Command {
 
 
   // Called when the command is initially scheduled.
+  // Runs motor
   @Override
   public void initialize() {
     m_indexer.runNoteThrough();
@@ -34,12 +35,15 @@ public class Feed extends Command {
   public void execute() {}
   
   // Called once the command ends or is interrupted.
+  // When called stops running the motor
   @Override
   public void end(boolean interrupted) {
     m_indexer.stop();
   }
 
   // Returns true when the command should end.
+  // If note is detected by beam break sensor, calls end() to stop 
+  // If not motor will keep running
   @Override
   public boolean isFinished() {
     if (m_indexer.isNotePresent())
