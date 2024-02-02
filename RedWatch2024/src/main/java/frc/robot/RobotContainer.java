@@ -7,7 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.feed;
+import frc.robot.commands.Feed;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -62,7 +62,7 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     // configures Button A on controller to Indexer
-    new JoystickButton(m_driverController, Button.kA.value).onTrue(new feed(m_Indexer));
+    new JoystickButton(m_driverController, Button.kA.value).onTrue(new Feed(m_Indexer));
   }
 
   /**

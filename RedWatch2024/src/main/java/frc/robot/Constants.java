@@ -14,15 +14,21 @@ package frc.robot;
  */
 public final class Constants {
   public static class OperatorConstants {
+    // Assigns Driver Controller to Port 0
     public static final int kDriverControllerPort = 0;
   }
 
 
   public static final class IndexerConstants {
+    // Assigns Indexer motor to port 4
     public static final int kIndexMotorPort = 4;
+    // Assigns Beam break sensor to port 1
     public static final int kBeamBreakPort = 1;
+    // Sets the indexer motor to 50% power
     public static final double kIndexerSpeed = 0.5;
+    // Sets the indexer motor stall limit to 45 amps
     public static final int kStallLimit = 45;
+    // Sets the indexer motor current limit to 60 amps
     public static final int kCurrentLimit = 60;
   }
 }
