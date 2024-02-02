@@ -17,6 +17,6 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   public static final class LightsConstants {
-    public static final int CANDLE_PORT = 17;
+    public static final int CANDLE_PORT = 11;
 }
 }

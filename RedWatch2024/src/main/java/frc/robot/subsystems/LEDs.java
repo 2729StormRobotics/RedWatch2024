@@ -74,8 +74,10 @@ public class LEDs extends SubsystemBase {
             // LEDSegment.BoomEncoderIndicator.fullClear();
             // LEDSegment.WristEncoderIndicator.fullClear();
             // Uncomment these lines once we start testing LEDs
-            LEDSegment.MainStrip.setColor(orange);
-        });
+            LEDSegment.MainStrip.setColor(red);
+            LEDSegment.strip2.setFlowAnimation(red, 0.5);
+            LEDSegment.strip3.setStrobeAnimation(red, 0.7);
+    });
     }
 
     public Command clearSegmentCommand(LEDSegment segment) {
@@ -97,7 +99,9 @@ public class LEDs extends SubsystemBase {
         // WristEncoderIndicator(6, 1, -1),
         // DriverStationIndicator(7, 1, -1),
         // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
-        MainStrip(0, 300, 2);
+        MainStrip(0, 2, 0),
+        strip2(2, 2, 1),
+        strip3(4,300, 2);
         // MAIN STRIP SHOULD BE STARTING AT INDEX 8, leave at 0 when testing
 
         public final int startIndex;
