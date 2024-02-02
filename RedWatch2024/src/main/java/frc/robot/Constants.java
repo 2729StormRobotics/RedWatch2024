@@ -27,6 +27,7 @@ public final class Constants {
     public static final double kAnglePerRevolution = kPivotingGearRatio * 3.14;
 		public static final double kHangerRightSize = 0;
     public static final double kEncoderOffset = 0;
+    public static final double kAnglesToTicks = 0;
 
     //If needed.
     public static double kP = 0;
