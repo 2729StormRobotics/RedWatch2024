@@ -32,7 +32,8 @@ import frc.robot.Constants.LightsConstants;
  * To use a SPECIFIC color do:
  * new Color(0, 0, 0) as a parameter
  * 
- * Request Note: setColor(orange)
+ * Request Note Ground: setColor(orange)
+ * Request Note: setBandAnimation(orange)
  * Aligning to speaker: setColor(red)
  * Aligned to speaker: setColor(green)
  * Default: setFadeAnimation(red)
