@@ -21,13 +21,9 @@ public class Intake extends SubsystemBase {
   // Direction of the Intake (intake, eject, none)
   public static boolean m_intake_direction;
 
-  // Beam Break variable
-  private final DigitalInput m_noteDetector;
 
   /** Creates a new Intake. */
   public Intake() {
-    // Initialize Beam Break
-    m_noteDetector = new DigitalInput(IntakeConstants.kBeamBreakPort);
 
     // Initialize left and right motors
     m_intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotor, MotorType.kBrushless);
