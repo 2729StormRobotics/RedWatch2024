@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LightsConstants;
-
+import frc.robot.presets.matrixPresets;
+import frc.robot.presets.matrixPresets.*;
 /*
  * USAGE:
  * ANYWHERE YOU WANT TO USE LEDS
@@ -62,24 +63,7 @@ public class LEDs extends SubsystemBase {
     public static final Color orange = new Color(255, 25, 0);
     public static final Color skin = new Color(169, 125, 100);
 
-    public Color[][] matrixColors = {   {black,black,black,black,black,black,black,black,black,black}, 
-                                        {black,black,black,black,black,black,black,black,black,black}, 
-                                        {black,black,red  ,red  ,black,black,black,red  ,red  ,black}, 
-                                        {black,red  ,black,black,black,black,red  ,black,black,black}, 
-                                        {black,red  ,black,red  ,red  ,black,red  ,black,red  ,red  }, 
-                                        {black,red  ,black,black,red  ,black,red  ,black,black,red  }, 
-                                        {black,black,red  ,red  ,black,black,black,red  ,red  ,black}, 
-                                        {black,black,black,black,black,black,black,black,black,black},
-                                        {black,black,black,black,black,black,black,black,black,black}, 
-                                        {black,black,black,black,black,black,black,black,black,black}
-                                    };
-
-
-
-
-
-
-
+  
     public LEDs() {
         CANdleConfiguration candleConfiguration = new CANdleConfiguration();
         candleConfiguration.statusLedOffWhenActive = true;
@@ -105,7 +89,7 @@ public class LEDs extends SubsystemBase {
             // Uncomment these lines once we start testing LEDs
             LEDSegment.MainStrip.setRainbowAnimation(1);
             // LEDSegment.Matrix.setRainbowAnimation(1);
-            setMatrixToGrid(matrixColors);
+            setMatrixToGrid(matrixPresets.ggMatrix);
             });
     }
 
