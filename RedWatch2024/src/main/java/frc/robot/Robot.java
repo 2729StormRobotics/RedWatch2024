@@ -53,7 +53,45 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     LEDSegment.MainStrip.clearAnimation();
     LEDSegment.MainStrip.setColor(LEDs.black);
-  }
+    LEDSegment.Strip2.setColor(LEDs.black);
+    LEDSegment.Strip3.setColor(LEDs.black);
+    LEDSegment.Strip4.setColor(LEDs.black);
+    LEDSegment.Strip5.setColor(LEDs.black);
+    LEDSegment.Strip6.setColor(LEDs.black);
+    LEDSegment.Strip7.setColor(LEDs.black);
+    LEDSegment.Strip8.setColor(LEDs.black);
+    LEDSegment.Strip9.setColor(LEDs.black);
+    LEDSegment.Strip10.setColor(LEDs.black);
+    LEDSegment.Strip11.setColor(LEDs.black);
+    LEDSegment.Strip12.setColor(LEDs.black);
+    LEDSegment.Strip13.setColor(LEDs.black);
+    LEDSegment.Strip14.setColor(LEDs.black);
+    LEDSegment.Strip15.setColor(LEDs.black);
+    LEDSegment.Strip16.setColor(LEDs.black);
+    LEDSegment.Strip17.setColor(LEDs.black);
+    LEDSegment.Strip18.setColor(LEDs.black);
+    LEDSegment.Strip19.setColor(LEDs.black);
+    LEDSegment.Strip20.setColor(LEDs.black);
+    LEDSegment.Strip21.setColor(LEDs.black);
+    LEDSegment.Strip22.setColor(LEDs.black);
+    LEDSegment.Strip23.setColor(LEDs.black);
+    LEDSegment.Strip24.setColor(LEDs.black);
+    LEDSegment.Strip25.setColor(LEDs.black);
+    LEDSegment.Strip26.setColor(LEDs.black);
+    LEDSegment.Strip27.setColor(LEDs.black);
+    LEDSegment.Strip28.setColor(LEDs.black);
+    LEDSegment.Strip29.setColor(LEDs.black);
+    LEDSegment.Strip30.setColor(LEDs.black);    LEDSegment.Strip11.setColor(LEDs.black);
+    LEDSegment.Strip12.setColor(LEDs.black);
+    LEDSegment.Strip13.setColor(LEDs.black);
+    LEDSegment.Strip14.setColor(LEDs.black);
+    LEDSegment.Strip15.setColor(LEDs.black);
+    LEDSegment.Strip16.setColor(LEDs.black);
+    LEDSegment.Strip17.setColor(LEDs.black);
+    LEDSegment.Strip18.setColor(LEDs.black);
+    LEDSegment.Strip19.setColor(LEDs.black);
+    LEDSegment.Strip20.setColor(LEDs.black);
+    LEDSegment.Strip21.setColor(LEDs.black);  }
 
   @Override
   public void disabledPeriodic() {}

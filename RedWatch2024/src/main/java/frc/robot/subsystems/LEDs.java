@@ -33,7 +33,7 @@ import frc.robot.Constants.LightsConstants;
  * new Color(0, 0, 0) as a parameter
  * 
  * Request Note Ground: setColor(orange)
- * Request Note: setBandAnimation(orange)
+ * Request Note: setBandAnimationf(orange)
  * Aligning to speaker: setColor(red)
  * Aligned to speaker: setColor(green)
  * Default: setFadeAnimation(red)
@@ -59,6 +59,8 @@ public class LEDs extends SubsystemBase {
     public static final Color green = new Color(56, 209, 0);
     public static final Color blue = new Color(8, 32, 255);
     public static final Color orange = new Color(255, 25, 0);
+    public static final Color skin = new Color(169, 125, 100);
+
 
     public LEDs() {
         CANdleConfiguration candleConfiguration = new CANdleConfiguration();
@@ -84,8 +86,31 @@ public class LEDs extends SubsystemBase {
             // LEDSegment.BoomEncoderIndicator.fullClear();
             // LEDSegment.WristEncoderIndicator.fullClear();
             // Uncomment these lines once we start testing LEDs
-            LEDSegment.MainStrip.setColor(orange);
-    });
+            LEDSegment.MainStrip.setColor(black);
+            LEDSegment.Strip2.setColor(skin);
+            LEDSegment.Strip3.setColor(brown);
+            LEDSegment.Strip4.setColor(skin);
+            LEDSegment.Strip5.setColor(white);
+            LEDSegment.Strip6.setColor(skin);
+            LEDSegment.Strip7.setColor(brown);
+            LEDSegment.Strip8.setColor(skin);
+            LEDSegment.Strip9.setColor(blue);
+            LEDSegment.Strip10.setColor(skin);
+            LEDSegment.Strip11.setColor(brown);
+            LEDSegment.Strip12.setColor(skin);
+            LEDSegment.Strip13.setColor(brown);
+            LEDSegment.Strip14.setColor(skin);
+            LEDSegment.Strip15.setColor(brown);
+            LEDSegment.Strip16.setColor(skin);
+            LEDSegment.Strip17.setColor(blue);
+            LEDSegment.Strip18.setColor(skin);
+            LEDSegment.Strip19.setColor(brown);
+            LEDSegment.Strip20.setColor(skin);
+            LEDSegment.Strip21.setColor(white);
+            LEDSegment.Strip22.setColor(skin);
+            LEDSegment.Strip23.setColor(brown);
+            LEDSegment.Strip24.setColor(skin);
+            });
     }
 
     public Command clearSegmentCommand(LEDSegment segment) {
@@ -96,7 +121,6 @@ public class LEDs extends SubsystemBase {
     }
     public Command setSegmentCommand(LEDSegment segment) {
         return runOnce(() -> {
-            LEDSegment.MainStrip.setColor(red);
         });
     }
     public static enum LEDSegment {
@@ -107,7 +131,30 @@ public class LEDs extends SubsystemBase {
         // WristEncoderIndicator(6, 1, -1),
         // DriverStationIndicator(7, 1, -1),
         // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
-        MainStrip(0, 300, 0);
+        MainStrip(0, 8, 0),
+        Strip2(8,5,1),
+        Strip3(13,5,2),
+        Strip4(18,2,3),
+        Strip5(20,1,4),
+        Strip6(21,3,5),
+        Strip7(24,2,6),
+        Strip8(26,1,7),
+        Strip9(27,1,8),
+        Strip10(28,2,9),
+        Strip11(30,4,0),
+        Strip12(34,5,0),
+        Strip13(39,2,0),
+        Strip14(41,5,0),
+        Strip15(46,4,0),
+        Strip16(50,2,0),
+        Strip17(52,1,0),
+        Strip18(53,1,0),
+        Strip19(54,2,0),
+        Strip20(56,3,0),
+        Strip21(59,1,0),
+        Strip22(60,2,0),
+        Strip23(62,5,0),
+        Strip24(67,5,0);
         // MAIN STRIP SHOULD BE STARTING AT INDEX 8, leave at 0 when testing
 
         public final int startIndex;
