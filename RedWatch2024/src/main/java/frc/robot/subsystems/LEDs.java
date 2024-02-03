@@ -27,6 +27,7 @@ import frc.robot.presets.matrixPresets.*;
  * LEDSegment.MainStrip.(whatever command)
  * if any questions, ask Krithik
  * 
+ * remember, the LED count includes the 8 onboard candle LEDS.
  * 
  * To SET A GENERAL COLOR
  * USE LEDs.(whatever color) as a parameter
@@ -41,7 +42,11 @@ import frc.robot.presets.matrixPresets.*;
  * Default: setFadeAnimation(red)
  * Partymode: setRainbowAnimation(1)
  * 
- * 
+ * MATRIX USAGE:
+ * Create an order for the matrix in the matrixPresets.java file
+ * use the command setMatrixToGrid with your preset as a parameter
+ * if needs to be offset make sure to offset both the led segment AND 
+ * variable "no" in the setMatrixToGrid function
  */
 
 public class LEDs extends SubsystemBase {
