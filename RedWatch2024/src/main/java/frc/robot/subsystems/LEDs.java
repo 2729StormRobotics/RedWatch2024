@@ -87,29 +87,47 @@ public class LEDs extends SubsystemBase {
             // LEDSegment.WristEncoderIndicator.fullClear();
             // Uncomment these lines once we start testing LEDs
             LEDSegment.MainStrip.setColor(black);
-            LEDSegment.Strip2.setColor(skin);
-            LEDSegment.Strip3.setColor(brown);
-            LEDSegment.Strip4.setColor(skin);
-            LEDSegment.Strip5.setColor(white);
-            LEDSegment.Strip6.setColor(skin);
-            LEDSegment.Strip7.setColor(brown);
-            LEDSegment.Strip8.setColor(skin);
-            LEDSegment.Strip9.setColor(blue);
-            LEDSegment.Strip10.setColor(skin);
-            LEDSegment.Strip11.setColor(brown);
-            LEDSegment.Strip12.setColor(skin);
-            LEDSegment.Strip13.setColor(brown);
-            LEDSegment.Strip14.setColor(skin);
-            LEDSegment.Strip15.setColor(brown);
-            LEDSegment.Strip16.setColor(skin);
-            LEDSegment.Strip17.setColor(blue);
-            LEDSegment.Strip18.setColor(skin);
-            LEDSegment.Strip19.setColor(brown);
-            LEDSegment.Strip20.setColor(skin);
-            LEDSegment.Strip21.setColor(white);
-            LEDSegment.Strip22.setColor(skin);
-            LEDSegment.Strip23.setColor(brown);
-            LEDSegment.Strip24.setColor(skin);
+            LEDSegment.Strip2.setColor(white);
+            LEDSegment.Strip3.setColor(red);
+            LEDSegment.Strip4.setColor(white);
+            LEDSegment.Strip5.setColor(red);
+            LEDSegment.Strip6.setColor(white);
+            LEDSegment.Strip7.setColor(red);
+            LEDSegment.Strip8.setColor(white);
+            LEDSegment.Strip9.setColor(red);
+            LEDSegment.Strip10.setColor(white);
+            LEDSegment.Strip11.setColor(red);
+            LEDSegment.Strip12.setColor(white);
+            LEDSegment.Strip13.setColor(red);
+            LEDSegment.Strip14.setColor(white);
+            LEDSegment.Strip15.setColor(red);
+            LEDSegment.Strip16.setColor(white);
+            LEDSegment.Strip17.setColor(red);
+            LEDSegment.Strip18.setColor(white);
+            LEDSegment.Strip19.setColor(red);
+            LEDSegment.Strip20.setColor(white);
+            LEDSegment.Strip21.setColor(red);
+            LEDSegment.Strip22.setColor(white);
+            LEDSegment.Strip23.setColor(red);
+            LEDSegment.Strip24.setColor(white);
+            LEDSegment.Strip25.setColor(red);
+            LEDSegment.Strip26.setColor(white);
+            LEDSegment.Strip27.setColor(red);
+            LEDSegment.Strip28.setColor(white);
+            LEDSegment.Strip29.setColor(red);
+            LEDSegment.Strip30.setColor(white);
+            LEDSegment.Strip31.setColor(red);
+            LEDSegment.Strip32.setColor(white);
+            LEDSegment.Strip33.setColor(red);
+            LEDSegment.Strip34.setColor(white);
+            LEDSegment.Strip35.setColor(red);
+            LEDSegment.Strip36.setColor(white);
+            LEDSegment.Strip37.setColor(red);
+            LEDSegment.Strip38.setColor(white);
+            LEDSegment.Strip39.setColor(red);
+            LEDSegment.Strip40.setColor(white);
+            LEDSegment.Strip41.setColor(red);
+            LEDSegment.Strip42.setColor(white);
             });
     }
 
@@ -132,29 +150,47 @@ public class LEDs extends SubsystemBase {
         // DriverStationIndicator(7, 1, -1),
         // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
         MainStrip(0, 8, 0),
-        Strip2(8,5,1),
-        Strip3(13,5,2),
-        Strip4(18,2,3),
+        Strip2(8,4,1),
+        Strip3(13,2,2),
+        Strip4(18,7,3),
         Strip5(20,1,4),
-        Strip6(21,3,5),
-        Strip7(24,2,6),
-        Strip8(26,1,7),
+        Strip6(21,2,5),
+        Strip7(24,1,6),
+        Strip8(26,5,7),
         Strip9(27,1,8),
-        Strip10(28,2,9),
-        Strip11(30,4,0),
-        Strip12(34,5,0),
+        Strip10(28,4,9),
+        Strip11(30,1,0),
+        Strip12(34,3,0),
         Strip13(39,2,0),
-        Strip14(41,5,0),
-        Strip15(46,4,0),
+        Strip14(41,4,0),
+        Strip15(46,2,0),
         Strip16(50,2,0),
-        Strip17(52,1,0),
+        Strip17(52,2,0),
         Strip18(53,1,0),
         Strip19(54,2,0),
-        Strip20(56,3,0),
-        Strip21(59,1,0),
-        Strip22(60,2,0),
-        Strip23(62,5,0),
-        Strip24(67,5,0);
+        Strip20(56,1,0),
+        Strip21(59,2,0),
+        Strip22(60, 2, 0),
+        Strip23(13,2,2),
+        Strip24(18,1,3),
+        Strip25(20,2,4),
+        Strip26(21,1,5),
+        Strip27(24,2,6),
+        Strip28(26,2,7),
+        Strip29(27,2,8),
+        Strip30(28,4,9),
+        Strip31(30,2,0),
+        Strip32(8,3,1),
+        Strip33(13,1,2),
+        Strip34(18,4,3),
+        Strip35(20,1,4),
+        Strip36(21,5,5),
+        Strip37(24,1,6),
+        Strip38(26,2,7),
+        Strip39(27,1,8),
+        Strip40(28,7,9),
+        Strip41(30,2,0),
+        Strip42(8,4,1);
         // MAIN STRIP SHOULD BE STARTING AT INDEX 8, leave at 0 when testing
 
         public final int startIndex;
