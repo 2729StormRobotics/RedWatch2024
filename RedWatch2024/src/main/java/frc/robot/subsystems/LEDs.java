@@ -62,7 +62,23 @@ public class LEDs extends SubsystemBase {
     public static final Color orange = new Color(255, 25, 0);
     public static final Color skin = new Color(169, 125, 100);
 
-    public Color[][] matrixColors = new Color[10][10];
+    public Color[][] matrixColors = {   {black,black,black,black,black,black,black,black,black,black}, 
+                                        {black,black,black,black,black,black,black,black,black,black}, 
+                                        {black,black,red  ,red  ,black,black,black,red  ,red  ,black}, 
+                                        {black,red  ,black,black,black,black,red  ,black,black,black}, 
+                                        {black,red  ,black,red  ,red  ,black,red  ,black,red  ,red  }, 
+                                        {black,red  ,black,black,red  ,black,red  ,black,black,red  }, 
+                                        {black,black,red  ,red  ,black,black,black,red  ,red  ,black}, 
+                                        {black,black,black,black,black,black,black,black,black,black},
+                                        {black,black,black,black,black,black,black,black,black,black}, 
+                                        {black,black,black,black,black,black,black,black,black,black}
+                                    };
+
+
+
+
+
+
 
     public LEDs() {
         CANdleConfiguration candleConfiguration = new CANdleConfiguration();
@@ -72,7 +88,6 @@ public class LEDs extends SubsystemBase {
         candleConfiguration.brightnessScalar = 1.0;
         candleConfiguration.vBatOutputMode = VBatOutputMode.Modulated;
         candle.configAllSettings(candleConfiguration, 100);
-        
         setDefaultCommand(defaultCommand());
     }
 
@@ -89,48 +104,8 @@ public class LEDs extends SubsystemBase {
             // LEDSegment.WristEncoderIndicator.fullClear();
             // Uncomment these lines once we start testing LEDs
             LEDSegment.MainStrip.setRainbowAnimation(1);
-            LEDSegment.Matrix.setRainbowAnimation(1);
-            // LEDSegment.Strip2.setColor(white);
-            // LEDSegment.Strip3.setColor(red);
-            // LEDSegment.Strip4.setColor(white);
-            // LEDSegment.Strip5.setColor(red);
-            // LEDSegment.Strip6.setColor(white);
-            // LEDSegment.Strip7.setColor(red);
-            // LEDSegment.Strip8.setColor(white);
-            // LEDSegment.Strip9.setColor(red);
-            // LEDSegment.Strip10.setColor(white);
-            // LEDSegment.Strip11.setColor(red);
-            // LEDSegment.Strip12.setColor(white);
-            // LEDSegment.Strip13.setColor(red);
-            // LEDSegment.Strip14.setColor(white);
-            // LEDSegment.Strip15.setColor(red);
-            // LEDSegment.Strip16.setColor(white);
-            // LEDSegment.Strip17.setColor(red);
-            // LEDSegment.Strip18.setColor(white);
-            // LEDSegment.Strip19.setColor(red);
-            // LEDSegment.Strip20.setColor(white);
-            // LEDSegment.Strip21.setColor(red);
-            // LEDSegment.Strip22.setColor(white);
-            // LEDSegment.Strip23.setColor(red);
-            // LEDSegment.Strip24.setColor(white);
-            // LEDSegment.Strip25.setColor(red);
-            // LEDSegment.Strip26.setColor(white);
-            // LEDSegment.Strip27.setColor(red);
-            // LEDSegment.Strip28.setColor(white);
-            // LEDSegment.Strip29.setColor(red);
-            // LEDSegment.Strip30.setColor(white);
-            // LEDSegment.Strip31.setColor(red);
-            // LEDSegment.Strip32.setColor(white);
-            // LEDSegment.Strip33.setColor(red);
-            // LEDSegment.Strip34.setColor(white);
-            // LEDSegment.Strip35.setColor(red);
-            // LEDSegment.Strip36.setColor(white);
-            // LEDSegment.Strip37.setColor(red);
-            // LEDSegment.Strip38.setColor(white);
-            // LEDSegment.Strip39.setColor(red);
-            // LEDSegment.Strip40.setColor(white);
-            // LEDSegment.Strip41.setColor(red);
-            // LEDSegment.Strip42.setColor(white);
+            // LEDSegment.Matrix.setRainbowAnimation(1);
+            setMatrixToGrid(matrixColors);
             });
     }
 
@@ -264,5 +239,18 @@ public class LEDs extends SubsystemBase {
             this.blue = blue;
         }
 
+    }
+    public void setMatrixToGrid(Color[][] matrix)
+    {
+        int no = 8;
+        for (int i = 0; i < matrix.length; i++) {
+    
+          // Iterate through the columns of the current row
+          for (int j = 0; j < matrix[i].length; j++) {
+              Color color = matrix[i][j];
+              no++;
+              candle.setLEDs(color.red, color.green, color.blue, 0, no, 1);
+          }
+        }
     }
 }
