@@ -16,4 +16,9 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class VisionConstants {
+    public static final double kNoteTolerance = 50;
+    public static final double kPX = 0.012;
+  }
 }
