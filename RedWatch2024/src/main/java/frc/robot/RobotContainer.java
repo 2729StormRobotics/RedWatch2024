@@ -51,7 +51,7 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(new RunCommand(() -> m_shooter.setShooterSpeed(0, 0)));
+    m_driverController.b().whileTrue(new RunCommand(() -> m_shooter.setShooterSpeed(0.25, 0.25)));
     m_driverController.a().whileTrue(new RunCommand(() -> m_shooter.setShooterSpeed(0, 0)));
 
   }
