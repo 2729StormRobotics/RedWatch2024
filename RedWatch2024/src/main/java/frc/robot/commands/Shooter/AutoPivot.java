@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Shooter;
@@ -17,7 +17,7 @@ public class AutoPivot extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Pivot(shooter, shooter.getOptimalAngle(0, vision.getZ())) // Pivot to the angle returned by the getOptimalAngle() method
+      new Pivot(shooter, shooter.getOptimalAngle(0, vision.getSpeakerDistance())) // Pivot to the angle returned by the getOptimalAngle() method
     );
   }
 }

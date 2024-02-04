@@ -38,12 +38,12 @@ public final class Constants {
     public static final double kRightPivotOffset = 0;
 
     // Pivot PID values
-    public static final double kPPivot = 0;
+    public static final double kPPivot = 0.005;
     public static final double kIPivot = 0;
     public static final double kDPivot = 0;
-    public static final double kMaxPivotVelocity = 0; // Measured in degrees/s
+    public static final double kMaxPivotVelocity = 45; // Measured in degrees/s
     public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
-    public static final double kPivotTolerance = 2; // degrees
+    public static final double kPivotTolerance = 1; // degrees
 
     // Flywheel PID values
     public static final double kMaxRPM = 5000;
@@ -74,5 +74,15 @@ public final class Constants {
     public static final double kTolerance = 0;
     public static final double kPTurn = 0;
     public static final double kSTurn = 0;
+    
+    // Heights for detecting distance away from apriltag
+    public static final double limelightHeight = Units.inchesToMeters(20);
+    public static final double limelightAngle = 20; // degrees
+    public static final double apriltagWidth = Units.inchesToMeters(6.5);
+    public static final double speakerTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
+    public static final double ampTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
+    public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
+
+
   }
 }

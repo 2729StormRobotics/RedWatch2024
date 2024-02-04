@@ -108,7 +108,7 @@ public class Shooter extends SubsystemBase {
 
   // returns pivot angle of shooter in degrees
   public double getPivotAngle() {
-    return m_PivotEncoder.getPosition();
+    return m_PivotEncoder.getPosition() * 360;
   }
 
   /*
