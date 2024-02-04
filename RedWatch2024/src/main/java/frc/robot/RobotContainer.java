@@ -17,6 +17,16 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Indexer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import frc.robot.commands.Intake.EjectNote;
+import frc.robot.commands.Intake.IntakeItem;
+import frc.robot.commands.Intake.StopIntake;
+import frc.robot.subsystems.Intake;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -25,12 +35,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  // Initializes Indexer 
   private final Indexer m_Indexer;
+  private final Intake m_intake = new Intake();
+
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-    private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);  
-
+  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);  
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -53,6 +63,16 @@ public class RobotContainer {
   private void configureBindings() {
     // configures Button A on controller to Indexer
     new JoystickButton(m_driverController, Button.kA.value).onTrue(new Feed(m_Indexer));
+
+    // Run Intake Until Beam break
+    new JoystickButton(m_driverController, Button.kA.value).onTrue(new IntakeItem(m_intake));
+
+    // Stop Intake
+    new JoystickButton(m_driverController, Button.kX.value).onTrue(new StopIntake(m_intake));
+    
+    // Eject Note
+    new JoystickButton(m_driverController, Button.kY.value).onTrue(new EjectNote(m_intake));
+
   }
 
   /**

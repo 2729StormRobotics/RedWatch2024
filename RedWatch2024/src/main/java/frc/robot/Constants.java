@@ -149,5 +149,10 @@ public static final class DriveConstants {
   }
 
   
+  public static class IntakeConstants {
+    public static final int kIntakeMotor = 9;
+    public static final double kIntakeMotorSpeed = 0.4;
+    public static final double kEjectMotorSpeed = -0.4;
+  }
 }
 
