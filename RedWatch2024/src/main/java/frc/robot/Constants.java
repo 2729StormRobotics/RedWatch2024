@@ -196,9 +196,15 @@ public static final class DriveConstants {
     public static final double kPivotTolerance = 1; // degrees
 
     // Flywheel PID values
-    public static final double kMaxRPM = 5000;
+    public static final double kMaxRPM = 6000;
     public static final double kPShoot = 0;
     public static final double kRPMTolerance = 50;
+
+    // Flywheel Shooting values
+    public static final double kLeftRPM = 0;
+    public static final double kRightRPM = 0;
+    public static final double kLeftPower = 0;
+    public static final double kRightPower = 0;
 
     // Field and Robot Measurements
     // All units are in meters

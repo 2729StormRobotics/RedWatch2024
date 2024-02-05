@@ -72,9 +72,9 @@ public class Shooter extends SubsystemBase {
   }
 
   // Sets shooter speed in a percentage, from 0-1
-  public void setShooterSpeed(double power) {
-    m_leftFlywheel.set(power);
-    m_rightFlywheel.set(power);
+  public void setShooterSpeed(double leftPower, double rightPower) {
+    m_leftFlywheel.set(leftPower);
+    m_rightFlywheel.set(rightPower);
   }
 
   public void stopPivotMotors() {

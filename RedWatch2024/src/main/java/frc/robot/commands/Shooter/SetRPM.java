@@ -16,17 +16,24 @@ import frc.robot.subsystems.Shooter;
 
 public class SetRPM extends Command {
   private final Shooter m_shooter;
-  private final PIDController m_controller;
-  public double m_targetRPM; // target rpm
-  public double m_ff; // feedforward
+  private final PIDController m_RightController;
+  private final PIDController m_LeftController;
+  public double m_targetLeftRPM; // target rpm
+  public double m_targetRightRPM; // target rpm
+  public double m_LeftFF; // feedforward
+  public double m_RightFF; // feedforward
 
   /** Creates a new SetRPM. */
-  public SetRPM(Shooter shooter, double rpm) {
+  public SetRPM(Shooter shooter, double leftRPM, double rightRPM) {
     m_shooter = shooter;
-    m_controller = new PIDController(Constants.ShooterConstants.kPShoot, 0, 0); // only uses P
-    m_controller.setTolerance(Constants.ShooterConstants.kRPMTolerance); // sets tolerance for PID controller to end
-    m_targetRPM = rpm;
-    m_ff = m_targetRPM/Constants.ShooterConstants.kMaxRPM; // turn RPM into a value between 0-1
+    m_LeftController = new PIDController(Constants.ShooterConstants.kPShoot, 0, 0); // only uses P
+    m_LeftController.setTolerance(Constants.ShooterConstants.kRPMTolerance); // sets tolerance for PID controller to end
+    m_RightController = new PIDController(Constants.ShooterConstants.kPShoot, 0, 0);
+    m_RightController.setTolerance(Constants.ShooterConstants.kRPMTolerance);
+    m_targetLeftRPM = leftRPM;
+    m_targetRightRPM = rightRPM;
+    m_LeftFF = m_targetLeftRPM/Constants.ShooterConstants.kMaxRPM; // turn RPM into a value between 0-1
+    m_RightFF = m_targetRightRPM/Constants.ShooterConstants.kMaxRPM; // turn RPM into a value between 0-1
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
@@ -41,7 +48,8 @@ public class SetRPM extends Command {
   public void execute() {
     // feedforward should get the rpm decently close
     // PID will make it more accurate (hopefully)
-    m_shooter.setShooterSpeed(m_ff + m_controller.calculate(m_shooter.getAverageRPM(), m_targetRPM));
+    m_shooter.setShooterSpeed(m_LeftFF + m_LeftController.calculate(m_shooter.getLeftRPM(), m_targetLeftRPM), 
+    m_RightFF + m_RightController.calculate(m_shooter.getRightRPM(), m_targetRightRPM));
   }
 
   // Called once the command ends or is interrupted.
@@ -51,6 +59,6 @@ public class SetRPM extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_controller.atSetpoint();
+    return m_LeftController.atSetpoint() && m_RightController.atSetpoint();
   }
 }
