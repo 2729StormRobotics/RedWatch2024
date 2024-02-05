@@ -33,23 +33,25 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Indexer m_indexer;
+  // private final Indexer m_indexer;
   private final Intake m_intake;
-  private final Shooter m_shooter;
+  // private final Shooter m_shooter;
   private final Drivetrain m_drivetrain;
   
   
-  private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
-  private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
-  private final XboxController m_WeaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);  
+  // private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
+  // private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
+  private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);  
+  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriveTranslatorPort);  
+
   //add the joystick here
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    m_indexer = new Indexer();
+    // m_indexer = new Indexer();
     m_intake = new Intake();
-    m_shooter = new Shooter();
+    // m_shooter = new Shooter();
     m_drivetrain = new Drivetrain();
     SmartDashboard.putData(CommandScheduler.getInstance());
 
@@ -59,16 +61,19 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(
       new RunCommand(
         () -> m_drivetrain.drive(
-          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getLeftY()*.6, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getLeftX()*.6, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getRightX()*.6, OperatorConstants.kDriveDeadband),
+          // -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          // -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          // -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
 
-    //pivot control
-    m_shooter.setDefaultCommand(
-      new JoystickPivot(m_WeaponsController.getLeftY(), m_shooter)
-    );
+    //manual pivot control
+    // m_shooter.setDefaultCommand(
+    //   new JoystickPivot(m_weaponsController.getLeftY(), m_shooter)
+    // );
     
   }
 
@@ -82,17 +87,18 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // configures Button A on controller to Indexer
-    new JoystickButton(m_WeaponsController, Button.kA.value).onTrue(new Feed(m_indexer));
-
     // Run Intake Until Beam break
-    new JoystickButton(m_WeaponsController, Button.kA.value).onTrue(new IntakeItem(m_intake));
+    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new IntakeItem(m_intake));
 
     // Stop Intake
-    new JoystickButton(m_WeaponsController, Button.kX.value).onTrue(new StopIntake(m_intake));
+    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new StopIntake(m_intake));
     
     // Eject Note
-    new JoystickButton(m_WeaponsController, Button.kY.value).onTrue(new EjectNote(m_intake));
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new EjectNote(m_intake));
+    
+    // reset gyro
+    new JoystickButton(m_driverController, Button.kA.value).onTrue(new RunCommand(() -> m_drivetrain.resetHeading()));
+
 
   }
 

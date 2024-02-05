@@ -130,6 +130,9 @@ public class Drivetrain extends SubsystemBase {
         },
         pose);
   }
+  public void resetHeading(){
+    m_gyro.reset();
+  }
 
   /**
    * Method to drive the robot using joystick info.
@@ -170,6 +173,7 @@ public class Drivetrain extends SubsystemBase {
       else if (angleDif > 0.85*Math.PI) {
         if (m_currentTranslationMag > 1e-4) { //some small number to avoid floating-point errors with equality checking
           // keep currentTranslationDir unchanged
+          
           m_currentTranslationMag = m_magLimiter.calculate(0.0);
         }
         else {
@@ -209,6 +213,7 @@ public class Drivetrain extends SubsystemBase {
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]);
+    
   }
 
   /**
