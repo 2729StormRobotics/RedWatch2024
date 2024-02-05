@@ -4,30 +4,26 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Indexer.Feed;
-import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.subsystems.Indexer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Indexer.Feed;
 import frc.robot.commands.Intake.EjectNote;
 import frc.robot.commands.Intake.IntakeItem;
 import frc.robot.commands.Intake.StopIntake;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -39,7 +35,11 @@ public class RobotContainer {
   private final Indexer m_indexer;
   private final Intake m_intake;
   private final Shooter m_shooter;
-
+  private final Drivetrain m_drivetrain;
+  
+  
+  private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
+  private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
   private final XboxController m_WeaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);  
   //add the joystick here
 
@@ -50,9 +50,21 @@ public class RobotContainer {
     m_indexer = new Indexer();
     m_intake = new Intake();
     m_shooter = new Shooter();
+    m_drivetrain = new Drivetrain();
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     configureBindings();
+
+     // Configure default commands
+    m_drivetrain.setDefaultCommand(
+      new RunCommand(
+        () -> m_drivetrain.drive(
+          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
+          true, true),
+        m_drivetrain));
+    
   }
 
   /**

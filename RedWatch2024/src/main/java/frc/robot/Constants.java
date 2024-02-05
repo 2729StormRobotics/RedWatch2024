@@ -27,9 +27,15 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   
   public static class OperatorConstants {
-    // Assigns Driver Controller to Port 0
-    public static final int kDriverControllerPort = 0;
+    //ports
+    public static final int kDriveTranslatorPort = 1;
+    public static final int kDriveRotatorPort = 2;
     public static final int kWeaponsControllerPort = 0;
+
+    //joystick settings
+    public static final double kDriveDeadband = 0.1;
+    public static final double translationMultiplier = 0.6;
+    public static double rotationMultiplier = 1;
 
   }
   
