@@ -5,13 +5,14 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Indexer.Feed;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.Constants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -30,6 +31,7 @@ public class Feed_Shoot extends SequentialCommandGroup {
     addCommands(
       new SetRPM(m_shooter, Constants.ShooterConstants.kLeftRPM, Constants.ShooterConstants.kRightRPM),
       new Feed(m_indexer),
+      new WaitCommand(0.5),
       new StopShooter(m_shooter)
     );
   }
