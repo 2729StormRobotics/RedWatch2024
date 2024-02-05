@@ -21,6 +21,7 @@ import frc.robot.commands.Intake.EjectNote;
 import frc.robot.commands.Intake.IntakeItem;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -35,8 +36,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Indexer m_Indexer;
-  private final Intake m_Intake;
+  private final Indexer m_indexer;
+  private final Intake m_intake;
+  private final Shooter m_shooter;
 
   private final XboxController m_WeaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);  
   //add the joystick here
@@ -45,8 +47,9 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    m_Indexer = new Indexer();
-    m_Intake = new Intake();
+    m_indexer = new Indexer();
+    m_intake = new Intake();
+    m_shooter = new Shooter();
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     configureBindings();
@@ -63,7 +66,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // configures Button A on controller to Indexer
-    new JoystickButton(m_WeaponsController, Button.kA.value).onTrue(new Feed(m_Indexer));
+    new JoystickButton(m_WeaponsController, Button.kA.value).onTrue(new Feed(m_indexer));
 
     // Run Intake Until Beam break
     new JoystickButton(m_WeaponsController, Button.kA.value).onTrue(new IntakeItem(m_intake));

@@ -26,9 +26,7 @@ public class IntakeItem extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
     m_intake.intakeItem();
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,20 +36,12 @@ public class IntakeItem extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // Stops gripper motors
-    m_intake.stopIntake();
-
   }
 
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // Checks to see if the Note is in the intake using the beam break
-    // if (m_intake.isNotePresent())
-      
-    //   return true;
-    
-    return false;
+    return true;
   }
 }

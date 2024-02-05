@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Indexer;
 import static frc.robot.Constants.IndexerConstants.*;
 
-public class Feed extends Command {
+public class Load extends Command {
   /** Creates a new feed. */
   private final Indexer m_indexer; 
     // Use addRequirements() here to declare subsystem dependencies.
 
-  public Feed(Indexer indexer) {
+  public Load(Indexer indexer) {
     // initializes index 
     m_indexer = indexer;
     // Use addRequirements() here to declare subsystem dependencies.    
@@ -46,6 +46,7 @@ public class Feed extends Command {
   // If not motor will keep running
   @Override
   public boolean isFinished() {
-    return !m_indexer.isNotePresent();
+    return m_indexer.isNotePresent();
+
   }
 }
