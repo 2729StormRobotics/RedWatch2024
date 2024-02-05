@@ -174,6 +174,9 @@ public static final class DriveConstants {
     public static final int kRightFlywheelID = 999;
     public static final int kCurrentLimit = 45;
 
+    //manual control speed limiters 
+    public static final double kPivotSpeedLimiter = 1; 
+
     // Make sure that the two pivot motors and two shooting motors rotate in opposite directions
     public static final boolean kLeftFlywheelInverted = false;
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;

@@ -20,6 +20,7 @@ import frc.robot.commands.Indexer.Feed;
 import frc.robot.commands.Intake.EjectNote;
 import frc.robot.commands.Intake.IntakeItem;
 import frc.robot.commands.Intake.StopIntake;
+import frc.robot.commands.Shooter.JoystickPivot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -46,7 +47,6 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
     m_indexer = new Indexer();
     m_intake = new Intake();
     m_shooter = new Shooter();
@@ -55,7 +55,7 @@ public class RobotContainer {
 
     configureBindings();
 
-     // Configure default commands
+     //Joystick drive
     m_drivetrain.setDefaultCommand(
       new RunCommand(
         () -> m_drivetrain.drive(
@@ -64,6 +64,11 @@ public class RobotContainer {
           -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
+
+    //pivot control
+    m_shooter.setDefaultCommand(
+      new JoystickPivot(m_WeaponsController.getLeftY(), m_shooter)
+    );
     
   }
 
