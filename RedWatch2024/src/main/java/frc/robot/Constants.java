@@ -29,7 +29,10 @@ public final class Constants {
   public static class OperatorConstants {
     // Assigns Driver Controller to Port 0
     public static final int kDriverControllerPort = 0;
+    public static final int kWeaponsControllerPort = 0;
+
   }
+  
 
 
   public static final class IndexerConstants {
