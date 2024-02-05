@@ -232,6 +232,7 @@ public static final class DriveConstants {
     public static final double speakerTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double ampTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
+    public static final double aprilTagAlignTolerance = 1;
 
   }
 }
