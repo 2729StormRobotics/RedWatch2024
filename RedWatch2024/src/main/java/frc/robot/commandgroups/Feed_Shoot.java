@@ -29,6 +29,7 @@ public class Feed_Shoot extends SequentialCommandGroup {
     addCommands(
       new SetRPM(m_shooter, m_speed),
       new Feed(m_indexer),
+      new WaitCommand(0.5),
       new StopShooter(m_shooter)
     );
   }
