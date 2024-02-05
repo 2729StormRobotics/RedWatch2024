@@ -13,6 +13,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 
+/*
+ * Makes the robot automatically align to nearest apriltag (while still being able to drive translationally)
+ */
 public class AprilTagAlign extends Command {
   private final Vision m_vision; 
   private final Drivetrain m_drivetrain;
@@ -32,6 +35,7 @@ public class AprilTagAlign extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // Values for PID Calculation
     m_turnError = 0;
     m_turnPower = 0;
 
@@ -40,7 +44,7 @@ public class AprilTagAlign extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_turnError = m_vision.getX();
+    m_turnError = m_vision.getX(); // Horizontal angle away from target
     m_turnPower = m_turnError * Constants.VisionConstants.kPTurn; // Calculate P value
     m_turnPower += Math.copySign(Constants.VisionConstants.kSTurn, m_turnPower); // Add feedforward value
 
