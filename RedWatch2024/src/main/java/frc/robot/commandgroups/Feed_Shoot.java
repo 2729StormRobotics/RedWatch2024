@@ -5,6 +5,7 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Indexer.Feed;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.commands.Shooter.StopShooter;
@@ -29,6 +30,7 @@ public class Feed_Shoot extends SequentialCommandGroup {
     addCommands(
       new SetRPM(m_shooter, m_speed),
       new Feed(m_indexer),
+      new WaitCommand(0.5),
       new StopShooter(m_shooter)
     );
   }
