@@ -22,8 +22,8 @@ public class Vision extends SubsystemBase {
 
   private static ShuffleboardLayout m_status;
 
-  public double note_x = -999999;
-  public double note_y = -999999;
+  public double note_x = 0;
+  public double note_y = 0;
 
   /** Creates a new NoteDetection. */
   public Vision() {
@@ -64,7 +64,7 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    note_x = SmartDashboard.getNumber("note_x", -999999);
-    note_y = SmartDashboard.getNumber("note_y", -999999);
+    note_x = SmartDashboard.getNumber("note_x", 0);
+    note_y = SmartDashboard.getNumber("note_y", 0);
   }
 }
