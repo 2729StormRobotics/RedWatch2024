@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+
+
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -153,6 +155,72 @@ public static final class DriveConstants {
     public static final int kIntakeMotor = 9;
     public static final double kIntakeMotorSpeed = 0.4;
     public static final double kEjectMotorSpeed = -0.4;
+  }
+  
+  public static class ShooterConstants {
+    // Motor ID/initialization values
+    public static final int kLeftPivotID = 999;
+    public static final int kRightPivotID = 999;
+    public static final int kLeftFlywheelID = 999;
+    public static final int kRightFlywheelID = 999;
+    public static final int kCurrentLimit = 45;
+
+    // Make sure that the two pivot motors and two shooting motors rotate in opposite directions
+    public static final boolean kLeftFlywheelInverted = false;
+    public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
+    public static final boolean kLeftPivot = false;
+    public static final boolean kRightPivot = !kLeftPivot;
+
+    // Absolute encoder offsets
+    public static final double kLeftPivotOffset = 0;
+    public static final double kRightPivotOffset = 0;
+
+    // Pivot PID values
+    public static final double kPPivot = 0.005;
+    public static final double kIPivot = 0;
+    public static final double kDPivot = 0;
+    public static final double kMaxPivotVelocity = 45; // Measured in degrees/s
+    public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
+    public static final double kPivotTolerance = 1; // degrees
+
+    // Flywheel PID values
+    public static final double kMaxRPM = 5000;
+    public static final double kPShoot = 0;
+    public static final double kRPMTolerance = 50;
+
+    // Field and Robot Measurements
+    // All units are in meters
+    public static final double goalHeight = Units.inchesToMeters(78.129);
+    public static final double shooterLength = Units.inchesToMeters(12.01);
+    public static final double exitVelocity = 15;
+    public static final double g = 9.81;
+    public static final double k = -g/(2*Math.pow(exitVelocity, 2)); // substitution used in angle calculation
+
+    
+  }
+
+  public static class VisionConstants {
+    // Camera configuration
+    public static final double kAprilTagPipeline = 1;
+    public static final double kLightOffValue = 0;
+
+    // PID values for driving with vision
+    public static final double kDistanceTolerance = 0;
+    public static final double kPX = 0;
+    public static final double kSDrive = 0;
+    public static final double kPY = 0;
+    public static final double kTolerance = 0;
+    public static final double kPTurn = 0;
+    public static final double kSTurn = 0;
+    
+    // Heights for detecting distance away from apriltag
+    public static final double limelightHeight = Units.inchesToMeters(20);
+    public static final double limelightAngle = 20; // degrees
+    public static final double apriltagWidth = Units.inchesToMeters(6.5);
+    public static final double speakerTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
+    public static final double ampTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
+    public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
+
   }
 }
 
