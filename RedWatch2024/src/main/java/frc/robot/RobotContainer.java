@@ -12,7 +12,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.LEDs;
-import frc.robot.commands.SetLEDColor;
+import frc.robot.commands.runMatrixAnimation;
+import frc.robot.commands.setMatrix;
 
 
 
@@ -50,7 +51,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Run Intake Until Beam break
-    new JoystickButton(m_driverController, Button.kA.value).onTrue(new SetLEDColor(m_LEDs, LEDs.orange));
+    new JoystickButton(m_driverController, Button.kA.value).onFalse(new runMatrixAnimation(m_LEDs));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.

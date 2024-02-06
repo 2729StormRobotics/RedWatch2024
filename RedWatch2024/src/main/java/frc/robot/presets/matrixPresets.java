@@ -105,7 +105,7 @@ public class matrixPresets {
         black  ,black  ,red    ,red    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black    ,red  ,black  ,red    ,black  ,black    ,black  ,black  ,black  , 
         black  ,black    ,black  ,black    ,black    ,black  ,red    ,red  ,black  ,black,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,black  , 
     };
     public static Color[] frame4_2720 = {      
@@ -116,7 +116,7 @@ public class matrixPresets {
         black  ,black  ,red    ,black    ,black  ,red  ,red  ,red    ,black  ,black, 
         black  ,black    ,black  ,black  ,black    ,red  ,black    ,red  ,black  ,black  , 
         black  ,black    ,red  ,red    ,black    ,black  ,black    ,black  ,black  ,black,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
         black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
     };
@@ -127,7 +127,7 @@ public class matrixPresets {
         black  ,black  ,red    ,red    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black    ,red  ,black  ,red    ,black  ,black    ,black  ,black  ,black  , 
         black  ,black    ,black  ,black    ,black    ,black  ,red    ,red  ,black  ,black,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
         black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
@@ -138,7 +138,7 @@ public class matrixPresets {
         black  ,black  ,red    ,black    ,black  ,red  ,red  ,red    ,black  ,black, 
         black  ,black    ,black  ,black  ,black    ,red  ,black    ,red  ,black  ,black  , 
         black  ,black    ,red  ,red    ,black    ,black  ,black    ,black  ,black  ,black,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
         black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
@@ -149,7 +149,7 @@ public class matrixPresets {
         black  ,black  ,red    ,red    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black    ,red  ,black  ,red    ,black  ,black    ,black  ,black  ,black  , 
         black  ,black    ,black  ,black    ,black    ,black  ,red    ,red  ,black  ,black,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
         black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
@@ -160,7 +160,7 @@ public class matrixPresets {
         black  ,black  ,red    ,black    ,black  ,red  ,red  ,red    ,black  ,black, 
         black  ,black    ,black  ,black  ,black    ,red  ,black    ,red  ,black  ,black  , 
         black  ,black    ,red  ,red    ,black    ,black  ,black    ,black  ,black  ,black,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
         black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
@@ -171,24 +171,24 @@ public class matrixPresets {
     public static Color[] frame9_2720 = {      
         black  ,black    ,red  ,black  ,red    ,black  ,black    ,black  ,black  ,black  , 
         black  ,black    ,black  ,black    ,black    ,black  ,red    ,red  ,black  ,black,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
         black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,black  ,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,red  ,red  ,red  ,black  ,black  ,black  ,
     };
     public static Color[] frame10_2720 = {      
         black  ,black    ,red  ,red    ,black    ,black  ,black    ,black  ,black  ,black,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
         black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black,
         black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,black  ,
-        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,red  ,red  ,red  ,black  ,black  ,black  ,
         black  ,black  ,red  ,black  ,black  ,black  ,black  ,red  ,black  ,black  ,
     };

@@ -8,14 +8,15 @@ import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.Color;
 import frc.robot.subsystems.LEDs.LEDSegment;
+import frc.robot.presets.matrixPresets;
 
-public class SetLEDColor extends Command {
+public class setMatrix extends Command {
+  private Color[] m_colors;
   private LEDs m_leds;
-  private Color LEDColor;
   // private LEDSegment LEDSegment = new LedSegment;
-  public SetLEDColor(LEDs leds, Color color) {
+  public setMatrix(Color[] colors, LEDs leds) {
+    m_colors = colors;
     m_leds = leds;
-    LEDColor = color;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_leds);
   }
@@ -23,7 +24,7 @@ public class SetLEDColor extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    LEDSegment.MainStrip.setColor(LEDColor);
+    m_leds.setMatrixToGrid(m_colors);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,6 +38,6 @@ public class SetLEDColor extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
