@@ -35,7 +35,6 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
     // Configure the trigger bindings
     configureBindings();
   }
@@ -51,7 +50,6 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Run Intake Until Beam break
-    new JoystickButton(m_driverController, Button.kA.value).onFalse(new runMatrixAnimation(m_LEDs));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -65,5 +63,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return null;
+  }
+  public Command runLEDS() {
+    // An example command will be run in autonomous
+    return new runMatrixAnimation(m_LEDs);
   }
 }

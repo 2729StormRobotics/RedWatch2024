@@ -18,6 +18,7 @@ import frc.robot.subsystems.LEDs.LEDSegment;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private Command m_LEDCommand;
 
   private RobotContainer m_robotContainer;
 
@@ -114,6 +115,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_LEDCommand = m_robotContainer.runLEDS();
+    m_LEDCommand.schedule();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

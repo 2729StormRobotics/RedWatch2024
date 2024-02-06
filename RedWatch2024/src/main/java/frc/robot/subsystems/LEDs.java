@@ -16,6 +16,7 @@ import com.ctre.phoenix.led.StrobeAnimation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LightsConstants;
+import frc.robot.commands.runMatrixAnimation;
 import frc.robot.presets.matrixPresets;
 /*
  * USAGE:
@@ -65,11 +66,11 @@ public class LEDs extends SubsystemBase {
     public static final Color blue = new Color(8, 32, 255);
     public static final Color orange = new Color(255, 25, 0);
     public static final Color skin = new Color(169, 125, 100);
-
   
     public LEDs() {
         CANdleConfiguration candleConfiguration = new CANdleConfiguration();
         candleConfiguration.statusLedOffWhenActive = true;
+        candleConfiguration.enableOptimizations = true;
         candleConfiguration.disableWhenLOS = false;
         candleConfiguration.stripType = LEDStripType.RGB;
         candleConfiguration.brightnessScalar = 1.0;
@@ -83,6 +84,7 @@ public class LEDs extends SubsystemBase {
     }
 
     public Command defaultCommand() {
+        setBrightness(1);
         return runOnce(() -> {
             // LEDSegment.BatteryIndicator.fullClear();
             // LEDSegment.PressureIndicator.fullClear();
@@ -90,9 +92,9 @@ public class LEDs extends SubsystemBase {
             // LEDSegment.BoomEncoderIndicator.fullClear();
             // LEDSegment.WristEncoderIndicator.fullClear();
             // Uncomment these lines once we start testing LEDs
-            LEDSegment.MainStrip.setRainbowAnimation(1);
+            LEDSegment.Matrix.setStrobeAnimation(red, 1);
             // LEDSegment.Matrix.setRainbowAnimation(1);
-            setMatrixToGrid(matrixPresets.ggMatrix);
+            // setMatrixToGrid(matrixPresets.ggMatrix);
             });
     }
 
@@ -115,7 +117,7 @@ public class LEDs extends SubsystemBase {
         // DriverStationIndicator(7, 1, -1),
         // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
         MainStrip(0, 7, 0),
-        Matrix(7,100,1);
+        Matrix(7,150,1);
         // Strip2(8,4,1),
         // Strip3(13,2,2),
         // Strip4(18,7,3),

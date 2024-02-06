@@ -25,7 +25,20 @@ public class runMatrixAnimation extends SequentialCommandGroup {
     matrixPresets.frame7_2720,
     matrixPresets.frame8_2720,
     matrixPresets.frame9_2720,
-    matrixPresets.frame10_2720
+    matrixPresets.frame10_2720,
+    matrixPresets.frame11_2720,
+    matrixPresets.frame12_2720,
+    matrixPresets.frame13_2720,
+    matrixPresets.frame14_2720,
+    matrixPresets.frame15_2720,
+    matrixPresets.frame16_2720,
+    matrixPresets.frame17_2720,
+    matrixPresets.frame18_2720,
+    matrixPresets.frame19_2720,
+    matrixPresets.frame20_2720,
+    matrixPresets.frame21_2720,
+    matrixPresets.frame22_2720,
+    matrixPresets.frame23_2720
   };
   public runMatrixAnimation(LEDs m_leds) {
 
@@ -53,6 +66,30 @@ public class runMatrixAnimation extends SequentialCommandGroup {
       new setMatrix(colors[9], m_leds),
       new WaitCommand(1.5),
       new setMatrix(colors[10], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[11], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[12], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[13], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[14], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[15], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[16], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[17], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[18], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[19], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[20], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[21], m_leds),
+      new WaitCommand(1.5),
+      new setMatrix(colors[22], m_leds),
       new WaitCommand(1.5)
     );
   }
