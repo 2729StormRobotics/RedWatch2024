@@ -15,12 +15,12 @@ import frc.robot.subsystems.Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Intake_Load extends SequentialCommandGroup {
+public class IntakeThenLoad extends SequentialCommandGroup {
   private final Intake m_intake;
   private final Indexer m_indexer;
 
   /** Creates a new IntakeLoad. */
-  public Intake_Load(Intake intake, Indexer indexer) {
+  public IntakeThenLoad(Intake intake, Indexer indexer) {
     m_indexer = indexer;
     m_intake = intake;
 

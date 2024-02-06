@@ -5,34 +5,37 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.Indexer.Feed;
-import frc.robot.commands.Shooter.SetRPM;
-import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.Constants;
+import frc.robot.subsystems.Vision;
+
+/*
+ * full auto scoring setup
+ * 1. auto pivot & rev
+ * 2. feed & shoot
+ */
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class Feed_Shoot extends SequentialCommandGroup {
+public class ScoringSequence extends SequentialCommandGroup {
   private final Indexer m_indexer;
-  private final double m_speed;
   private final Shooter m_shooter; 
+  private final Vision m_vision;
+  private final double m_angle;
 
-  /** Creates a new Shoot. */
-  public Feed_Shoot(double speed, Shooter shooter, Indexer indexer) {
+  /** Creates a new AutoScore. */
+  public ScoringSequence(double angle, Shooter shooter, Indexer indexer, Vision vision) {
     m_indexer = indexer;
-    m_speed = speed;
     m_shooter = shooter;
-
+    m_vision = vision;
+    m_angle = angle;
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetRPM(m_shooter, Constants.ShooterConstants.kLeftRPM, Constants.ShooterConstants.kRightRPM),
-      new Feed(m_indexer),
-      new WaitCommand(0.5),
-      new StopShooter(m_shooter)
+      new PivotAndRev(m_shooter, m_angle),
+      new FeedAndShoot(m_shooter, m_indexer)
     );
   }
 }

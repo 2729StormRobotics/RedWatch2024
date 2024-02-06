@@ -4,25 +4,33 @@
 
 package frc.robot.commandgroups;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.Constants;
 import frc.robot.commands.Shooter.Pivot;
+import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
+
+/*
+ * Creates a shooting preset, that will pivot the shooter to the right angle 
+ * and rev it up to max speed at the time
+ * Pivot and rev at the same time will save time
+ */
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoPivot extends SequentialCommandGroup {
+public class PivotAndRev extends ParallelCommandGroup {
   private final Shooter m_shooter;
-  private final Vision m_vision;
-  /** Creates a new AutoPivot. */
-  public AutoPivot(Shooter shooter, Vision vision) {
+  private final double m_presetAngle;
+  /** Creates a new ShootingPreset. */
+  public PivotAndRev(Shooter shooter, double presetAngle) {
     m_shooter = shooter;
-    m_vision = vision;
+    m_presetAngle = presetAngle;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Pivot(m_shooter, m_shooter.getOptimalAngle(0, m_vision.getSpeakerDistance())) // Pivot to the angle returned by the getOptimalAngle() method
+      new Pivot(m_shooter, m_presetAngle),
+      new SetRPM(m_shooter, Constants.ShooterConstants.kLeftRPM, Constants.ShooterConstants.kRightRPM)
     );
   }
 }
