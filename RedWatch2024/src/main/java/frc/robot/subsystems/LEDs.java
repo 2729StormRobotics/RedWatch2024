@@ -13,12 +13,10 @@ import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.SingleFadeAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LightsConstants;
 import frc.robot.presets.matrixPresets;
-import frc.robot.presets.matrixPresets.*;
 /*
  * USAGE:
  * ANYWHERE YOU WANT TO USE LEDS
@@ -116,8 +114,8 @@ public class LEDs extends SubsystemBase {
         // WristEncoderIndicator(6, 1, -1),
         // DriverStationIndicator(7, 1, -1),
         // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
-        MainStrip(0, 300, 0),
-        Matrix(8,100,1);
+        MainStrip(0, 7, 0),
+        Matrix(7,100,1);
         // Strip2(8,4,1),
         // Strip3(13,2,2),
         // Strip4(18,7,3),
@@ -229,17 +227,27 @@ public class LEDs extends SubsystemBase {
         }
 
     }
-    public void setMatrixToGrid(Color[][] matrix)
+    public void setMatrixToGrid(Color[] matrix)
     {
-        int no = 8;
+        int no = 7;
         for (int i = 0; i < matrix.length; i++) {
     
-          // Iterate through the columns of the current row
-          for (int j = 0; j < matrix[i].length; j++) {
-              Color color = matrix[i][j];
-              no++;
-              candle.setLEDs(color.red, color.green, color.blue, 0, no, 1);
-          }
+            Color color = matrix[i];
+            no++;
+            candle.setLEDs(color.red, color.green, color.blue, 0, no, 1);
+        }
+    }
+    public static void reverse(Color[] array) {
+        int start = 0;
+        int end = array.length - 1;
+
+        while (start < end) {
+            Color temp = array[start];
+            array[start] = array[end];
+            array[end] = temp;
+
+            start++;
+            end--;
         }
     }
 }

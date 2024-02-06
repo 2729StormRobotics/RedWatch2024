@@ -21,17 +21,17 @@ public class matrixPresets {
     public static final Color skin = new Color(169, 125, 100);
 
 
-    public static Color[][] ggMatrix = {   
-        {black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  }, 
-        {black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  }, 
-        {black  ,black  ,red    ,red    ,black  ,black  ,black  ,red    ,red    ,black  }, 
-        {black  ,red    ,black  ,black  ,black  ,black  ,red    ,black  ,black  ,black  }, 
-        {black  ,red    ,black  ,red    ,red    ,black  ,red    ,black  ,red    ,red    }, 
-        {black  ,red    ,black  ,black  ,red    ,black  ,red    ,black  ,black  ,red    }, 
-        {black  ,black  ,red    ,red    ,black  ,black  ,black  ,red    ,red    ,black  }, 
-        {black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  },
-        {black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  }, 
-        {black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  }
+    public static Color[] ggMatrix = {      
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  , 
+        black  ,black  ,black  ,red    ,red    ,red    ,red    ,black  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,black  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black    ,red  ,black  ,red    ,black  ,black    ,red  ,black  ,black  , 
+        black  ,black    ,black  ,red    ,black    ,red  ,red    ,black  ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,black  ,black    ,black,black,black, 
+        black  ,black  ,black  ,red    ,red    ,red    ,red    ,black  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,black  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black    ,red  ,black  ,red    ,black  ,black    ,red  ,black  ,black  , 
+        black  ,black    ,black  ,red    ,black    ,red  ,red    ,black  ,black  ,black,
     };
 
     public static Color[][] allwhiteMatrix = {   
@@ -60,16 +60,16 @@ public class matrixPresets {
         {black ,black ,black ,black ,black ,black ,black ,black ,black ,black }
     };
 
-    public static Color[][] smileyMatrix = {   
-        {white ,white ,white ,white ,white ,white ,white ,white ,white ,white }, 
-        {white ,white ,white ,white ,white ,white ,white ,white ,white ,white }, 
-        {white ,white ,yellow,yellow,white ,white ,yellow,yellow,white ,white }, 
-        {white ,white ,yellow,yellow,white ,white ,yellow,yellow,white ,white }, 
-        {white ,white ,white ,white ,white ,white ,white ,white ,white ,white }, 
-        {white ,white ,white ,white ,white ,white ,white ,white ,white ,white }, 
-        {white ,yellow,white ,white ,white ,white ,white ,white ,yellow,white }, 
-        {white ,yellow,yellow,yellow,yellow,yellow,yellow,yellow,yellow,white },
-        {white ,white ,yellow,yellow,yellow,yellow,yellow,yellow,white ,white }, 
-        {white ,white ,white ,white ,white ,white ,white ,white ,white ,white }
+    public static Color[] smileyMatrix = {   
+        white ,white ,white ,white ,white ,white ,white ,white ,white ,white , 
+        white ,white ,yellow,yellow,white ,white ,white ,white ,white ,white , 
+        white ,yellow,yellow,yellow,white ,white ,yellow,yellow,white ,white , 
+        white ,yellow,yellow,white ,white ,white ,yellow,yellow,white ,white , 
+        white ,yellow,yellow,white ,white ,white ,white ,white ,white ,white , 
+        white ,yellow,yellow,white ,white ,white ,white ,white ,white ,white , 
+        white ,yellow,yellow,white ,white ,white ,yellow,yellow,white ,white , 
+        white ,yellow,yellow,yellow,white ,white ,yellow,yellow,white ,white ,
+        white ,white ,yellow,yellow,white ,white ,white ,white ,white ,white , 
+        white ,white ,white ,white ,white ,white ,white ,white ,white ,white 
     };
 }
