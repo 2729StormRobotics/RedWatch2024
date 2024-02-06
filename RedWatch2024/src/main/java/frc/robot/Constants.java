@@ -25,11 +25,13 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final double kDriveDeadband = 0.1;
   }
 
   public static class VisionConstants {
     public static final double kNoteTolerance = 50;
     public static final double kPX = 0.012;
+    public static final double kPTurn = 0.012;
   }
 
   public static final class ModuleConstants {
