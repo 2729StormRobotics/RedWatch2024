@@ -6,8 +6,8 @@ public class matrixPresets {
     // colors:
     // Team colors
     public static final Color red = new Color(255, 0, 0);
-    public static final Color black  = new Color(255, 230, 220);
-    // public static final Color black   = new Color(0, 0, 0);
+    // public static final Color black  = new Color(255, 230, 220);
+    public static final Color black   = new Color(0, 0, 0);
     public static final Color brown = new Color(139,69,19);
 
     // Game piece colors
@@ -25,14 +25,14 @@ public class matrixPresets {
     public static Color[] ggMatrix = {      
         black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  , 
         black  ,black  ,black  ,red    ,red    ,red    ,red    ,black  ,black  ,black  , 
-        black  ,black  ,red    ,black    ,black  ,black  ,black  ,red    ,black  ,black, 
-        black  ,black    ,red  ,black  ,red    ,black  ,black    ,red  ,black  ,black  , 
-        black  ,black    ,black  ,red    ,black    ,red  ,red    ,black  ,black  ,black, 
-        black  ,black    ,black  ,black  ,black    ,black  ,black    ,black,black,black, 
+        black  ,black  ,red    ,black  ,black  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black  ,red    ,black  ,red    ,black  ,black  ,red    ,black  ,black  , 
+        black  ,black  ,black  ,red    ,black  ,red    ,red    ,black  ,black  ,black, 
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black, 
         black  ,black  ,black  ,red    ,red    ,red    ,red    ,black  ,black  ,black  , 
-        black  ,black  ,red    ,black    ,black  ,black  ,black  ,red    ,black  ,black, 
-        black  ,black    ,red  ,black  ,red    ,black  ,black    ,red  ,black  ,black  , 
-        black  ,black    ,black  ,red    ,black    ,red  ,red    ,black  ,black  ,black,
+        black  ,black  ,red    ,black  ,black  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black  ,red    ,black  ,black  ,red    ,black  ,red    ,black  ,black  , 
+        black  ,black  ,black  ,red    ,red    ,black  ,red    ,black  ,black  ,black,
     };
 
     public static Color[][] allwhiteMatrix = {   

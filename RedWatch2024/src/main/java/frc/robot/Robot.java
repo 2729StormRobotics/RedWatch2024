@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.LEDSegment;
+import frc.robot.presets.matrixPresets;
+import frc.robot.commands.setMatrix;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -52,8 +55,8 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    LEDSegment.MainStrip.clearAnimation();
-    LEDSegment.MainStrip.setColor(LEDs.black);
+    LEDSegment.Matrix.clearAnimation();
+    LEDSegment.Matrix.setColor(LEDs.black);
     // LEDSegment.Strip2.setColor(LEDs.black);
     // LEDSegment.Strip3.setColor(LEDs.black);
     // LEDSegment.Strip4.setColor(LEDs.black);
@@ -115,8 +118,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_LEDCommand = m_robotContainer.runLEDS();
-    m_LEDCommand.schedule();
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove

@@ -55,6 +55,7 @@ public class LEDs extends SubsystemBase {
     public static final Color red = new Color(255, 0, 0);
     public static final Color black = new Color(0, 0, 0);
     public static final Color brown = new Color(139,69,19);
+     
 
     // Game piece colors
     public static final Color yellow = new Color(242, 60, 0);
@@ -67,6 +68,7 @@ public class LEDs extends SubsystemBase {
     public static final Color orange = new Color(255, 25, 0);
     public static final Color skin = new Color(169, 125, 100);
   
+    
     public LEDs() {
         CANdleConfiguration candleConfiguration = new CANdleConfiguration();
         candleConfiguration.statusLedOffWhenActive = true;
@@ -84,18 +86,13 @@ public class LEDs extends SubsystemBase {
     }
 
     public Command defaultCommand() {
-        setBrightness(1);
-        return runOnce(() -> {
-            // LEDSegment.BatteryIndicator.fullClear();
-            // LEDSegment.PressureIndicator.fullClear();
-            // LEDSegment.MastEncoderIndicator.fullClear();
-            // LEDSegment.BoomEncoderIndicator.fullClear();
-            // LEDSegment.WristEncoderIndicator.fullClear();
-            // Uncomment these lines once we start testing LEDs
-            LEDSegment.Matrix.setStrobeAnimation(red, 1);
+        // setBrightness(1);
+        return new runMatrixAnimation(this);
+        /*return runOnce(() -> {
+            // LEDSegment.Matrix.setStrobeAnimation(red, 0.8);
             // LEDSegment.Matrix.setRainbowAnimation(1);
-            // setMatrixToGrid(matrixPresets.ggMatrix);
-            });
+            setMatrixToGrid(matrixPresets.ggMatrix);
+            });*/
     }
 
     public Command clearSegmentCommand(LEDSegment segment) {
@@ -236,6 +233,7 @@ public class LEDs extends SubsystemBase {
     
             Color color = matrix[i];
             no++;
+            // candle.animate(new RainbowAnimation(1, 0.7, 1, false, no));
             candle.setLEDs(color.red, color.green, color.blue, 0, no, 1);
         }
     }

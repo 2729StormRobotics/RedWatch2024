@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.LEDs;
 import frc.robot.commands.runMatrixAnimation;
 import frc.robot.commands.setMatrix;
+import frc.robot.presets.matrixPresets;
 
 
 
@@ -63,9 +64,5 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
     return null;
-  }
-  public Command runLEDS() {
-    // An example command will be run in autonomous
-    return new runMatrixAnimation(m_LEDs);
   }
 }
