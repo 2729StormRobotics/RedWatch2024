@@ -72,4 +72,100 @@ public class matrixPresets {
         white ,white ,yellow,yellow,white ,white ,white ,white ,white ,white , 
         white ,white ,white ,white ,white ,white ,white ,white ,white ,white 
     };
+        public static Color[] frame1_2720 = {      
+        black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
+        black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,black  ,red  ,black  ,red    ,black  ,black, 
+        black  ,black  ,red    ,black    ,black  ,red  ,black  ,red    ,black  ,black, 
+        black  ,black    ,black  ,red    ,black    ,black  ,black    ,red  ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,black  ,black    ,black,black,black, 
+        black  ,black  ,red  ,black    ,black    ,black    ,black    ,black  ,black  ,black  , 
+        black  ,black  ,red    ,red    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black    ,red  ,black  ,red    ,black  ,black    ,black  ,black  ,black  , 
+        black  ,black    ,black  ,black    ,black    ,black  ,red    ,red  ,black  ,black,
+    };
+    public static Color[] frame2_2720 = {      
+        black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black    ,red  ,black    ,black    ,black  ,red    ,black  ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,black  ,black    ,black,black,black, 
+        black  ,black  ,black  ,black    ,black    ,black    ,black    ,red  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,black  ,red  ,red  ,red    ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,red  ,black    ,red  ,black  ,black  , 
+        black  ,black    ,red  ,red    ,black    ,black  ,black    ,black  ,black  ,black,
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+    };
+    public static Color[] frame3_2720 = {      
+        black  ,black  ,red    ,black    ,black  ,red  ,black  ,red    ,black  ,black, 
+        black  ,black  ,red    ,black    ,black  ,red  ,black  ,red    ,black  ,black, 
+        black  ,black    ,black  ,red    ,black    ,black  ,black    ,red  ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,black  ,black    ,black,black,black, 
+        black  ,black  ,red  ,black    ,black    ,black    ,black    ,black  ,black  ,black  , 
+        black  ,black  ,red    ,red    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black    ,red  ,black  ,red    ,black  ,black    ,black  ,black  ,black  , 
+        black  ,black    ,black  ,black    ,black    ,black  ,red    ,red  ,black  ,black,
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,black  , 
+    };
+    public static Color[] frame4_2720 = {      
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black    ,red  ,black    ,black    ,black  ,red    ,black  ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,black  ,black    ,black,black,black, 
+        black  ,black  ,black  ,black    ,black    ,black    ,black    ,red  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,black  ,red  ,red  ,red    ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,red  ,black    ,red  ,black  ,black  , 
+        black  ,black    ,red  ,red    ,black    ,black  ,black    ,black  ,black  ,black,
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
+        black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
+    };
+    public static Color[] frame5_2720 = {      
+        black  ,black    ,black  ,red    ,black    ,black  ,black    ,red  ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,black  ,black    ,black,black,black, 
+        black  ,black  ,red  ,black    ,black    ,black    ,black    ,black  ,black  ,black  , 
+        black  ,black  ,red    ,red    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black    ,red  ,black  ,red    ,black  ,black    ,black  ,black  ,black  , 
+        black  ,black    ,black  ,black    ,black    ,black  ,red    ,red  ,black  ,black,
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
+        black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
+    };
+    public static Color[] frame6_2720 = {      
+        black  ,black    ,black  ,black  ,black    ,black  ,black    ,black,black,black, 
+        black  ,black  ,black  ,black    ,black    ,black    ,black    ,red  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,black  ,red  ,red  ,red    ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,red  ,black    ,red  ,black  ,black  , 
+        black  ,black    ,red  ,red    ,black    ,black  ,black    ,black  ,black  ,black,
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
+        black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
+    };
+    public static Color[] frame7_2720 = {      
+        black  ,black  ,red  ,black    ,black    ,black    ,black    ,black  ,black  ,black  , 
+        black  ,black  ,red    ,red    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black    ,red  ,black  ,red    ,black  ,black    ,black  ,black  ,black  , 
+        black  ,black    ,black  ,black    ,black    ,black  ,red    ,red  ,black  ,black,
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
+        black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,black  ,
+    };
+    public static Color[] frame8_2720 = {      
+        black  ,black  ,red    ,black    ,black  ,red  ,red  ,red    ,black  ,black, 
+        black  ,black    ,black  ,black  ,black    ,red  ,black    ,red  ,black  ,black  , 
+        black  ,black    ,red  ,red    ,black    ,black  ,black    ,black  ,black  ,black,
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+        black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
+        black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
+        black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black,
+        black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,black  ,
+        black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black
+    };
 }
