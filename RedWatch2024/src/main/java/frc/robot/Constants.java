@@ -25,7 +25,7 @@ public final class Constants {
     // Assigns Beam break sensor to port 1
     public static final int kBeamBreakPort = 1;
     // Sets the indexer motor to 50% power
-    public static final double kIndexerSpeed = 0.5;
+    public static final double kIndexerSpeed = 0.3;
     // Sets the indexer motor stall limit to 45 amps
     public static final int kStallLimit = 45;
     // Sets the indexer motor current limit to 60 amps
