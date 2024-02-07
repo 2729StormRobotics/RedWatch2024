@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-import frc.robot.CommandGroups.TrapIntakeGroup;
+import frc.robot.commandgroups.TrapIntakeGroup;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
