@@ -244,5 +244,8 @@ public static final class DriveConstants {
   public static class ControlPanelConstants {
 		public static final String kShuffleboardTab = "Control Panel";
 	}
+  public static final class LightsConstants {
+    public static final int CANDLE_PORT = 11;
+}
 }
 
