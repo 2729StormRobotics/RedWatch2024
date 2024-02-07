@@ -68,9 +68,9 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(
       new RunCommand(
         () -> m_drivetrain.drive(
-          -MathUtil.applyDeadband(m_driverController.getLeftY()*.6, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getLeftX()*.6, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getRightX()*.6, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getLeftY()*0.6, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getLeftX()*0.6, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getRightX()*0.6, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
@@ -78,9 +78,9 @@ public class RobotContainer {
         m_drivetrain));
 
     //manual pivot control
-    // m_shooter.setDefaultCommand(
-    //   new JoystickPivot(m_weaponsController.getLeftY(), m_shooter)
-    // );
+    m_shooter.setDefaultCommand(
+      new JoystickPivot((m_weaponsController.getLeftY())*0.6, m_shooter)
+    );
     
   }
 
@@ -94,6 +94,7 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
     // Run Intake Until Beam break
     new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
 
