@@ -241,5 +241,8 @@ public static final class DriveConstants {
     public static final double aprilTagAlignTolerance = 1;
 
   }
+  public static class ControlPanelConstants {
+		public static final String kShuffleboardTab = "Control Panel";
+	}
 }
 

@@ -57,7 +57,10 @@ public class Indexer extends SubsystemBase {
     //Sets motor at speed 0 (stops running the motor)
     m_IndexerMotor.set(0);
   }
-    
+   
+  public Double getIndexerRPM(){
+    return ((m_IndexerMotor.getEncoder().getVelocity()));
+  }
 
   @Override
   public void periodic() {

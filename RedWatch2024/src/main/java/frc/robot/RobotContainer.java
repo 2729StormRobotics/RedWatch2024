@@ -16,6 +16,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commandgroups.FeedAndShoot;
+import frc.robot.commandgroups.IntakeThenLoad;
+import frc.robot.commandgroups.PivotAndRev;
+import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commands.Indexer.Feed;
 import frc.robot.commands.Intake.EjectNote;
 import frc.robot.commands.Intake.IntakeItem;
@@ -25,6 +29,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -33,9 +38,10 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  // private final Indexer m_indexer;
+  private final Indexer m_indexer;
   private final Intake m_intake;
-  // private final Shooter m_shooter;
+  private final Shooter m_shooter;
+  private final Vision m_vision;
   private final Drivetrain m_drivetrain;
   
   
@@ -49,9 +55,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // m_indexer = new Indexer();
+    m_indexer = new Indexer();
     m_intake = new Intake();
-    // m_shooter = new Shooter();
+    m_shooter = new Shooter();
+    m_vision = new Vision();
     m_drivetrain = new Drivetrain();
     SmartDashboard.putData(CommandScheduler.getInstance());
 
@@ -88,13 +95,16 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Run Intake Until Beam break
-    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new IntakeItem(m_intake));
+    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
 
     // Stop Intake
-    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new StopIntake(m_intake));
+    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
     
     // Eject Note
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new EjectNote(m_intake));
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer, m_vision));
+
+    // Pivor and Rev
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(m_shooter, 50));
     
     // reset gyro
     new JoystickButton(m_driverController, Button.kA.value).onTrue(new RunCommand(() -> m_drivetrain.resetHeading()));
