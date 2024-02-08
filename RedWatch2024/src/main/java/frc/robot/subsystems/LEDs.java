@@ -87,12 +87,12 @@ public class LEDs extends SubsystemBase {
 
     public Command defaultCommand() {
         // setBrightness(1);
-        return new runMatrixAnimation(this);
-        /*return runOnce(() -> {
+        // return new runMatrixAnimation(this);
+        return runOnce(() -> {
             // LEDSegment.Matrix.setStrobeAnimation(red, 0.8);
-            // LEDSegment.Matrix.setRainbowAnimation(1);
-            setMatrixToGrid(matrixPresets.ggMatrix);
-            });*/
+            LEDSegment.Underglow.setRainbowAnimation(1);
+            // setMatrixToGrid(matrixPresets.ggMatrix);
+            });
     }
 
     public Command clearSegmentCommand(LEDSegment segment) {
