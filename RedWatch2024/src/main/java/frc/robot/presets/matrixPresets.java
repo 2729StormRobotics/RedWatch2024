@@ -174,7 +174,7 @@ public class matrixPresets {
         black  ,black    ,black  ,black    ,black    ,black  ,red    ,red  ,black  ,black,
         black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
-        black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
+        black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,black  ,
@@ -185,7 +185,7 @@ public class matrixPresets {
         black  ,black    ,red  ,red    ,black    ,black  ,black    ,black  ,black  ,black,
         black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
-        black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
+        black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
@@ -196,7 +196,7 @@ public class matrixPresets {
     public static Color[] frame11_2720 = {      
         black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
-        black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
+        black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,black  ,
@@ -206,8 +206,8 @@ public class matrixPresets {
         black  ,black  ,red  ,black  ,black  ,black  ,black  ,red  ,black  ,black  ,
     };
     public static Color[] frame12_2720 = {      
-        black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
-        black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
+        black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,
+        black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  ,  
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black,
         black  ,black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  , 
@@ -218,7 +218,7 @@ public class matrixPresets {
         black  ,black  ,red  ,black  ,black  ,black  ,black  ,red  ,black  ,black  ,
     };
     public static Color[] frame13_2720 = {      
-        black  ,black  ,red  ,red    ,black    ,black    ,black    ,red  ,black  ,black  , 
+        black  ,black  ,red  ,black    ,black    ,black    ,red    ,red  ,black  ,black  , 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red    ,black    ,red  ,black  ,black  ,red    ,black  ,black, 
         black  ,black  ,red  ,black  ,black  ,black  ,red  ,black  ,black  ,black  ,
