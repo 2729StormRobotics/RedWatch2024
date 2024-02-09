@@ -2,7 +2,7 @@ package frc.robot.presets;
 
 import frc.robot.subsystems.LEDs.Color;
 
-public class 2720Animation_Red {
+public class Animation2720_Red {
     // colors:
     // Team colors
     public static final Color red = new Color(255, 0, 0);
