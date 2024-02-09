@@ -20,9 +20,11 @@ import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.PivotAndRev;
 import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commands.Shooter.JoystickPivot;
+import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 /**
@@ -37,7 +39,9 @@ public class RobotContainer {
   private final Intake m_intake;
   private final Shooter m_shooter;
   private final Vision m_vision;
+  private final LEDs m_leds;
   private final Drivetrain m_drivetrain;
+  private final ControlPanel m_controlpanel;
   
   
   // private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
@@ -54,7 +58,9 @@ public class RobotContainer {
     m_intake = new Intake();
     m_shooter = new Shooter();
     m_vision = new Vision();
+    m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
+    m_controlpanel = new ControlPanel(m_drivetrain, m_indexer, m_leds, m_intake, m_shooter, m_vision);
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     configureBindings();
