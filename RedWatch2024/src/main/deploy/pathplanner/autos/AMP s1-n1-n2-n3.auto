@@ -12,21 +12,33 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "P1"
+            "name": "IntakeItem"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "P2"
+            "pathName": "AMP s1-n1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "P3"
+            "pathName": "AMP n1-n2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AMP n2-n3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopIntake"
           }
         }
       ]

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
@@ -13,7 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -22,6 +25,8 @@ import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.PivotAndRev;
 import frc.robot.commandgroups.ScoringSequence;
+import frc.robot.commands.Intake.IntakeItem;
+import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.JoystickPivot;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
@@ -68,10 +73,6 @@ public class RobotContainer {
     m_controlpanel = new ControlPanel(m_drivetrain, m_indexer, m_leds, m_intake, m_shooter, m_vision);
     SmartDashboard.putData(CommandScheduler.getInstance());
 
-    // Puts auto chooser onto shuffleboard
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
-
     configureBindings();
 
      //Joystick drive
@@ -91,6 +92,20 @@ public class RobotContainer {
     m_shooter.setDefaultCommand(
       new JoystickPivot((m_weaponsController.getLeftY())*0.6, m_shooter)
     );
+
+    /*
+     * Auto
+     */
+    // Named Commands
+    // Shooting
+    NamedCommands.registerCommand("Shoot", new ScoringSequence(m_shooter.getOptimalAngle(0, m_vision.getSpeakerDistance()), m_shooter, m_indexer));
+    // NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad(m_intake, m_indexer));
+    NamedCommands.registerCommand("IntakeItem", new IntakeItem(m_intake));
+    NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
+
+    // Puts auto chooser onto shuffleboard
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
     
   }
 
