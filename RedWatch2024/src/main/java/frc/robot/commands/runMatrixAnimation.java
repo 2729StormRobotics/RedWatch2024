@@ -10,6 +10,7 @@ import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.Color;
 import frc.robot.presets.matrixPresets;
 import frc.robot.presets.Animation2720_Red;
+import frc.robot.presets.AnimationRevUp;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -41,14 +42,26 @@ public class runMatrixAnimation extends SequentialCommandGroup {
     Animation2720_Red.frame22_2720,
     Animation2720_Red.frame23_2720
   };
+    Color[][] revUpAnimation = {
+    AnimationRevUp.frame1_RevUp,
+    AnimationRevUp.frame2_RevUp,
+    AnimationRevUp.frame3_RevUp,
+    AnimationRevUp.frame4_RevUp,
+    AnimationRevUp.frame5_RevUp,
+    AnimationRevUp.frame6_RevUp,
+    AnimationRevUp.frame7_RevUp,
+    AnimationRevUp.frame8_RevUp,
+    AnimationRevUp.frame9_RevUp,
+    AnimationRevUp.frame10_RevUp
+  };
   public runMatrixAnimation(LEDs m_leds) {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    for (int i = 0; i < Red2720Animation.length; ++i) {
+    for (int i = 0; i < revUpAnimation.length; ++i) {
       addCommands(
-        new setMatrix(Red2720Animation[i], m_leds),
-        new WaitCommand(0.1)
+        new setMatrix(revUpAnimation[i], m_leds),
+        new WaitCommand(0.05)
       );
     }
   }
