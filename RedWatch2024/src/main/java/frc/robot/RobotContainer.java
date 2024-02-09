@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -43,6 +46,8 @@ public class RobotContainer {
   private final Drivetrain m_drivetrain;
   private final ControlPanel m_controlpanel;
   
+  // Will allow to choose which auto command to run from the shuffleboard
+  private final SendableChooser<Command> autoChooser;
   
   // private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
   // private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
@@ -62,6 +67,10 @@ public class RobotContainer {
     m_drivetrain = new Drivetrain();
     m_controlpanel = new ControlPanel(m_drivetrain, m_indexer, m_leds, m_intake, m_shooter, m_vision);
     SmartDashboard.putData(CommandScheduler.getInstance());
+
+    // Puts auto chooser onto shuffleboard
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
 
     configureBindings();
 
@@ -122,6 +131,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return autoChooser.getSelected();
   }
 }
