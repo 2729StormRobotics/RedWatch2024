@@ -12,7 +12,12 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ControlPanelConstants;
+import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.Shooter.Pivot;
+import frc.robot.commands.Indexer.setIndexerSpeeds;
+import frc.robot.commands.Intake.setIntakeSpeeds;
+import frc.robot.commands.LEDs.setAllLEDs;
 
 import java.util.Map;
 
@@ -30,6 +35,8 @@ public class ControlPanel extends SubsystemBase {
 
 
   private final GenericEntry setPivotEncoder;
+  private final GenericEntry setIntakeSpeeds;
+  private final GenericEntry setIndexerSpeeds;
 
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
@@ -53,7 +60,7 @@ public class ControlPanel extends SubsystemBase {
       .withPosition(0, 0)
       .withSize(2, 4);
       
-    m_indexerStatus = m_controlpanelTab.getLayout("indexer Status", BuiltInLayouts.kList)
+    m_indexerStatus = m_controlpanelTab.getLayout("Indexer Status", BuiltInLayouts.kList)
       .withProperties(Map.of("Label position", "TOP"))
       .withPosition(2, 0)
       .withSize(2, 2);
@@ -73,21 +80,32 @@ public class ControlPanel extends SubsystemBase {
       .withPosition(10, 0)
       .withSize(1, 2);
 
-
+    // Drivetrain
     m_drivetrainStatus.addDouble("Average Speed", () -> m_drivetrain.getTurnRate()); // How fast the robot is
     m_drivetrainStatus.addNumber("Robot Heading", () -> m_drivetrain.getHeading()); // How far the robot is
     m_drivetrainStatus.addDouble("Pitch", () -> m_drivetrain.m_gyro.getPitch()); // Pitch of robot
     m_drivetrainStatus.addDouble("Yaw", () -> m_drivetrain.m_gyro.getYaw());// Yaw of robot
  
+    //  Indexer
     m_indexerStatus.addDouble("Indexer Velocity", () -> m_indexer.getIndexerRPM()); // How fast the indexer is
     m_indexerStatus.addBoolean("Beam break status", () -> m_indexer.isNotePresent());
+    setIndexerSpeeds = m_indexerStatus.add("Indexer Speeds Input", IndexerConstants.kIndexerSpeed).getEntry();
+    m_indexerStatus.add(new setIndexerSpeeds(m_indexer, setIndexerSpeeds.get().getDouble()));  
 
+    // Shooter
     m_shooterStatus.addNumber("Pivot Encoder", () -> m_shooter.getPivotAngle()); // Angle of shooter
-    setPivotEncoder = m_intakeStatus.add("Pivot Encoder Input", m_shooter.getPivotAngle()).getEntry();
+    setPivotEncoder = m_shooterStatus.add("Pivot Encoder Input", m_shooter.getPivotAngle()).getEntry();
     m_shooterStatus.add(new Pivot(m_shooter, setPivotEncoder.get().getDouble()));  
     m_shooterStatus.addNumber("Flywheel RPM", () -> m_shooter.getAverageRPM());
 
+    // Intake
     m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
+    setIntakeSpeeds = m_indexerStatus.add("Intake Speeds Input", IntakeConstants.kIntakeMotorSpeed).getEntry();
+    m_indexerStatus.add(new setIntakeSpeeds(m_intake, setIntakeSpeeds.get().getDouble()));  
+
+    // Lights
+    m_lightsStatus.add(new setAllLEDs(LEDs.red));  
+    
     
   }
 

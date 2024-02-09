@@ -47,7 +47,7 @@ public final class Constants {
     // Assigns Beam break sensor to port 1
     public static final int kBeamBreakPort = 1;
     // Sets the indexer motor to 50% power
-    public static final double kIndexerSpeed = 0.5;
+    public static double kIndexerSpeed = 0.8;
     // Sets the indexer motor stall limit to 45 amps
     public static final int kStallLimit = 45;
     // Sets the indexer motor current limit to 60 amps
@@ -162,8 +162,8 @@ public static final class DriveConstants {
   
   public static class IntakeConstants {
     public static final int kIntakeMotor = 9;
-    public static final double kIntakeMotorSpeed = 0.8;
-    public static final double kEjectMotorSpeed = -0.8;
+    public static double kIntakeMotorSpeed = 0.8;
+    public static double kEjectMotorSpeed = -0.8;
   }
   
   public static class ShooterConstants {
@@ -203,8 +203,8 @@ public static final class DriveConstants {
     // Flywheel Shooting values
     public static final double kLeftRPM = 0;
     public static final double kRightRPM = 0;
-    public static final double kLeftPower = 0;
-    public static final double kRightPower = 0;
+    public static double kLeftPower = 0;
+    public static double kRightPower = 0;
 
     // Field and Robot Measurements
     // All units are in meters
