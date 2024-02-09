@@ -69,7 +69,6 @@ public class Indexer extends SubsystemBase {
   }
 
   public void load(double d) {
-    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'load'");
   }
 }

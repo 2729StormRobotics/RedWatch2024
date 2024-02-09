@@ -16,37 +16,6 @@ import com.ctre.phoenix.led.StrobeAnimation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LightsConstants;
-import frc.robot.commands.LEDs.runMatrixAnimation;
-import frc.robot.presets.matrixPresets;
-/*
- * USAGE:
- * ANYWHERE YOU WANT TO USE LEDS
- * import the LEDSegment
- * then run:
- * LEDSegment.MainStrip.(whatever command)
- * if any questions, ask Krithik
- * 
- * remember, the LED count includes the 8 onboard candle LEDS.
- * 
- * To SET A GENERAL COLOR
- * USE LEDs.(whatever color) as a parameter
- * 
- * To use a SPECIFIC color do:
- * new Color(0, 0, 0) as a parameter
- * 
- * Request Note Ground: setColor(orange)
- * Request Note: setBandAnimationf(orange)
- * Aligning to speaker: setColor(red)
- * Aligned to speaker: setColor(green)
- * Default: setFadeAnimation(red)
- * Partymode: setRainbowAnimation(1)
- * 
- * MATRIX USAGE:
- * Create an order for the matrix in the matrixPresets.java file
- * use the command setMatrixToGrid with your preset as a parameter
- * if needs to be offset make sure to offset both the led segment AND 
- * variable "no" in the setMatrixToGrid function
- */
 
 public class LEDs extends SubsystemBase {
     public static final CANdle candle = new CANdle(LightsConstants.CANDLE_PORT);

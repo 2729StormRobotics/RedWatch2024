@@ -10,7 +10,6 @@ import frc.robot.commands.Indexer.Feed;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.Constants;
 

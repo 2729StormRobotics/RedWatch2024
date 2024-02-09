@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.GenericEntry;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
@@ -15,13 +14,11 @@ import frc.robot.Constants.ControlPanelConstants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.commands.Shooter.Pivot;
-import frc.robot.commands.Indexer.setIndexerSpeeds;
-import frc.robot.commands.Intake.setIntakeSpeeds;
+import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.commands.LEDs.setAllLEDs;
+import frc.robot.commands.LEDs.setDefault;
 
 import java.util.Map;
-
-import com.kauailabs.navx.frc.AHRS;
 
 public class ControlPanel extends SubsystemBase {
 
@@ -40,15 +37,17 @@ public class ControlPanel extends SubsystemBase {
 
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
+  private final LEDs m_leds;
   private final Intake m_intake;
   private final Shooter m_shooter;
   private final Vision m_vision;
 
 
   /** Creates a new ControlPanel. */
-  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, Vision vision) {
+  public ControlPanel(Drivetrain drivetrain, Indexer indexer, LEDs leds, Intake intake, Shooter shooter, Vision vision) {
     m_drivetrain = drivetrain;
     m_indexer = indexer;
+    m_leds = leds;
     m_intake = intake;
     m_shooter = shooter;
     m_vision = vision;
@@ -84,27 +83,30 @@ public class ControlPanel extends SubsystemBase {
     m_drivetrainStatus.addDouble("Average Speed", () -> m_drivetrain.getTurnRate()); // How fast the robot is
     m_drivetrainStatus.addNumber("Robot Heading", () -> m_drivetrain.getHeading()); // How far the robot is
     m_drivetrainStatus.addDouble("Pitch", () -> m_drivetrain.m_gyro.getPitch()); // Pitch of robot
-    m_drivetrainStatus.addDouble("Yaw", () -> m_drivetrain.m_gyro.getYaw());// Yaw of robot
+    m_drivetrainStatus.addDouble("Yaw", () -> m_drivetrain.m_gyro.getYaw());// Yaw of robot\
+    m_drivetrainStatus.add("Zero Heading", (runOnce(() -> {m_drivetrain.zeroHeading();})));
  
     //  Indexer
     m_indexerStatus.addDouble("Indexer Velocity", () -> m_indexer.getIndexerRPM()); // How fast the indexer is
     m_indexerStatus.addBoolean("Beam break status", () -> m_indexer.isNotePresent());
     setIndexerSpeeds = m_indexerStatus.add("Indexer Speeds Input", IndexerConstants.kIndexerSpeed).getEntry();
-    m_indexerStatus.add(new setIndexerSpeeds(m_indexer, setIndexerSpeeds.get().getDouble()));  
+    m_indexerStatus.add("Set Indexer Speeds", runOnce(() -> {IndexerConstants.kIndexerSpeed = setIndexerSpeeds.get().getDouble();}));  
 
     // Shooter
     m_shooterStatus.addNumber("Pivot Encoder", () -> m_shooter.getPivotAngle()); // Angle of shooter
     setPivotEncoder = m_shooterStatus.add("Pivot Encoder Input", m_shooter.getPivotAngle()).getEntry();
-    m_shooterStatus.add(new Pivot(m_shooter, setPivotEncoder.get().getDouble()));  
+    m_shooterStatus.add("Pivot to Input", new Pivot(m_shooter, setPivotEncoder.get().getDouble()));  
     m_shooterStatus.addNumber("Flywheel RPM", () -> m_shooter.getAverageRPM());
 
     // Intake
     m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
     setIntakeSpeeds = m_indexerStatus.add("Intake Speeds Input", IntakeConstants.kIntakeMotorSpeed).getEntry();
-    m_indexerStatus.add(new setIntakeSpeeds(m_intake, setIntakeSpeeds.get().getDouble()));  
+    m_intakeStatus.add("Intake to Input", runOnce(() -> {IntakeConstants.kIntakeMotorSpeed = setIntakeSpeeds.get().getDouble(); IntakeConstants.kEjectMotorSpeed = -setIntakeSpeeds.get().getDouble();}));  
 
     // Lights
-    m_lightsStatus.add(new setAllLEDs(LEDs.red));  
+    m_lightsStatus.add("Set LEDs to Red", new setAllLEDs(LEDs.red));  
+    m_lightsStatus.add("Set to Default",new setDefault());  
+    m_lightsStatus.add("Party Mode", new PartyMode(m_leds));  
     
     
   }

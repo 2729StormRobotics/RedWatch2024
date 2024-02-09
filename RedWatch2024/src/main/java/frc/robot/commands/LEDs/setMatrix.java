@@ -4,11 +4,9 @@
 
 package frc.robot.commands.LEDs;
 
-import edu.wpi.first.wpilibj2.command.*;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.Color;
-import frc.robot.subsystems.LEDs.LEDSegment;
-import frc.robot.presets.matrixPresets;
 
 public class setMatrix extends Command {
   private Color[] m_colors;

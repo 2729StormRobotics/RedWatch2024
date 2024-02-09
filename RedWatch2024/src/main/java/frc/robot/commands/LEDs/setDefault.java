@@ -2,28 +2,25 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Intake;
+package frc.robot.commands.LEDs;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake;
-import frc.robot.Constants.IntakeConstants;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.LEDSegment;
 
-public class setIntakeSpeeds extends Command {
-  private Intake m_intake;
-  private Double m_speeds;
-  /** Creates a new setSpeeds. */
-  public setIntakeSpeeds(Intake intake, Double speed) {
-    m_intake = intake;
-    m_speeds = speed;
-    addRequirements(m_intake);
+public class setDefault extends Command {
+  /** Creates a new setDefault. */
+  public setDefault() {
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    IntakeConstants.kEjectMotorSpeed = -m_speeds;
-    IntakeConstants.kIntakeMotorSpeed = m_speeds;
+    LEDSegment.MainStrip.setColor(LEDs.black);
+    LEDSegment.Matrix.setColor(LEDs.black);
+    LEDSegment.Underglow.setColor(LEDs.red);
+    LEDSegment.StatusLEDs.setFadeAnimation(LEDs.orange, 0.7);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,6 +34,6 @@ public class setIntakeSpeeds extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

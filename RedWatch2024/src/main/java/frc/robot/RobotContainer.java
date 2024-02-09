@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,10 +19,6 @@ import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.PivotAndRev;
 import frc.robot.commandgroups.ScoringSequence;
-import frc.robot.commands.Indexer.Feed;
-import frc.robot.commands.Intake.EjectNote;
-import frc.robot.commands.Intake.IntakeItem;
-import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Shooter.JoystickPivot;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
