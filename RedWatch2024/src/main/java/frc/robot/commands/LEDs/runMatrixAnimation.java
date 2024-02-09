@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.Color;
+import frc.robot.subsystems.LEDs.LEDSegment;
 import frc.robot.presets.matrixPresets;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
