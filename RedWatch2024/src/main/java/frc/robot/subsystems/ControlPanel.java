@@ -57,12 +57,12 @@ public class ControlPanel extends SubsystemBase {
     m_drivetrainStatus = m_controlpanelTab.getLayout("Drivetrain Status", BuiltInLayouts.kList)
       .withProperties(Map.of("Label position", "TOP"))
       .withPosition(0, 0)
-      .withSize(2, 4);
+      .withSize(2, 5);
       
     m_indexerStatus = m_controlpanelTab.getLayout("Indexer Status", BuiltInLayouts.kList)
       .withProperties(Map.of("Label position", "TOP"))
       .withPosition(2, 0)
-      .withSize(2, 2);
+      .withSize(2, 4);
 
     m_lightsStatus = m_controlpanelTab.getLayout("Light Status", BuiltInLayouts.kList)
       .withProperties(Map.of("Label position", "TOP"))
@@ -72,12 +72,12 @@ public class ControlPanel extends SubsystemBase {
     m_intakeStatus = m_controlpanelTab.getLayout("Pivot Arm Status", BuiltInLayouts.kList)
       .withProperties(Map.of("Label position", "TOP"))
       .withPosition(8, 0)
-      .withSize(1, 2);
+      .withSize(1, 3);
     
     m_shooterStatus = m_controlpanelTab.getLayout("Telescoping Arm Status", BuiltInLayouts.kList)
       .withProperties(Map.of("Label position", "TOP"))
       .withPosition(10, 0)
-      .withSize(1, 2);
+      .withSize(1, 4);
 
     // Drivetrain
     m_drivetrainStatus.addDouble("Average Speed", () -> m_drivetrain.getTurnRate()); // How fast the robot is
