@@ -45,7 +45,9 @@ public class Load extends Command {
   // If not motor will keep running
   @Override
   public boolean isFinished() {
-    return m_indexer.isNotePresent();
-
+    if (m_indexer.isNotePresent()) {
+      return m_indexer.isNotePresent();
+    }
+    return false;
   }
 }
