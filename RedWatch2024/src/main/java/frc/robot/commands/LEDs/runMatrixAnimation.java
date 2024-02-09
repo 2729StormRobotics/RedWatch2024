@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.Color;
 import frc.robot.presets.Animation2720_Red;
+import frc.robot.presets.PercentMotorSpeed;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -40,14 +41,26 @@ public class runMatrixAnimation extends SequentialCommandGroup {
     Animation2720_Red.frame22_2720,
     Animation2720_Red.frame23_2720
   };
+  Color[][] rampUpAnimation = {
+    PercentMotorSpeed.frame1_10per,
+    PercentMotorSpeed.frame2_20per,
+    PercentMotorSpeed.frame3_30per,
+    PercentMotorSpeed.frame4_40per,
+    PercentMotorSpeed.frame5_50per,
+    PercentMotorSpeed.frame6_60per,
+    PercentMotorSpeed.frame7_70per,
+    PercentMotorSpeed.frame8_80per,
+    PercentMotorSpeed.frame9_90per,
+    PercentMotorSpeed.frame10_100per
+  };
 
   public runMatrixAnimation(LEDs m_leds) {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    for (int i = 0; i < Red2720Animation.length; ++i) {
+    for (int i = 0; i < rampUpAnimation.length; ++i) {
       addCommands(
-        new setMatrix(Red2720Animation[i], m_leds),
+        new setMatrix(rampUpAnimation[i], m_leds),
         new WaitCommand(0.05)
       );
     }
