@@ -90,20 +90,21 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-    // Run Intake Until Beam break
+    // feed
     new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
 
-    // Stop Intake
+    // intake
     new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
     
-    // Eject Note
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer, m_vision));
+    // scoring 
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer));
 
     // Pivor and Rev
     new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(m_shooter, 50));
     
     // reset gyro
     new JoystickButton(m_driverController, Button.kA.value).onTrue(new RunCommand(() -> m_drivetrain.resetHeading()));
+
 
 
   }

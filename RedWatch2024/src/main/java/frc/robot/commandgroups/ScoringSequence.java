@@ -22,14 +22,12 @@ import frc.robot.subsystems.Vision;
 public class ScoringSequence extends SequentialCommandGroup {
   private final Indexer m_indexer;
   private final Shooter m_shooter; 
-  private final Vision m_vision;
   private final double m_angle;
 
   /** Creates a new AutoScore. */
-  public ScoringSequence(double angle, Shooter shooter, Indexer indexer, Vision vision) {
+  public ScoringSequence(double angle, Shooter shooter, Indexer indexer) {
     m_indexer = indexer;
     m_shooter = shooter;
-    m_vision = vision;
     m_angle = angle;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
