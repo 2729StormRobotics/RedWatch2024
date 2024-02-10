@@ -6,6 +6,7 @@ package frc.robot.commands.Vision;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.OperatorConstants;
@@ -46,7 +47,7 @@ public class AprilTagAlign extends Command {
     m_turnError = m_vision.getX(); // Horizontal angle away from target
     m_turnPower = m_turnError * Constants.VisionConstants.kPTurn; // Calculate P value
     m_turnPower += Math.copySign(Constants.VisionConstants.kSTurn, m_turnPower); // Add feedforward value
-
+    SmartDashboard.putNumber("turnError", m_turnError);
     // drive the robot
     m_drivetrain.drive(
       MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),

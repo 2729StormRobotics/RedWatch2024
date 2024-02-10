@@ -6,6 +6,8 @@ package frc.robot.commands.Indexer;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class Feed extends Command {
   /** Creates a new feed. */
@@ -45,6 +47,11 @@ public class Feed extends Command {
   // If not motor will keep running
   @Override
   public boolean isFinished() {
+    if(!m_indexer.isNotePresent()) {
+      LEDSegment.MainStrip.setColor(LEDs.green);
+      // LEDSegment.Matrix.runMatrixAnimation(LEDs);
+      return !m_indexer.isNotePresent();
+    }
     return !m_indexer.isNotePresent();
   }
 }

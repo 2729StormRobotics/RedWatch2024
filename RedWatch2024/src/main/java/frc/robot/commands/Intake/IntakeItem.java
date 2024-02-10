@@ -5,7 +5,9 @@
 package frc.robot.commands.Intake;
 
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDs;
 import edu.wpi.first.wpilibj2.command.*;
+import frc.robot.subsystems.LEDs.LEDSegment;
 
 // Creates a command for the intake subsystem to run motors to grab an object from the intake
 public class IntakeItem extends Command {
@@ -13,9 +15,12 @@ public class IntakeItem extends Command {
   // Create a variable for the intake
   private final Intake m_intake;
 
+
+
   /** Creates a new IntakeItem. */
   public IntakeItem(Intake intake) {
     // Set intake variable to the Intake subsystem
+
     m_intake = intake;
     
     // Use addRequirements() here to declare subsystem dependencies.
@@ -27,6 +32,8 @@ public class IntakeItem extends Command {
   @Override
   public void initialize() {
     m_intake.intakeItem();
+    LEDSegment.MainStrip.setColor(LEDs.yellow);
+    LEDSegment.Matrix.setColor(LEDs.yellow);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

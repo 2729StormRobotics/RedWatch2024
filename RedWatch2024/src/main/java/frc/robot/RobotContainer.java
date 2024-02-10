@@ -54,8 +54,8 @@ public class RobotContainer {
   // Will allow to choose which auto command to run from the shuffleboard
   private final SendableChooser<Command> autoChooser;
   
-  // private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
-  // private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
+  private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
+  private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
   private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);  
   private final XboxController m_driverController = new XboxController(OperatorConstants.kDriveTranslatorPort);  
 
@@ -79,9 +79,9 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(
       new RunCommand(
         () -> m_drivetrain.drive(
-          -MathUtil.applyDeadband(m_driverController.getLeftY()*0.6, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getLeftX()*0.6, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getRightX()*0.6, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
@@ -134,7 +134,7 @@ public class RobotContainer {
     // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(m_shooter, 50));
     
     // reset gyro
-    new JoystickButton(m_driverController, Button.kA.value).onTrue(new RunCommand(() -> m_drivetrain.resetHeading()));
+    new JoystickButton(m_driverController, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
 
 
 
