@@ -12,7 +12,7 @@
         "y": 5.392498407283805
       },
       "isLocked": false,
-      "linkedName": "AMP n2"
+      "linkedName": "n2"
     },
     {
       "anchor": {
@@ -20,12 +20,12 @@
         "y": 4.268366371490578
       },
       "prevControl": {
-        "x": 1.756349522804811,
-        "y": 4.857717409242615
+        "x": 1.7563051692218785,
+        "y": 4.857657539117012
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "AMP n3"
+      "linkedName": "n3"
     }
   ],
   "rotationTargets": [],

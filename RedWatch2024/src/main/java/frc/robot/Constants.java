@@ -233,6 +233,7 @@ public static final class DriveConstants {
     public static final double exitVelocity = 15;
     public static final double g = 9.81;
     public static final double k = -g/(2*Math.pow(exitVelocity, 2)); // substitution used in angle calculation
+    public static final double SubwooferAnglePreset = 60; // needs to be determined
 
     
   }
