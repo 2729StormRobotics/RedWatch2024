@@ -21,6 +21,8 @@ import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.PivotAndRev;
 import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commands.Shooter.JoystickPivot;
+import frc.robot.commands.Shooter.SetPower;
+import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
@@ -39,8 +41,8 @@ public class RobotContainer {
   private final Indexer m_indexer;
   private final Intake m_intake;
   private final Shooter m_shooter;
-  private final Vision m_vision;
-  private final LEDs m_leds;
+  // private final Vision m_vision;
+  // private final LEDs m_leds;
   private final Drivetrain m_drivetrain;
   private final ControlPanel m_controlpanel;
   
@@ -58,10 +60,10 @@ public class RobotContainer {
     m_indexer = new Indexer();
     m_intake = new Intake();
     m_shooter = new Shooter();
-    m_vision = new Vision();
-    m_leds = new LEDs();
+    // m_vision = new Vision();
+    // m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
-    m_controlpanel = new ControlPanel(m_drivetrain, m_indexer, m_leds, m_intake, m_shooter, m_vision);
+    m_controlpanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter);
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     configureBindings();
@@ -96,21 +98,24 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    //testing button
+    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new SetPower(m_shooter, 0, 0));
 
-    // feed
-    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
 
-    // intake
-    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
+    // // feed
+    // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
+
+    // // intake
+    // new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
     
-    // // scoring 
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer));
+    // // // scoring 
+    // // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer));
 
-    // // Pivor and Rev
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(m_shooter, 50));
+    // // // Pivor and Rev
+    // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(m_shooter, 50));
     
-    // reset gyro
-    new JoystickButton(m_driverController, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
+    // // reset gyro
+    // new JoystickButton(m_driverController, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
 
 
 

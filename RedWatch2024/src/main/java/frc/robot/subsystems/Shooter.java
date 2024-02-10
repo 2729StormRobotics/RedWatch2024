@@ -40,8 +40,8 @@ public class Shooter extends SubsystemBase {
 
     motorInit(m_leftFlywheel, Constants.ShooterConstants.kLeftFlywheelInverted);
     motorInit(m_rightFlywheel, Constants.ShooterConstants.kRightFlywheelInverted);
-    motorInit(m_leftPivot, Constants.ShooterConstants.kLeftPivot);
-    motorInit(m_rightPivot, Constants.ShooterConstants.kRightPivot);
+    motorInit(m_leftPivot, Constants.ShooterConstants.kLeftPivotInverted);
+    motorInit(m_rightPivot, Constants.ShooterConstants.kRightPivotInverted);
 
 
     // Pivot encoder initialization

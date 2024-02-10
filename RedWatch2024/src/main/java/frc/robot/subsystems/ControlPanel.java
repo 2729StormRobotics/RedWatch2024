@@ -41,20 +41,20 @@ public class ControlPanel extends SubsystemBase {
 
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
-  private final LEDs m_leds;
+  // private final LEDs m_leds;
   private final Intake m_intake;
   private final Shooter m_shooter;
-  private final Vision m_vision;
+  // private final Vision m_vision;
 
 
   /** Creates a new ControlPanel. */
-  public ControlPanel(Drivetrain drivetrain, Indexer indexer, LEDs leds, Intake intake, Shooter shooter, Vision vision) {
+  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter) {
     m_drivetrain = drivetrain;
     m_indexer = indexer;
-    m_leds = leds;
+    // m_leds = leds;
     m_intake = intake;
     m_shooter = shooter;
-    m_vision = vision;
+    // m_vision = vision;
 
     m_controlpanelTab = Shuffleboard.getTab(ControlPanelConstants.kShuffleboardTab);
 
@@ -111,9 +111,9 @@ public class ControlPanel extends SubsystemBase {
     m_intakeStatus.add("Intake to Input", runOnce(() -> {IntakeConstants.kIntakeMotorSpeed = setIntakeSpeeds.get().getDouble(); IntakeConstants.kEjectMotorSpeed = -setIntakeSpeeds.get().getDouble();}));  
 
     // Lights
-    m_lightsStatus.add("Set LEDs to Red", new setAllLEDs(LEDs.red));  
-    m_lightsStatus.add("Set to Default",new setDefault());  
-    m_lightsStatus.add("Party Mode", new PartyMode(m_leds));  
+    // m_lightsStatus.add("Set LEDs to Red", new setAllLEDs(LEDs.red));  
+    // m_lightsStatus.add("Set to Default",new setDefault());  
+    // m_lightsStatus.add("Party Mode", new PartyMode(m_leds));  
     
     
   }

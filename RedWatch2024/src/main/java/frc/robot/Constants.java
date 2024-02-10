@@ -42,8 +42,8 @@ public final class Constants {
 
 
   public static final class IndexerConstants {
-    // Assigns Indexer motor to port 4
-    public static final int kIndexMotorPort = 4;
+    // Assigns Indexer motor to port 
+    public static final int kIndexMotorPort = 10;
     // Assigns Beam break sensor to port 1
     public static final int kBeamBreakPort = 1;
     // Sets the indexer motor to 50% power
@@ -161,17 +161,18 @@ public static final class DriveConstants {
 
   
   public static class IntakeConstants {
-    public static final int kIntakeMotor = 9;
+    public static final int kIntakeMotor = 13;
     public static double kIntakeMotorSpeed = 0.8;
     public static double kEjectMotorSpeed = -0.8;
   }
   
   public static class ShooterConstants {
-    // Motor ID/initialization values
-    public static final int kLeftPivotID = 999;
-    public static final int kRightPivotID = 999;
-    public static final int kLeftFlywheelID = 999;
-    public static final int kRightFlywheelID = 999;
+    // Motor ID/initialization valu
+    
+    public static final int kLeftPivotID = 12;
+    public static final int kRightPivotID = 11;
+    public static final int kLeftFlywheelID = 14;
+    public static final int kRightFlywheelID = 9;
     public static final int kCurrentLimit = 45;
 
     //manual control speed limiters 
@@ -180,8 +181,8 @@ public static final class DriveConstants {
     // Make sure that the two pivot motors and two shooting motors rotate in opposite directions
     public static final boolean kLeftFlywheelInverted = false;
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
-    public static final boolean kLeftPivot = false;
-    public static final boolean kRightPivot = !kLeftPivot;
+    public static final boolean kLeftPivotInverted = false;
+    public static final boolean kRightPivotInverted = !kLeftPivotInverted;
 
     // Absolute encoder offsets
     public static final double kLeftPivotOffset = 0;
