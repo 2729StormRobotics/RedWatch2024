@@ -50,11 +50,10 @@ public class Feed extends Command {
   // If not motor will keep running
   @Override
   public boolean isFinished() {
-    if(m_indexer.isNotePresent()) {
+    if(!m_indexer.isNotePresent()) {
       LEDSegment.MainStrip.setColor(LEDs.green);
-      // LEDSegment.Matrix.runMatrixAnimation(LEDs);
-      return m_indexer.isNotePresent();
+      return !m_indexer.isNotePresent();
     }
-    return m_indexer.isNotePresent();
+    return !m_indexer.isNotePresent();
   }
 }
