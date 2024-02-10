@@ -4,6 +4,7 @@
 
 package frc.robot.commands.LEDs;
 
+import edu.wpi.first.math.Matrix;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.Color;
@@ -22,19 +23,19 @@ public class setMatrix extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_leds.setMatrixToGrid(m_colors);
+    m_leds.setMatrixToGrid(m_colors, m_leds.matrix_candle);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_leds.setMatrixToGrid(m_colors);
+    m_leds.setMatrixToGrid(m_colors, m_leds.matrix_candle);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_leds.setMatrixToGrid(m_colors);
+    m_leds.setMatrixToGrid(m_colors, m_leds.matrix_candle);
 
   }
 

@@ -20,7 +20,7 @@ public class setDefault extends Command {
     LEDSegment.MainStrip.setColor(LEDs.black);
     LEDSegment.Matrix.setColor(LEDs.black);
     LEDSegment.Underglow.setColor(LEDs.red);
-    LEDSegment.StatusLEDs.setFadeAnimation(LEDs.orange, 0.7);
+    LEDSegment.MainStatusLEDs.setFadeAnimation(LEDs.orange, 0.7);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

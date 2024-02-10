@@ -73,4 +73,41 @@ public class matrixPresets {
         white ,white ,yellow,yellow,white ,white ,white ,white ,white ,white , 
         white ,white ,white ,white ,white ,white ,white ,white ,white ,white 
     };
+    public static Color[][] Red2720Animation = {
+        Animation2720_Red.frame1_2720,
+        Animation2720_Red.frame2_2720,
+        Animation2720_Red.frame3_2720,
+        Animation2720_Red.frame4_2720,
+        Animation2720_Red.frame5_2720,
+        Animation2720_Red.frame6_2720,
+        Animation2720_Red.frame7_2720,
+        Animation2720_Red.frame8_2720,
+        Animation2720_Red.frame9_2720,
+        Animation2720_Red.frame10_2720,
+        Animation2720_Red.frame11_2720,
+        Animation2720_Red.frame12_2720,
+        Animation2720_Red.frame13_2720,
+        Animation2720_Red.frame14_2720,
+        Animation2720_Red.frame15_2720,
+        Animation2720_Red.frame16_2720,
+        Animation2720_Red.frame17_2720,
+        Animation2720_Red.frame18_2720,
+        Animation2720_Red.frame19_2720,
+        Animation2720_Red.frame20_2720,
+        Animation2720_Red.frame21_2720,
+        Animation2720_Red.frame22_2720,
+        Animation2720_Red.frame23_2720
+      };
+      public static Color[][] rampUpAnimation = {
+        PercentMotorSpeed.frame1_10per,
+        PercentMotorSpeed.frame2_20per,
+        PercentMotorSpeed.frame3_30per,
+        PercentMotorSpeed.frame4_40per,
+        PercentMotorSpeed.frame5_50per,
+        PercentMotorSpeed.frame6_60per,
+        PercentMotorSpeed.frame7_70per,
+        PercentMotorSpeed.frame8_80per,
+        PercentMotorSpeed.frame9_90per,
+        PercentMotorSpeed.frame10_100per
+      };
 }
