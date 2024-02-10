@@ -111,6 +111,7 @@ public class Shooter extends SubsystemBase {
   }
 
   /*
+   * Always set init parameter to 0
    * Command will return the optimal angle to shoot at
    * Derivation of the Formula can be seen here:
    * https://drive.google.com/file/d/1dcSJj9QoYHzQPaUIWQf76gtZUhYFJNyI/view?usp=drive_link

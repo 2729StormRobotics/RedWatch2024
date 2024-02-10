@@ -54,6 +54,7 @@ public class AprilTagAlign extends Command {
       MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
       (-m_turnPower - MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.kDriveRotatorPort, OperatorConstants.kDriveDeadband)),
       true, true);
+    
   }
 
   // Called once the command ends or is interrupted.
