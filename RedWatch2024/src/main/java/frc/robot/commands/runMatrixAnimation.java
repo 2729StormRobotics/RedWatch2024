@@ -13,6 +13,7 @@ import frc.robot.presets.Animation2720_Red;
 import frc.robot.presets.AnimationRevUp;
 import frc.robot.presets.NoteAnimation;
 import frc.robot.presets.AutoTimerFrames;
+import frc.robot.presets.PercentMotorSpeed;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -77,7 +78,7 @@ public class runMatrixAnimation extends SequentialCommandGroup {
       NoteAnimation.frame17_NoteAnimation,
       NoteAnimation.frame18_NoteAnimation,
       NoteAnimation.frame19_NoteAnimation
-      };
+  };
 
   Color[][] autoTimerAnimation = {
 
@@ -97,6 +98,20 @@ public class runMatrixAnimation extends SequentialCommandGroup {
       AutoTimerFrames.frame14_AutoTimer,
       AutoTimerFrames.frame15_AutoTimer
 
+  };
+
+  Color[][] percentMotorSpeed = {
+
+      PercentMotorSpeed.frame1_10per,
+      PercentMotorSpeed.frame2_20per,
+      PercentMotorSpeed.frame3_30per,
+      PercentMotorSpeed.frame4_40per,
+      PercentMotorSpeed.frame5_50per,
+      PercentMotorSpeed.frame6_60per,
+      PercentMotorSpeed.frame7_70per,
+      PercentMotorSpeed.frame8_80per,
+      PercentMotorSpeed.frame9_90per,
+      PercentMotorSpeed.frame10_100per
 
   };
 
@@ -104,9 +119,9 @@ public class runMatrixAnimation extends SequentialCommandGroup {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    for (int i = 0; i < noteAnimation.length; ++i) {
+    for (int i = 0; i < percentMotorSpeed.length; ++i) {
       addCommands(
-          new setMatrix(noteAnimation[i], m_leds),
+          new setMatrix(percentMotorSpeed[i], m_leds),
           new WaitCommand(0.05));
     }
   }
