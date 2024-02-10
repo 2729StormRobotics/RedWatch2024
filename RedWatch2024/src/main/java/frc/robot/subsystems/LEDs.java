@@ -33,7 +33,7 @@ public class LEDs extends SubsystemBase {
 
     // Game piece colors
     public static final Color yellow = new Color(242, 60, 0);
-    public static final Color purple = new Color(184, 0, 185);
+    public static final Color purple = new Color(204, 0, 205);
 
     // Indicator colors
     public static final Color white = new Color(255, 230, 220);
@@ -42,6 +42,7 @@ public class LEDs extends SubsystemBase {
     public static final Color orange = new Color(255, 25, 0);
     public static final Color skin = new Color(169, 125, 100);
   
+    
     
     public LEDs() {
         CANdleConfiguration candleConfiguration = new CANdleConfiguration();
@@ -63,8 +64,8 @@ public class LEDs extends SubsystemBase {
     public Command defaultCommand() {
         // setBrightness(1);
         // return new runMatrixAnimation(this);
-        return new ParallelCommandGroup(
-                runOnce(() -> {LEDSegment.Underglow.setRainbowAnimation(1);}),
+        return new SequentialCommandGroup(
+                runOnce(() -> {LEDSegment.Underglow.setFadeAnimation(new Color(46, 0, 0), 1);}),
                 new runMatrixAnimation(this, matrixPresets.rampUpAnimation)
               );
         
@@ -84,8 +85,8 @@ public class LEDs extends SubsystemBase {
         // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
         MainStatusLEDs(0,7,0, main_candle),
         MatrixStatusLEDs(0,7,0, matrix_candle),
-        Underglow(7,100,1, main_candle),
-        MainStrip(107, 100, 2, main_candle),
+        Underglow(7,400,1, main_candle),
+        MainStrip(307, 100, 2, main_candle),
         Matrix(7,250,3, matrix_candle);
         // MAIN STRIP SHOULD BE STARTING AT INDEX 8, leave at 0 when testing
 

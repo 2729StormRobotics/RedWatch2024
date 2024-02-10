@@ -6,6 +6,7 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 
@@ -23,17 +24,19 @@ public class ScoringSequence extends SequentialCommandGroup {
   private final Indexer m_indexer;
   private final Shooter m_shooter; 
   private final double m_angle;
+  private final LEDs m_leds;
 
   /** Creates a new AutoScore. */
-  public ScoringSequence(double angle, Shooter shooter, Indexer indexer) {
+  public ScoringSequence(double angle, Shooter shooter, Indexer indexer, LEDs leds) {
     m_indexer = indexer;
     m_shooter = shooter;
     m_angle = angle;
+    m_leds = leds;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new PivotAndRev(m_shooter, m_angle),
-      new FeedAndShoot(m_shooter, m_indexer)
+      new PivotAndRev(m_shooter, m_angle, m_leds),
+      new FeedAndShoot(m_shooter, m_indexer, m_leds)
     );
   }
 }
