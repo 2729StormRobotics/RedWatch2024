@@ -188,10 +188,10 @@ public static final class DriveConstants {
     public static final double kRightPivotOffset = 0;
 
     // Pivot PID values
-    public static final double kPPivot = 0.005;
+    public static double kPPivot = 0.005;
     public static final double kIPivot = 0;
     public static final double kDPivot = 0;
-    public static final double kMaxPivotVelocity = 45; // Measured in degrees/s
+    public static double kMaxPivotVelocity = 45; // Measured in degrees/s
     public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
     public static final double kPivotTolerance = 1; // degrees
 

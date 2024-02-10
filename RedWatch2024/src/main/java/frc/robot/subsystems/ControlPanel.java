@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.util.Map;
+
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -13,12 +15,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ControlPanelConstants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.commands.Shooter.Pivot;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.commands.LEDs.setAllLEDs;
 import frc.robot.commands.LEDs.setDefault;
-
-import java.util.Map;
+import frc.robot.commands.Shooter.Pivot;
 
 public class ControlPanel extends SubsystemBase {
 
@@ -34,6 +35,9 @@ public class ControlPanel extends SubsystemBase {
   private final GenericEntry setPivotEncoder;
   private final GenericEntry setIntakeSpeeds;
   private final GenericEntry setIndexerSpeeds;
+
+  private final GenericEntry setkPPivot;
+  private final GenericEntry setkMaxPivotVelocity;
 
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
@@ -77,7 +81,7 @@ public class ControlPanel extends SubsystemBase {
     m_shooterStatus = m_controlpanelTab.getLayout("Telescoping Arm Status", BuiltInLayouts.kList)
       .withProperties(Map.of("Label position", "TOP"))
       .withPosition(10, 0)
-      .withSize(1, 4);
+      .withSize(1, 7);
 
     // Drivetrain
     m_drivetrainStatus.addDouble("Average Speed", () -> m_drivetrain.getTurnRate()); // How fast the robot is
@@ -97,6 +101,9 @@ public class ControlPanel extends SubsystemBase {
     setPivotEncoder = m_shooterStatus.add("Pivot Encoder Input", m_shooter.getPivotAngle()).getEntry();
     m_shooterStatus.add("Pivot to Input", new Pivot(m_shooter, setPivotEncoder.get().getDouble()));  
     m_shooterStatus.addNumber("Flywheel RPM", () -> m_shooter.getAverageRPM());
+    setkPPivot = m_shooterStatus.add("kPPivot", ShooterConstants.kPPivot).getEntry();
+    setkMaxPivotVelocity = m_shooterStatus.add("kMaxPivotVelocity", ShooterConstants.kMaxPivotVelocity).getEntry();
+    m_shooterStatus.add("Set PID Values", runOnce(() -> {ShooterConstants.kPPivot = setkPPivot.get().getDouble(); ShooterConstants.kMaxPivotVelocity = setkMaxPivotVelocity.get().getDouble(); }));
 
     // Intake
     m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
