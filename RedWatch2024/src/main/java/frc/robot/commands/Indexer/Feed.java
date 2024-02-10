@@ -4,10 +4,7 @@
 
 package frc.robot.commands.Indexer;
 
-import edu.wpi.first.math.Matrix;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.LEDs.runMatrixAnimation;
-import frc.robot.presets.matrixPresets;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.LEDSegment;
@@ -52,6 +49,7 @@ public class Feed extends Command {
   public boolean isFinished() {
     if(!m_indexer.isNotePresent()) {
       LEDSegment.MainStrip.setColor(LEDs.green);
+      // LEDSegment.Matrix.runMatrixAnimation(LEDs);
       return !m_indexer.isNotePresent();
     }
     return !m_indexer.isNotePresent();

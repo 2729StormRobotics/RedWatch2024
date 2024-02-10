@@ -7,7 +7,7 @@ public class PercentMotorSpeed {
     public static final Color black = new Color(0, 0, 0);
 
     public static final Color red1 = new Color(255, 0, 0);
-    public static final Color red2 = new Color(2, 65, 0);
+    public static final Color red2 = new Color(247, 65, 0);
     public static final Color orange1 = new Color(247, 65, 0);
     public static final Color orange2 = new Color(247, 65, 0);
     public static final Color orange3 = new Color(247, 65, 0);
