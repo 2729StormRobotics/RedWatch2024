@@ -38,249 +38,243 @@ public class NoteAnimation {
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
+        orange, black, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, black, orange,
+        orange, black, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, black, orange,
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black 
+        black, black, black, black, black, black, black, black, black, black  
 
     };
 
     public static Color[] frame3_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, black, orange,
+        orange, orange, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, orange, orange,
+        orange, orange, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, orange, orange,
+        orange, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange 
+        black, black, black, black, black, black, black, black, black, black 
     };
 
 
     public static Color[] frame4_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange 
+        orange, black, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, orange, orange, 
+        black, orange, orange, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, orange, orange, black,
+        black, orange, orange, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, orange, orange, black,
+        orange, orange, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, black, orange, 
+        black, black, black, black, black, black, black, black, black, black
     };
 
     public static Color[] frame5_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange
+        orange, orange, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, orange, orange, orange, 
+        black, black, orange, orange, black, black, black, black, black, black,
+        black, black, black, black, black, black, orange, orange, black, black,
+        black, black, orange, orange, black, black, black, black, black, black,
+        black, black, black, black, black, black, orange, orange, black, black,
+        orange, orange, orange, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, orange, orange, 
+        black, black, black, black, black, black, black, black, black, black
     };
 
     public static Color[] frame6_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange
+        black, black, black, black, black, black, black, orange, orange, orange,
+        orange, orange, orange, orange, black, black, black, black, black, black,
+        black, black, black, black, black, orange, orange, black, black, black,
+        black, black, black, orange, orange, black, black, black, black, black,
+        black, black, black, black, black, orange, orange, black, black, black,
+        black, black, black, orange, orange, black, black, black, black, black,
+        black, black, black, black, black, black, orange, orange, orange, orange,
+        orange, orange, orange, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, black, black
+
     };
 
     public static Color[] frame7_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange
+        orange, orange, orange, orange, black, black, black, black, black, black,
+        black, black, black, black, black, orange, orange, orange, orange, orange,
+        black, black, black, black, orange, orange, black, black, black, black,
+        black, black, black, black, orange, orange, black, black, black, black,
+        black, black, black, black, orange, orange, black, black, black, black,
+        black, black, black, black, orange, orange, black, black, black, black,
+        orange, orange, orange, orange, orange, black, black, black, black, black,
+        black, black, black, black, black, black, orange, orange, orange, orange,
+        black, black, black, black, black, black, black, black, black, black
+
     };
 
     public static Color[] frame8_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange
+        black, orange, orange, orange, orange, black, black, black, black, black,
+        black, black, black, black, orange, orange, orange, orange, orange, orange,
+        orange, black, black, black, black, orange, orange, black, black, black,
+        black, black, black, orange, orange, black, black, black, black, orange,
+        orange, black, black, black, black, orange, orange, black, black, black,
+        black, black, black, orange, orange, black, black, black, black, orange,
+        orange, orange, orange, orange, orange, orange, black, black, black, black,
+        black, black, black, black, black, orange, orange, orange, orange, black,
+        black, black, black, black, black, black, black, black, black, black
     };
 
     public static Color[] frame9_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange
+        black, black, orange, orange, orange, orange, black, black, black, black,
+        black, black, black, orange, orange, orange, orange, orange, orange, black, 
+        orange, orange, black, black, black, black, orange, orange, black, black,
+        black, black, orange, orange, black, black, black, black, orange, orange,
+        orange, orange, black, black, black, black, orange, orange, black, black,
+        black, black, orange, orange, black, black, black, black, orange, orange,
+        black, orange, orange, orange, orange, orange, orange, black, black, black,
+        black, black, black, black, orange, orange, orange, orange, black, black,
+        black, black, black, black, black, black, black, black, black, black
+
     };
 
      public static Color[] frame10_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange
+        black, black, black, orange, orange, orange, orange, black, black, black,
+        black, black, orange, orange, orange, orange, orange, orange, black, black, 
+        black, orange, orange, black, black, black, black, orange, orange, black, 
+        black, orange, orange, black, black, black, black, orange, orange, black, 
+        black, orange, orange, black, black, black, black, orange, orange, black, 
+        black, orange, orange, black, black, black, black, orange, orange, black, 
+        black, black, orange, orange, orange, orange, orange, orange, black, black, 
+        black, black, black, orange, orange, orange, orange, black, black, black,
+        black, black, black, black, black, black, black, black, black, black 
+
     };
 
 
     public static Color[] frame11_NoteAnimation = {
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black
+        black, black, black, black, black, black, black, black, black, black, 
+        black, black, black, black, orange, orange, orange, orange, black, black, 
+        black, orange, orange, orange, orange, orange, orange, black, black, black, 
+        black, black, orange, orange, black, black, black, black, orange, orange,
+        orange, orange, black, black, black, black, orange, orange, black, black, 
+        black, black, orange, orange, black, black, black, black, orange, orange, 
+        orange, orange, black, black, black, black, orange, orange, black, black, 
+        black, black, black, orange, orange, orange, orange, orange, orange, black, 
+        black, black, orange, orange, orange, orange, black, black, black, black, 
+        black, black, black, black, black, black, black, black, black, black
     };
 
 
     public static Color[] frame12_NoteAnimation = {
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        black, black, black, black, black, black, black, black, black, black
+        black, black, black, black, black, black, black, black, black, black, 
+        black, black, black, black, black, orange, orange, orange, orange, black, 
+        orange, orange, orange, orange, orange, orange, black, black, black, black, 
+        black, black, black, orange, orange, black, black, black, black, orange,
+        orange, black, black, black, black, orange, orange, black, black, black, 
+        black, black, black, orange, orange, black, black, black, black, orange,
+        orange, black, black, black, black, orange, orange, black, black, black, 
+        black, black, black, black, orange, orange, orange, orange, orange, orange,
+        black, orange, orange, orange, orange, black, black, black, black, black, 
+        black, black, black, black, black, black, black, black, black, black 
+
     };
 
     
     public static Color[] frame13_NoteAnimation = {
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black
+        black, black, black, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, orange, orange, orange, orange, 
+        orange, orange, orange, orange, orange, black, black, black, black, black, 
+        black, black, black, black, orange, orange, black, black, black, black, 
+        black, black, black, black, orange, orange, black, black, black, black, 
+        black, black, black, black, orange, orange, black, black, black, black, 
+        black, black, black, black, orange, orange, black, black, black, black, 
+        black, black, black, black, black, orange, orange, orange, orange, orange,
+        orange, orange, orange, orange, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, black, black, black 
     };
 
 
     public static Color[] frame14_NoteAnimation = {
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black
+        black, black, black, black, black, black, black, orange, orange, orange,
+        orange, orange, orange, orange, black, black, black, black, black, black, 
+        black, black, black, black, black, orange, orange, black, black, black, 
+        black, black, black, orange, orange, black, black, black, black, black, 
+        black, black, black, black, black, orange, orange, black, black, black, 
+        black, black, black, orange, orange, black, black, black, black, black, 
+        black, black, black, black, black, black, orange, orange, orange, orange,
+        orange, orange, orange, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, black, black, black 
+
     };
 
 
     public static Color[] frame15_NoteAnimation = {
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, orange, orange, 
+        orange, orange, orange, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, orange, orange, black, black, 
+        black, black, orange, orange, black, black, black, black, black, black, 
+        black, black, black, black, black, black, orange, orange, black, black, 
+        black, black, orange, orange, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, orange, orange, orange, 
+        orange, orange, black, black, black, black, black, black, black, black, 
         black, black, black, black, black, black, black, black, black, black
     };
 
 
     public static Color[] frame16_NoteAnimation = {
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black
+        black, black, black, black, black, black, black, black, black, orange, 
+        orange, orange, black, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, orange, orange, black, 
+        black, orange, orange, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, orange, orange, black,
+        black, orange, orange, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, black, orange, orange,
+        orange, black, black, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, black, black, black 
+
     };
 
 
     public static Color[] frame17_NoteAnimation = {
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
+        orange, black, black, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, black, orange, orange,
+        orange, orange, black, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, black, orange, orange, 
+        orange, orange, black, black, black, black, black, black, black, black, 
+        black, black, black, black, black, black, black, black, black, orange,
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black
+        black, black, black, black, black, black, black, black, black, black 
+
     };
 
 
     public static Color[] frame18_NoteAnimation = {
-        orange, orange, black, black, black, black, black, black, orange, orange,
-        orange, orange, orange, orange, orange, orange, orange, orange, orange, orange,
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, black, orange,
+        orange, black, black, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, black, black, orange,
+        orange, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black
     };
-
-
+    
+    
     public static Color[] frame19_NoteAnimation = {
-        black, orange, orange, orange, orange, orange, orange, orange, orange, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, black, black, black
-    };
-    
-    
-    public static Color[] frame20_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
         black, black, black, black, black, black, black, black, black, black,
