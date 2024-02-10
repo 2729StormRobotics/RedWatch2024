@@ -11,6 +11,7 @@ import frc.robot.subsystems.LEDs.Color;
 import frc.robot.presets.matrixPresets;
 import frc.robot.presets.Animation2720_Red;
 import frc.robot.presets.AnimationRevUp;
+import frc.robot.presets.NoteAnimation;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -54,13 +55,36 @@ public class runMatrixAnimation extends SequentialCommandGroup {
     AnimationRevUp.frame9_RevUp,
     AnimationRevUp.frame10_RevUp
   };
+  Color[][] noteAnimation = {
+    
+    NoteAnimation.frame1_NoteAnimation,
+    NoteAnimation.frame2_NoteAnimation,
+    NoteAnimation.frame3_NoteAnimation,
+    NoteAnimation.frame4_NoteAnimation,
+    NoteAnimation.frame5_NoteAnimation,
+    NoteAnimation.frame6_NoteAnimation,
+    NoteAnimation.frame7_NoteAnimation,
+    NoteAnimation.frame8_NoteAnimation,
+    NoteAnimation.frame9_NoteAnimation,
+    NoteAnimation.frame10_NoteAnimation,
+    NoteAnimation.frame11_NoteAnimation,
+    NoteAnimation.frame12_NoteAnimation,
+    NoteAnimation.frame13_NoteAnimation,
+    NoteAnimation.frame14_NoteAnimation,
+    NoteAnimation.frame15_NoteAnimation,
+    NoteAnimation.frame16_NoteAnimation,
+    NoteAnimation.frame17_NoteAnimation,
+    NoteAnimation.frame18_NoteAnimation,
+    NoteAnimation.frame19_NoteAnimation,
+    NoteAnimation.frame20_NoteAnimation
+  };
   public runMatrixAnimation(LEDs m_leds) {
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    for (int i = 0; i < revUpAnimation.length; ++i) {
+    for (int i = 0; i < noteAnimation.length; ++i) {
       addCommands(
-        new setMatrix(revUpAnimation[i], m_leds),
+        new setMatrix(noteAnimation[i], m_leds),
         new WaitCommand(0.05)
       );
     }
