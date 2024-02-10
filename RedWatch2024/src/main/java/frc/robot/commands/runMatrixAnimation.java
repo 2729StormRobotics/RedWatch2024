@@ -76,9 +76,8 @@ public class runMatrixAnimation extends SequentialCommandGroup {
       NoteAnimation.frame16_NoteAnimation,
       NoteAnimation.frame17_NoteAnimation,
       NoteAnimation.frame18_NoteAnimation,
-      NoteAnimation.frame19_NoteAnimation,
-      NoteAnimation.frame20_NoteAnimation
-  };
+      NoteAnimation.frame19_NoteAnimation
+      };
 
   Color[][] autoTimerAnimation = {
 

@@ -90,14 +90,14 @@ public class NoteAnimation {
 
     public static Color[] frame6_NoteAnimation = {
         black, black, black, black, black, black, black, black, black, black,
-        black, black, black, black, black, black, black, orange, orange, orange,
-        orange, orange, orange, orange, black, black, black, black, black, black,
-        black, black, black, black, black, orange, orange, black, black, black,
-        black, black, black, orange, orange, black, black, black, black, black,
-        black, black, black, black, black, orange, orange, black, black, black,
-        black, black, black, orange, orange, black, black, black, black, black,
-        black, black, black, black, black, black, orange, orange, orange, orange,
         orange, orange, orange, black, black, black, black, black, black, black,
+        black, black, black, black, black, black, orange, orange, orange, orange,
+        black, black, black, orange, orange, black, black, black, black, black,
+        black, black, black, black, black, orange, orange, black, black, black,
+        black, black, black, orange, orange, black, black, black, black, black,
+        black, black, black, black, black, orange, orange, black, black, black,
+        orange, orange, orange, orange, black, black, black, black, black, black,
+        black, black, black, black, black, black, black, orange, orange, orange,
         black, black, black, black, black, black, black, black, black, black
 
     };

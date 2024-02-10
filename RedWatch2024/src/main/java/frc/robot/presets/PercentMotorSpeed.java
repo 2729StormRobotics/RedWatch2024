@@ -7,15 +7,15 @@ public class PercentMotorSpeed {
     public static final Color black = new Color(0, 0, 0);
 
     public static final Color red1 = new Color(255, 0, 0);
-    public static final Color red2 = new Color(247, 65, 0);
-    public static final Color orange1 = new Color(247, 65, 0);
-    public static final Color orange2 = new Color(247, 65, 0);
-    public static final Color orange3 = new Color(247, 65, 0);
-    public static final Color yellow1 = new Color(247, 65, 0);
-    public static final Color green1 = new Color(247, 65, 0);
-    public static final Color green2 = new Color(247, 65, 0);
-    public static final Color green3 = new Color(247, 65, 0);
-    public static final Color green4 = new Color(247, 65, 0);
+    public static final Color red2 = new Color(254, 68, 0);
+    public static final Color orange1 = new Color(248, 102, 0);
+    public static final Color orange2 = new Color(238, 130, 0);
+    public static final Color orange3 = new Color(223, 155, 0);
+    public static final Color yellow1 = new Color(205, 178, 0);
+    public static final Color green1 = new Color(182, 199, 0);
+    public static final Color green2 = new Color(152, 219, 0);
+    public static final Color green3 = new Color(111, 237, 0);
+    public static final Color green4 = new Color(0, 255, 0);
 
     public static Color[] frame1_10per = {
             black, black, black, black, black, black, black, black, black, black,
