@@ -4,29 +4,31 @@
 
 package frc.robot.commands.Vision;
 
-import frc.robot.Constants;
-import frc.robot.Constants.*;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Vision;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Vision;
 
 public class NoteAlign extends Command {
+  /** Creates a new RotationAllign. */
+  Vision m_vision; 
+  Drivetrain m_driveSubsystem;
+  XboxController m_driverController;
+  double turnError;
+  double turnPower;
 
-  private final Drivetrain m_drivetrain;
-  private final Vision m_vision;
-  private final XboxController m_driverController;
-
-  private double turnError;
-  private double turnPower;
-
-  /** Creates a new NoteAlign. */
-  public NoteAlign(Drivetrain drivetrain, Vision vision, XboxController driverController) {
-    m_drivetrain = drivetrain;
-    m_vision = vision;
-    m_driverController = driverController;
+  public NoteAlign(Drivetrain driveSubsystem, Vision vision, XboxController driverController) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_vision = vision; 
+    m_driveSubsystem = driveSubsystem;
+    m_driverController = driverController;
+    addRequirements(driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -40,13 +42,16 @@ public class NoteAlign extends Command {
   @Override
   public void execute() {
     turnError = m_vision.getNoteXSkew();
-    turnPower = turnError * VisionConstants.kPTurn;
+    turnPower = turnError * Constants.VisionConstants.kPTurn;
 
-    m_drivetrain.drive(
-      MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
-      MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
-      (-turnPower - MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband)),
-      true, true);
+    SmartDashboard.putNumber("turnpower", turnPower);
+    SmartDashboard.putNumber("turnerror", turnError);
+    m_driveSubsystem.drive(
+        MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
+        MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
+        (-turnPower),
+        false, true);
+
   }
 
   // Called once the command ends or is interrupted.
@@ -56,6 +61,7 @@ public class NoteAlign extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(turnError) < VisionConstants.kNoteTolerance);
+    return false;
+    // return (Math.abs(turnError) < Constants.VisionConstants.kTolerance);
   }
 }

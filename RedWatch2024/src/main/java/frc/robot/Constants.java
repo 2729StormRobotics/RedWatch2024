@@ -32,6 +32,7 @@ public final class Constants {
     public static final double kNoteTolerance = 50;
     public static final double kPX = 0.012;
     public static final double kPTurn = 0.012;
+    public static final double kTolerance = 2.0;
   }
 
   public static final class ModuleConstants {
