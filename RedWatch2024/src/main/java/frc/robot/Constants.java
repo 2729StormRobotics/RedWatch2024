@@ -42,12 +42,12 @@ public final class Constants {
 
 
   public static final class IndexerConstants {
-    // Assigns Indexer motor to port 
+    // Assigns Indexer moftor to port 
     public static final int kIndexMotorPort = 10;
     // Assigns Beam break sensor to port 1
-    public static final int kBeamBreakPort = 1;
+    public static final int kBeamBreakPort = 8;
     // Sets the indexer motor to 50% power
-    public static double kIndexerSpeed = 0.8;
+    public static double kIndexerSpeed = 0.3;
     // Sets the indexer motor stall limit to 45 amps
     public static final int kStallLimit = 45;
     // Sets the indexer motor current limit to 60 amps
@@ -179,10 +179,10 @@ public static final class DriveConstants {
     public static final double kPivotSpeedLimiter = 1; 
 
     // Make sure that the two pivot motors and two shooting motors rotate in opposite directions
-    public static final boolean kLeftFlywheelInverted = false;
+    public static final boolean kLeftFlywheelInverted = true;
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
-    public static final boolean kLeftPivotInverted = false;
-    public static final boolean kRightPivotInverted = !kLeftPivotInverted;
+    public static final boolean kLeftPivotInverted = true;
+    public static final boolean kRightPivotInverted = true;
 
     // Absolute encoder offsets
     public static final double kLeftPivotOffset = 0;
@@ -202,10 +202,10 @@ public static final class DriveConstants {
     public static final double kRPMTolerance = 50;
 
     // Flywheel Shooting values
-    public static final double kLeftRPM = 0;
-    public static final double kRightRPM = 0;
-    public static double kLeftPower = 0;
-    public static double kRightPower = 0;
+    public static final double kLeftRPM = 1000;
+    public static final double kRightRPM = 1000;
+    public static double kLeftPower = .75;
+    public static double kRightPower = .75;
 
     // Field and Robot Measurements
     // All units are in meters

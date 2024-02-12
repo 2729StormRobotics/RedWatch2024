@@ -27,6 +27,7 @@ public class IntakeThenLoad extends SequentialCommandGroup {
     addCommands(
       //will run the intake & indexer until the beambreak detects the note
       new ParallelDeadlineGroup(
+        
         new Load(m_indexer), //"deadline" commmand 
         new IntakeItem(m_intake) 
       ),

@@ -20,6 +20,8 @@ import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.PivotAndRev;
 import frc.robot.commandgroups.ScoringSequence;
+import frc.robot.commands.Indexer.Feed;
+import frc.robot.commands.Indexer.Load;
 import frc.robot.commands.Shooter.JoystickPivot;
 import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Shooter.SetRPM;
@@ -50,7 +52,7 @@ public class RobotContainer {
   private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
   private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
   private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);  
-  private final XboxController m_driverController = new XboxController(OperatorConstants.kDriveTranslatorPort);  
+  // private final XboxController m_driverController = new XboxController(OperatorConstants.kDriveTranslatorPort);  
 
   //add the joystick here
 
@@ -72,19 +74,18 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(
       new RunCommand(
         () -> m_drivetrain.drive(
-          -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
-          // -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-          // -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-          // -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
+          // -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
+          // -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
+          // -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
 
     //manual pivot control
-    m_shooter.setDefaultCommand(
-      new JoystickPivot((m_weaponsController.getLeftY())*0.6, m_shooter)
-    );
+     m_shooter.setDefaultCommand(
+      new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.3), m_shooter));
     
   }
 
@@ -99,14 +100,18 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //testing button
-    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new SetPower(m_shooter, 0, 0));
+    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new SetPower(m_shooter,.2, .2));
+  
+    //load
+    new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Load(m_indexer));
+    // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Feed(m_indexer));
+
+    // feed
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
 
 
-    // // feed
-    // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
-
-    // // intake
-    // new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
+    // intake
+    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
     
     // // // scoring 
     // // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer));

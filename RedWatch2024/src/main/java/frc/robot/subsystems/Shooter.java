@@ -83,7 +83,7 @@ public class Shooter extends SubsystemBase {
 
   public void stopShooterMotors() {
     m_leftFlywheel.set(0);
-    m_rightPivot.set(0);
+    m_rightFlywheel.set(0);
   }
 
   /*
@@ -107,7 +107,7 @@ public class Shooter extends SubsystemBase {
 
   // returns pivot angle of shooter in degrees
   public double getPivotAngle() {
-    return m_PivotEncoder.getPosition() * 360;
+    return m_PivotEncoder.getPosition() * 360 * 22/54;
   }
 
   /*

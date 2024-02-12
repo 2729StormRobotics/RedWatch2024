@@ -32,13 +32,13 @@ public class Indexer extends SubsystemBase {
   }
     // Determines whether note is detected or not
   public boolean isNotePresent() {
-      return !m_NoteDectector.get();
+      return m_NoteDectector.get();
   }
    
   //PID of motor
   public void initMotor(boolean invert){
     this.m_IndexerMotor.restoreFactoryDefaults();
-    this.m_IndexerMotor.setIdleMode(com.revrobotics.CANSparkMax.IdleMode.kCoast);
+    this.m_IndexerMotor.setIdleMode(com.revrobotics.CANSparkMax.IdleMode.kBrake);
     this.m_IndexerMotor.setSmartCurrentLimit(kCurrentLimit);
     this.m_IndexerMotor.setInverted(invert);
     this.m_IndexerMotor.setSmartCurrentLimit(kStallLimit);
