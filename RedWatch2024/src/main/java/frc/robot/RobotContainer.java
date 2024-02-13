@@ -70,7 +70,7 @@ public class RobotContainer {
   
     //switch to note align
     new JoystickButton(m_driverController, Button.kY.value)
-      .toggleOnTrue(new NoteAlign(m_drivetrain, m_vision, m_driverController));
+      .whileTrue(new NoteAlign(m_drivetrain, m_vision, m_driverController));
   }
 
   /**

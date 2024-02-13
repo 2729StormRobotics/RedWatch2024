@@ -42,13 +42,13 @@ public class NoteAlign extends Command {
   @Override
   public void execute() {
     turnError = m_vision.getNoteXSkew();
-    turnPower = turnError * Constants.VisionConstants.kPTurn;
+    turnPower = turnError * Constants.VisionConstants.kPNoteTurn;
 
     SmartDashboard.putNumber("turnpower", turnPower);
     SmartDashboard.putNumber("turnerror", turnError);
     m_driveSubsystem.drive(
-        MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
-        MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
+        -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
+        -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
         (-turnPower),
         false, true);
 
