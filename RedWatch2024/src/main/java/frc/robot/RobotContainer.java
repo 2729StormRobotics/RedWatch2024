@@ -19,22 +19,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
-import frc.robot.commandgroups.PivotAndRev;
-import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commands.Meltdown;
-import frc.robot.commands.Indexer.Feed;
-import frc.robot.commands.Indexer.Load;
-import frc.robot.commands.Shooter.JoystickPivot;
 import frc.robot.commands.Shooter.Pivot;
-import frc.robot.commands.Shooter.SetPower;
-import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -80,9 +71,9 @@ public class RobotContainer {
           // -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*1, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
 
@@ -110,13 +101,29 @@ public class RobotContainer {
     // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Feed(m_indexer));
 
     // feed
-    // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
 
 
     // intake
-    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 26));
-    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new InstantCommand(() -> m_shooter.setPivotSpeed(0)));
-    new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_intake, m_drivetrain, m_indexer));
+    new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
+
+    //pivot
+    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 47));
+
+    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new Meltdown(m_shooter, m_intake, m_drivetrain, m_indexer));
+
+    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new InstantCommand(() -> {m_indexer.runIndexer(-0.7);}));
+
+
+
+    // new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new InstantCommand(() -> {
+    //   m_indexer.stop();
+    //   m_intake.stopIntake();
+    //   m_shooter.stopShooterMotors();
+    //   m_shooter.stopPivotMotors();
+    // }));
+
+    // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new InstantCommand(() -> m_shooter.setPivotSpeed(0)));
 
     // // // scoring 
     // // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer));
@@ -124,8 +131,8 @@ public class RobotContainer {
     // // // Pivor and Rev
     // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(m_shooter, 50));
     
-    // // reset gyro
-    // new JoystickButton(m_driverController, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
+    // reset gyro
+    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
 
 
 

@@ -5,12 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
-public class Meltdown extends Command {
+public class Meltdown extends InstantCommand {
   /** Creates a new Meltdown. */
   private final Shooter m_shooter;
   private final Intake m_intake;
@@ -22,10 +23,9 @@ public class Meltdown extends Command {
     m_drivetrain = drivetrain;
     m_indexer = indexer;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(shooter);
-    addRequirements(intake);
-    addRequirements(drivetrain);
-    addRequirements(indexer);
+    addRequirements(m_shooter);
+    addRequirements(m_intake);
+    addRequirements(m_indexer);
   }
 
   // Called when the command is initially scheduled.
@@ -34,7 +34,12 @@ public class Meltdown extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_indexer.stop();
+      m_intake.stopIntake();
+      m_shooter.stopShooterMotors();
+      m_shooter.stopPivotMotors();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
