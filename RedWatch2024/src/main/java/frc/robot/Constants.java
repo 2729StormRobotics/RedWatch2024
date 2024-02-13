@@ -47,7 +47,7 @@ public final class Constants {
     // Assigns Beam break sensor to port 1
     public static final int kBeamBreakPort = 8;
     // Sets the indexer motor to 50% power
-    public static double kIndexerSpeed = 0.3;
+    public static double kIndexerSpeed = 0.7;
     // Sets the indexer motor stall limit to 45 amps
     public static final int kStallLimit = 45;
     // Sets the indexer motor current limit to 60 amps
@@ -189,10 +189,10 @@ public static final class DriveConstants {
     public static final double kRightPivotOffset = 0;
 
     // Pivot PID values
-    public static double kPPivot = 0.005;
+    public static double kPPivot = 0.0125;
     public static final double kIPivot = 0;
     public static final double kDPivot = 0;
-    public static double kMaxPivotVelocity = 45; // Measured in degrees/s
+    public static double kMaxPivotVelocity = 10; // Measured in degrees/s
     public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
     public static final double kPivotTolerance = 1; // degrees
 

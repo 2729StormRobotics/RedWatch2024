@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -20,9 +21,11 @@ import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.PivotAndRev;
 import frc.robot.commandgroups.ScoringSequence;
+import frc.robot.commands.Meltdown;
 import frc.robot.commands.Indexer.Feed;
 import frc.robot.commands.Indexer.Load;
 import frc.robot.commands.Shooter.JoystickPivot;
+import frc.robot.commands.Shooter.Pivot;
 import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.subsystems.ControlPanel;
@@ -85,7 +88,7 @@ public class RobotContainer {
 
     //manual pivot control
      m_shooter.setDefaultCommand(
-      new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.3), m_shooter));
+      new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.15), m_shooter));
     
   }
 
@@ -100,19 +103,21 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //testing button
-    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new SetPower(m_shooter,.2, .2));
+    // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new SetPower(m_shooter,.2, .2));
   
     //load
-    new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Load(m_indexer));
+    // new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Load(m_indexer));
     // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Feed(m_indexer));
 
     // feed
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
+    // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
 
 
     // intake
-    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
-    
+    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 26));
+    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new InstantCommand(() -> m_shooter.setPivotSpeed(0)));
+    new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_intake, m_drivetrain, m_indexer));
+
     // // // scoring 
     // // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer));
 
