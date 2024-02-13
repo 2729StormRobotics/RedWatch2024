@@ -9,6 +9,7 @@ import frc.robot.commands.Vision.NoteAlign;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,6 +29,11 @@ public class RobotContainer {
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final Vision m_vision = new Vision();
 
+  private final double m_rotationMultiplier = 1;
+  private final double m_translationMultiplier = 0.6;
+  private final Joystick m_translator = new Joystick(1);
+  private final Joystick m_rotator = new Joystick(2);
+
   // Replace with CommandPS4Controller or CommandJoystick if needed
   XboxController m_driverController = new XboxController(OperatorConstants.kDriverControllerPort);
 
@@ -42,9 +48,9 @@ public class RobotContainer {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_drivetrain.drive(
-                -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_translator.getY()*m_translationMultiplier, OperatorConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_translator.getX()*m_translationMultiplier, OperatorConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_rotator.getX()*m_rotationMultiplier, OperatorConstants.kDriveDeadband),
                 true, true),
             m_drivetrain));
   }
@@ -60,17 +66,17 @@ public class RobotContainer {
    */
   private void configureBindings() {
     //locks wheels
-    new JoystickButton(m_driverController, Button.kX.value)
+    new JoystickButton(m_translator, Button.kX.value)
         .whileTrue(new RunCommand(
             () -> m_drivetrain.setX(),
             m_drivetrain));
 
     //zero heading 
-    new JoystickButton(m_driverController, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
+    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
   
     //switch to note align
-    new JoystickButton(m_driverController, Button.kY.value)
-      .whileTrue(new NoteAlign(m_drivetrain, m_vision, m_driverController));
+    new JoystickButton(m_translator, Button.kY.value)
+      .whileTrue(new NoteAlign(m_drivetrain, m_vision, m_translator));
   }
 
   /**

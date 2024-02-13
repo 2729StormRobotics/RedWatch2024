@@ -5,6 +5,7 @@
 package frc.robot.commands.Vision;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -19,11 +20,14 @@ public class NoteAlign extends Command {
   /** Creates a new RotationAllign. */
   Vision m_vision; 
   Drivetrain m_driveSubsystem;
-  XboxController m_driverController;
+  Joystick m_driverController;
   double turnError;
   double turnPower;
 
-  public NoteAlign(Drivetrain driveSubsystem, Vision vision, XboxController driverController) {
+  private final double m_rotationMultiplier = 1;
+  private final double m_translationMultiplier = 0.6;
+
+  public NoteAlign(Drivetrain driveSubsystem, Vision vision, Joystick driverController) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_vision = vision; 
     m_driveSubsystem = driveSubsystem;
@@ -47,8 +51,8 @@ public class NoteAlign extends Command {
     SmartDashboard.putNumber("turnpower", turnPower);
     SmartDashboard.putNumber("turnerror", turnError);
     m_driveSubsystem.drive(
-        -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
-        -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
+      -MathUtil.applyDeadband(m_driverController.getY()*m_translationMultiplier, OperatorConstants.kDriveDeadband),
+      -MathUtil.applyDeadband(m_driverController.getX()*m_translationMultiplier, OperatorConstants.kDriveDeadband),
         (-turnPower),
         false, true);
 
