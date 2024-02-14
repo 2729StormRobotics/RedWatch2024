@@ -1,7 +1,7 @@
 package frc.robot.presets;
 import frc.robot.subsystems.LEDs.Color;;
 public class fireAnimations {
-    Color[] fire_frame_0 = {
+    public static Color[] fire_frame_0 = {
         new Color(  0,  8,  6), new Color(  0,  2,  4), new Color(  3,  3, 11), new Color(  3,  0,  2), new Color(  7,  0,  0), new Color( 15,  4,  0), new Color( 11,  0,  0), new Color( 14,  0,  0), new Color( 10,  0,  4), new Color( 14,  0, 18),
         new Color( 10,  0,  0), new Color( 37, 22, 17), new Color( 30, 13,  0), new Color( 49, 33,  0), new Color( 14,  0,  0), new Color( 18,  5,  0), new Color(  7,  0,  0), new Color(  2,  0,  6), new Color(  7, 11, 14), new Color(  0,  3,  2),
         new Color(  3,  1,  6), new Color(  4,  0,  4), new Color( 11,  0,  4), new Color( 20,  0,  0), new Color( 22,  0,  0), new Color( 81, 54,  1), new Color(188,163, 96), new Color(150,128, 68), new Color(125,106, 73), new Color( 24,  7,  0),
@@ -13,7 +13,7 @@ public class fireAnimations {
         new Color(  0,  2,  0), new Color(  0,  1,  0), new Color(  3,  0,  0), new Color(  6,  0,  2), new Color(  7,  0,  0), new Color(  8,  0,  0), new Color(  8,  0,  0), new Color(  8,  0,  0), new Color(  7,  0,  0), new Color(  7,  0,  0),
         new Color(  3,  0,  9), new Color(  3,  0,  9), new Color(  1,  0,  7), new Color(  0,  0,  5), new Color(  0,  0,  4), new Color(  0,  0,  2), new Color(  0,  1,  0), new Color(  0,  2,  0), new Color(  0,  4,  0), new Color(  0,  4,  0),
         };
-        Color[] fire_frame_1 = {
+        public Color[] fire_frame_1 = {
         new Color(  1,  0,  2), new Color(  6,  4,  7), new Color(  0,  0,  4), new Color(  0,  0,  0), new Color(  0,  1,  0), new Color(  6,  8,  0), new Color(  1,  1,  0), new Color(  3,  0,  0), new Color(  6,  0,  9), new Color( 12,  0, 19),
         new Color(  7,  0,  2), new Color( 20, 11,  6), new Color( 27, 19,  0), new Color(  8,  1,  0), new Color( 27, 20,  0), new Color( 13,  5,  0), new Color(  9,  2,  0), new Color(  4,  0,  0), new Color(  1,  0,  2), new Color(  2,  2,  4),
         new Color(  0,  0,  2), new Color(  5,  1,  2), new Color( 11,  0,  0), new Color( 21,  0,  0), new Color( 34,  6,  0), new Color(148,119, 61), new Color(133,110, 40), new Color(135,119, 57), new Color( 94, 84, 48), new Color( 12,  4,  0),
@@ -25,7 +25,7 @@ public class fireAnimations {
         new Color(  0,  0,  4), new Color(  0,  0,  2), new Color(  0,  0,  0), new Color(  1,  0,  0), new Color(  3,  0,  0), new Color(  6,  0,  0), new Color( 11,  0,  0), new Color( 23,  5,  1), new Color( 32, 11,  8), new Color( 24,  0,  0),
         new Color( 15,  0,  3), new Color( 17,  0, 10), new Color( 12,  0, 14), new Color(  4,  0,  8), new Color(  0,  0,  2), new Color(  0,  2,  0), new Color(  0,  3,  0), new Color(  0,  2,  0), new Color(  0,  0,  4), new Color(  0,  0,  5),
         };
-        Color[] fire_frame_2 = {
+        public Color[] fire_frame_2 = {
         new Color(  3,  0,  7), new Color(  7,  1, 11), new Color(  4,  0,  9), new Color(  4,  0,  5), new Color( 11,  3,  1), new Color(  4,  0,  0), new Color(  7,  4,  0), new Color(  0,  0,  0), new Color(  0,  0,  9), new Color(  5,  7, 22),
         new Color(  3,  0,  0), new Color(  4,  0,  0), new Color( 35, 27,  4), new Color( 11,  0,  0), new Color( 28, 14,  0), new Color( 15,  2,  0), new Color( 14,  0,  0), new Color( 14,  3,  9), new Color(  4,  0,  2), new Color(  3,  0,  2),
         new Color(  7,  2,  0), new Color( 13,  3,  1), new Color( 14,  0,  0), new Color( 20,  0,  0), new Color( 84, 56,  8), new Color(139,110, 44), new Color(118, 92, 17), new Color(163,140, 73), new Color( 86, 66, 29), new Color( 23,  5,  0),
@@ -37,7 +37,7 @@ public class fireAnimations {
         new Color(  0,  1,  0), new Color(  2,  1,  0), new Color(  4,  0,  0), new Color(  7,  0,  0), new Color( 11,  0,  0), new Color( 13,  0,  0), new Color( 19,  1,  0), new Color( 39, 21, 19), new Color( 15,  0,  0), new Color( 14,  0,  0),
         new Color(  6,  0, 11), new Color(  7,  0, 14), new Color( 14,  5, 24), new Color(  4,  0, 12), new Color(  3,  0,  5), new Color(  4,  3,  1), new Color(  1,  2,  0), new Color(  0,  2,  0), new Color(  0,  3,  0), new Color(  0,  2,  0),
         };
-        Color[] fire_frame_3 = {
+        public Color[] fire_frame_3 = {
         new Color(  0,  2,  0), new Color(  0,  0,  0), new Color(  4,  1, 10), new Color(  4,  0, 10), new Color(  4,  0,  4), new Color(  8,  2,  6), new Color(  5,  1,  2), new Color(  0,  0,  0), new Color(  0,  2,  0), new Color(  0,  3,  0),
         new Color(  8,  1,  0), new Color(  7,  0,  0), new Color( 18,  6,  0), new Color( 35, 21,  0), new Color( 14,  0,  0), new Color( 16,  0,  0), new Color(  8,  0,  0), new Color(  7,  0,  3), new Color(  1,  0,  0), new Color(  7,  8,  2),
         new Color(  4,  0,  0), new Color( 13,  3,  2), new Color( 17,  0,  0), new Color( 22,  0,  0), new Color( 53, 14,  0), new Color(116, 75, 23), new Color(193,155, 80), new Color(110, 75,  7), new Color( 64, 30,  2), new Color( 28,  0,  0),
@@ -49,7 +49,7 @@ public class fireAnimations {
         new Color(  0,  4,  3), new Color(  0,  1,  4), new Color(  0,  0,  5), new Color(  4,  0,  3), new Color(  6,  0,  0), new Color( 15,  8,  0), new Color( 30, 23,  0), new Color( 35, 28,  0), new Color(  7,  0,  0), new Color(  7,  0,  0),
         new Color(  0,  1,  0), new Color(  0,  1,  0), new Color(  2,  4,  0), new Color(  3,  6,  0), new Color(  0,  3,  0), new Color(  0,  2,  0), new Color(  0,  3,  6), new Color(  0,  3,  7), new Color(  0,  3,  2), new Color(  0,  5,  2),
         };
-        Color[] fire_frame_4 = {
+        public Color[] fire_frame_4 = {
         new Color(  3,  4,  0), new Color(  1,  0,  0), new Color( 10,  3, 19), new Color(  6,  0, 12), new Color( 11,  0,  4), new Color(  7,  0,  0), new Color(  6,  0,  0), new Color(  5,  1,  0), new Color(  0,  1,  0), new Color(  4,  9,  5),
         new Color(  4,  0,  0), new Color( 22, 16,  4), new Color( 12,  0,  0), new Color( 16,  0,  0), new Color( 21,  4,  0), new Color( 23,  5,  0), new Color( 14,  0,  8), new Color(  7,  0,  9), new Color(  3,  0,  0), new Color(  0,  1,  0),
         new Color(  3,  0,  0), new Color(  6,  0,  0), new Color( 16,  0,  4), new Color( 22,  0,  0), new Color( 81, 49,  0), new Color(150,116, 44), new Color(131, 96, 28), new Color( 81, 50,  0), new Color(113, 87, 62), new Color( 25,  3,  0),
@@ -61,7 +61,7 @@ public class fireAnimations {
         new Color(  4,  0,  5), new Color(  6,  0,  2), new Color( 10,  0,  0), new Color( 12,  0,  0), new Color( 14,  0,  0), new Color( 22,  5,  0), new Color( 33, 16,  0), new Color( 21,  5,  0), new Color( 19,  9,  0), new Color( 13,  5,  0),
         new Color(  1,  4,  0), new Color(  4,  7,  0), new Color(  0,  0,  4), new Color( 10,  7, 14), new Color(  6,  1,  5), new Color(  4,  0,  0), new Color(  7,  0,  0), new Color(  8,  1,  0), new Color(  6,  0,  0), new Color(  6,  0,  4),
         };
-        Color[] fire_frame_5 = {
+        public Color[] fire_frame_5 = {
         new Color(  0,  6,  5), new Color(  0,  1,  5), new Color(  0,  0, 12), new Color(  0,  0, 11), new Color(  1,  0,  5), new Color(  3,  1,  4), new Color(  0,  0,  0), new Color(  5,  6,  1), new Color(  1,  0,  0), new Color(  1,  0,  0),
         new Color(  6,  0,  0), new Color( 36, 28, 15), new Color( 17,  9,  0), new Color( 11,  0,  0), new Color( 25, 13,  0), new Color( 15,  4,  0), new Color(  6,  0,  2), new Color(  6,  1,  8), new Color(  0,  1,  0), new Color(  0,  4,  0),
         new Color(  6,  2,  0), new Color(  6,  0,  0), new Color( 10,  0,  0), new Color( 28,  5,  0), new Color(140,109, 80), new Color( 79, 45,  0), new Color( 34,  3,  0), new Color(151,125, 64), new Color(124,106, 68), new Color( 21,  7,  0),
@@ -73,7 +73,7 @@ public class fireAnimations {
         new Color(  0,  1,  5), new Color(  0,  1,  5), new Color(  5,  1,  2), new Color(  9,  2,  0), new Color( 10,  4,  0), new Color( 11,  6,  0), new Color( 11,  7,  0), new Color( 13,  7,  0), new Color( 14,  2,  0), new Color( 14,  0,  0),
         new Color(  6,  1,  0), new Color(  3,  4,  0), new Color(  0,  6,  0), new Color(  0,  8,  0), new Color(  0,  6,  0), new Color(  0,  5,  0), new Color(  1,  0,  0), new Color(  1,  0,  0), new Color(  0,  1,  4), new Color(  0,  1,  7),
         };
-        Color[] fire_frame_6 = {
+        public Color[] fire_frame_6 = {
         new Color(  0,  1,  0), new Color(  0,  1,  4), new Color(  4,  6, 19), new Color(  0,  0, 12), new Color(  0,  1,  8), new Color(  0,  1,  0), new Color(  0,  1,  0), new Color(  4,  4,  0), new Color(  3,  0,  0), new Color(  7,  4,  0),
         new Color(  8,  0,  0), new Color( 20,  8,  0), new Color( 42, 32,  7), new Color( 10,  0,  0), new Color( 10,  0,  0), new Color( 29, 19,  9), new Color( 18,  9, 12), new Color(  4,  0,  4), new Color(  3,  1,  2), new Color(  0,  0,  0),
         new Color(  8,  0,  0), new Color( 13,  0,  0), new Color( 21,  0,  0), new Color(117, 86, 66), new Color(126, 92, 47), new Color( 56, 20,  0), new Color(111, 76, 12), new Color(189,156,103), new Color(106, 76, 52), new Color( 28,  0,  0),
@@ -85,7 +85,7 @@ public class fireAnimations {
         new Color(  0,  1,  9), new Color(  0,  1,  6), new Color(  4,  0,  2), new Color( 11,  0,  0), new Color( 24,  1,  0), new Color( 25,  0,  0), new Color( 23,  0,  0), new Color( 28, 10,  0), new Color(  8,  0,  0), new Color(  6,  0,  0),
         new Color(  0,  2,  2), new Color(  0,  1,  2), new Color(  8,  6, 11), new Color(  6,  0,  4), new Color(  8,  0,  5), new Color( 10,  0,  7), new Color(  4,  0,  5), new Color(  1,  0,  5), new Color(  0,  2,  9), new Color(  0,  2,  8),
         };
-        Color[] fire_frame_7 = {
+        public Color[] fire_frame_7 = {
         new Color(  0,  5,  1), new Color(  0,  3,  2), new Color(  0,  1,  8), new Color(  1,  0,  5), new Color(  6,  0,  0), new Color( 17,  3,  3), new Color( 11,  0,  0), new Color( 13,  0,  0), new Color( 10,  0,  7), new Color( 15,  0, 19),
         new Color( 11,  0,  5), new Color( 28, 10, 10), new Color( 38, 21,  0), new Color( 51, 32,  2), new Color( 15,  0,  0), new Color( 15,  0,  0), new Color( 13,  4,  9), new Color(  1,  0,  5), new Color(  0,  3,  3), new Color(  0,  4,  0),
         new Color(  1,  3,  0), new Color(  2,  0,  1), new Color(  8,  0,  4), new Color( 88, 66, 68), new Color( 24,  0,  0), new Color( 89, 57,  8), new Color(188,162, 75), new Color(176,153, 73), new Color(110, 84, 59), new Color( 26,  0,  1),

@@ -4,6 +4,8 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.led.FireAnimation;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.LEDs;
@@ -14,6 +16,8 @@ import frc.robot.presets.AnimationRevUp;
 import frc.robot.presets.NoteAnimation;
 import frc.robot.presets.AutoTimerFrames;
 import frc.robot.presets.PercentMotorSpeed;
+import frc.robot.presets.RainbowAnimation;
+import frc.robot.presets.fireAnimations;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -113,6 +117,53 @@ public class runMatrixAnimation extends SequentialCommandGroup {
       PercentMotorSpeed.frame9_90per,
       PercentMotorSpeed.frame10_100per
 
+  };
+  Color[][] fireAnim = {
+    fireAnimations.fire_frame_0,
+    fireAnimations.fire_frame_1,
+    fireAnimations.fire_frame_2,
+    fireAnimations.fire_frame_3,
+    fireAnimations.fire_frame_4,
+    fireAnimations.fire_frame_5,
+    fireAnimations.fire_frame_6,
+    fireAnimations.fire_frame_7
+  };
+
+  Color[][] rainbowAnim = {
+    RainbowAnimation.gif_frame_4,
+    RainbowAnimation.gif_frame_8,
+    RainbowAnimation.gif_frame_12,
+    RainbowAnimation.gif_frame_16,
+    RainbowAnimation.gif_frame_20,
+    RainbowAnimation.gif_frame_24,
+    RainbowAnimation.gif_frame_28,
+    RainbowAnimation.gif_frame_32,
+    RainbowAnimation.gif_frame_36,
+    RainbowAnimation.gif_frame_40,
+    RainbowAnimation.gif_frame_44,
+    RainbowAnimation.gif_frame_48,
+    RainbowAnimation.gif_frame_52,
+    RainbowAnimation.gif_frame_56,
+    RainbowAnimation.gif_frame_60,
+    RainbowAnimation.gif_frame_64,
+    RainbowAnimation.gif_frame_68,
+    RainbowAnimation.gif_frame_72,
+    RainbowAnimation.gif_frame_76,
+    RainbowAnimation.gif_frame_80,
+    RainbowAnimation.gif_frame_84,
+    RainbowAnimation.gif_frame_88,
+    RainbowAnimation.gif_frame_92,
+    RainbowAnimation.gif_frame_96,
+    RainbowAnimation.gif_frame_100,
+    RainbowAnimation.gif_frame_104,
+    RainbowAnimation.gif_frame_108,
+    RainbowAnimation.gif_frame_112,
+    RainbowAnimation.gif_frame_116,
+    RainbowAnimation.gif_frame_120,
+    RainbowAnimation.gif_frame_124,
+    RainbowAnimation.gif_frame_128,
+    RainbowAnimation.gif_frame_132,
+    RainbowAnimation.gif_frame_136
   };
 
   public runMatrixAnimation(LEDs m_leds) {
