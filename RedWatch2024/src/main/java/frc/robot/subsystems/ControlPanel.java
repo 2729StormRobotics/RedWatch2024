@@ -11,7 +11,9 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ControlPanelConstants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
@@ -104,7 +106,7 @@ public class ControlPanel extends SubsystemBase {
     setkPPivot = m_shooterStatus.add("kPPivot", ShooterConstants.kPPivot).getEntry();
     setkMaxPivotVelocity = m_shooterStatus.add("kMaxPivotVelocity", ShooterConstants.kMaxPivotVelocity).getEntry();
     m_shooterStatus.add("Set PID Values", runOnce(() -> {ShooterConstants.kPPivot = setkPPivot.get().getDouble(); ShooterConstants.kMaxPivotVelocity = setkMaxPivotVelocity.get().getDouble(); }));
-
+    SmartDashboard.putNumber("Shooter Speeds", 0.5);
     // Intake
     m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
     setIntakeSpeeds = m_indexerStatus.add("Intake Speeds Input", IntakeConstants.kIntakeMotorSpeed).getEntry();
@@ -121,5 +123,8 @@ public class ControlPanel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Constants.ShooterConstants.kLeftPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
+    Constants.ShooterConstants.kRightPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
+
   }
 }
