@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.Map;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
@@ -46,8 +49,8 @@ public class Vision extends SubsystemBase {
     m_status.addNumber("note_x", () -> note_x);
     m_status.addNumber("note_y", () -> note_y);
     
-    table.getEntry("pipeline").setNumber(Constants.VisionConstants.kAprilTagPipeline);
-    table.getEntry("ledMode").setNumber(Constants.VisionConstants.kLightOffValue);
+    table.getEntry("pipeline").setNumber(VisionConstants.kAprilTagPipeline);
+    table.getEntry("ledMode").setNumber(VisionConstants.kLightOffValue);
   }
 
   public double xAlign() {
@@ -71,6 +74,7 @@ public class Vision extends SubsystemBase {
 
   public double getNoteYSkew() {
     return note_y;
+  }
 
   public void setPipeline(double pipeline) {
     table.getEntry("pipeline").setNumber(pipeline);
@@ -100,24 +104,24 @@ public class Vision extends SubsystemBase {
    */
 
   public double getSpeakerDistance() {
-    double deltaHeight = Constants.VisionConstants.speakerTagHeight - Constants.VisionConstants.limelightHeight;
-    double deltaAngle = Math.toRadians(Constants.VisionConstants.limelightAngle + getY());
+    double deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
+    double deltaAngle = Math.toRadians(VisionConstants.limelightAngle + getY());
     double dist = deltaHeight/Math.tan(deltaAngle);
     
     return dist;
   }
 
   public double getAmpDistance() {
-    double deltaHeight = Constants.VisionConstants.ampTagHeight - Constants.VisionConstants.limelightHeight;
-    double deltaAngle = Math.toRadians(Constants.VisionConstants.limelightAngle + getY());
+    double deltaHeight = VisionConstants.ampTagHeight - VisionConstants.limelightHeight;
+    double deltaAngle = Math.toRadians(VisionConstants.limelightAngle + getY());
     double dist = deltaHeight/Math.tan(deltaAngle);
     
     return dist;
   }
 
   public double getStageDistance() {
-    double deltaHeight = Constants.VisionConstants.stageTagHeight - Constants.VisionConstants.limelightHeight;
-    double deltaAngle = Math.toRadians(Constants.VisionConstants.limelightAngle + getY());
+    double deltaHeight = VisionConstants.stageTagHeight - VisionConstants.limelightHeight;
+    double deltaAngle = Math.toRadians(VisionConstants.limelightAngle + getY());
     double dist = deltaHeight/Math.tan(deltaAngle);
     
     return dist;

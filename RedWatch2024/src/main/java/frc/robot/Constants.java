@@ -38,31 +38,6 @@ public final class Constants {
     public static final double rotationMultiplier = 1;
   }
 
-  public static class VisionConstants {
-    public static final double kNoteTolerance = 50;
-    public static final double kPX = 0.012;
-    public static final double kPTurn = 0.012;
-    public static final double kPNoteTurn = 0.008;
-    public static final double kTolerance = 2.0;
-  }
-  
-
-
-  public static final class IndexerConstants {
-    // Assigns Indexer moftor to port 
-    public static final int kIndexMotorPort = 10;
-    // Assigns Beam break sensor to port 1
-    public static final int kBeamBreakPort = 8;
-    // Sets the indexer motor to 50% power
-    public static double kIndexerSpeed = 0.7;
-    // Sets the indexer motor stall limit to 45 amps
-    public static final int kStallLimit = 45;
-    // Sets the indexer motor current limit to 60 amps
-    public static final int kCurrentLimit = 60;
-  }
-
-
-
 public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
@@ -165,97 +140,6 @@ public static final class DriveConstants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
-
-  public static final class DriveConstants {
-    // Driving Parameters - Note that these are not the maximum capable speeds of
-    // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 4.8;
-    public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
-
-    public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
-    public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
-
-    // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(26.5);
-    // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(26.5);
-    // Distance between front and back wheels on robot
-    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-        new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-        new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-        new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
-
-    // Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
-    public static final double kFrontRightChassisAngularOffset = 0;
-    public static final double kBackLeftChassisAngularOffset = Math.PI;
-    public static final double kBackRightChassisAngularOffset = Math.PI / 2;
-
-    // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 4;
-    public static final int kRearLeftDrivingCanId = 6;
-    public static final int kFrontRightDrivingCanId = 2;
-    public static final int kRearRightDrivingCanId = 8;
-  
-  public static class IntakeConstants {
-    public static final int kIntakeMotor = 13;
-    public static double kIntakeMotorSpeed = 0.8;
-    public static double kEjectMotorSpeed = -0.8;
-  }
-  
-  public static class ShooterConstants {
-    // Motor ID/initialization valu
-    
-    public static final int kLeftPivotID = 12;
-    public static final int kRightPivotID = 11;
-    public static final int kLeftFlywheelID = 14;
-    public static final int kRightFlywheelID = 9;
-    public static final int kCurrentLimit = 45;
-
-    //manual control speed limiters 
-    public static final double kPivotSpeedLimiter = 1; 
-
-    // Make sure that the two pivot motors and two shooting motors rotate in opposite directions
-    public static final boolean kLeftFlywheelInverted = true;
-    public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
-    public static final boolean kLeftPivotInverted = true;
-    public static final boolean kRightPivotInverted = true;
-
-    // Absolute encoder offsets
-    public static final double kLeftPivotOffset = 0;
-    public static final double kRightPivotOffset = 0;
-
-    // Pivot PID values
-    public static double kPPivot = 0.0125;
-    public static final double kIPivot = 0;
-    public static final double kDPivot = 0;
-    public static double kMaxPivotVelocity = 10; // Measured in degrees/s
-    public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
-    public static final double kPivotTolerance = 1; // degrees
-
-    // Flywheel PID values
-    public static final double kMaxRPM = 6000;
-    public static final double kPShoot = 0;
-    public static final double kRPMTolerance = 50;
-
-    // Flywheel Shooting values
-    public static final double kLeftRPM = 1000;
-    public static final double kRightRPM = 1000;
-    public static double kLeftPower = .75;
-    public static double kRightPower = .75;
-
-    // Field and Robot Measurements
-    // All units are in meters
-    public static final double goalHeight = Units.inchesToMeters(78.129);
-    public static final double shooterLength = Units.inchesToMeters(12.01);
-    public static final double exitVelocity = 15;
-    public static final double g = 9.81;
-    public static final double k = -g/(2*Math.pow(exitVelocity, 2)); // substitution used in angle calculation
-
-    
-  }
     
   public static class VisionConstants {
     // Camera configuration
@@ -264,11 +148,11 @@ public static final class DriveConstants {
 
     // PID values for driving with vision
     public static final double kDistanceTolerance = 0;
-    public static final double kPX = 0;
+    public static final double kPX = 0.012;
     public static final double kSDrive = 0;
     public static final double kPY = 0;
     public static final double kTolerance = 0;
-    public static final double kPTurn = 0;
+    public static final double kPTurn = 0.012;
     public static final double kSTurn = 0;
     
     // Heights for detecting distance away from apriltag
@@ -280,13 +164,7 @@ public static final class DriveConstants {
     public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double aprilTagAlignTolerance = 1;
 
-  }
-  }
-  public static class ControlPanelConstants {
-		public static final String kShuffleboardTab = "Control Panel";
-	}
-  public static final class LightsConstants {
-    public static final int MAIN_PORT = 11;
-    public static final int MATRIX_PORT = 12;
+    public static final double kNoteTolerance = 2.0;
+    public static final double kPNoteTurn = 0.008;
   }
 }

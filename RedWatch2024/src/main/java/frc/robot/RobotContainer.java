@@ -21,15 +21,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commandgroups.FeedAndShoot;
-import frc.robot.commandgroups.IntakeThenLoad;
-import frc.robot.commands.Meltdown;
-import frc.robot.commands.Shooter.Pivot;
-import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -38,63 +31,25 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
-  private final Vision m_vision = new Vision();
+  private final Drivetrain m_drivetrain;
+  private final Vision m_vision;
 
-  private final double m_rotationMultiplier = 1;
-  private final double m_translationMultiplier = 0.6;
+  // private final LEDs m_leds;
+
   private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
   private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
   private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer() { 
+    m_vision = new Vision();
+    m_drivetrain = new Drivetrain();
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     // Configure the trigger bindings
     configureBindings();
 
     // Configure default commands
-    m_drivetrain.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-            () -> m_drivetrain.drive(
-                -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
-                true, true),
-            m_drivetrain));
-  private final Indexer m_indexer;
-  private final Intake m_intake;
-  private final Shooter m_shooter;
-  // private final Vision m_vision;
-  // private final LEDs m_leds;
-  private final Drivetrain m_drivetrain;
-  private final ControlPanel m_controlpanel;
-  
-  
-  private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
-  private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
-  private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);  
-  // private final XboxController m_driverController = new XboxController(OperatorConstants.kDriveTranslatorPort);  
-
-  //add the joystick here
-
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    m_indexer = new Indexer();
-    m_intake = new Intake();
-    m_shooter = new Shooter();
-    // m_vision = new Vision();
-    // m_leds = new LEDs();
-    m_drivetrain = new Drivetrain();
-    m_controlpanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter);
-    SmartDashboard.putData(CommandScheduler.getInstance());
-
-    configureBindings();
-
      //Joystick drive
     m_drivetrain.setDefaultCommand(
       new RunCommand(
@@ -106,12 +61,7 @@ public class RobotContainer {
           -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
           -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*1, OperatorConstants.kDriveDeadband),
           true, true),
-        m_drivetrain));
-
-    //manual pivot control
-     m_shooter.setDefaultCommand(
-      new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.15), m_shooter));
-    
+        m_drivetrain));  
   }
 
   /**
@@ -129,43 +79,6 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_drivetrain.setX(),
             m_drivetrain));
-    //testing button
-    // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new SetPower(m_shooter,.2, .2));
-  
-    //load
-    // new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Load(m_indexer));
-    // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Feed(m_indexer));
-
-    // feed
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
-
-
-    // intake
-    new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
-
-    //pivot
-    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 47));
-
-    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new Meltdown(m_shooter, m_intake, m_drivetrain, m_indexer));
-
-    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new InstantCommand(() -> {m_indexer.runIndexer(-0.7);}));
-
-
-
-    // new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new InstantCommand(() -> {
-    //   m_indexer.stop();
-    //   m_intake.stopIntake();
-    //   m_shooter.stopShooterMotors();
-    //   m_shooter.stopPivotMotors();
-    // }));
-
-    // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new InstantCommand(() -> m_shooter.setPivotSpeed(0)));
-
-    // // // scoring 
-    // // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer));
-
-    // // // Pivor and Rev
-    // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(m_shooter, 50));
     
     // reset gyro
     new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
