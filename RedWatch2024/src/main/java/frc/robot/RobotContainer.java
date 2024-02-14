@@ -38,63 +38,35 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
-  private final Vision m_vision = new Vision();
+  private final Drivetrain m_drivetrain;
+  private final Vision m_vision;
+  private final Indexer m_indexer;
+  private final Intake m_intake;
+  private final Shooter m_shooter;
+  private final ControlPanel m_controlPanel;
+  // private final LEDs m_leds;
 
-  private final double m_rotationMultiplier = 1;
-  private final double m_translationMultiplier = 0.6;
   private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
   private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
   private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
+  public RobotContainer() { 
+    m_indexer = new Indexer();
+    m_intake = new Intake();
+    m_shooter = new Shooter();
+    m_vision = new Vision();
+    // m_leds = new LEDs();
+    m_drivetrain = new Drivetrain();
+    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter);
+    SmartDashboard.putData(CommandScheduler.getInstance());
+
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     // Configure the trigger bindings
     configureBindings();
 
     // Configure default commands
-    m_drivetrain.setDefaultCommand(
-        // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
-        new RunCommand(
-            () -> m_drivetrain.drive(
-                -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
-                true, true),
-            m_drivetrain));
-  private final Indexer m_indexer;
-  private final Intake m_intake;
-  private final Shooter m_shooter;
-  // private final Vision m_vision;
-  // private final LEDs m_leds;
-  private final Drivetrain m_drivetrain;
-  private final ControlPanel m_controlpanel;
-  
-  
-  private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
-  private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
-  private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);  
-  // private final XboxController m_driverController = new XboxController(OperatorConstants.kDriveTranslatorPort);  
-
-  //add the joystick here
-
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    m_indexer = new Indexer();
-    m_intake = new Intake();
-    m_shooter = new Shooter();
-    // m_vision = new Vision();
-    // m_leds = new LEDs();
-    m_drivetrain = new Drivetrain();
-    m_controlpanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter);
-    SmartDashboard.putData(CommandScheduler.getInstance());
-
-    configureBindings();
-
      //Joystick drive
     m_drivetrain.setDefaultCommand(
       new RunCommand(
@@ -110,8 +82,7 @@ public class RobotContainer {
 
     //manual pivot control
      m_shooter.setDefaultCommand(
-      new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.15), m_shooter));
-    
+      new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.15), m_shooter));    
   }
 
   /**

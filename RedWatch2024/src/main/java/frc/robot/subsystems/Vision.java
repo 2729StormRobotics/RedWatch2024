@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.util.Map;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
@@ -21,7 +24,7 @@ public class Vision extends SubsystemBase {
   private static ShuffleboardTab m_controlpanelTab;
 
   private static ShuffleboardLayout m_status;
-  
+
   public static String target = "HIGH";
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
@@ -39,15 +42,15 @@ public class Vision extends SubsystemBase {
     m_controlpanelTab = Shuffleboard.getTab("Vision");
 
     m_status = m_controlpanelTab.getLayout("Status", BuiltInLayouts.kList)
-      .withProperties(Map.of("Label position", "TOP"))
-      .withPosition(0, 0)
-      .withSize(2, 4);
+        .withProperties(Map.of("Label position", "TOP"))
+        .withPosition(0, 0)
+        .withSize(2, 4);
 
     m_status.addNumber("note_x", () -> note_x);
     m_status.addNumber("note_y", () -> note_y);
-    
-    table.getEntry("pipeline").setNumber(Constants.VisionConstants.kAprilTagPipeline);
-    table.getEntry("ledMode").setNumber(Constants.VisionConstants.kLightOffValue);
+
+    table.getEntry("pipeline").setNumber(VisionConstants.kAprilTagPipeline);
+    table.getEntry("ledMode").setNumber(VisionConstants.kLightOffValue);
   }
 
   public double xAlign() {
@@ -61,7 +64,7 @@ public class Vision extends SubsystemBase {
     }
 
     xPower *= VisionConstants.kPX;
-    
+
     return xPower;
   }
 
@@ -71,6 +74,7 @@ public class Vision extends SubsystemBase {
 
   public double getNoteYSkew() {
     return note_y;
+  }
 
   public void setPipeline(double pipeline) {
     table.getEntry("pipeline").setNumber(pipeline);
@@ -92,7 +96,7 @@ public class Vision extends SubsystemBase {
 
   // returns relative area of the target compared with FOV
   public double getArea() {
-    return area; 
+    return area;
   }
 
   /*
@@ -100,26 +104,26 @@ public class Vision extends SubsystemBase {
    */
 
   public double getSpeakerDistance() {
-    double deltaHeight = Constants.VisionConstants.speakerTagHeight - Constants.VisionConstants.limelightHeight;
-    double deltaAngle = Math.toRadians(Constants.VisionConstants.limelightAngle + getY());
-    double dist = deltaHeight/Math.tan(deltaAngle);
-    
+    double deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
+    double deltaAngle = Math.toRadians(VisionConstants.limelightAngle + getY());
+    double dist = deltaHeight / Math.tan(deltaAngle);
+
     return dist;
   }
 
   public double getAmpDistance() {
-    double deltaHeight = Constants.VisionConstants.ampTagHeight - Constants.VisionConstants.limelightHeight;
-    double deltaAngle = Math.toRadians(Constants.VisionConstants.limelightAngle + getY());
-    double dist = deltaHeight/Math.tan(deltaAngle);
-    
+    double deltaHeight = VisionConstants.ampTagHeight - VisionConstants.limelightHeight;
+    double deltaAngle = Math.toRadians(VisionConstants.limelightAngle + getY());
+    double dist = deltaHeight / Math.tan(deltaAngle);
+
     return dist;
   }
 
   public double getStageDistance() {
-    double deltaHeight = Constants.VisionConstants.stageTagHeight - Constants.VisionConstants.limelightHeight;
-    double deltaAngle = Math.toRadians(Constants.VisionConstants.limelightAngle + getY());
-    double dist = deltaHeight/Math.tan(deltaAngle);
-    
+    double deltaHeight = VisionConstants.stageTagHeight - VisionConstants.limelightHeight;
+    double deltaAngle = Math.toRadians(VisionConstants.limelightAngle + getY());
+    double dist = deltaHeight / Math.tan(deltaAngle);
+
     return dist;
   }
 
@@ -132,7 +136,7 @@ public class Vision extends SubsystemBase {
     // This method will be called once per scheduler run
     note_x = SmartDashboard.getNumber("note_x", 0);
     note_y = SmartDashboard.getNumber("note_y", 0);
-    
+
     x = tx.getDouble(0.0);
     y = ty.getDouble(0.0);
 
@@ -142,6 +146,5 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
     SmartDashboard.putString("Target", Vision.target);
-    
   }
 }
