@@ -4,15 +4,24 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
+
+import java.util.Map;
+
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import frc.robot.Constants.VisionConstants;
 
 public class Vision extends SubsystemBase {
-  /** Creates a new Vision. */
+
+  private static ShuffleboardTab m_controlpanelTab;
+
+  private static ShuffleboardLayout m_status;
+  
   public static String target = "HIGH";
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
@@ -21,10 +30,47 @@ public class Vision extends SubsystemBase {
   private double x;
   private double y;
   private double area;
+
+  public double note_x = 0;
+  public double note_y = 0;
+
+  /** Creates a new NoteDetection. */
   public Vision() {
+    m_controlpanelTab = Shuffleboard.getTab("Vision");
+
+    m_status = m_controlpanelTab.getLayout("Status", BuiltInLayouts.kList)
+      .withProperties(Map.of("Label position", "TOP"))
+      .withPosition(0, 0)
+      .withSize(2, 4);
+
+    m_status.addNumber("note_x", () -> note_x);
+    m_status.addNumber("note_y", () -> note_y);
+    
     table.getEntry("pipeline").setNumber(Constants.VisionConstants.kAprilTagPipeline);
     table.getEntry("ledMode").setNumber(Constants.VisionConstants.kLightOffValue);
   }
+
+  public double xAlign() {
+    double xError = 0;
+    double xPower = 0;
+
+    xError = getNoteXSkew();
+
+    if (Math.abs(xError) < VisionConstants.kNoteTolerance) {
+      return 0;
+    }
+
+    xPower *= VisionConstants.kPX;
+    
+    return xPower;
+  }
+
+  public double getNoteXSkew() {
+    return note_x;
+  }
+
+  public double getNoteYSkew() {
+    return note_y;
 
   public void setPipeline(double pipeline) {
     table.getEntry("pipeline").setNumber(pipeline);
@@ -84,6 +130,9 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    note_x = SmartDashboard.getNumber("note_x", 0);
+    note_y = SmartDashboard.getNumber("note_y", 0);
+    
     x = tx.getDouble(0.0);
     y = ty.getDouble(0.0);
 

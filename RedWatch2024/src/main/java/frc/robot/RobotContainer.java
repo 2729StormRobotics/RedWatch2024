@@ -4,6 +4,10 @@
 
 package frc.robot;
 
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Vision.NoteAlign;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Vision;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -34,6 +38,33 @@ import frc.robot.subsystems.Shooter;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Vision m_vision = new Vision();
+
+  private final double m_rotationMultiplier = 1;
+  private final double m_translationMultiplier = 0.6;
+  private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
+  private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
+  private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);
+
+  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  public RobotContainer() {
+    SmartDashboard.putData(CommandScheduler.getInstance());
+
+    // Configure the trigger bindings
+    configureBindings();
+
+    // Configure default commands
+    m_drivetrain.setDefaultCommand(
+        // The left stick controls translation of the robot.
+        // Turning is controlled by the X axis of the right stick.
+        new RunCommand(
+            () -> m_drivetrain.drive(
+                -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
+                true, true),
+            m_drivetrain));
   private final Indexer m_indexer;
   private final Intake m_intake;
   private final Shooter m_shooter;
@@ -93,6 +124,11 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    // locks wheels
+    new JoystickButton(m_translator, Button.kX.value)
+        .whileTrue(new RunCommand(
+            () -> m_drivetrain.setX(),
+            m_drivetrain));
     //testing button
     // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new SetPower(m_shooter,.2, .2));
   
@@ -135,7 +171,12 @@ public class RobotContainer {
     new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
 
 
-
+    // reset gyro
+    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
+  
+    // switch to note align
+    new JoystickButton(m_translator, Button.kY.value)
+      .whileTrue(new NoteAlign(m_drivetrain, m_vision, m_translator));
   }
 
   /**
