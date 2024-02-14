@@ -17,7 +17,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.lib.swerve.MAXSwerveModule;
 import frc.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
@@ -130,6 +129,9 @@ public class Drivetrain extends SubsystemBase {
         },
         pose);
   }
+  public void resetHeading(){
+    m_gyro.reset();
+  }
 
   /**
    * Method to drive the robot using joystick info.
@@ -170,6 +172,7 @@ public class Drivetrain extends SubsystemBase {
       else if (angleDif > 0.85*Math.PI) {
         if (m_currentTranslationMag > 1e-4) { //some small number to avoid floating-point errors with equality checking
           // keep currentTranslationDir unchanged
+          
           m_currentTranslationMag = m_magLimiter.calculate(0.0);
         }
         else {
@@ -209,6 +212,7 @@ public class Drivetrain extends SubsystemBase {
     m_frontRight.setDesiredState(swerveModuleStates[1]);
     m_rearLeft.setDesiredState(swerveModuleStates[2]);
     m_rearRight.setDesiredState(swerveModuleStates[3]);
+    
   }
 
   /**
@@ -254,7 +258,7 @@ public class Drivetrain extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return -Math.IEEEremainder(m_gyro.getAngle(), 360);
+    return -Math.IEEEremainder(m_gyro.getAngle(), -360);
   }
 
   /**
