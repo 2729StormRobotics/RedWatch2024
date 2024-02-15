@@ -9,6 +9,9 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
+import frc.robot.lib.LinearInterpolationTable;
+import java.awt.geom.Point2D;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -157,7 +160,7 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    // Motor ID/initialization valu
+    // Motor ID/initialization values
 
     public static final int kLeftPivotID = 12;
     public static final int kRightPivotID = 11;
@@ -205,6 +208,31 @@ public final class Constants {
     public static final double exitVelocity = 15;
     public static final double g = 9.81;
     public static final double k = -g / (2 * Math.pow(exitVelocity, 2)); // substitution used in angle calculation
+
+    // Interpolation table for getting shooting angle based off distance
+    public static final Point2D[] ShootingPoints = new Point2D[]{
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double(),
+      new Point2D.Double()
+    };
+    public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable();
   }
 
   public static class VisionConstants {
