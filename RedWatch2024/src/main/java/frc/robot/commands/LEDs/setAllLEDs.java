@@ -20,7 +20,6 @@ public class setAllLEDs extends Command {
   @Override
   public void initialize() {
     LEDSegment.MainStrip.setColor(m_color);
-    LEDSegment.Matrix.setColor(m_color);
     LEDSegment.Underglow.setColor(m_color);
     LEDSegment.MainStatusLEDs.setColor(m_color);
   }

@@ -14,16 +14,15 @@ import com.ctre.phoenix.led.SingleFadeAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LightsConstants;
-import frc.robot.commands.LEDs.runMatrixAnimation;
 import frc.robot.presets.matrixPresets;
 
 public class LEDs extends SubsystemBase {
     public static final CANdle main_candle = new CANdle(LightsConstants.MAIN_PORT);
-    public static final CANdle matrix_candle = new CANdle(LightsConstants.MATRIX_PORT);
 
     // Team colors
     public static final Color red = new Color(255, 0, 0);
@@ -52,7 +51,6 @@ public class LEDs extends SubsystemBase {
         candleConfiguration.brightnessScalar = 1.0;
         candleConfiguration.vBatOutputMode = VBatOutputMode.Modulated;
         main_candle.configAllSettings(candleConfiguration, 100);
-        matrix_candle.configAllSettings(candleConfiguration, 100);
         setDefaultCommand(defaultCommand());
     }
 
@@ -63,10 +61,7 @@ public class LEDs extends SubsystemBase {
     public Command defaultCommand() {
         // setBrightness(1);
         // return new runMatrixAnimation(this);
-        return new ParallelCommandGroup(
-                runOnce(() -> {LEDSegment.Underglow.setRainbowAnimation(1);}),
-                new runMatrixAnimation(this, matrixPresets.rampUpAnimation)
-              );
+        return new InstantCommand(() -> {LEDSegment.Underglow.setRainbowAnimation(1);});
         
     }
 
@@ -83,10 +78,8 @@ public class LEDs extends SubsystemBase {
     public static enum LEDSegment {
         // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
         MainStatusLEDs(0,7,0, main_candle),
-        MatrixStatusLEDs(0,7,0, matrix_candle),
         Underglow(7,100,1, main_candle),
-        MainStrip(107, 100, 2, main_candle),
-        Matrix(7,250,3, matrix_candle);
+        MainStrip(107, 100, 2, main_candle);
         // MAIN STRIP SHOULD BE STARTING AT INDEX 8, leave at 0 when testing
 
         public final int startIndex;

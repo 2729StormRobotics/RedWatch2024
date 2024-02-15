@@ -49,7 +49,6 @@ public class Load extends Command {
   public boolean isFinished() {
     if (m_indexer.isNotePresent()) {
       LEDSegment.MainStrip.setColor(LEDs.orange);
-      LEDSegment.Matrix.setColor(LEDs.orange);
       return m_indexer.isNotePresent();
     }
     return false;
