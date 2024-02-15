@@ -210,26 +210,7 @@ public final class Constants {
     public static final double k = -g / (2 * Math.pow(exitVelocity, 2)); // substitution used in angle calculation
 
     // Interpolation table for getting shooting angle based off distance
-    public static final Point2D[] ShootingPoints = new Point2D[]{
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
-      new Point2D.Double(),
+    public static final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
       new Point2D.Double()
     };
     public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable();
