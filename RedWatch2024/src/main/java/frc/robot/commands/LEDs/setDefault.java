@@ -18,7 +18,6 @@ public class setDefault extends Command {
   @Override
   public void initialize() {
     LEDSegment.MainStrip.setColor(LEDs.black);
-    LEDSegment.Matrix.setColor(LEDs.black);
     LEDSegment.Underglow.setColor(LEDs.red);
     LEDSegment.MainStatusLEDs.setFadeAnimation(LEDs.orange, 0.7);
   }
