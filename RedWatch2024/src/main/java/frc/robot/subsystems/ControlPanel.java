@@ -94,12 +94,17 @@ public class ControlPanel extends SubsystemBase {
     m_drivetrainStatus.addDouble("Pitch", () -> m_drivetrain.m_gyro.getPitch()); // Pitch of robot
     m_drivetrainStatus.addDouble("Yaw", () -> m_drivetrain.m_gyro.getYaw());// Yaw of robot\
     m_drivetrainStatus.add("Zero Heading", (runOnce(() -> {m_drivetrain.zeroHeading();})));
- 
+    m_drivetrainStatus.add("Gyro", m_drivetrain.m_gyro).withWidget(BuiltInWidgets.kGyro);
+// motor controllers
+    m_drivetrainStatus.add("FrontLeftController", m_drivetrain.m_frontLeft).withWidget(BuiltInWidgets.kMotorController);
+    m_drivetrainStatus.add("FrontRightController", m_drivetrain.m_frontRight).withWidget(BuiltInWidgets.kMotorController);
+    m_drivetrainStatus.add("RearLeftController", m_drivetrain.m_rearLeft).withWidget(BuiltInWidgets.kMotorController);
+    m_drivetrainStatus.add("RearRightControler", m_drivetrain.m_rearRight).withWidget(BuiltInWidgets.kMotorController);
+
     //  Indexer
     m_indexerStatus.addDouble("Indexer Velocity", () -> m_indexer.getIndexerRPM()); // How fast the indexer is
-    m_indexerStatus.addBoolean("Beam break status", () -> m_indexer.isNotePresent());
-    setIndexerSpeeds = m_indexerStatus.add("Indexer Speeds Input", IndexerConstants.kIndexerSpeed).getEntry();
-    m_indexerStatus.add("Set Indexer Speeds", runOnce(() -> {IndexerConstants.kIndexerSpeed = setIndexerSpeeds.get().getDouble();}));  
+    m_indexerStatus.addBoolean("Beam break status", () -> m_indexer.isNotePresent()).withWidget(BuiltInWidgets.kBooleanBox);
+    setIndexerSpeeds = m_indexerStatus.add("Indexer Speeds", IndexerConstants.kIndexerSpeed).getEntry();
 
     // Shooter
     m_shooterStatus.addNumber("Pivot Encoder", () -> m_shooter.getPivotAngle()); // Angle of shooter
@@ -113,11 +118,10 @@ public class ControlPanel extends SubsystemBase {
     .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
     setPivotSpeeds = m_shooterStatus.add("Pivot Speed", 1)
     .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
-    
+
     // Intake
     m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
-    setIntakeSpeeds = m_indexerStatus.add("Intake Speeds Input", IntakeConstants.kIntakeMotorSpeed).getEntry();
-    m_intakeStatus.add("Intake to Input", runOnce(() -> {IntakeConstants.kIntakeMotorSpeed = setIntakeSpeeds.get().getDouble(); IntakeConstants.kEjectMotorSpeed = -setIntakeSpeeds.get().getDouble();}));  
+    setIntakeSpeeds = m_indexerStatus.add("Intake Speeds", IntakeConstants.kIntakeMotorSpeed).getEntry();
 
     // Lights
     // m_lightsStatus.add("Set LEDs to Red", new setAllLEDs(LEDs.red));  
@@ -133,5 +137,7 @@ public class ControlPanel extends SubsystemBase {
     Constants.ShooterConstants.kLeftPower = setShooterSpeeds.getDouble(0.2);
     Constants.ShooterConstants.kRightPower = setShooterSpeeds.getDouble(0.2);
     Constants.ShooterConstants.pivotPower = setPivotSpeeds.getDouble(0.1);
+    Constants.IntakeConstants.kIntakeMotorSpeed = setIntakeSpeeds.getDouble(0.2);
+    Constants.IndexerConstants.kIndexerSpeed = setIndexerSpeeds.getDouble(0.2);
   }
 }
