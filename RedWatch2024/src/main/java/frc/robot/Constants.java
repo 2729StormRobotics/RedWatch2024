@@ -233,6 +233,9 @@ public final class Constants {
       new Point2D.Double()
     };
     public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable();
+    
+    // Set Positions
+    public static final double kIntakeAngle = 47;
   }
 
   public static class VisionConstants {
