@@ -58,7 +58,7 @@ public class RobotContainer {
     m_vision = new Vision();
     // m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
-    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter);
+    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_vision);
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     SmartDashboard.putData(CommandScheduler.getInstance());
