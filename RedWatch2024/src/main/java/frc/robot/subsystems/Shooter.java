@@ -17,7 +17,6 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
   // Motors and absolute encoder for pivoting for the shooter
-  public final CANSparkMax m_leftPivot;
   public final CANSparkMax m_rightPivot;
   public final AbsoluteEncoder m_PivotEncoder;
 
@@ -33,19 +32,17 @@ public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
   public Shooter() {
     // All motors initialization
-    m_leftPivot = new CANSparkMax(Constants.ShooterConstants.kLeftPivotID, MotorType.kBrushless);
     m_rightPivot = new CANSparkMax(Constants.ShooterConstants.kRightPivotID, MotorType.kBrushless);
     m_leftFlywheel = new CANSparkMax(Constants.ShooterConstants.kLeftFlywheelID, MotorType.kBrushless);
     m_rightFlywheel = new CANSparkMax(Constants.ShooterConstants.kRightFlywheelID, MotorType.kBrushless);
 
     motorInit(m_leftFlywheel, Constants.ShooterConstants.kLeftFlywheelInverted);
     motorInit(m_rightFlywheel, Constants.ShooterConstants.kRightFlywheelInverted);
-    motorInit(m_leftPivot, Constants.ShooterConstants.kLeftPivotInverted);
     motorInit(m_rightPivot, Constants.ShooterConstants.kRightPivotInverted);
 
 
     // Pivot encoder initialization
-    m_PivotEncoder = m_leftPivot.getAbsoluteEncoder(Type.kDutyCycle);
+    m_PivotEncoder = m_rightPivot.getAbsoluteEncoder(Type.kDutyCycle);
 
     // Flywheel encoder initialization
     m_leftFlywheelEncoder = m_leftFlywheel.getEncoder();
@@ -66,7 +63,6 @@ public class Shooter extends SubsystemBase {
 
   // Sets pivot speed in a percentage, from 0-1
   public void setPivotSpeed(double power) {
-    m_leftPivot.set(power);
     m_rightPivot.set(power);
   }
 
@@ -77,7 +73,6 @@ public class Shooter extends SubsystemBase {
   }
 
   public void stopPivotMotors() {
-    m_leftPivot.set(0);
     m_rightPivot.set(0);
   }
 

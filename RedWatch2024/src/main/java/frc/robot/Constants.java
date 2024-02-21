@@ -41,7 +41,7 @@ public final class Constants {
 
   public static final class IndexerConstants {
     // Assigns Indexer moftor to port
-    public static final int kIndexMotorPort = 10;
+    public static final int kIndexMotorPort = 12;
     // Assigns Beam break sensor to port 1
     public static final int kBeamBreakPort = 8;
     // Sets the indexer motor to 50% power
@@ -162,10 +162,10 @@ public final class Constants {
   public static class ShooterConstants {
     // Motor ID/initialization values
 
-    public static final int kLeftPivotID = 12;
-    public static final int kRightPivotID = 11;
-    public static final int kLeftFlywheelID = 14;
-    public static final int kRightFlywheelID = 9;
+    // public static final int kLeftPivotID = 12; NO MORE LEFT PIVOT ONLY RIGHT PIVOT
+    public static final int kRightPivotID = 9;
+    public static final int kLeftFlywheelID = 10;
+    public static final int kRightFlywheelID = 14;
     public static final int kCurrentLimit = 45;
 
     // manual control speed limiters
