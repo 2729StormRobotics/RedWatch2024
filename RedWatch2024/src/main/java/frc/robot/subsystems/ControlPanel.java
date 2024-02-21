@@ -8,6 +8,7 @@ import java.util.Map;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -37,6 +38,8 @@ public class ControlPanel extends SubsystemBase {
   private final GenericEntry setPivotEncoder;
   private final GenericEntry setIntakeSpeeds;
   private final GenericEntry setIndexerSpeeds;
+  private final GenericEntry setShooterSpeeds;
+  private final GenericEntry setPivotSpeeds;
 
   private final GenericEntry setkPPivot;
   private final GenericEntry setkMaxPivotVelocity;
@@ -105,8 +108,12 @@ public class ControlPanel extends SubsystemBase {
     m_shooterStatus.addNumber("Flywheel RPM", () -> m_shooter.getAverageRPM());
     setkPPivot = m_shooterStatus.add("kPPivot", ShooterConstants.kPPivot).getEntry();
     setkMaxPivotVelocity = m_shooterStatus.add("kMaxPivotVelocity", ShooterConstants.kMaxPivotVelocity).getEntry();
-    m_shooterStatus.add("Set PID Values", runOnce(() -> {ShooterConstants.kPPivot = setkPPivot.get().getDouble(); ShooterConstants.kMaxPivotVelocity = setkMaxPivotVelocity.get().getDouble(); }));
-    SmartDashboard.putNumber("Shooter Speeds", 0.5);
+    // setkPPivot = m_shooterStatus.add("Pivot PID", m_shooter.pivot)
+    setShooterSpeeds = m_shooterStatus.add("Shooter Speed", 1)
+    .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+    setPivotSpeeds = m_shooterStatus.add("Pivot Speed", 1)
+    .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+    
     // Intake
     m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
     setIntakeSpeeds = m_indexerStatus.add("Intake Speeds Input", IntakeConstants.kIntakeMotorSpeed).getEntry();
@@ -123,8 +130,8 @@ public class ControlPanel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Constants.ShooterConstants.kLeftPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
-    Constants.ShooterConstants.kRightPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
-
+    Constants.ShooterConstants.kLeftPower = setShooterSpeeds.getDouble(0.2);
+    Constants.ShooterConstants.kRightPower = setShooterSpeeds.getDouble(0.2);
+    Constants.ShooterConstants.pivotPower = setPivotSpeeds.getDouble(0.1);
   }
 }
