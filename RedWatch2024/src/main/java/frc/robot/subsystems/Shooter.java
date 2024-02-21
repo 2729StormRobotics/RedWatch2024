@@ -113,72 +113,8 @@ public class Shooter extends SubsystemBase {
     return (1 - m_PivotEncoder.getPosition()) * 360 * 22/54;
   }
 
-  /*
-   * Command will return the optimal angle to shoot at
-   * Derivation of the Formula can be seen here:
-   * https://drive.google.com/file/d/1dcSJj9QoYHzQPaUIWQf76gtZUhYFJNyI/view?usp=drive_link
-   * The graph of this (including Taylor Series approximation that is used here):
-   * https://www.desmos.com/calculator/fsfd7xb0pe
-   * The Newton Method is used to approximate the solutions
-   */
-
-  // F(x) and F'(x) functions needed for getOptimalAngle() method
-  public static double f(double x, double dist) {
-    // Renaming constants so that they are easier to follow and the code looks less scary
-    double l = Constants.ShooterConstants.shooterLength;
-    double h = Constants.ShooterConstants.goalHeight;
-    double k = Constants.ShooterConstants.k;
-  
-    // Coefficients of the Polynomial
-    double a = 2*dist/15;
-    double b = (-h/3 + Math.pow(l, 2)/3 * k - k*dist*l/12);
-    double c = -2*dist/3;
-    double d = k*dist*l + h - Math.pow(l, 2)*k;
-    double e = dist;
-    double f = k*Math.pow(dist, 2) - 2*k*dist*l - h + Math.pow(l, 2)*k;
-
-    // Evaluating f(x)
-    return a*Math.pow(x, 5) + b*Math.pow(x, 4) + c*Math.pow(x, 3) + d*Math.pow(x, 2) + e*x + f;
-  }
-
-  public static double f_prime(double x, double dist) {
-    // Renaming constants so that they are easier to follow and the code looks less scary
-    double l = Constants.ShooterConstants.shooterLength;
-    double h = Constants.ShooterConstants.goalHeight;
-    double k = Constants.ShooterConstants.k;
-  
-    // Coefficients of the Polynomial
-    double a = 2*dist/15;
-    double b = (-h/3 + Math.pow(l, 2)/3 * k - k*dist*l/12);
-    double c = -2*dist/3;
-    double d = k*dist*l + h - Math.pow(l, 2)*k;
-    double e = dist;
-    double f = k*Math.pow(dist, 2) - 2*k*dist*l - h + Math.pow(l, 2)*k;
-
-    // Evaluating f'(x)
-    return 5*a*Math.pow(x, 4) + 4*b*Math.pow(x, 3) + 3*c*Math.pow(x, 2) + 2*d*x + e;
-  }
-
-  // Newton's Method (recursive)
-  // explanation: https://calcworkshop.com/derivatives/newtons-method/#:~:text=Newton's%20Method%2C%20also%20known%20as,us%20to%20solve%20by%20hand.
-  public double getOptimalAngle(double init, double dist) {
-    double x0 = 0;
-    double x1 = x0 - f(x0, dist)/f_prime(x0, dist);
-    if (Math.abs(x1 - x0) < 1e-2) { // stops recursion once obtaining an answer with < 0.01 error
-      iterations = 0;
-      return x1;
-    }
-
-    // If it has run for more than 5 iterations and has not found a solution yet, 
-    // then there is no solution with the given shooter speed and distance (it will take 2-3 iterations most the time)
-    // return the current angle in this case
-    if (iterations > 5) {
-      iterations = 0;
-      return getPivotAngle();
-    }
-
-    iterations += 1;
-    return getOptimalAngle(x1, dist);
+  public double getOptimalAngle(double distance) {
+    return Constants.ShooterConstants.ShooterInterpolationTable.getOutput(distance);
   }
 
   @Override
