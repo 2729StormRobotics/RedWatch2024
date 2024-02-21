@@ -31,6 +31,7 @@ public class ControlPanel extends SubsystemBase {
   private final ShuffleboardLayout m_drivetrainStatus;
   private final ShuffleboardLayout m_indexerStatus;
   private final ShuffleboardLayout m_lightsStatus;
+  private final ShuffleboardLayout m_visionStatus;
   private final ShuffleboardLayout m_intakeStatus;
   private final ShuffleboardLayout m_shooterStatus;
 
@@ -49,17 +50,17 @@ public class ControlPanel extends SubsystemBase {
   // private final LEDs m_leds;
   private final Intake m_intake;
   private final Shooter m_shooter;
-  // private final Vision m_vision;
+  private final Vision m_vision;
 
 
   /** Creates a new ControlPanel. */
-  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter) {
+  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, Vision vision) {
     m_drivetrain = drivetrain;
     m_indexer = indexer;
     // m_leds = leds;
     m_intake = intake;
     m_shooter = shooter;
-    // m_vision = vision;
+    m_vision = vision;
 
     m_controlpanelTab = Shuffleboard.getTab(ControlPanelConstants.kShuffleboardTab);
 
@@ -83,9 +84,14 @@ public class ControlPanel extends SubsystemBase {
       .withPosition(8, 0)
       .withSize(1, 3);
     
-    m_shooterStatus = m_controlpanelTab.getLayout("Telescoping Arm Status", BuiltInLayouts.kList)
+    m_shooterStatus = m_controlpanelTab.getLayout("Shooter Status", BuiltInLayouts.kList)
       .withProperties(Map.of("Label position", "TOP"))
       .withPosition(10, 0)
+      .withSize(2, 7);
+
+    m_visionStatus = m_controlpanelTab.getLayout("Vision Status", BuiltInLayouts.kList)
+      .withProperties(Map.of("Label position", "TOP"))
+      .withPosition(12, 0)
       .withSize(1, 7);
 
     // Drivetrain
@@ -122,6 +128,12 @@ public class ControlPanel extends SubsystemBase {
     // Intake
     m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
     setIntakeSpeeds = m_indexerStatus.add("Intake Speeds", IntakeConstants.kIntakeMotorSpeed).getEntry();
+
+    // Vision
+    m_visionStatus.addDouble("Speaker Distance", () -> m_vision.getSpeakerDistance());
+    m_visionStatus.addDouble("Stage Distance", () -> m_vision.getStageDistance());
+    m_visionStatus.addDouble("Amp Distance", () -> m_vision.getAmpDistance());
+    
 
     // Lights
     // m_lightsStatus.add("Set LEDs to Red", new setAllLEDs(LEDs.red));  
