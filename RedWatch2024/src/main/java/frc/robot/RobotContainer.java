@@ -115,7 +115,8 @@ public class RobotContainer {
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
 
     //pivot
-    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 47));
+    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new RunCommand(() -> m_shooter.setPivotSpeed(
+      0.12 * Math.cos(Math.toRadians(m_shooter.getPivotAngle())))));
 
     new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new Meltdown(m_shooter, m_intake, m_drivetrain, m_indexer));
 

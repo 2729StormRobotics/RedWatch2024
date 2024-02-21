@@ -46,7 +46,7 @@ public class Indexer extends SubsystemBase {
 
   public void runIndexer(double speed) {
     //speed in percent
-    m_IndexerMotor.set(speed);
+    m_IndexerMotor.set(-speed);
   }
     //Sets motor at indexer speed, 50%, (runs motor)
   public void runNoteThrough() {

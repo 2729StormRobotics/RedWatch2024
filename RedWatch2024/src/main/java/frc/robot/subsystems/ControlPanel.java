@@ -107,6 +107,8 @@ public class ControlPanel extends SubsystemBase {
     setkMaxPivotVelocity = m_shooterStatus.add("kMaxPivotVelocity", ShooterConstants.kMaxPivotVelocity).getEntry();
     m_shooterStatus.add("Set PID Values", runOnce(() -> {ShooterConstants.kPPivot = setkPPivot.get().getDouble(); ShooterConstants.kMaxPivotVelocity = setkMaxPivotVelocity.get().getDouble(); }));
     SmartDashboard.putNumber("Shooter Speeds", 0.5);
+    SmartDashboard.putNumber("pivot Speeds", 0.1);
+
     // Intake
     m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
     setIntakeSpeeds = m_indexerStatus.add("Intake Speeds Input", IntakeConstants.kIntakeMotorSpeed).getEntry();
@@ -125,6 +127,6 @@ public class ControlPanel extends SubsystemBase {
     // This method will be called once per scheduler run
     Constants.ShooterConstants.kLeftPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
     Constants.ShooterConstants.kRightPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
-
+    Constants.ShooterConstants.kPivotPower = SmartDashboard.getNumber("pivot Speeds", 0.1);
   }
 }

@@ -173,10 +173,10 @@ public final class Constants {
 
     // Make sure that the two pivot motors and two shooting motors rotate in
     // opposite directions
-    public static final boolean kLeftFlywheelInverted = true;
+    public static final boolean kLeftFlywheelInverted = false;
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
     public static final boolean kLeftPivotInverted = true;
-    public static final boolean kRightPivotInverted = true;
+    public static final boolean kRightPivotInverted = false;
 
     // Absolute encoder offsets
     public static final double kLeftPivotOffset = 0;
@@ -200,6 +200,8 @@ public final class Constants {
     public static final double kRightRPM = 1000;
     public static double kLeftPower = .75;
     public static double kRightPower = .75;
+
+    public static double kPivotPower = 0;
 
     // Field and Robot Measurements
     // All units are in meters

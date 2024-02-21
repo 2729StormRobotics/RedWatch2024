@@ -52,7 +52,7 @@ public class Shooter extends SubsystemBase {
 
   public void motorInit(CANSparkMax motor, boolean invert) {
     motor.restoreFactoryDefaults();
-    motor.setIdleMode(IdleMode.kBrake);
+    motor.setIdleMode(IdleMode.kCoast);
     motor.setSmartCurrentLimit(Constants.ShooterConstants.kCurrentLimit);
     motor.setInverted(invert);
   }
@@ -102,10 +102,10 @@ public class Shooter extends SubsystemBase {
 
   // returns pivot angle of shooter in degrees
   public double getPivotAngle() {
-    if ((1 -m_PivotEncoder.getPosition())* 360 * 22/54 > 140) {
+    if ((m_PivotEncoder.getPosition())* 360 > 300) {
       return 0;
     }
-    return (1 - m_PivotEncoder.getPosition()) * 360 * 22/54;
+    return (m_PivotEncoder.getPosition()) * 360;
   }
 
   public double getOptimalAngle(double distance) {
