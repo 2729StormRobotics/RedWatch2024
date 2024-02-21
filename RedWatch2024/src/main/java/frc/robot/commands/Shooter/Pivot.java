@@ -57,7 +57,7 @@ public class Pivot extends Command {
   public void execute() {
     timeElapsed += 0.02; // this updates every 20 ms
     // Set pivot speed to the value calculated by the PID Controller
-    m_shooter.setPivotSpeed(m_controller.calculate(m_shooter.getPivotAngle(), m_angle));
+    m_shooter.setPivotSpeed(m_controller.calculate(m_shooter.getPivotAngle() + m_shooter.getPivotFeedForward(), m_angle));
   }
 
   // Called once the command ends or is interrupted.

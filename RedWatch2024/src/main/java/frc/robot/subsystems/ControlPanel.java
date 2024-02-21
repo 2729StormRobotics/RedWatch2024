@@ -38,7 +38,7 @@ public class ControlPanel extends SubsystemBase {
   private final GenericEntry setIntakeSpeeds;
   private final GenericEntry setIndexerSpeeds;
 
-  private final GenericEntry setkPPivot;
+  // private final GenericEntry setkPPivot;
   private final GenericEntry setkMaxPivotVelocity;
 
   private final Drivetrain m_drivetrain;
@@ -103,11 +103,13 @@ public class ControlPanel extends SubsystemBase {
     setPivotEncoder = m_shooterStatus.add("Pivot Encoder Input", m_shooter.getPivotAngle()).getEntry();
     m_shooterStatus.add("Pivot to Input", new Pivot(m_shooter, setPivotEncoder.get().getDouble()));  
     m_shooterStatus.addNumber("Flywheel RPM", () -> m_shooter.getAverageRPM());
-    setkPPivot = m_shooterStatus.add("kPPivot", ShooterConstants.kPPivot).getEntry();
+    // setkPPivot = m_shooterStatus.add("kPPivot", ).getEntry();
     setkMaxPivotVelocity = m_shooterStatus.add("kMaxPivotVelocity", ShooterConstants.kMaxPivotVelocity).getEntry();
-    m_shooterStatus.add("Set PID Values", runOnce(() -> {ShooterConstants.kPPivot = setkPPivot.get().getDouble(); ShooterConstants.kMaxPivotVelocity = setkMaxPivotVelocity.get().getDouble(); }));
+    // m_shooterStatus.add("Set PID Values", runOnce(() -> {ShooterConstants.kPPivot = setkPPivot.get().getDouble(); ShooterConstants.kMaxPivotVelocity = setkMaxPivotVelocity.get().getDouble(); }));
     SmartDashboard.putNumber("Shooter Speeds", 0.5);
     SmartDashboard.putNumber("pivot Speeds", 0.1);
+    SmartDashboard.putNumber("kPPivot", ShooterConstants.kPPivot);
+
 
     // Intake
     m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
@@ -128,5 +130,6 @@ public class ControlPanel extends SubsystemBase {
     Constants.ShooterConstants.kLeftPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
     Constants.ShooterConstants.kRightPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
     Constants.ShooterConstants.kPivotPower = SmartDashboard.getNumber("pivot Speeds", 0.1);
+    Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0.0125);
   }
 }

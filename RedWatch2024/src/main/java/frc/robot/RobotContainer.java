@@ -39,7 +39,7 @@ import frc.robot.subsystems.Shooter;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drivetrain;
-  private final Vision m_vision;
+  // private final Vision m_vision;
   private final Indexer m_indexer;
   private final Intake m_intake;
   private final Shooter m_shooter;
@@ -55,10 +55,10 @@ public class RobotContainer {
     m_indexer = new Indexer();
     m_intake = new Intake();
     m_shooter = new Shooter();
-    m_vision = new Vision();
+    // m_vision = new Vision();
     // m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
-    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_vision);
+    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter);
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     SmartDashboard.putData(CommandScheduler.getInstance());
@@ -74,15 +74,15 @@ public class RobotContainer {
           // -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*1, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*0.25, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*0.25, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*0.25, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
 
     //manual pivot control
      m_shooter.setDefaultCommand(
-      new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.15), m_shooter));    
+      new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.05 + m_shooter.getPivotFeedForward()), m_shooter));    
   }
 
   /**
@@ -114,9 +114,6 @@ public class RobotContainer {
     // intake
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
 
-    //pivot
-    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new RunCommand(() -> m_shooter.setPivotSpeed(
-      0.12 * Math.cos(Math.toRadians(m_shooter.getPivotAngle())))));
 
     new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new Meltdown(m_shooter, m_intake, m_drivetrain, m_indexer));
 
@@ -147,8 +144,8 @@ public class RobotContainer {
     new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
   
     // switch to note align
-    new JoystickButton(m_translator, Button.kY.value)
-      .whileTrue(new NoteAlign(m_drivetrain, m_vision, m_translator));
+    // new JoystickButton(m_translator, Button.kY.value)
+    //   .whileTrue(new NoteAlign(m_drivetrain, m_vision, m_translator));
   }
 
   /**

@@ -112,6 +112,10 @@ public class Shooter extends SubsystemBase {
     return Constants.ShooterConstants.ShooterInterpolationTable.getOutput(distance);
   }
 
+  public double getPivotFeedForward() {
+    return Constants.ShooterConstants.kPivotPower * Math.cos(Math.toRadians(getPivotAngle() + 49));
+  }
+
   @Override
   public void periodic() {
     // Put RPM and pivot angle on shuffleboard

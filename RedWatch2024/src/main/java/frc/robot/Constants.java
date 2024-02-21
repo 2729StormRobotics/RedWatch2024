@@ -202,7 +202,7 @@ public final class Constants {
     public static double kLeftPower = .75;
     public static double kRightPower = .75;
 
-    public static double kPivotPower = 0;
+    public static double kPivotPower = 0.034; //tested
 
     // Field and Robot Measurements
     // All units are in meters
