@@ -8,6 +8,7 @@ import java.util.Map;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -37,9 +38,11 @@ public class ControlPanel extends SubsystemBase {
   private final GenericEntry setPivotEncoder;
   private final GenericEntry setIntakeSpeeds;
   private final GenericEntry setIndexerSpeeds;
+  private final GenericEntry setShooterSpeeds;
+  // private final GenericEntry setPivotSpeeds;
 
   // private final GenericEntry setkPPivot;
-  private final GenericEntry setkMaxPivotVelocity;
+  // private final GenericEntry setkMaxPivotVelocity;
 
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
@@ -91,23 +94,29 @@ public class ControlPanel extends SubsystemBase {
     m_drivetrainStatus.addDouble("Pitch", () -> m_drivetrain.m_gyro.getPitch()); // Pitch of robot
     m_drivetrainStatus.addDouble("Yaw", () -> m_drivetrain.m_gyro.getYaw());// Yaw of robot\
     m_drivetrainStatus.add("Zero Heading", (runOnce(() -> {m_drivetrain.zeroHeading();})));
- 
+    m_drivetrainStatus.add("Gyro", m_drivetrain.m_gyro).withWidget(BuiltInWidgets.kGyro);
+    // motor controllers
+    m_drivetrainStatus.add("FrontLeftController", m_drivetrain.m_frontLeft).withWidget(BuiltInWidgets.kMotorController);
+    m_drivetrainStatus.add("FrontRightController", m_drivetrain.m_frontRight).withWidget(BuiltInWidgets.kMotorController);
+    m_drivetrainStatus.add("RearLeftController", m_drivetrain.m_rearLeft).withWidget(BuiltInWidgets.kMotorController);
+    m_drivetrainStatus.add("RearRightControler", m_drivetrain.m_rearRight).withWidget(BuiltInWidgets.kMotorController);
+    
     //  Indexer
     m_indexerStatus.addDouble("Indexer Velocity", () -> m_indexer.getIndexerRPM()); // How fast the indexer is
-    m_indexerStatus.addBoolean("Beam break status", () -> m_indexer.isNotePresent());
-    setIndexerSpeeds = m_indexerStatus.add("Indexer Speeds Input", IndexerConstants.kIndexerSpeed).getEntry();
-    m_indexerStatus.add("Set Indexer Speeds", runOnce(() -> {IndexerConstants.kIndexerSpeed = setIndexerSpeeds.get().getDouble();}));  
-
+    m_indexerStatus.addBoolean("Beam break status", () -> m_indexer.isNotePresent()).withWidget(BuiltInWidgets.kBooleanBox);
+    setIndexerSpeeds = m_indexerStatus.add("Indexer Speeds", IndexerConstants.kIndexerSpeed).getEntry();
     // Shooter
     m_shooterStatus.addNumber("Pivot Encoder", () -> m_shooter.getPivotAngle()); // Angle of shooter
     setPivotEncoder = m_shooterStatus.add("Pivot Encoder Input", m_shooter.getPivotAngle()).getEntry();
     m_shooterStatus.add("Pivot to Input", new Pivot(m_shooter, setPivotEncoder.get().getDouble()));  
     m_shooterStatus.addNumber("Flywheel RPM", () -> m_shooter.getAverageRPM());
-    // setkPPivot = m_shooterStatus.add("kPPivot", ).getEntry();
-    setkMaxPivotVelocity = m_shooterStatus.add("kMaxPivotVelocity", ShooterConstants.kMaxPivotVelocity).getEntry();
-    // m_shooterStatus.add("Set PID Values", runOnce(() -> {ShooterConstants.kPPivot = setkPPivot.get().getDouble(); ShooterConstants.kMaxPivotVelocity = setkMaxPivotVelocity.get().getDouble(); }));
-    SmartDashboard.putNumber("Shooter Speeds", 0.5);
-    SmartDashboard.putNumber("pivot Speeds", 0.1);
+    // setkPPivot = m_shooterStatus.add("Pivot PID", m_shooter.pivot)
+    setShooterSpeeds = m_shooterStatus.add("Shooter Speed", 1)
+    .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+    // setPivotSpeeds = m_shooterStatus.add("Pivot Speed", 1)
+    // .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+    // SmartDashboard.putNumber("Shooter Speeds", 0.5);
+    // SmartDashboard.putNumber("pivot Speeds", 0.1);
     SmartDashboard.putNumber("kPPivot", ShooterConstants.kPPivot);
 
 
@@ -127,9 +136,9 @@ public class ControlPanel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Constants.ShooterConstants.kLeftPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
-    Constants.ShooterConstants.kRightPower = SmartDashboard.getNumber("Shooter Speed", 0.5);
-    Constants.ShooterConstants.kPivotPower = SmartDashboard.getNumber("pivot Speeds", 0.1);
+    Constants.ShooterConstants.kLeftPower = setShooterSpeeds.getDouble(0.2);
+    Constants.ShooterConstants.kRightPower = setShooterSpeeds.getDouble(0.2);
+    // Constants.ShooterConstants.kPivotPower = setPivotSpeeds.getDouble(0.1);
     Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0.0125);
   }
 }
