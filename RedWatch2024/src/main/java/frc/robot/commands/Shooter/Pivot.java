@@ -6,6 +6,7 @@ package frc.robot.commands.Shooter;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
@@ -22,6 +23,8 @@ public class Pivot extends Command {
 
   private final TrapezoidProfile.Constraints m_constraints;
   private final ProfiledPIDController m_controller;
+  double error;
+  double power;
 
   public double timeElapsed = 0; // Keep track of time
 
@@ -57,20 +60,31 @@ public class Pivot extends Command {
   public void execute() {
     timeElapsed += 0.02; // this updates every 20 ms
     // Set pivot speed to the value calculated by the PID Controller
-    m_shooter.setPivotSpeed(m_controller.calculate(m_shooter.getPivotAngle() + m_shooter.getPivotFeedForward(), m_angle));
+    error = m_angle - m_shooter.getPivotAngle();
+    power = error * Constants.ShooterConstants.kPPivot +  m_shooter.getPivotFeedForward();
+    if (power > 0.3) {
+      power = 0.3;
+    }
+    else if (power < -0.3) {
+      power = -0.3;
+    }
+    m_shooter.setPivotSpeed(power);
+      // m_controller.calculate(m_shooter.getPivotAngle(), m_angle) + m_shooter.getPivotFeedForward());
+    SmartDashboard.putNumber("PID pivot speed", power);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     // Stop pivot motors
-    m_shooter.stopPivotMotors();
+    // m_shooter.stopPivotMotors();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     // Finish command when shooter is at the setpoint
-    return m_controller.atSetpoint();
+    return Math.abs(error) < Constants.ShooterConstants.kPivotTolerance;
+    // return false;
   }
 }

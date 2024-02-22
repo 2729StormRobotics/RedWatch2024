@@ -38,7 +38,7 @@ public class ControlPanel extends SubsystemBase {
   private final GenericEntry setPivotEncoder;
   private final GenericEntry setIntakeSpeeds;
   private final GenericEntry setIndexerSpeeds;
-  private final GenericEntry setShooterSpeeds;
+  // private final GenericEntry setShooterSpeeds;
   // private final GenericEntry setPivotSpeeds;
 
   // private final GenericEntry setkPPivot;
@@ -96,10 +96,10 @@ public class ControlPanel extends SubsystemBase {
     m_drivetrainStatus.add("Zero Heading", (runOnce(() -> {m_drivetrain.zeroHeading();})));
     m_drivetrainStatus.add("Gyro", m_drivetrain.m_gyro).withWidget(BuiltInWidgets.kGyro);
     // motor controllers
-    m_drivetrainStatus.add("FrontLeftController", m_drivetrain.m_frontLeft).withWidget(BuiltInWidgets.kMotorController);
-    m_drivetrainStatus.add("FrontRightController", m_drivetrain.m_frontRight).withWidget(BuiltInWidgets.kMotorController);
-    m_drivetrainStatus.add("RearLeftController", m_drivetrain.m_rearLeft).withWidget(BuiltInWidgets.kMotorController);
-    m_drivetrainStatus.add("RearRightControler", m_drivetrain.m_rearRight).withWidget(BuiltInWidgets.kMotorController);
+    // m_drivetrainStatus.add("FrontLeftController", m_drivetrain.m_frontLeft).withWidget(BuiltInWidgets.kMotorController);
+    // m_drivetrainStatus.add("FrontRightController", m_drivetrain.m_frontRight).withWidget(BuiltInWidgets.kMotorController);
+    // m_drivetrainStatus.add("RearLeftController", m_drivetrain.m_rearLeft).withWidget(BuiltInWidgets.kMotorController);
+    // m_drivetrainStatus.add("RearRightControler", m_drivetrain.m_rearRight).withWidget(BuiltInWidgets.kMotorController);
     
     //  Indexer
     m_indexerStatus.addDouble("Indexer Velocity", () -> m_indexer.getIndexerRPM()); // How fast the indexer is
@@ -111,13 +111,14 @@ public class ControlPanel extends SubsystemBase {
     m_shooterStatus.add("Pivot to Input", new Pivot(m_shooter, setPivotEncoder.get().getDouble()));  
     m_shooterStatus.addNumber("Flywheel RPM", () -> m_shooter.getAverageRPM());
     // setkPPivot = m_shooterStatus.add("Pivot PID", m_shooter.pivot)
-    setShooterSpeeds = m_shooterStatus.add("Shooter Speed", 1)
-    .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
+    // setShooterSpeeds = m_shooterStatus.add("Shooter Speed", 1)
+    // .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
     // setPivotSpeeds = m_shooterStatus.add("Pivot Speed", 1)
     // .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
-    // SmartDashboard.putNumber("Shooter Speeds", 0.5);
+    SmartDashboard.putNumber("Shooter Speeds", 0.75);
     // SmartDashboard.putNumber("pivot Speeds", 0.1);
     SmartDashboard.putNumber("kPPivot", ShooterConstants.kPPivot);
+    SmartDashboard.putNumber("kDPivot", ShooterConstants.kDPivot);
 
 
     // Intake
@@ -136,9 +137,13 @@ public class ControlPanel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    Constants.ShooterConstants.kLeftPower = setShooterSpeeds.getDouble(0.2);
-    Constants.ShooterConstants.kRightPower = setShooterSpeeds.getDouble(0.2);
-    // Constants.ShooterConstants.kPivotPower = setPivotSpeeds.getDouble(0.1);
-    Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0.0125);
+    // Constants.ShooterConstants.kLeftPower = setShooterSpeeds.getDouble(0);
+    // Constants.ShooterConstants.kRightPower = setShooterSpeeds.getDouble(0);
+    
+    Constants.ShooterConstants.kLeftPower = SmartDashboard.getNumber("Shooter Speeds", 0.2);
+    Constants.ShooterConstants.kRightPower = SmartDashboard.getNumber("Shooter Speeds", 0.2);
+    // Constants.ShooterConstants.kPivotPower = SmartDashboard.getNumber("pivot speeds")
+    Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0);
+    Constants.ShooterConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);
   }
 }

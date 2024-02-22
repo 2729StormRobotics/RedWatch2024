@@ -12,6 +12,7 @@ import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -113,7 +114,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getPivotFeedForward() {
-    return Constants.ShooterConstants.kPivotPower * Math.cos(Math.toRadians(getPivotAngle() + 49));
+    return Constants.ShooterConstants.kPivotFF * Math.cos(Math.toRadians(getPivotAngle() + 49));
   }
 
   @Override
@@ -121,5 +122,8 @@ public class Shooter extends SubsystemBase {
     // Put RPM and pivot angle on shuffleboard
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
     SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
+    // if (getPivotAngle() >= 85 ){
+    //   CommandScheduler.getInstance().schedule(null);
+    // }
   }
 }
