@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.commands.Shooter.SoftStop;
 
 public class Shooter extends SubsystemBase {
   // Motors and absolute encoder for pivoting for the shooter
@@ -122,8 +123,8 @@ public class Shooter extends SubsystemBase {
     // Put RPM and pivot angle on shuffleboard
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
     SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
-    // if (getPivotAngle() >= 85 ){
-    //   CommandScheduler.getInstance().schedule(null);
-    // }
+    if (getPivotAngle() >= 65 ){
+      CommandScheduler.getInstance().schedule(new SoftStop(this, getPivotAngle()));
+    }
   }
 }

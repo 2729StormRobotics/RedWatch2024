@@ -25,7 +25,9 @@ public class SoftStop extends InstantCommand {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_shooter.setPivotSpeed(-0.05);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -34,6 +36,6 @@ public class SoftStop extends InstantCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_shooter.getPivotAngle()<= (0);
+    return m_shooter.getPivotAngle()<= (m_startingAngle-5);
   }
 }
