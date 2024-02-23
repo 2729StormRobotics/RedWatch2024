@@ -183,9 +183,9 @@ public final class Constants {
     public static final double kRightPivotOffset = 0;
 
     // Pivot PID values
-    public static double kPPivot = 0.0;
+    public static double kPPivot = 0.007;
     public static final double kIPivot = 0;
-    public static double kDPivot = 0;
+    public static double kDPivot = 0.0003;
     public static double kMaxPivotVelocity = 10; // Measured in degrees/s
     public static final double kMaxPivotAcceleration = 45; // Measured in degrees/s^2
     public static final double kPivotTolerance = 1; // degrees
@@ -196,13 +196,14 @@ public final class Constants {
     public static final double kPShoot = 0;
     public static final double kRPMTolerance = 50;
 
+    
     // Flywheel Shooting values
     public static final double kLeftRPM = 1000;
     public static final double kRightRPM = 1000;
     public static double kLeftPower = .17; // 0.183 for forward shot amp, 57 degrees
     public static double kRightPower = .17; // 0.17 speed for backward amp shot
 
-    public static double kPivotFF = 0.0465; //tested
+    public static double kPivotFF = 0.035; //tested
 
     // Field and Robot Measurements
     // All units are in meters

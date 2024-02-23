@@ -115,7 +115,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getPivotFeedForward() {
-    return Constants.ShooterConstants.kPivotFF * Math.cos(Math.toRadians(getPivotAngle() + 49));
+    return Constants.ShooterConstants.kPivotFF * Math.cos(Math.toRadians(getPivotAngle() + 40));
   }
 
   @Override
@@ -123,8 +123,8 @@ public class Shooter extends SubsystemBase {
     // Put RPM and pivot angle on shuffleboard
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
     SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
-    if (getPivotAngle() >= 65 ){
-      CommandScheduler.getInstance().schedule(new SoftStop(this, getPivotAngle()));
-    }
+    // if (getPivotAngle() >= 65 ){
+    //   CommandScheduler.getInstance().schedule(new SoftStop(this, getPivotAngle()));
+    // }
   }
 }

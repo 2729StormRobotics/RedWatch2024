@@ -142,7 +142,7 @@ public class ControlPanel extends SubsystemBase {
     
     Constants.ShooterConstants.kLeftPower = SmartDashboard.getNumber("Shooter Speeds", 0.2);
     Constants.ShooterConstants.kRightPower = SmartDashboard.getNumber("Shooter Speeds", 0.2);
-    // Constants.ShooterConstants.kPivotPower = SmartDashboard.getNumber("pivot speeds")
+    // Constants.ShooterConstants.kPivotFF = SmartDashboard.getNumber("pivot FF", 0.0465);
     Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0);
     Constants.ShooterConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);
   }
