@@ -26,6 +26,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commands.Meltdown;
+import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.commands.Shooter.Pivot;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
@@ -61,7 +62,7 @@ public class RobotContainer {
     m_vision = new Vision();
     m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
-    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter);
+    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_vision);
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     SmartDashboard.putData(CommandScheduler.getInstance());
@@ -77,8 +78,8 @@ public class RobotContainer {
           // -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*0.7, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*0.7, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*0.5, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*0.5, OperatorConstants.kDriveDeadband),
           -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*1, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
@@ -120,28 +121,31 @@ public class RobotContainer {
     // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Feed(m_indexer));
 
     // Shooter
-    new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}));
-    new POVButton(m_weaponsController, 180).onTrue(new RunCommand(() -> {m_shooter.stopShooterMotors();}));
+    new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}, m_shooter));
+    new POVButton(m_weaponsController, 180).onTrue(new InstantCommand(() -> {m_shooter.stopShooterMotors();}, m_shooter));
 
     // Intake
-    new POVButton(m_weaponsController, 90).onTrue(new RunCommand(() -> {m_intake.ejectItem();}));
-    new POVButton(m_weaponsController, 270).onTrue(new RunCommand(() -> {m_intake.stopIntake();}));
+    new POVButton(m_weaponsController, 90).onTrue(new RunCommand(() -> {m_intake.ejectItem();}, m_intake));
+    new POVButton(m_weaponsController, 270).onTrue(new InstantCommand(() -> {m_intake.stopIntake();}, m_intake));
 
     // Indexer
-    new POVButton(m_weaponsController, 45).onTrue(new RunCommand(() -> {m_indexer.runIndexer(Constants.IndexerConstants.kIndexerSpeed);}));
-    new POVButton(m_weaponsController, 225).onTrue(new RunCommand(() -> {m_indexer.stop();}));
+    new POVButton(m_weaponsController, 45).onTrue(new RunCommand(() -> {m_indexer.runIndexer(Constants.IndexerConstants.kIndexerSpeed);}, m_indexer));
+    new POVButton(m_weaponsController, 225).onTrue(new InstantCommand(() -> {m_indexer.stop();}, m_indexer));
 
     // LEDs
+    new JoystickButton(m_weaponsController, Button.kRightStick.value).onTrue(new PartyMode(m_leds));
 
-    //bumper up shoot
-    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker));
-// new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, 1, 1));
+    //bumper up shoot - RB
+    // new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker));
+new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, .7, .5));
 
     // AMP SHOT
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp));
+    
+    //INTAKE - A
     new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
 
-    
+    //MELTDOWN - B
     new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_intake, m_drivetrain, m_indexer));
     
     //pivot intake

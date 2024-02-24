@@ -49,17 +49,17 @@ public class ControlPanel extends SubsystemBase {
   // private final LEDs m_leds;
   private final Intake m_intake;
   private final Shooter m_shooter;
-  // private final Vision m_vision;
+  private final Vision m_vision;
 
 
   /** Creates a new ControlPanel. */
-  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter) {
+  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, Vision vision) {
     m_drivetrain = drivetrain;
     m_indexer = indexer;
     // m_leds = leds;
     m_intake = intake;
     m_shooter = shooter;
-    // m_vision = vision;
+    m_vision = vision;
 
     m_controlpanelTab = Shuffleboard.getTab(ControlPanelConstants.kShuffleboardTab);
 
@@ -145,5 +145,6 @@ public class ControlPanel extends SubsystemBase {
     // Constants.ShooterConstants.kPivotFF = SmartDashboard.getNumber("pivot FF", 0.0465);
     Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0);
     Constants.ShooterConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);
+    SmartDashboard.putNumber("Auto angle", m_shooter.getOptimalAngle(m_vision.getSpeakerDistance()));
   }
 }

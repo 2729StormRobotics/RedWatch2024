@@ -54,10 +54,14 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     LEDSegment.Matrix.fullClear();
+    // LEDSegment.Matrix.setRainbowAnimation(1);
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+        // LEDSegment.Matrix.setRainbowAnimation(1);
+
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override

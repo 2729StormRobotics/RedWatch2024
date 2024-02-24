@@ -91,6 +91,13 @@ public class LEDs extends SubsystemBase {
             // LEDSegment.Matrix.setRainbowAnimation(1);
             });
     }
+    public Command Partymode(){
+        return runOnce(() -> {
+
+            LEDSegment.Matrix.setRainbowAnimation(1);
+
+        });
+    } 
 
     public Command clearSegmentCommand(LEDSegment segment) {
         return runOnce(() -> {

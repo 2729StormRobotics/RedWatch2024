@@ -217,9 +217,14 @@ public final class Constants {
 
     // Interpolation table for getting shooting angle based off distance
     public static final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
-      new Point2D.Double()
+      new Point2D.Double(0.93, 54),
+      new Point2D.Double(1.77, 43.5),
+      new Point2D.Double(2, 39.32),
+      new Point2D.Double(2.32, 36.17),
+      new Point2D.Double(2.6, 34.75),
+      new Point2D.Double(2.9, 32.3)
     };
-    public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable();
+    public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
     
     // Set Positions
     public static final double kIntakeAngle = 47;
@@ -240,11 +245,11 @@ public final class Constants {
     public static final double kSTurn = 0;
 
     // Heights for detecting distance away from apriltag
-    public static final double limelightHeight = Units.inchesToMeters(20);
-    public static final double limelightAngle = 20; // degrees
+    public static final double limelightHeight = Units.inchesToMeters(11.5);
+    public static final double limelightAngle = 30.5; // degrees
     public static final double apriltagWidth = Units.inchesToMeters(6.5);
-    public static final double speakerTagHeight = Units.inchesToMeters(53.875)
-        + Units.inchesToMeters(apriltagWidth / 2);
+    public static final double speakerTagHeight = Units.inchesToMeters(53.875);
+        // + Units.inchesToMeters(apriltagWidth / 2);
     public static final double ampTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double aprilTagAlignTolerance = 1;
