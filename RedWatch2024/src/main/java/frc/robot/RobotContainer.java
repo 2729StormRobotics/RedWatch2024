@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Vision.AprilTagAlign;
 import frc.robot.commands.Vision.NoteAlign;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
@@ -30,6 +31,7 @@ import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Shooter;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -40,12 +42,12 @@ import frc.robot.subsystems.Shooter;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drivetrain;
-  // private final Vision m_vision;
+  private final Vision m_vision;
   private final Indexer m_indexer;
   private final Intake m_intake;
   private final Shooter m_shooter;
   private final ControlPanel m_controlPanel;
-  // private final LEDs m_leds;
+  private final LEDs m_leds;
 
   private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
   private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
@@ -56,8 +58,8 @@ public class RobotContainer {
     m_indexer = new Indexer();
     m_intake = new Intake();
     m_shooter = new Shooter();
-    // m_vision = new Vision();
-    // m_leds = new LEDs();
+    m_vision = new Vision();
+    m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
     m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter);
     SmartDashboard.putData(CommandScheduler.getInstance());
@@ -75,9 +77,9 @@ public class RobotContainer {
           // -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*0.5, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*0.5, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*0.5, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*0.7, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*0.7, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*1, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
 
@@ -96,11 +98,20 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+
+    /*
+     * Driver
+     */
     // locks wheels
     new JoystickButton(m_translator, Button.kX.value)
         .whileTrue(new RunCommand(
             () -> m_drivetrain.setX(),
             m_drivetrain));
+    // reset gyro
+    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
+    // vision align
+    new JoystickButton(m_translator, Button.kA.value).toggleOnTrue(new AprilTagAlign(m_vision, m_drivetrain, m_translator));
+
     //testing button
     // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new SetPower(m_shooter,.2, .2));
   
@@ -109,38 +120,36 @@ public class RobotContainer {
     // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Feed(m_indexer));
 
     // Shooter
-    new POVButton(m_weaponsController, 0).onTrue(new InstantCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPower, Constants.ShooterConstants.kLeftPower);}));
-    new POVButton(m_weaponsController, 180).onTrue(new InstantCommand(() -> {m_shooter.stopShooterMotors();}));
+    new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}));
+    new POVButton(m_weaponsController, 180).onTrue(new RunCommand(() -> {m_shooter.stopShooterMotors();}));
 
     // Intake
-    new POVButton(m_weaponsController, 90).onTrue(new InstantCommand(() -> {m_intake.intakeItem();}));
-    new POVButton(m_weaponsController, 270).onTrue(new InstantCommand(() -> {m_intake.stopIntake();}));
+    new POVButton(m_weaponsController, 90).onTrue(new RunCommand(() -> {m_intake.ejectItem();}));
+    new POVButton(m_weaponsController, 270).onTrue(new RunCommand(() -> {m_intake.stopIntake();}));
 
     // Indexer
-    new POVButton(m_weaponsController, 45).onTrue(new InstantCommand(() -> {m_indexer.runIndexer(Constants.IndexerConstants.kIndexerSpeed);}));
-    new POVButton(m_weaponsController, 225).onTrue(new InstantCommand(() -> {m_indexer.stop();}));
+    new POVButton(m_weaponsController, 45).onTrue(new RunCommand(() -> {m_indexer.runIndexer(Constants.IndexerConstants.kIndexerSpeed);}));
+    new POVButton(m_weaponsController, 225).onTrue(new RunCommand(() -> {m_indexer.stop();}));
 
     // LEDs
-    // intake
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new FeedAndShoot(m_shooter, m_indexer));
+
+    //bumper up shoot
+    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker));
+// new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, 1, 1));
+
+    // AMP SHOT
+    new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp));
     new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
 
-
+    
     new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_intake, m_drivetrain, m_indexer));
+    
+    //pivot intake
+    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 75)); //37.5 at .55
 
-    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new InstantCommand(() -> {m_indexer.runIndexer(-0.7);}));
+    //pivot bumper up
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(m_shooter, 52));
 
-    // new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new InstantCommand(() -> {m_indexer.runIndexer(-0.7);}));
-
-    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 45));
-
-
-    // new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new InstantCommand(() -> {
-    //   m_indexer.stop();
-    //   m_intake.stopIntake();
-    //   m_shooter.stopShooterMotors();
-    //   m_shooter.stopPivotMotors();
-    // }));
 
     // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new InstantCommand(() -> m_shooter.setPivotSpeed(0)));
 
@@ -150,12 +159,7 @@ public class RobotContainer {
     // // // Pivor and Rev
     // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(m_shooter, 50));
     
-    // reset gyro
-    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
-
-
-    // reset gyro
-    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
+    
   
     // switch to note align
     // new JoystickButton(m_translator, Button.kY.value)

@@ -5,7 +5,6 @@
 package frc.robot.commands.LEDs;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.presets.matrixPresets;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.LEDSegment;
 
@@ -21,9 +20,7 @@ public class PartyMode extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    LEDSegment.MainStrip.setRainbowAnimation(0.8);
-    LEDSegment.Underglow.setRainbowAnimation(0.8);
-    LEDSegment.MainStatusLEDs.setRainbowAnimation(0.8);
+    LEDSegment.Matrix.setRainbowAnimation(0.8);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override

@@ -14,15 +14,41 @@ import com.ctre.phoenix.led.SingleFadeAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LightsConstants;
 import frc.robot.presets.matrixPresets;
+/*
+ * USAGE:
+ * ANYWHERE YOU WANT TO USE LEDS
+ * import the LEDSegment
+ * then run:
+ * LEDSegment.MainStrip.(whatever command)
+ * if any questions, ask Krithik
+ * 
+ * remember, the LED count includes the 8 onboard candle LEDS.
+ * 
+ * To SET A GENERAL COLOR
+ * USE LEDs.(whatever color) as a parameter
+ * 
+ * To use a SPECIFIC color do:
+ * new Color(0, 0, 0) as a parameter
+ * 
+ * Request Note Ground: setColor(orange)
+ * Request Note: setBandAnimationf(orange)
+ * Aligning to speaker: setColor(red)
+ * Aligned to speaker: setColor(green)
+ * Default: setFadeAnimation(red)
+ * Partymode: setRainbowAnimation(1)
+ * 
+ * MATRIX USAGE:
+ * Create an order for the matrix in the matrixPresets.java file
+ * use the command setMatrixToGrid with your preset as a parameter
+ * if needs to be offset make sure to offset both the led segment AND 
+ * variable "no" in the setMatrixToGrid function
+ */
 
 public class LEDs extends SubsystemBase {
-    public static final CANdle main_candle = new CANdle(LightsConstants.MAIN_PORT);
+    public static final CANdle candle = new CANdle(LightsConstants.CANDLE_PORT);
 
     // Team colors
     public static final Color red = new Color(255, 0, 0);
@@ -50,19 +76,20 @@ public class LEDs extends SubsystemBase {
         candleConfiguration.stripType = LEDStripType.RGB;
         candleConfiguration.brightnessScalar = 1.0;
         candleConfiguration.vBatOutputMode = VBatOutputMode.Modulated;
-        main_candle.configAllSettings(candleConfiguration, 100);
+        candle.configAllSettings(candleConfiguration, 100);
         setDefaultCommand(defaultCommand());
     }
 
-    public void setBrightness(double percent, CANdle candle) {
+    public void setBrightness(double percent) {
         candle.configBrightnessScalar(percent, 100);
     }
 
     public Command defaultCommand() {
         // setBrightness(1);
-        // return new runMatrixAnimation(this);
-        return new InstantCommand(() -> {LEDSegment.Underglow.setRainbowAnimation(1);});
-        
+        return runOnce(() -> {
+            LEDSegment.Matrix.setFadeAnimation(red, 0.3);
+            // LEDSegment.Matrix.setRainbowAnimation(1);
+            });
     }
 
     public Command clearSegmentCommand(LEDSegment segment) {
@@ -76,22 +103,66 @@ public class LEDs extends SubsystemBase {
         });
     }
     public static enum LEDSegment {
+        // BatteryIndicator(0, 2, 0),
+        // PressureIndicator(2, 2, 1),
+        // MastEncoderIndicator(4, 1, -1),
+        // BoomEncoderIndicator(5, 1, -1),
+        // WristEncoderIndicator(6, 1, -1),
+        // DriverStationIndicator(7, 1, -1),
         // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
-        MainStatusLEDs(0,7,0, main_candle),
-        Underglow(7,100,1, main_candle),
-        MainStrip(107, 100, 2, main_candle);
+        MainStrip(0, 7, 0),
+        Matrix(7,60,1);
+        // Strip2(8,4,1),
+        // Strip3(13,2,2),
+        // Strip4(18,7,3),
+        // Strip5(20,1,4),
+        // Strip6(21,2,5),
+        // Strip7(24,1,6),
+        // Strip8(26,5,7),
+        // Strip9(27,1,8),
+        // Strip10(28,4,9),
+        // Strip11(30,1,0),
+        // Strip12(34,3,0),
+        // Strip13(39,2,0),
+        // Strip14(41,4,0),
+        // Strip15(46,2,0),
+        // Strip16(50,2,0),
+        // Strip17(52,2,0),
+        // Strip18(53,1,0),
+        // Strip19(54,2,0),
+        // Strip20(56,1,0),
+        // Strip21(59,2,0),
+        // Strip22(60, 2, 0),
+        // Strip23(13,2,2),
+        // Strip24(18,1,3),
+        // Strip25(20,2,4),
+        // Strip26(21,1,5),
+        // Strip27(24,2,6),
+        // Strip28(26,2,7),
+        // Strip29(27,2,8),
+        // Strip30(28,4,9),
+        // Strip31(30,2,0),
+        // Strip32(8,3,1),
+        // Strip33(13,1,2),
+        // Strip34(18,4,3),
+        // Strip35(20,1,4),
+        // Strip36(21,5,5),
+        // Strip37(24,1,6),
+        // Strip38(26,2,7),
+        // Strip39(27,1,8),
+        // Strip40(28,7,9),
+        // Strip41(30,2,0),
+        // Strip42(8,4,1);
         // MAIN STRIP SHOULD BE STARTING AT INDEX 8, leave at 0 when testing
 
         public final int startIndex;
         public final int segmentSize;
         public final int animationSlot;
-        public final CANdle candle;
 
-        private LEDSegment(int startIndex, int segmentSize, int animationSlot, CANdle m_candle) {
+        private LEDSegment(int startIndex, int segmentSize, int animationSlot) {
             this.startIndex = startIndex;
             this.segmentSize = segmentSize;
             this.animationSlot = animationSlot;
-            this.candle = m_candle;
         }
 
         public void setColor(Color color) {
@@ -152,7 +223,7 @@ public class LEDs extends SubsystemBase {
         }
 
     }
-    public void setMatrixToGrid(Color[] matrix, CANdle candle)
+    public void setMatrixToGrid(Color[] matrix)
     {
         int no = 7;
         for (int i = 0; i < matrix.length; i++) {

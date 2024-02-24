@@ -200,10 +200,12 @@ public final class Constants {
     // Flywheel Shooting values
     public static final double kLeftRPM = 1000;
     public static final double kRightRPM = 1000;
-    public static double kLeftPower = .17; // 0.183 for forward shot amp, 57 degrees
-    public static double kRightPower = .17; // 0.17 speed for backward amp shot
+    public static double kLeftPowerAmp = .148; // 0.183 for forward shot amp, 57 degrees
+    public static double kRightPowerAmp = .148; // 0.17 speed for backward amp shot
+    public static double kLeftPowerSpeaker = 0.55;
+    public static double kRightPowerSpeaker = 0.55; //55
 
-    public static double kPivotFF = 0.035; //tested
+    public static double kPivotFF = 0.034; // 0.35 tested and works but too high while shooting
 
     // Field and Robot Measurements
     // All units are in meters
@@ -234,7 +236,7 @@ public final class Constants {
     public static final double kSDrive = 0;
     public static final double kPY = 0;
     public static final double kTolerance = 0;
-    public static final double kPTurn = 0;
+    public static final double kPTurn = 0.012;
     public static final double kSTurn = 0;
 
     // Heights for detecting distance away from apriltag
@@ -256,7 +258,6 @@ public final class Constants {
   }
 
   public static final class LightsConstants {
-    public static final int MAIN_PORT = 11;
-    public static final int MATRIX_PORT = 12;
+    public static final int CANDLE_PORT  = 12;
   }
 }

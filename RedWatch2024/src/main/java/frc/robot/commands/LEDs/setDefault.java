@@ -17,9 +17,7 @@ public class setDefault extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    LEDSegment.MainStrip.setColor(LEDs.black);
-    LEDSegment.Underglow.setColor(LEDs.red);
-    LEDSegment.MainStatusLEDs.setFadeAnimation(LEDs.orange, 0.7);
+    LEDSegment.Matrix.setColor(LEDs.black);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

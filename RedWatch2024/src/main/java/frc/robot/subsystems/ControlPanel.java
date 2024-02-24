@@ -140,8 +140,8 @@ public class ControlPanel extends SubsystemBase {
     // Constants.ShooterConstants.kLeftPower = setShooterSpeeds.getDouble(0);
     // Constants.ShooterConstants.kRightPower = setShooterSpeeds.getDouble(0);
     
-    Constants.ShooterConstants.kLeftPower = SmartDashboard.getNumber("Shooter Speeds", 0.2);
-    Constants.ShooterConstants.kRightPower = SmartDashboard.getNumber("Shooter Speeds", 0.2);
+    Constants.ShooterConstants.kLeftPowerSpeaker = SmartDashboard.getNumber("Shooter Speeds", 0.75);
+    Constants.ShooterConstants.kRightPowerSpeaker = SmartDashboard.getNumber("Shooter Speeds", 0.75);
     // Constants.ShooterConstants.kPivotFF = SmartDashboard.getNumber("pivot FF", 0.0465);
     Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0);
     Constants.ShooterConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);

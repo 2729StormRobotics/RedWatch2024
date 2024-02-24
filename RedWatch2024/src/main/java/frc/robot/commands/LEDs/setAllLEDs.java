@@ -19,9 +19,7 @@ public class setAllLEDs extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    LEDSegment.MainStrip.setColor(m_color);
-    LEDSegment.Underglow.setColor(m_color);
-    LEDSegment.MainStatusLEDs.setColor(m_color);
+    LEDSegment.Matrix.setColor(m_color);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

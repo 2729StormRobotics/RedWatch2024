@@ -25,15 +25,15 @@ public class FeedAndShoot extends SequentialCommandGroup {
   private final Shooter m_shooter; 
 
   /** Creates a new Shoot. */
-  public FeedAndShoot(Shooter shooter, Indexer indexer) {
+  public FeedAndShoot(Shooter shooter, Indexer indexer, double leftSpeed, double rightSpeed) {
     m_indexer = indexer;
     m_shooter = shooter;
 
     addCommands(
-      new SetPower(m_shooter, Constants.ShooterConstants.kLeftPower, Constants.ShooterConstants.kRightPower),
+      new SetPower(m_shooter, leftSpeed, rightSpeed),
       new WaitCommand(2),
       new InstantCommand(() -> {m_indexer.runIndexer(1);}),
-      new WaitCommand(1.5),
+      new WaitCommand(3),
       new StopShooter(m_shooter),
       new InstantCommand(() -> {m_indexer.stop();})
 

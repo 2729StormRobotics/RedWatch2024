@@ -53,7 +53,7 @@ public class Pivot extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    timeElapsed = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
