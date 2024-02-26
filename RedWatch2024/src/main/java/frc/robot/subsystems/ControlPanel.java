@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import java.util.Map;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -26,24 +28,6 @@ import frc.robot.commands.Shooter.Pivot;
 
 public class ControlPanel extends SubsystemBase {
 
-  private final ShuffleboardTab m_controlpanelTab;
-
-  private final ShuffleboardLayout m_drivetrainStatus;
-  private final ShuffleboardLayout m_indexerStatus;
-  private final ShuffleboardLayout m_lightsStatus;
-  private final ShuffleboardLayout m_intakeStatus;
-  private final ShuffleboardLayout m_shooterStatus;
-
-
-  private final GenericEntry setPivotEncoder;
-  private final GenericEntry setIntakeSpeeds;
-  private final GenericEntry setIndexerSpeeds;
-  // private final GenericEntry setShooterSpeeds;
-  // private final GenericEntry setPivotSpeeds;
-
-  // private final GenericEntry setkPPivot;
-  // private final GenericEntry setkMaxPivotVelocity;
-
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
   // private final LEDs m_leds;
@@ -61,55 +45,40 @@ public class ControlPanel extends SubsystemBase {
     m_shooter = shooter;
     m_vision = vision;
 
-    m_controlpanelTab = Shuffleboard.getTab(ControlPanelConstants.kShuffleboardTab);
-
-    m_drivetrainStatus = m_controlpanelTab.getLayout("Drivetrain Status", BuiltInLayouts.kList)
-      .withProperties(Map.of("Label position", "TOP"))
-      .withPosition(0, 0)
-      .withSize(2, 5);
-      
-    m_indexerStatus = m_controlpanelTab.getLayout("Indexer Status", BuiltInLayouts.kList)
-      .withProperties(Map.of("Label position", "TOP"))
-      .withPosition(2, 0)
-      .withSize(2, 4);
-
-    m_lightsStatus = m_controlpanelTab.getLayout("Light Status", BuiltInLayouts.kList)
-      .withProperties(Map.of("Label position", "TOP"))
-      .withPosition(4, 0)
-      .withSize(2, 3);
-
-    m_intakeStatus = m_controlpanelTab.getLayout("Pivot Arm Status", BuiltInLayouts.kList)
-      .withProperties(Map.of("Label position", "TOP"))
-      .withPosition(8, 0)
-      .withSize(1, 3);
     
-    m_shooterStatus = m_controlpanelTab.getLayout("Telescoping Arm Status", BuiltInLayouts.kList)
-      .withProperties(Map.of("Label position", "TOP"))
-      .withPosition(10, 0)
-      .withSize(1, 7);
-
     // Drivetrain
-    m_drivetrainStatus.addDouble("Average Speed", () -> m_drivetrain.getTurnRate()); // How fast the robot is
-    m_drivetrainStatus.addNumber("Robot Heading", () -> m_drivetrain.getHeading()); // How far the robot is
-    m_drivetrainStatus.addDouble("Pitch", () -> m_drivetrain.m_gyro.getPitch()); // Pitch of robot
-    m_drivetrainStatus.addDouble("Yaw", () -> m_drivetrain.m_gyro.getYaw());// Yaw of robot\
-    m_drivetrainStatus.add("Zero Heading", (runOnce(() -> {m_drivetrain.zeroHeading();})));
-    m_drivetrainStatus.add("Gyro", m_drivetrain.m_gyro).withWidget(BuiltInWidgets.kGyro);
+    SmartDashboard.putNumber("Average Speed", m_drivetrain.getTurnRate()); // How fast the robot is
+    SmartDashboard.putNumber("Robot Heading", m_drivetrain.getHeading()); // How far the robot is
+    SmartDashboard.putNumber("Pitch", m_drivetrain.m_gyro.getPitch()); // Pitch of robot
+    SmartDashboard.putNumber("Yaw", m_drivetrain.m_gyro.getYaw());// Yaw of robot\
     // motor controllers
-    // m_drivetrainStatus.add("FrontLeftController", m_drivetrain.m_frontLeft).withWidget(BuiltInWidgets.kMotorController);
-    // m_drivetrainStatus.add("FrontRightController", m_drivetrain.m_frontRight).withWidget(BuiltInWidgets.kMotorController);
-    // m_drivetrainStatus.add("RearLeftController", m_drivetrain.m_rearLeft).withWidget(BuiltInWidgets.kMotorController);
-    // m_drivetrainStatus.add("RearRightControler", m_drivetrain.m_rearRight).withWidget(BuiltInWidgets.kMotorController);
+    SmartDashboard.putData("Swerve Drive", new Sendable() {
+      @Override
+      public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("SwerveDrive");
+    
+        builder.addDoubleProperty("Front Left Angle", () -> m_drivetrain.m_frontLeft.getPosition().angle.getRadians(), null);
+        builder.addDoubleProperty("Front Left Velocity", () -> m_drivetrain.m_frontLeft.getState().speedMetersPerSecond, null);
+    
+        builder.addDoubleProperty("Front Right Angle", () -> m_drivetrain.m_frontRight.getPosition().angle.getRadians(), null);
+        builder.addDoubleProperty("Front Right Velocity", () -> m_drivetrain.m_frontRight.getState().speedMetersPerSecond, null);
+    
+        builder.addDoubleProperty("Back Left Angle", () -> m_drivetrain.m_rearLeft.getPosition().angle.getRadians(), null);
+        builder.addDoubleProperty("Back Left Velocity", () -> m_drivetrain.m_rearLeft.getState().speedMetersPerSecond, null);
+    
+        builder.addDoubleProperty("Back Right Angle", () -> m_drivetrain.m_rearRight.getPosition().angle.getRadians(), null);
+        builder.addDoubleProperty("Back Right Velocity", () -> m_drivetrain.m_rearRight.getState().speedMetersPerSecond, null);
+    
+        builder.addDoubleProperty("Robot Angle", () -> Math.toRadians(m_drivetrain.getHeading()), null);
+      }
+    });
     
     //  Indexer
-    m_indexerStatus.addDouble("Indexer Velocity", () -> m_indexer.getIndexerRPM()); // How fast the indexer is
-    m_indexerStatus.addBoolean("Beam break status", () -> m_indexer.isNotePresent()).withWidget(BuiltInWidgets.kBooleanBox);
-    setIndexerSpeeds = m_indexerStatus.add("Indexer Speeds", IndexerConstants.kIndexerSpeed).getEntry();
+    SmartDashboard.putNumber("Indexer Velocity", m_indexer.getIndexerRPM()); // How fast the indexer is
+    SmartDashboard.putBoolean("Beam break status", m_indexer.isNotePresent());
     // Shooter
-    m_shooterStatus.addNumber("Pivot Encoder", () -> m_shooter.getPivotAngle()); // Angle of shooter
-    setPivotEncoder = m_shooterStatus.add("Pivot Encoder Input", m_shooter.getPivotAngle()).getEntry();
-    m_shooterStatus.add("Pivot to Input", new Pivot(m_shooter, setPivotEncoder.get().getDouble()));  
-    m_shooterStatus.addNumber("Flywheel RPM", () -> m_shooter.getAverageRPM());
+    SmartDashboard.putNumber("Pivot Encoder", m_shooter.getPivotAngle()); // Angle of shooter
+    SmartDashboard.putNumber("Flywheel RPM", m_shooter.getAverageRPM());
     // setkPPivot = m_shooterStatus.add("Pivot PID", m_shooter.pivot)
     // setShooterSpeeds = m_shooterStatus.add("Shooter Speed", 1)
     // .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
@@ -122,15 +91,13 @@ public class ControlPanel extends SubsystemBase {
 
 
     // Intake
-    m_intakeStatus.addNumber("Intake RPM", () -> m_intake.getVelocity());
-    setIntakeSpeeds = m_indexerStatus.add("Intake Speeds Input", IntakeConstants.kIntakeMotorSpeed).getEntry();
-    m_intakeStatus.add("Intake to Input", runOnce(() -> {IntakeConstants.kIntakeMotorSpeed = setIntakeSpeeds.get().getDouble(); IntakeConstants.kEjectMotorSpeed = -setIntakeSpeeds.get().getDouble();}));  
+    SmartDashboard.putNumber("Intake RPM", m_intake.getVelocity());
 
     // Lights
     // m_lightsStatus.add("Set LEDs to Red", new setAllLEDs(LEDs.red));  
     // m_lightsStatus.add("Set to Default",new setDefault());  
     // m_lightsStatus.add("Party Mode", new PartyMode(m_leds));  
-    
+    SmartDashboard.put
     
   }
 

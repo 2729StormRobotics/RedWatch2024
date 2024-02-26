@@ -42,7 +42,7 @@ public class Pivot extends Command {
     // PID Controller
     m_controller = new PIDController(Constants.ShooterConstants.kPPivot,
     Constants.ShooterConstants.kIPivot, Constants.ShooterConstants.kDPivot);
-
+    SmartDashboard.putData(m_controller);
     // Set the goal and tolerances of the PID Controller
     m_controller.setSetpoint(m_angle);
     m_controller.setTolerance(Constants.ShooterConstants.kPivotTolerance);
