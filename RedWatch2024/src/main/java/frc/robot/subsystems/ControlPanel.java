@@ -90,14 +90,14 @@ public class ControlPanel extends SubsystemBase {
     SmartDashboard.putNumber("kDPivot", ShooterConstants.kDPivot);
 
 
-    // Intake
+    // Intake a
     SmartDashboard.putNumber("Intake RPM", m_intake.getVelocity());
 
     // Lights
     // m_lightsStatus.add("Set LEDs to Red", new setAllLEDs(LEDs.red));  
     // m_lightsStatus.add("Set to Default",new setDefault());  
     // m_lightsStatus.add("Party Mode", new PartyMode(m_leds));  
-    SmartDashboard.put
+
     
   }
 
