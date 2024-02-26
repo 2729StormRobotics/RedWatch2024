@@ -32,7 +32,7 @@ public class FeedAndShoot extends SequentialCommandGroup {
     addCommands(
       new SetPower(m_shooter, leftSpeed, rightSpeed),
       new WaitCommand(2),
-      new InstantCommand(() -> {m_indexer.runIndexer(1);}),
+      new InstantCommand(() -> {m_indexer.runIndexer(1);}),//0.5 for amp
       new WaitCommand(3),
       new StopShooter(m_shooter),
       new InstantCommand(() -> {m_indexer.stop();})
