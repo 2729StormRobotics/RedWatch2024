@@ -46,6 +46,8 @@ public final class Constants {
     public static final int kBeamBreakPort = 8;
     // Sets the indexer motor to 50% power
     public static double kIndexerSpeed = 0.7;
+    // Sets the indexer motor to 50% power in the opposite direction
+    public static double kSourceIndexerSpeed = -0.7;
     // Sets the indexer motor stall limit to 45 amps
     public static final int kStallLimit = 45;
     // Sets the indexer motor current limit to 60 amps
@@ -190,6 +192,7 @@ public final class Constants {
     public static final double kMaxPivotAcceleration = 45; // Measured in degrees/s^2
     public static final double kPivotTolerance = 1; // degrees
     public static double pivotPower;
+    public static final double kSourcePivotAngle = 0; // Angle of intake for source
 
     // Flywheel PID values
     public static final double kMaxRPM = 6000;
