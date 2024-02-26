@@ -9,6 +9,8 @@ import java.util.Map;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -45,7 +47,8 @@ public class ControlPanel extends SubsystemBase {
     m_shooter = shooter;
     m_vision = vision;
 
-    
+    PowerDistribution m_PD = new PowerDistribution(20,ModuleType.kRev);
+
     // Drivetrain
     SmartDashboard.putNumber("Average Speed", m_drivetrain.getTurnRate()); // How fast the robot is
     SmartDashboard.putNumber("Robot Heading", m_drivetrain.getHeading()); // How far the robot is
@@ -73,6 +76,18 @@ public class ControlPanel extends SubsystemBase {
       }
     });
     
+
+    // voltage
+    SmartDashboard.putNumber("Total Voltage", m_PD.getVoltage());
+    SmartDashboard.putNumber("Temp", m_PD.getTemperature());
+    SmartDashboard.putNumber("Total Power", m_PD.getTotalPower());
+    SmartDashboard.putNumber("Front Left Voltage", m_PD.getCurrent(18)/ m_PD.getTotalPower());
+    SmartDashboard.putNumber("Front Right Voltage", m_PD.getCurrent(1)/ m_PD.getTotalPower());
+    SmartDashboard.putNumber("Back Left Voltage", m_PD.getCurrent(11)/ m_PD.getTotalPower());
+    SmartDashboard.putNumber("Back Right Voltage", m_PD.getCurrent(7)/ m_PD.getTotalPower());
+    SmartDashboard.putNumber("Total Watts", m_PD.getTotalPower());
+    
+
     //  Indexer
     SmartDashboard.putNumber("Indexer Velocity", m_indexer.getIndexerRPM()); // How fast the indexer is
     SmartDashboard.putBoolean("Beam break status", m_indexer.isNotePresent());
