@@ -87,7 +87,8 @@ public class ControlPanel extends SubsystemBase {
     SmartDashboard.putNumber("Back Left Voltage", m_PD.getCurrent(11)/ m_PD.getTotalPower());
     SmartDashboard.putNumber("Back Right Voltage", m_PD.getCurrent(7)/ m_PD.getTotalPower());
     SmartDashboard.putNumber("Total Watts", m_PD.getTotalPower());
-    
+    SmartDashboard.putData("PDH", m_PD);
+    SmartDashboard.putData("Gyro", m_drivetrain.m_gyro);
 
     //  Indexer
     SmartDashboard.putNumber("Indexer Velocity", m_indexer.getIndexerRPM()); // How fast the indexer is
