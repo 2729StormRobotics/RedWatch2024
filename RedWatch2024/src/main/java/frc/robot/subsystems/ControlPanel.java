@@ -134,7 +134,7 @@ public class ControlPanel extends SubsystemBase {
     Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0);
     Constants.ShooterConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);
     Constants.IndexerConstants.kIndexerSpeed = SmartDashboard.getNumber("Indexer Speed", 0.7);
-    LEDSegment.Matrix.setFadeAnimation(new Color(r, g, b), 0.5);
+    LEDSegment.MainStrip.setFadeAnimation(new Color(r, g, b), 0.5);
     SmartDashboard.putNumber("Auto angle", m_shooter.getOptimalAngle(m_vision.getSpeakerDistance()));
     SmartDashboard.putData("Scheduler", CommandScheduler.getInstance());
   }
