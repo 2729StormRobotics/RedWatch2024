@@ -42,36 +42,36 @@ public class Indexer extends SubsystemBase {
     boolean isDone = false;
     int count = 0;
 
-    while (count < 2){
+    while (count < 2) {
       if (isNotePresent()) {
         state1 = isNotePresent();
         if ((state1 == isNotePresent())) {
           count++;
           state1 = false;
         }
-        
+
       }
       isDone = (count == 2);
     }
-/**
-        if ((isNotePresent() && (count == 0))) {
-          count++;
-          state1 = isNotePresent();
-        }
-      
-        
-      while (state1 != state2) {
-        if (state1 != isNotePresent()) {
-          state1 = isNotePresent();
-        }
-      }
-
-      if (isNotePresent() && (state1 == state2)) {
-        count++;
-      }
-      
-      isDone = (count == 2);
-*/
+    /**
+     * if ((isNotePresent() && (count == 0))) {
+     * count++;
+     * state1 = isNotePresent();
+     * }
+     * 
+     * 
+     * while (state1 != state2) {
+     * if (state1 != isNotePresent()) {
+     * state1 = isNotePresent();
+     * }
+     * }
+     * 
+     * if (isNotePresent() && (state1 == state2)) {
+     * count++;
+     * }
+     * 
+     * isDone = (count == 2);
+     */
 
     return isDone;
 
