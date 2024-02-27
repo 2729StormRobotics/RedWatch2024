@@ -39,22 +39,22 @@ public class ControlPanel extends SubsystemBase {
   private final LEDs m_leds;
   private final Intake m_intake;
   private final Shooter m_shooter;
-  private final Vision m_vision;
+  // private final Vision m_vision;
   public int r=225;
   public int b=0;
   public int g=0;
 
   /** Creates a new ControlPanel. */
-  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, Vision vision, LEDs leds) {
+  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, LEDs leds) {
     m_drivetrain = drivetrain;
     m_indexer = indexer;
     m_leds = leds;
     m_intake = intake;
     m_shooter = shooter;
-    m_vision = vision;
+    // m_vision = vision;
 
     PowerDistribution m_PD = new PowerDistribution(20,ModuleType.kRev);
-
+    BuiltInAccelerometer BiA = new BuiltInAccelerometer();
     // Drivetrain
     SmartDashboard.putNumber("Average Speed", m_drivetrain.getTurnRate()); // How fast the robot is
     SmartDashboard.putNumber("Robot Heading", m_drivetrain.getHeading()); // How far the robot is
@@ -125,17 +125,15 @@ public class ControlPanel extends SubsystemBase {
     // This method will be called once per scheduler run
     // Constants.ShooterConstants.kLeftPower = setShooterSpeeds.getDouble(0);
     // Constants.ShooterConstants.kRightPower = setShooterSpeeds.getDouble(0);
-    r= (int) SmartDashboard.getNumber("LED R", 255);
-    g=(int)SmartDashboard.getNumber("LED G", 0);
-    b=(int)SmartDashboard.getNumber("LED B", 0);
     Constants.ShooterConstants.kLeftPowerSpeaker = SmartDashboard.getNumber("Speaker Shooter Speeds", 0.75);
     Constants.ShooterConstants.kRightPowerSpeaker = SmartDashboard.getNumber("Speaker Shooter Speeds", 0.75);
     // Constants.ShooterConstants.kPivotFF = SmartDashboard.getNumber("pivot FF", 0.0465);
     Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0);
     Constants.ShooterConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);
     Constants.IndexerConstants.kIndexerSpeed = SmartDashboard.getNumber("Indexer Speed", 0.7);
-    LEDSegment.MainStrip.setFadeAnimation(new Color(r, g, b), 0.5);
-    SmartDashboard.putNumber("Auto angle", m_shooter.getOptimalAngle(m_vision.getSpeakerDistance()));
+    // LEDSegment.MainStrip.setFadeAnimation(new Color(r, g, b), 0.5);
+    // SmartDashboard.putNumber("Auto angle", m_shooter.getOptimalAngle(m_vision.getSpeakerDistance()));
     SmartDashboard.putData("Scheduler", CommandScheduler.getInstance());
+    SmartDashboard.putNumber("Fused Heading",m_drivetrain.m_gyro.getFusedHeading());
   }
 }

@@ -88,7 +88,7 @@ public class Shooter extends SubsystemBase {
    * GETTERS
    */
   public double getLeftVoltage() {
-    return m_leftFlywheel.getBusVoltage();
+    return m_leftFlywheel.getBusVoltage()*m_leftFlywheel.getAppliedOutput();
   }
 
   public double getRightVoltage() {
@@ -131,6 +131,8 @@ public class Shooter extends SubsystemBase {
     // Put RPM and pivot angle on shuffleboard
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
     SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
+    SmartDashboard.putNumber("Shooter Voltage", getLeftVoltage());
+
     // if (getPivotAngle() >= 65 ){
     //   CommandScheduler.getInstance().schedule(new SoftStop(this, getPivotAngle()));
     // }

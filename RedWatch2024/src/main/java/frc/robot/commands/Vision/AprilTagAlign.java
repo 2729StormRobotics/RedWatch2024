@@ -50,8 +50,8 @@ public class AprilTagAlign extends Command {
     SmartDashboard.putNumber("turnError", m_turnError);
     // drive the robot
     m_drivetrain.drive(
-      MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-      MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+      MathUtil.applyDeadband(-m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+      MathUtil.applyDeadband(-m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
       (-m_turnPower),
       true, true);
   }

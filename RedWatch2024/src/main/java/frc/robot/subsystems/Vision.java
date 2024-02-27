@@ -105,7 +105,7 @@ public class Vision extends SubsystemBase {
 
   public double getSpeakerDistance() {
     double deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
-    double deltaAngle = Math.toRadians(VisionConstants.limelightAngle + getY());
+    double deltaAngle = Math.toRadians(VisionConstants.limelightAngle + ty.getDouble(0));
     double dist = deltaHeight / Math.tan(deltaAngle);
 
     return dist;

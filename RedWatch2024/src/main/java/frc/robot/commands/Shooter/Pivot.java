@@ -10,7 +10,9 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.LEDs.LEDSegment;
 
 /*
  * Will pivot the shooter to the specified angle
@@ -62,6 +64,7 @@ public class Pivot extends Command {
     timeElapsed += 0.02; // this updates every 20 ms
     // Set pivot speed to the value calculated by the PID Controller
     // error = m_angle - m_shooter.getPivotAngle();
+    LEDSegment.MainStrip.setFadeAnimation(LEDs.green, 1);
     // power = error * Constants.ShooterConstants.kPPivot +  m_shooter.getPivotFeedForward();
     power =  m_controller.calculate(m_shooter.getPivotAngle(), m_angle); // + m_shooter.getPivotFeedForward();
     if (power > 0.2) {
@@ -85,6 +88,8 @@ public class Pivot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    
+    LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 1);
     // Finish command when shooter is at the setpoint
     // return Math.abs(error) < Constants.ShooterConstants.kPivotTolerance;
     return m_controller.atSetpoint() || timeElapsed > 2;

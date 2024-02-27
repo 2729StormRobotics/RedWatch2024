@@ -10,6 +10,7 @@ import frc.robot.commands.Vision.NoteAlign;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
@@ -47,7 +48,7 @@ public class RobotContainer {
   private final Vision m_vision;
   private final Indexer m_indexer;
   private final Intake m_intake;
-  private final Shooter m_shooter;
+  final Shooter m_shooter;
   private final ControlPanel m_controlPanel;
   private final LEDs m_leds;
 
@@ -63,10 +64,9 @@ public class RobotContainer {
     m_vision = new Vision();
     m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
-    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_vision, m_leds);
-    SmartDashboard.putData(CommandScheduler.getInstance());
+    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_leds);
 
-    SmartDashboard.putData(CommandScheduler.getInstance());
+    SmartDashboard.putData("command scheduler", CommandScheduler.getInstance());
 
     // Configure the trigger bindings
     configureBindings();
@@ -79,8 +79,8 @@ public class RobotContainer {
           // -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*0.25, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*0.25, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
           -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*1, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
@@ -137,9 +137,13 @@ public class RobotContainer {
     //INTAKE PIVOT - X 
     new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 75)); //37.5 at .55
 
-    //SPEAKER PIVOT - Y
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(m_shooter, 40));
-
+    //PIVOT SPEAKER - Y
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(
+      m_shooter, 
+      m_shooter.getOptimalAngle(m_vision.getSpeakerDistance())));
+    SmartDashboard.putNumber("Vision Speaker distance", m_vision.getSpeakerDistance());
+    SmartDashboard.putNumber("Limelight y angle", m_vision.getY());
+    SmartDashboard.putNumber("Limelight table y", NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(27));
 
 
     // Shooter overrides 

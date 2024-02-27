@@ -7,6 +7,7 @@ package frc.robot;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.lib.LinearInterpolationTable;
@@ -187,7 +188,7 @@ public final class Constants {
     public static final double kRightPivotOffset = 0;
 
     // Pivot PID values
-    public static double kPPivot = 0.0055;//0.007
+    public static double kPPivot = 0.006;//0.006
     public static final double kIPivot = 0;
     public static double kDPivot = 0;//0.0001;
     public static double kMaxPivotVelocity = 10; // Measured in degrees/s
@@ -230,6 +231,18 @@ public final class Constants {
       new Point2D.Double(2.9, 32.3)
     };
     public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
+
+    public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
+
+    static {
+      shooterMap.put(0.93, 54.0);
+      shooterMap.put(1.77, 43.5);
+      shooterMap.put(2.0, 39.32);
+      shooterMap.put(2.32, 36.17);
+      shooterMap.put(2.6, 34.75);
+      shooterMap.put(2.9, 32.3);
+
+    }
     
     // Set Positions
     public static final double kIntakeAngle = 47;
