@@ -51,8 +51,6 @@ public final class Constants {
     public static double kIndexerSpeed = 0.7;
     // Sets the indexer motor to 50% power in the opposite direction
     public static double kSourceIndexerSpeed = -0.7;
-    // Sets the indexer motor stall limit to 45 amps
-    public static final int kStallLimit = 45;
     // Sets the indexer motor current limit to 60 amps
     public static final int kCurrentLimit = 60;
   }
@@ -171,7 +169,7 @@ public final class Constants {
     public static final int kRightPivotID = 9;
     public static final int kLeftFlywheelID = 10;
     public static final int kRightFlywheelID = 14;
-    public static final int kCurrentLimit = 45;
+    public static final int kCurrentLimit = 60;
 
     // manual control speed limiters
     public static final double kPivotSpeedLimiter = 1;

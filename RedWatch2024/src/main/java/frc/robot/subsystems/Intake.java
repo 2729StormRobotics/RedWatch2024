@@ -75,6 +75,7 @@ public class Intake extends SubsystemBase {
     motor.restoreFactoryDefaults();
     motor.setIdleMode(IdleMode.kBrake);
     motor.setInverted(inverse);
+    motor.setSmartCurrentLimit(60);
   }
 
   // public boolean isNotePresent(){
