@@ -20,7 +20,7 @@ public class PartyMode extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    LEDSegment.Matrix.setRainbowAnimation(1);
+    LEDSegment.MainStrip.setRainbowAnimation(1);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override

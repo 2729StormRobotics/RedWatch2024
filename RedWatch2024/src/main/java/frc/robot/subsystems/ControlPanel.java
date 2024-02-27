@@ -9,6 +9,7 @@ import java.util.Map;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
@@ -53,9 +54,7 @@ public class ControlPanel extends SubsystemBase {
     m_vision = vision;
 
     PowerDistribution m_PD = new PowerDistribution(20,ModuleType.kRev);
-    SmartDashboard.putNumber("LED R", r);
-    SmartDashboard.putNumber("LED G", g);
-    SmartDashboard.putNumber("LED B", b);
+
     // Drivetrain
     SmartDashboard.putNumber("Average Speed", m_drivetrain.getTurnRate()); // How fast the robot is
     SmartDashboard.putNumber("Robot Heading", m_drivetrain.getHeading()); // How far the robot is
@@ -68,16 +67,16 @@ public class ControlPanel extends SubsystemBase {
         builder.setSmartDashboardType("SwerveDrive");
     
         builder.addDoubleProperty("Front Left Angle", () -> m_drivetrain.m_frontLeft.getPosition().angle.getRadians(), null);
-        builder.addDoubleProperty("Front Left Velocity", () -> m_drivetrain.m_frontLeft.getState().speedMetersPerSecond, null);
+        builder.addDoubleProperty("Front Left Velocity", () -> m_drivetrain.m_frontLeft.m_drivingEncoder.getVelocity(), null);
     
         builder.addDoubleProperty("Front Right Angle", () -> m_drivetrain.m_frontRight.getPosition().angle.getRadians(), null);
-        builder.addDoubleProperty("Front Right Velocity", () -> m_drivetrain.m_frontRight.getState().speedMetersPerSecond, null);
+        builder.addDoubleProperty("Front Right Velocity", () -> m_drivetrain.m_frontRight.m_drivingEncoder.getVelocity(), null);
     
         builder.addDoubleProperty("Back Left Angle", () -> m_drivetrain.m_rearLeft.getPosition().angle.getRadians(), null);
-        builder.addDoubleProperty("Back Left Velocity", () -> m_drivetrain.m_rearLeft.getState().speedMetersPerSecond, null);
+        builder.addDoubleProperty("Back Left Velocity", () -> m_drivetrain.m_rearLeft.m_drivingEncoder.getVelocity(), null);
     
         builder.addDoubleProperty("Back Right Angle", () -> m_drivetrain.m_rearRight.getPosition().angle.getRadians(), null);
-        builder.addDoubleProperty("Back Right Velocity", () -> m_drivetrain.m_rearRight.getState().speedMetersPerSecond, null);
+        builder.addDoubleProperty("Back Right Velocity", () -> m_drivetrain.m_rearRight.m_drivingEncoder.getVelocity(), null);
     
         builder.addDoubleProperty("Robot Angle", () -> Math.toRadians(m_drivetrain.getHeading()), null);
       }
@@ -87,13 +86,9 @@ public class ControlPanel extends SubsystemBase {
     // voltage
     SmartDashboard.putNumber("Total Voltage", m_PD.getVoltage());
     SmartDashboard.putNumber("Temp", m_PD.getTemperature());
-    SmartDashboard.putNumber("Total Power", m_PD.getTotalPower());
-    SmartDashboard.putNumber("Front Left Voltage", m_PD.getCurrent(18)/ m_PD.getTotalPower());
-    SmartDashboard.putNumber("Front Right Voltage", m_PD.getCurrent(1)/ m_PD.getTotalPower());
-    SmartDashboard.putNumber("Back Left Voltage", m_PD.getCurrent(11)/ m_PD.getTotalPower());
-    SmartDashboard.putNumber("Back Right Voltage", m_PD.getCurrent(7)/ m_PD.getTotalPower());
-    SmartDashboard.putNumber("Total Watts", m_PD.getTotalPower());
-    
+    SmartDashboard.putData("PDH", m_PD);
+    SmartDashboard.putData("Gyro", m_drivetrain.m_gyro);
+    SmartDashboard.putData("BuiltInAccelerometer", BiA);
 
     //  Indexer
     SmartDashboard.putNumber("Indexer Velocity", m_indexer.getIndexerRPM());
