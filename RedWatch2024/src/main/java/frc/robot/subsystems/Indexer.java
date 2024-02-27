@@ -83,7 +83,7 @@ public class Indexer extends SubsystemBase {
     this.m_IndexerMotor.setIdleMode(com.revrobotics.CANSparkMax.IdleMode.kBrake);
     this.m_IndexerMotor.setSmartCurrentLimit(kCurrentLimit);
     this.m_IndexerMotor.setInverted(invert);
-    this.m_IndexerMotor.setSmartCurrentLimit(kStallLimit);
+    this.m_IndexerMotor.burnFlash();
   }
 
   public void runIndexer(double speed) {

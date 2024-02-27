@@ -57,6 +57,7 @@ public class Shooter extends SubsystemBase {
     motor.setIdleMode(IdleMode.kCoast);
     motor.setSmartCurrentLimit(Constants.ShooterConstants.kCurrentLimit);
     motor.setInverted(invert);
+    motor.burnFlash();
   }
 
   /*
