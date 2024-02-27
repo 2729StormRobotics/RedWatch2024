@@ -40,6 +40,9 @@ public final class Constants {
   }
 
   public static final class IndexerConstants {
+    public static final double kFeedSpeakerSpeed = 1;
+    public static final double kFeedAmpSpeed = 0.5;
+
     // Assigns Indexer moftor to port
     public static final int kIndexMotorPort = 12;
     // Assigns Beam break sensor to port 1

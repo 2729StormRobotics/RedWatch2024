@@ -86,6 +86,13 @@ public class Shooter extends SubsystemBase {
   /*
    * GETTERS
    */
+  public double getLeftVoltage() {
+    return m_leftFlywheel.getBusVoltage();
+  }
+
+  public double getRightVoltage() {
+    return m_rightFlywheel.getBusVoltage();
+  }
 
   // returns rpm of left shooter motor
   public double getLeftRPM() {

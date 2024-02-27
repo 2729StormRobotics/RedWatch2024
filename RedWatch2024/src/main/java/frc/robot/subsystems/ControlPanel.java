@@ -88,7 +88,7 @@ public class ControlPanel extends SubsystemBase {
     SmartDashboard.putNumber("Temp", m_PD.getTemperature());
     SmartDashboard.putData("PDH", m_PD);
     SmartDashboard.putData("Gyro", m_drivetrain.m_gyro);
-    SmartDashboard.putData("BuiltInAccelerometer", BiA);
+    // SmartDashboard.putData("BuiltInAccelerometer", BiA);
 
     //  Indexer
     SmartDashboard.putNumber("Indexer Velocity", m_indexer.getIndexerRPM());

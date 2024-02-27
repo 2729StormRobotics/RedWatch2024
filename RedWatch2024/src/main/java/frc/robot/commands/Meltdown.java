@@ -35,9 +35,9 @@ public class Meltdown extends InstantCommand {
   @Override
   public void execute() {
     m_indexer.stop();
-      m_intake.stopIntake();
-      m_shooter.stopShooterMotors();
-      m_shooter.stopPivotMotors();
+    m_intake.stopIntake();
+    m_shooter.stopShooterMotors();
+    m_shooter.stopPivotMotors();
   }
 
   // Called once the command ends or is interrupted.

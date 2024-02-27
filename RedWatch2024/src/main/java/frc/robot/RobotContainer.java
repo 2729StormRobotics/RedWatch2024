@@ -109,66 +109,53 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_drivetrain.setX(),
             m_drivetrain));
+
     // reset gyro
     new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
+   
     // vision align
     new JoystickButton(m_translator, Button.kA.value).toggleOnTrue(new AprilTagAlign(m_vision, m_drivetrain, m_translator));
-
-    //testing button
-    // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new SetPower(m_shooter,.2, .2));
   
-    //load
-    // new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Load(m_indexer));
-    // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Feed(m_indexer));
-
-    // Shooter
-    new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}, m_shooter));
-    new POVButton(m_weaponsController, 180).onTrue(new InstantCommand(() -> {m_shooter.stopShooterMotors();}, m_shooter));
-
-    // Intake
-    new POVButton(m_weaponsController, 90).onTrue(new RunCommand(() -> {m_intake.ejectItem();}, m_intake));
-    new POVButton(m_weaponsController, 270).onTrue(new InstantCommand(() -> {m_intake.stopIntake();}, m_intake));
-
-    // Indexer
-    new POVButton(m_weaponsController, 45).onTrue(new RunCommand(() -> {m_indexer.runIndexer(Constants.IndexerConstants.kIndexerSpeed);}, m_indexer));
-    new POVButton(m_weaponsController, 225).onTrue(new InstantCommand(() -> {m_indexer.stop();}, m_indexer));
-
-    // LEDs
-    new JoystickButton(m_weaponsController, Button.kRightStick.value).onTrue(new PartyMode(m_leds));
-
-    //bumper up shoot - RB
-    // new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker));
-new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, .7, .5));
-
-    // AMP SHOT
-    new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp));
+  
+  /*
+  * WEAPONS
+  */
+    //SHOOT SPEAKER - RB
+    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
+    (new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
     
-    //INTAKE - A
+    // SHOOT AMP - LB
+    new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
+    (new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
+    
+    //RUN INTAKE - A
     new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
 
     //MELTDOWN - B
     new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_intake, m_drivetrain, m_indexer));
     
-    //pivot intake
+    //INTAKE PIVOT - X 
     new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 75)); //37.5 at .55
 
-    //pivot bumper up
+    //SPEAKER PIVOT - Y
     new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(m_shooter, 40));
 
 
-    // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new InstantCommand(() -> m_shooter.setPivotSpeed(0)));
 
-    // // // scoring 
-    // // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new ScoringSequence(50, m_shooter, m_indexer));
+    // Shooter overrides 
+    new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}, m_shooter));
+    new POVButton(m_weaponsController, 180).onTrue(new InstantCommand(() -> {m_shooter.stopShooterMotors();}, m_shooter));
 
-    // // // Pivor and Rev
-    // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(m_shooter, 50));
-    
-    
-  
-    // switch to note align
-    // new JoystickButton(m_translator, Button.kY.value)
-    //   .whileTrue(new NoteAlign(m_drivetrain, m_vision, m_translator));
+    // Intake overrides
+    new POVButton(m_weaponsController, 90).onTrue(new RunCommand(() -> {m_intake.ejectItem();}, m_intake));
+    new POVButton(m_weaponsController, 270).onTrue(new InstantCommand(() -> {m_intake.stopIntake();}, m_intake));
+
+    // Indexer overrides
+    new POVButton(m_weaponsController, 45).onTrue(new RunCommand(() -> {m_indexer.runIndexer(Constants.IndexerConstants.kIndexerSpeed);}, m_indexer));
+    new POVButton(m_weaponsController, 225).onTrue(new InstantCommand(() -> {m_indexer.stop();}, m_indexer));
+
+    // LEDs
+    new JoystickButton(m_weaponsController, Button.kRightStick.value).onTrue(new PartyMode(m_leds));
   }
 
   /**

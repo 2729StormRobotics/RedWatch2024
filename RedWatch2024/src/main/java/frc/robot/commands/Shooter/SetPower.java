@@ -26,4 +26,15 @@ public class SetPower extends InstantCommand {
   public void initialize() {
     m_shooter.setShooterSpeed(m_leftPower, m_rightPower);
   }
+
+  // Called once the command ends or is interrupted.
+   @Override
+  public void end(boolean interrupted) {}
+  
+  // Returns true when the command should end.
+  @Override
+  public boolean isFinished() {
+    return (m_shooter.getLeftVoltage() >= m_leftPower * 12) && 
+            (m_shooter.getRightVoltage() >= m_rightPower * 12);
+  }
 }
