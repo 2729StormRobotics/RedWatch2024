@@ -52,7 +52,7 @@ public final class Constants {
     // Sets the indexer motor to 50% power in the opposite direction
     public static double kSourceIndexerSpeed = -0.7;
     // Sets the indexer motor current limit to 60 amps
-    public static final int kCurrentLimit = 60;
+    public static final int kCurrentLimit = 35;
   }
 
   public static final class DriveConstants {
@@ -148,7 +148,7 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 50; // amps
+    public static final int kDrivingMotorCurrentLimit = 35; // amps
     public static final int kTurningMotorCurrentLimit = 20; // amps
   }
 
@@ -158,6 +158,7 @@ public final class Constants {
 
   public static class IntakeConstants {
     public static final int kIntakeMotor = 13;
+    public static final int kCurrentLimit = 35;
     public static double kIntakeMotorSpeed = 0.8;
     public static double kEjectMotorSpeed = -0.8;
   }
@@ -169,7 +170,7 @@ public final class Constants {
     public static final int kRightPivotID = 9;
     public static final int kLeftFlywheelID = 10;
     public static final int kRightFlywheelID = 14;
-    public static final int kCurrentLimit = 60;
+    public static final int kCurrentLimit = 35;
 
     // manual control speed limiters
     public static final double kPivotSpeedLimiter = 1;
