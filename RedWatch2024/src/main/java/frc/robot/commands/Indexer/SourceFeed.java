@@ -23,20 +23,18 @@ public class SourceFeed extends Command {
   }
 
   // Called when the command is initially scheduled.
-  // Runs motor
+  // Runs motor in the opposite direction
   @Override
   public void initialize() {
-
+    m_indexer.runNoteThrough(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    // if (m_indexer.isNotePresent() && passThrough == 0) {
-    //   passThrough = 1;
-    // }
-    m_indexer.sourceIsNotePresent();
+    if (m_indexer.isNotePresent() && passThrough == 0) {
+      passThrough = 1;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -51,7 +49,7 @@ public class SourceFeed extends Command {
   // If not motor will keep running
   @Override
   public boolean isFinished() {
-    if (m_indexer.sourceIsNotePresent()) {
+    if (m_indexer.isNotePresent() && passThrough == 1) {
       return true;
     } else {
       return false;
