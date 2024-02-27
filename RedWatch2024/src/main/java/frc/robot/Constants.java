@@ -183,12 +183,12 @@ public final class Constants {
     public static final double kRightPivotOffset = 0;
 
     // Pivot PID values
-    public static double kPPivot = 0.007;
+    public static double kPPivot = 0.0055;//0.007
     public static final double kIPivot = 0;
-    public static double kDPivot = 0.0003;
+    public static double kDPivot = 0;//0.0001;
     public static double kMaxPivotVelocity = 10; // Measured in degrees/s
     public static final double kMaxPivotAcceleration = 45; // Measured in degrees/s^2
-    public static final double kPivotTolerance = 1; // degrees
+    public static final double kPivotTolerance = 0; // degrees
     public static double pivotPower;
 
     // Flywheel PID values

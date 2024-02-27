@@ -27,6 +27,7 @@ import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commands.Meltdown;
 import frc.robot.commands.LEDs.PartyMode;
+import frc.robot.commands.Shooter.AutoPivot;
 import frc.robot.commands.Shooter.Pivot;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
@@ -62,7 +63,7 @@ public class RobotContainer {
     m_vision = new Vision();
     m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
-    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_vision);
+    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_vision, m_leds);
     SmartDashboard.putData(CommandScheduler.getInstance());
 
     SmartDashboard.putData(CommandScheduler.getInstance());
@@ -152,7 +153,7 @@ new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new Fe
     new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 75)); //37.5 at .55
 
     //pivot bumper up
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(m_shooter, 52));
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(m_shooter, 40));
 
 
     // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new InstantCommand(() -> m_shooter.setPivotSpeed(0)));
