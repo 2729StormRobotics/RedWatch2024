@@ -13,6 +13,7 @@ import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.SingleFadeAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LightsConstants;
@@ -54,7 +55,11 @@ public class LEDs extends SubsystemBase {
     public static final Color red = new Color(255, 0, 0);
     public static final Color black = new Color(0, 0, 0);
     public static final Color brown = new Color(139,69,19);
-     
+    
+    static int r=0;
+    static int g=0;
+    static int b=0;
+    public static Color ElasticColor = new Color(r, g, b);
 
     // Game piece colors
     public static final Color yellow = new Color(242, 60, 0);
@@ -69,6 +74,9 @@ public class LEDs extends SubsystemBase {
   
     
     public LEDs() {
+        SmartDashboard.putNumber("LED R", r);
+        SmartDashboard.putNumber("LED G", g);
+        SmartDashboard.putNumber("LED B", b);
         CANdleConfiguration candleConfiguration = new CANdleConfiguration();
         candleConfiguration.statusLedOffWhenActive = true;
         candleConfiguration.enableOptimizations = true;
@@ -109,14 +117,13 @@ public class LEDs extends SubsystemBase {
         return runOnce(() -> {
         });
     }
+    public void periodic(){
+        r = (int)SmartDashboard.getNumber("LED R", 255);
+        g = (int)SmartDashboard.getNumber("LED G", 255);
+        b = (int)SmartDashboard.getNumber("LED B", 255);
+        ElasticColor = new Color(r, g, b);
+    }
     public static enum LEDSegment {
-        // BatteryIndicator(0, 2, 0),
-        // PressureIndicator(2, 2, 1),
-        // MastEncoderIndicator(4, 1, -1),
-        // BoomEncoderIndicator(5, 1, -1),
-        // WristEncoderIndicator(6, 1, -1),
-        // DriverStationIndicator(7, 1, -1),
-        // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
         StatusLEDs(0, 7, 0),
         MainStrip(7,60,1);
 
