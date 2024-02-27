@@ -37,21 +37,41 @@ public class Indexer extends SubsystemBase {
 
   // Determines the note's prescense for source intake
   public boolean sourceIsNotePresent() {
-    boolean noteState = false;
-    boolean currState = sourceIsNotePresent();
+    boolean state1 = false;
+    boolean state2 = false;
     boolean isDone = false;
     int count = 0;
 
     while (count < 2){
-      if (sourceIsNotePresent()) {
-        noteState = sourceIsNotePresent();
-      }
-      if ((noteState == currState) ) {
-        count++;
-        noteState = false;
+      if (isNotePresent()) {
+        state1 = isNotePresent();
+        if ((state1 == isNotePresent())) {
+          count++;
+          state1 = false;
+        }
+        
       }
       isDone = (count == 2);
     }
+/**
+        if ((isNotePresent() && (count == 0))) {
+          count++;
+          state1 = isNotePresent();
+        }
+      
+        
+      while (state1 != state2) {
+        if (state1 != isNotePresent()) {
+          state1 = isNotePresent();
+        }
+      }
+
+      if (isNotePresent() && (state1 == state2)) {
+        count++;
+      }
+      
+      isDone = (count == 2);
+*/
 
     return isDone;
 
