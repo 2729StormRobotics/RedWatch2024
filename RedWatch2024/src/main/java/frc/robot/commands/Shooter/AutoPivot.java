@@ -11,16 +11,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 
 /*
  * Will pivot the shooter to the specified angle
  * Works based off of a profiledPID controller
  */
 
-public class Pivot extends Command {
+public class AutoPivot extends Command {
   // initialize shooter, angle, and PID constraints/controllers
   private final Shooter m_shooter;
-  private final double m_angle;
+  private final Vision m_vision;
+
+  private final double m_setpoint;
+
 
   // private final TrapezoidProfile.Constraints m_constraints;
   private final PIDController m_controller;
@@ -30,10 +34,11 @@ public class Pivot extends Command {
   public double timeElapsed = 0; // Keep track of time
 
   /** Creates a new Pivot. */
-  public Pivot(Shooter shooter, double angle) {
+  public AutoPivot(Shooter shooter, Vision vision) {
     m_shooter = shooter;
-    m_angle = angle;
+    m_vision = vision;
 
+    m_setpoint = m_shooter.getOptimalAngle(m_vision.getSpeakerDistance());
     // ProfiledPID Constraints
     // m_constraints = new TrapezoidProfile.Constraints(
     //   Constants.ShooterConstants.kMaxPivotVelocity,
@@ -44,7 +49,8 @@ public class Pivot extends Command {
     Constants.ShooterConstants.kIPivot, Constants.ShooterConstants.kDPivot);
     SmartDashboard.putData(m_controller);
     // Set the goal and tolerances of the PID Controller
-    m_controller.setSetpoint(m_angle);
+
+    m_controller.setSetpoint(m_setpoint);
     m_controller.setTolerance(Constants.ShooterConstants.kPivotTolerance);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
@@ -63,16 +69,18 @@ public class Pivot extends Command {
     // Set pivot speed to the value calculated by the PID Controller
     // error = m_angle - m_shooter.getPivotAngle();
     // power = error * Constants.ShooterConstants.kPPivot +  m_shooter.getPivotFeedForward();
-    power =  m_controller.calculate(m_shooter.getPivotAngle(), m_angle); // + m_shooter.getPivotFeedForward();
-    if (power > 0.2) {
-      power = 0.2;
+    power =  m_controller.calculate(m_shooter.getPivotAngle(), m_setpoint); // + m_shooter.getPivotFeedForward();
+    if (power > 0.3) {
+      power = 0.3;
     }
-    else if (power < -0.2) {
-      power = -0.2;
+    else if (power < -0.3) {
+      power = -0.3;
     }
-    m_shooter.setPivotSpeed(power+ m_shooter.getPivotFeedForward());
+    m_shooter.setPivotSpeed(power);
       // m_controller.calculate(m_shooter.getPivotAngle(), m_angle) + m_shooter.getPivotFeedForward());
     SmartDashboard.putNumber("PID pivot speed", power);
+    SmartDashboard.putNumber("AutoPivot angle", m_setpoint);
+
   }
 
   // Called once the command ends or is interrupted.
