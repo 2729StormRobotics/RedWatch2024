@@ -8,8 +8,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.lib.LinearInterpolationTable;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.LEDs.LEDSegment;
+
 import java.awt.geom.Point2D;
 import java.lang.invoke.ConstantBootstraps;
 
@@ -53,6 +56,7 @@ public class AutoPivot extends Command {
     m_turnPower = 0;
     m_setpoint = 0;
     timeElapsed = 0;
+    LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -80,7 +84,9 @@ public class AutoPivot extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    LEDSegment.MainStrip.setColor(LEDs.green);
+  }
 
   // Returns true when the command should end.
   @Override

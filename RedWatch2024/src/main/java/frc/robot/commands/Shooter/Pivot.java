@@ -56,6 +56,8 @@ public class Pivot extends Command {
   @Override
   public void initialize() {
     timeElapsed = 0;
+    LEDSegment.MainStrip.setBandAnimation(LEDs.green, 0.7);
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -64,7 +66,6 @@ public class Pivot extends Command {
     timeElapsed += 0.02; // this updates every 20 ms
     // Set pivot speed to the value calculated by the PID Controller
     // error = m_angle - m_shooter.getPivotAngle();
-    LEDSegment.MainStrip.setFadeAnimation(LEDs.green, 1);
     // power = error * Constants.ShooterConstants.kPPivot +  m_shooter.getPivotFeedForward();
     power =  m_controller.calculate(m_shooter.getPivotAngle(), m_angle); // + m_shooter.getPivotFeedForward();
     if (power > 0.2) {
@@ -83,13 +84,14 @@ public class Pivot extends Command {
   public void end(boolean interrupted) {
     // Stop pivot motors
     // m_shooter.stopPivotMotors();
+    LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.7);
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     
-    LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 1);
     // Finish command when shooter is at the setpoint
     // return Math.abs(error) < Constants.ShooterConstants.kPivotTolerance;
     return m_controller.atSetpoint() || timeElapsed > 2;

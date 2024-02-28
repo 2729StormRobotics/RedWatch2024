@@ -56,10 +56,10 @@ public class LEDs extends SubsystemBase {
     public static final Color black = new Color(0, 0, 0);
     public static final Color brown = new Color(139,69,19);
     
-    static int r=0;
-    static int g=0;
-    static int b=0;
-    public static Color ElasticColor = new Color(r, g, b);
+    int r=0;
+    int g=0;
+    int b=0;
+    public Color ElasticColor = new Color(r, g, b);
 
     // Game piece colors
     public static final Color yellow = new Color(242, 60, 0);
