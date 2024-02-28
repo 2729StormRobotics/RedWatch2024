@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 1.31,
+      "y": 5.56
+    },
+    "rotation": 180.0
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -18,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP s1-n1"
+                  "pathName": "MID s2-n2"
                 }
               },
               {
@@ -41,15 +47,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "IntakeItem"
+                  "pathName": "MID n2-n3"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "AMP n1-n2"
+                  "name": "IntakeItem"
                 }
               }
             ]
@@ -68,7 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP n2-n3"
+                  "pathName": "MID n3-n1"
                 }
               },
               {
@@ -89,6 +95,6 @@
       ]
     }
   },
-  "folder": "AmpSide",
+  "folder": "MidSide",
   "choreoAuto": false
 }

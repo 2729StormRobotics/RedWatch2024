@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -87,9 +88,9 @@ public class RobotContainer {
           // -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*1, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
 
@@ -97,9 +98,8 @@ public class RobotContainer {
      m_shooter.setDefaultCommand(
       new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.05 + m_shooter.getPivotFeedForward()), m_shooter));    
     
-    NamedCommands.registerCommand("Shoot", new SequentialCommandGroup(new AutoPivot(m_vision, m_shooter), new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker,  Constants.ShooterConstants.kRightPowerSpeaker, 1))
-    );
-    NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad(m_intake, m_indexer));
+    NamedCommands.registerCommand("Shoot", new ScoringSequence(m_vision, m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("IntakeItem", new ParallelCommandGroup(new IntakeThenLoad(m_intake, m_indexer), new Pivot(m_shooter, 75)));
     NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator));
 
