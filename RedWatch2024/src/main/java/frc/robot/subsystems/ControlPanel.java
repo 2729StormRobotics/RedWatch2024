@@ -40,19 +40,19 @@ public class ControlPanel extends SubsystemBase {
   private final LEDs m_leds;
   private final Intake m_intake;
   private final Shooter m_shooter;
-  // private final Vision m_vision;
+  private final Vision m_vision;
   public int r=225;
   public int b=0;
   public int g=0;
 
   /** Creates a new ControlPanel. */
-  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, LEDs leds) {
+  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, LEDs leds, Vision vision) {
     m_drivetrain = drivetrain;
     m_indexer = indexer;
     m_leds = leds;
     m_intake = intake;
     m_shooter = shooter;
-    // m_vision = vision;
+    m_vision = vision;
 
     PowerDistribution m_PD = new PowerDistribution(20,ModuleType.kRev);
     BuiltInAccelerometer BiA = new BuiltInAccelerometer();

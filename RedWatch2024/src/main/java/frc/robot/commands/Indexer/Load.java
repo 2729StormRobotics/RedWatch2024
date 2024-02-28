@@ -39,6 +39,8 @@ public class Load extends Command {
   // When called stops running the motor
   @Override
   public void end(boolean interrupted) {
+    
+    LEDSegment.MainStrip.setColor(LEDs.orange);
     m_indexer.stop();
   }
 
@@ -47,10 +49,6 @@ public class Load extends Command {
   // If not motor will keep running
   @Override
   public boolean isFinished() {
-    if (m_indexer.isNotePresent()) {
-      LEDSegment.MainStrip.setColor(LEDs.orange);
-      return m_indexer.isNotePresent();
-    }
-    return false;
+    return m_indexer.isNotePresent();
   }
 }

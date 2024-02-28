@@ -71,7 +71,7 @@ public class RobotContainer {
     m_vision = new Vision();
     m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
-    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_leds);
+    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_leds, m_vision);
 
     SmartDashboard.putData("command scheduler", CommandScheduler.getInstance());
 
@@ -155,9 +155,11 @@ public class RobotContainer {
     new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 75)); //37.5 at .55
 
     //PIVOT SPEAKER - Y
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(
-      m_shooter, 
-      m_shooter.getOptimalAngle(m_vision.getSpeakerDistance())));
+    // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(
+    //   m_shooter, 
+    //   m_shooter.getOptimalAngle(m_vision.getSpeakerDistance())));
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new AutoPivot(m_vision, m_shooter));
+
     SmartDashboard.putNumber("Vision Speaker distance", m_vision.getSpeakerDistance());
     SmartDashboard.putNumber("Limelight y angle", m_vision.getY());
     SmartDashboard.putNumber("Limelight table y", NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(27));

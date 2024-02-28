@@ -30,6 +30,7 @@ public class AutoPivot extends Command {
   double timeElapsed = 0;
 
   private final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
+      new Point2D.Double(0.0, 54),
       new Point2D.Double(0.93, 54),
       new Point2D.Double(1.77, 43.5),
       new Point2D.Double(2, 39.32),
@@ -56,7 +57,14 @@ public class AutoPivot extends Command {
     m_turnPower = 0;
     m_setpoint = 0;
     timeElapsed = 0;
-    LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
+    deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
+    if (m_vision.getY() == 0){
+      LEDSegment.MainStrip.setColor(LEDs.blue);
+    }
+    else
+    {
+      LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -65,7 +73,6 @@ public class AutoPivot extends Command {
     timeElapsed += 0.02;
 
     deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
-    deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
     dist = deltaHeight / Math.tan(deltaAngle);
 
     m_setpoint = ShooterInterpolationTable.getOutput(dist);
