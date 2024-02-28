@@ -4,32 +4,20 @@
 
 package frc.robot.subsystems;
 
-import java.util.Map;
+import com.revrobotics.CANSparkMax;
 
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.ControlPanelConstants;
 import frc.robot.Constants.IndexerConstants;
-import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.LEDs.PartyMode;
-import frc.robot.commands.LEDs.setAllLEDs;
-import frc.robot.commands.LEDs.setDefault;
-import frc.robot.commands.Shooter.Pivot;
 import frc.robot.subsystems.LEDs.Color;
 import frc.robot.subsystems.LEDs.LEDSegment;
 
@@ -89,7 +77,7 @@ public class ControlPanel extends SubsystemBase {
     SmartDashboard.putNumber("Temp", m_PD.getTemperature());
     SmartDashboard.putData("PDH", m_PD);
     SmartDashboard.putData("Gyro", m_drivetrain.m_gyro);
-    // SmartDashboard.putData("BuiltInAccelerometer", BiA);
+    SmartDashboard.putData("BuiltInAccelerometer", BiA);
 
     //  Indexer
     SmartDashboard.putNumber("Indexer Velocity", m_indexer.getIndexerRPM());
@@ -117,11 +105,25 @@ public class ControlPanel extends SubsystemBase {
     // SmartDashboard.putData("Set LEDs to Red", new LEDs.defaultCommand());  
     // m_lightsStatus.add("Set to Default",new setDefault());  
     SmartDashboard.putData("setLEDsToElastic", new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(m_leds.ElasticColor, 0.6);}));
+    SmartDashboard.putData("setDefaultColorRed", new InstantCommand(() -> {m_leds.defaultColor = new Color(255, 0, 0);}));
+    SmartDashboard.putData("setDefaultColorBlue", new InstantCommand(() -> {m_leds.defaultColor = new Color(0, 0, 255);}));
     SmartDashboard.putData("Party Mode", new PartyMode(m_leds));  
 
+    // Motor voltages
+    SmartDashboard.putNumber("Average Shooter Voltages", (getMotorAppliedVoltage(m_shooter.m_leftFlywheel) + getMotorAppliedVoltage(m_shooter.m_rightFlywheel))/2);
+    SmartDashboard.putNumber("Indexer Voltage", getMotorAppliedVoltage(m_indexer.m_IndexerMotor));
+    SmartDashboard.putNumber("Intake Voltage", getMotorAppliedVoltage(m_intake.m_intakeMotor));
     
-  }
+    // Drive motor voltages
+    SmartDashboard.putNumber("Drive Front Left Voltage", getMotorAppliedVoltage(m_drivetrain.m_frontLeft.m_drivingSparkMax));
+    SmartDashboard.putNumber("Drive Front Right Voltage", getMotorAppliedVoltage(m_drivetrain.m_frontRight.m_drivingSparkMax));
+    SmartDashboard.putNumber("Drive Rear Left Voltage", getMotorAppliedVoltage(m_drivetrain.m_rearLeft.m_drivingSparkMax));
+    SmartDashboard.putNumber("Drive Rear Right Voltage", getMotorAppliedVoltage(m_drivetrain.m_rearRight.m_drivingSparkMax));
 
+  }
+  private double getMotorAppliedVoltage(CANSparkMax cMax) {
+    return cMax.getBusVoltage()*cMax.getAppliedOutput();
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

@@ -55,7 +55,8 @@ public class LEDs extends SubsystemBase {
     public static final Color red = new Color(255, 0, 0);
     public static final Color black = new Color(0, 0, 0);
     public static final Color brown = new Color(139,69,19);
-    
+    public Color defaultColor = new Color(255,0,0);
+    public static Color allianceColor;
     int r=0;
     int g=0;
     int b=0;
@@ -95,7 +96,7 @@ public class LEDs extends SubsystemBase {
     public Command defaultCommand() {
         // setBrightness(1);
         return runOnce(() -> {
-            LEDSegment.MainStrip.setFadeAnimation(ElasticColor, 0.5);
+            LEDSegment.MainStrip.setFadeAnimation(allianceColor, 0.5);
             // LEDSegment.Matrix.setRainbowAnimation(1);
             });
     }
@@ -118,6 +119,7 @@ public class LEDs extends SubsystemBase {
         });
     }
     public void periodic(){
+        allianceColor = defaultColor;
         r = (int)SmartDashboard.getNumber("LED R", 255);
         g = (int)SmartDashboard.getNumber("LED G", 255);
         b = (int)SmartDashboard.getNumber("LED B", 255);
@@ -145,7 +147,6 @@ public class LEDs extends SubsystemBase {
         private void setAnimation(Animation animation) {
             candle.animate(animation, animationSlot);
         }
-
         public void fullClear() {
             clearAnimation();
             disableLEDs();
@@ -204,19 +205,6 @@ public class LEDs extends SubsystemBase {
             no++;
             // candle.animate(new RainbowAnimation(1, 0.7, 1, false, no));
             candle.setLEDs(color.red, color.green, color.blue, 0, no, 1);
-        }
-    }
-    public static void reverse(Color[] array) {
-        int start = 0;
-        int end = array.length - 1;
-
-        while (start < end) {
-            Color temp = array[start];
-            array[start] = array[end];
-            array[end] = temp;
-
-            start++;
-            end--;
         }
     }
 }

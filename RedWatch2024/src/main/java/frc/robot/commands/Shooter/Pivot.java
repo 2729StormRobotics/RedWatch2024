@@ -84,7 +84,7 @@ public class Pivot extends Command {
   public void end(boolean interrupted) {
     // Stop pivot motors
     // m_shooter.stopPivotMotors();
-    LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.7);
+    LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.7);
 
   }
 

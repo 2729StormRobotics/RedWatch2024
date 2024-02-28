@@ -9,6 +9,7 @@ import frc.robot.commands.Vision.AprilTagAlign;
 import frc.robot.commands.Vision.NoteAlign;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.LEDs.LEDSegment;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
@@ -137,16 +138,14 @@ public class RobotContainer {
     //INTAKE PIVOT - X 
     new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 75)); //37.5 at .55
 
+    //CALL FOR NOTE - X 
+    new JoystickButton(m_weaponsController, Button.kStart.value).onTrue(new InstantCommand(() -> {LEDSegment.MainStrip.setStrobeAnimation(LEDs.orange, 0.25);}));
+
     //PIVOT SPEAKER - Y
     // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(
     //   m_shooter, 
     //   m_shooter.getOptimalAngle(m_vision.getSpeakerDistance())));
     new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new AutoPivot(m_vision, m_shooter));
-
-    SmartDashboard.putNumber("Vision Speaker distance", m_vision.getSpeakerDistance());
-    SmartDashboard.putNumber("Limelight y angle", m_vision.getY());
-    SmartDashboard.putNumber("Limelight table y", NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(27));
-
 
     // Shooter overrides 
     new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}, m_shooter));
