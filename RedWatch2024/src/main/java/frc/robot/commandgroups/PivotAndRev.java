@@ -7,9 +7,11 @@ package frc.robot.commandgroups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.Shooter.Pivot;
+import frc.robot.commands.Shooter.AutoPivot;
 import frc.robot.commands.Shooter.RevShooter;
 import frc.robot.commands.Shooter.SetPower;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 
 /*
  * Creates a shooting preset, that will pivot the shooter to the right angle 
@@ -22,16 +24,17 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class PivotAndRev extends ParallelCommandGroup {
   private final Shooter m_shooter;
-  private final double m_presetAngle;
+  private final Vision m_vision;
+
   /** Creates a new ShootingPreset. */
-  public PivotAndRev(Shooter shooter, double presetAngle) {
+  public PivotAndRev(Shooter shooter, Vision vision, double leftPower, double rightPower) {
     m_shooter = shooter;
-    m_presetAngle = presetAngle;
+    m_vision = vision;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new Pivot(m_shooter, m_presetAngle),
-      new RevShooter(m_shooter, Constants.ShooterConstants.kLeftRPM, Constants.ShooterConstants.kRightRPM)
+      new AutoPivot(m_vision, m_shooter),
+      new RevShooter(m_shooter, leftPower, rightPower)
     );
   }
 }

@@ -210,7 +210,7 @@ public final class Constants {
     public static final double kRightPivotOffset = 0;
 
     // Pivot PID values
-    public static double kPPivot = 0.006;//0.006
+    public static double kPPivot = 0.0055;//0.006
     public static final double kIPivot = 0;
     public static double kDPivot = 0;//0.0001;
     public static double kMaxPivotVelocity = 10; // Measured in degrees/s
