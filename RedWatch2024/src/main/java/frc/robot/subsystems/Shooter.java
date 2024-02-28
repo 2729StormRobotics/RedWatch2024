@@ -92,7 +92,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getRightVoltage() {
-    return m_rightFlywheel.getBusVoltage();
+    return m_rightFlywheel.getBusVoltage()*m_rightFlywheel.getAppliedOutput();
   }
 
   public double getRightPower(){
@@ -136,8 +136,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
     SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
     SmartDashboard.putNumber("Left Shooter Voltage", getLeftVoltage()); //check value on smart dashbord for a rev cmd
-    SmartDashboard.putNumber("Right Shoot Power", getRightPower()); //check value on smart dashbord for a rev cmd
-
+    SmartDashboard.putNumber("Right Shooter Voltage", getRightVoltage());
 
     // if (getPivotAngle() >= 65 ){
     //   CommandScheduler.getInstance().schedule(new SoftStop(this, getPivotAngle()));

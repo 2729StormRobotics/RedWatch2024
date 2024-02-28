@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Indexer.Feed;
 import frc.robot.commands.Indexer.Load;
+import frc.robot.commands.Shooter.RevShooter;
 import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.commands.Shooter.StopShooter;
@@ -30,9 +31,9 @@ public class FeedAndShoot extends SequentialCommandGroup {
     m_shooter = shooter;
 
     addCommands(
-      new SetPower(m_shooter, leftSpeed, rightSpeed),
-      new WaitCommand(2),
-      new InstantCommand(() -> {m_indexer.runIndexer(indexerSpeed);}),//0.5 for amp
+      new RevShooter(m_shooter, leftSpeed, rightSpeed),
+      // new WaitCommand(2),
+      new InstantCommand(() -> {m_indexer.runIndexer(indexerSpeed);}),
       new WaitCommand(3),
       new StopShooter(m_shooter),
       new InstantCommand(() -> {m_indexer.stop();})
