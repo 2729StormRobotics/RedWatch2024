@@ -30,7 +30,7 @@ public class AutoPivot extends Command {
   double timeElapsed = 0;
 
   private final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
-      new Point2D.Double(0.0, 54),
+      new Point2D.Double(-0.01, 54),
       new Point2D.Double(0.93, 54),
       new Point2D.Double(1.77, 43.5),
       new Point2D.Double(2, 39.32),

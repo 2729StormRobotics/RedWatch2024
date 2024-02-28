@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
+import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commands.Meltdown;
 import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.commands.Shooter.AutoPivot;
@@ -115,7 +116,7 @@ public class RobotContainer {
     new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
    
     // vision align
-    new JoystickButton(m_translator, Button.kA.value).toggleOnTrue(new AprilTagAlign(m_vision, m_drivetrain, m_translator));
+    new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_vision, m_drivetrain, m_translator));
   
   
   /*
@@ -123,7 +124,7 @@ public class RobotContainer {
   */
     //SHOOT SPEAKER - RB
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
-    (new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    (new ScoringSequence(m_vision, m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
     
     // SHOOT AMP - LB
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
