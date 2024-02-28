@@ -12,12 +12,13 @@ import frc.robot.subsystems.LEDs.LEDSegment;
 public class SourceFeed extends Command {
   /** Creates a new feed. */
   private final Indexer m_indexer;
-  private int passThrough = 0;
+  private final Boolean m_part1;
   // Use addRequirements() here to declare subsystem dependencies.
 
-  public SourceFeed(Indexer indexer) {
+  public SourceFeed(Indexer indexer, boolean part1) {
     // initializes index
     m_indexer = indexer;
+    m_part1 = part1;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(indexer);
   }
@@ -32,16 +33,12 @@ public class SourceFeed extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_indexer.isNotePresent() && passThrough == 0) {
-      passThrough = 1;
-    }
   }
 
   // Called once the command ends or is interrupted.
   // When called stops running the motor
   @Override
   public void end(boolean interrupted) {
-    m_indexer.stop();
   }
 
   // Returns true when the command should end.
@@ -49,10 +46,9 @@ public class SourceFeed extends Command {
   // If not motor will keep running
   @Override
   public boolean isFinished() {
-    if (m_indexer.isNotePresent() && passThrough == 1) {
-      return true;
-    } else {
-      return false;
-    }
+    if(m_part1)
+      return(m_indexer.isNotePresent());
+    else
+      return (!m_indexer.isNotePresent());
   }
 }
