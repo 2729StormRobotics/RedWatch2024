@@ -7,6 +7,7 @@ package frc.robot.commandgroups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.Shooter.Pivot;
+import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.subsystems.Shooter;
 
@@ -30,7 +31,7 @@ public class PivotAndRev extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new Pivot(m_shooter, m_presetAngle),
-      new SetRPM(m_shooter, Constants.ShooterConstants.kLeftRPM, Constants.ShooterConstants.kRightRPM)
+      new SetPower(m_shooter, Constants.ShooterConstants.kLeftRPM, Constants.ShooterConstants.kRightRPM)
     );
   }
 }

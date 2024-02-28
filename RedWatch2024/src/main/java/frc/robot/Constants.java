@@ -4,14 +4,16 @@
 
 package frc.robot;
 
-
-
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import frc.robot.lib.LinearInterpolationTable;
+import java.awt.geom.Point2D;
+
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -26,38 +28,36 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-  
+
   public static class OperatorConstants {
-    //ports
+    // ports
     public static final int kDriveTranslatorPort = 1;
     public static final int kDriveRotatorPort = 2;
     public static final int kWeaponsControllerPort = 0;
 
-    //joystick settings
+    // joystick settings
     public static final double kDriveDeadband = 0.1;
     public static final double translationMultiplier = 0.6;
-    public static double rotationMultiplier = 1;
-
+    public static final double rotationMultiplier = 1;
   }
-  
-
 
   public static final class IndexerConstants {
-    // Assigns Indexer motor to port 4
-    public static final int kIndexMotorPort = 4;
+    public static final double kFeedSpeakerSpeed = 1;
+    public static final double kFeedAmpSpeed = 0.5;
+
+    // Assigns Indexer moftor to port
+    public static final int kIndexMotorPort = 12;
     // Assigns Beam break sensor to port 1
-    public static final int kBeamBreakPort = 1;
+    public static final int kBeamBreakPort = 8;
     // Sets the indexer motor to 50% power
-    public static double kIndexerSpeed = 0.8;
-    // Sets the indexer motor stall limit to 45 amps
-    public static final int kStallLimit = 45;
+    public static double kIndexerSpeed = 0.7;
+    // Sets the indexer motor to 50% power in the opposite direction
+    public static double kSourceIndexerSpeed = -0.7;
     // Sets the indexer motor current limit to 60 amps
-    public static final int kCurrentLimit = 60;
+    public static final int kCurrentLimit = 35;
   }
 
-
-
-public static final class DriveConstants {
+  public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
     public static final double kMaxSpeedMetersPerSecond = 4.8;
@@ -171,7 +171,7 @@ public static final class DriveConstants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 50; // amps
+    public static final int kDrivingMotorCurrentLimit = 35; // amps
     public static final int kTurningMotorCurrentLimit = 20; // amps
   }
 
@@ -179,52 +179,61 @@ public static final class DriveConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
 
-  
   public static class IntakeConstants {
-    public static final int kIntakeMotor = 9;
+    public static final int kIntakeMotor = 13;
+    public static final int kCurrentLimit = 35;
     public static double kIntakeMotorSpeed = 0.8;
     public static double kEjectMotorSpeed = -0.8;
   }
-  
+
   public static class ShooterConstants {
     // Motor ID/initialization values
-    public static final int kLeftPivotID = 999;
-    public static final int kRightPivotID = 999;
-    public static final int kLeftFlywheelID = 999;
-    public static final int kRightFlywheelID = 999;
-    public static final int kCurrentLimit = 45;
 
-    //manual control speed limiters 
-    public static final double kPivotSpeedLimiter = 1; 
+    // public static final int kLeftPivotID = 12; NO MORE LEFT PIVOT ONLY RIGHT PIVOT
+    public static final int kRightPivotID = 9;
+    public static final int kLeftFlywheelID = 10;
+    public static final int kRightFlywheelID = 14;
+    public static final int kCurrentLimit = 35;
 
-    // Make sure that the two pivot motors and two shooting motors rotate in opposite directions
+    // manual control speed limiters
+    public static final double kPivotSpeedLimiter = 1;
+
+    // Make sure that the two pivot motors and two shooting motors rotate in
+    // opposite directions
     public static final boolean kLeftFlywheelInverted = false;
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
-    public static final boolean kLeftPivot = false;
-    public static final boolean kRightPivot = !kLeftPivot;
+    public static final boolean kLeftPivotInverted = true;
+    public static final boolean kRightPivotInverted = false;
 
     // Absolute encoder offsets
     public static final double kLeftPivotOffset = 0;
     public static final double kRightPivotOffset = 0;
 
     // Pivot PID values
-    public static final double kPPivot = 0.005;
+    public static double kPPivot = 0.006;//0.006
     public static final double kIPivot = 0;
-    public static final double kDPivot = 0;
-    public static final double kMaxPivotVelocity = 45; // Measured in degrees/s
-    public static final double kMaxPivotAcceleration = 0; // Measured in degrees/s^2
-    public static final double kPivotTolerance = 1; // degrees
+    public static double kDPivot = 0;//0.0001;
+    public static double kMaxPivotVelocity = 10; // Measured in degrees/s
+    public static final double kMaxPivotAcceleration = 45; // Measured in degrees/s^2
+    public static final double kPivotTolerance = 0; // degrees
+    public static double pivotPower;
+    public static final double kSourcePivotAngle = 0; // Angle of intake for source
 
     // Flywheel PID values
     public static final double kMaxRPM = 6000;
     public static final double kPShoot = 0;
     public static final double kRPMTolerance = 50;
 
+    
     // Flywheel Shooting values
-    public static final double kLeftRPM = 0;
-    public static final double kRightRPM = 0;
-    public static double kLeftPower = 0;
-    public static double kRightPower = 0;
+    public static final double kLeftRPM = 1000;
+    public static final double kRightRPM = 1000;
+    public static double kLeftPowerAmp = .148; // 0.183 for forward shot amp, 57 degrees
+    public static double kRightPowerAmp = .148; // 0.17 speed for backward amp shot
+    public static double kLeftPowerSpeaker = 0.55;
+    public static double kRightPowerSpeaker = 0.55; //55
+
+    public static double kPivotFF = 0.034; // 0.35 tested and works but too high while shooting
 
     // Field and Robot Measurements
     // All units are in meters
@@ -232,10 +241,33 @@ public static final class DriveConstants {
     public static final double shooterLength = Units.inchesToMeters(12.01);
     public static final double exitVelocity = 15;
     public static final double g = 9.81;
-    public static final double k = -g/(2*Math.pow(exitVelocity, 2)); // substitution used in angle calculation
-    public static final double SubwooferAnglePreset = 60; // needs to be determined
+    public static final double k = -g / (2 * Math.pow(exitVelocity, 2)); // substitution used in angle calculation
 
+    // Interpolation table for getting shooting angle based off distance
+    public static final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
+      new Point2D.Double(0.93, 54),
+      new Point2D.Double(1.77, 43.5),
+      new Point2D.Double(2, 39.32),
+      new Point2D.Double(2.32, 36.17),
+      new Point2D.Double(2.6, 34.75),
+      new Point2D.Double(2.9, 32.3)
+    };
+    public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
+
+    public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
+
+    static {
+      shooterMap.put(0.93, 54.0);
+      shooterMap.put(1.77, 43.5);
+      shooterMap.put(2.0, 39.32);
+      shooterMap.put(2.32, 36.17);
+      shooterMap.put(2.6, 34.75);
+      shooterMap.put(2.9, 32.3);
+
+    }
     
+    // Set Positions
+    public static final double kIntakeAngle = 47;
   }
 
   public static class VisionConstants {
@@ -249,24 +281,28 @@ public static final class DriveConstants {
     public static final double kSDrive = 0;
     public static final double kPY = 0;
     public static final double kTolerance = 0;
-    public static final double kPTurn = 0;
+    public static final double kPTurn = 0.012;
     public static final double kSTurn = 0;
-    
+
     // Heights for detecting distance away from apriltag
-    public static final double limelightHeight = Units.inchesToMeters(20);
-    public static final double limelightAngle = 20; // degrees
+    public static final double limelightHeight = Units.inchesToMeters(11.5);
+    public static final double limelightAngle = 30.5; // degrees
     public static final double apriltagWidth = Units.inchesToMeters(6.5);
-    public static final double speakerTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
+    public static final double speakerTagHeight = Units.inchesToMeters(53.875);
+        // + Units.inchesToMeters(apriltagWidth / 2);
     public static final double ampTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double aprilTagAlignTolerance = 1;
 
+    public static final double kNoteTolerance = 2.0;
+    public static final double kPNoteTurn = 0.008;
   }
-  public static class ControlPanelConstants {
-		public static final String kShuffleboardTab = "Control Panel";
-	}
-  public static final class LightsConstants {
-    public static final int CANDLE_PORT = 11;
-}
-}
 
+  public static class ControlPanelConstants {
+    public static final String kShuffleboardTab = "Control Panel";
+  }
+
+  public static final class LightsConstants {
+    public static final int CANDLE_PORT  = 12;
+  }
+}

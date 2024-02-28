@@ -33,7 +33,6 @@ public class IntakeItem extends Command {
   public void initialize() {
     m_intake.intakeItem();
     LEDSegment.MainStrip.setColor(LEDs.yellow);
-    LEDSegment.Matrix.setColor(LEDs.yellow);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

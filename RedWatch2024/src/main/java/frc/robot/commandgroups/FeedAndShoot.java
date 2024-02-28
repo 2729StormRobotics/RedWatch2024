@@ -4,9 +4,13 @@
 
 package frc.robot.commandgroups;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Indexer.Feed;
+import frc.robot.commands.Indexer.Load;
+import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.subsystems.Indexer;
@@ -21,15 +25,18 @@ public class FeedAndShoot extends SequentialCommandGroup {
   private final Shooter m_shooter; 
 
   /** Creates a new Shoot. */
-  public FeedAndShoot(Shooter shooter, Indexer indexer) {
+  public FeedAndShoot(Shooter shooter, Indexer indexer, double leftSpeed, double rightSpeed, double indexerSpeed) {
     m_indexer = indexer;
     m_shooter = shooter;
 
     addCommands(
-      new SetRPM(m_shooter, Constants.ShooterConstants.kLeftRPM, Constants.ShooterConstants.kRightRPM),
-      new Feed(m_indexer),
-      new WaitCommand(0.5),
-      new StopShooter(m_shooter)
+      new SetPower(m_shooter, leftSpeed, rightSpeed),
+      new WaitCommand(2),
+      new InstantCommand(() -> {m_indexer.runIndexer(indexerSpeed);}),//0.5 for amp
+      new WaitCommand(3),
+      new StopShooter(m_shooter),
+      new InstantCommand(() -> {m_indexer.stop();})
+
     );
   }
 }

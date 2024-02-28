@@ -28,7 +28,7 @@ public class Load extends Command {
   // Runs motor
   @Override
   public void initialize() {
-    m_indexer.runNoteThrough();
+    m_indexer.runNoteThrough(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -49,7 +49,6 @@ public class Load extends Command {
   public boolean isFinished() {
     if (m_indexer.isNotePresent()) {
       LEDSegment.MainStrip.setColor(LEDs.orange);
-      LEDSegment.Matrix.setColor(LEDs.orange);
       return m_indexer.isNotePresent();
     }
     return false;

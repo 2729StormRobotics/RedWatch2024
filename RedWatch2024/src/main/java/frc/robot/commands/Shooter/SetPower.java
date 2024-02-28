@@ -26,4 +26,5 @@ public class SetPower extends InstantCommand {
   public void initialize() {
     m_shooter.setShooterSpeed(m_leftPower, m_rightPower);
   }
+
 }

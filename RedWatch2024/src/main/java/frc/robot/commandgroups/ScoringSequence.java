@@ -25,7 +25,7 @@ public class ScoringSequence extends SequentialCommandGroup {
   private final double m_angle;
 
   /** Creates a new AutoScore. */
-  public ScoringSequence(double angle, Shooter shooter, Indexer indexer) {
+  public ScoringSequence(double angle, Shooter shooter, Indexer indexer, double leftPower, double rightPower, double indexerPower) {
     m_indexer = indexer;
     m_shooter = shooter;
     m_angle = angle;
@@ -33,7 +33,7 @@ public class ScoringSequence extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new PivotAndRev(m_shooter, m_angle),
-      new FeedAndShoot(m_shooter, m_indexer)
+      new FeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower)
     );
   }
 }

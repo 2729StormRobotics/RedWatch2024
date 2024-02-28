@@ -15,50 +15,93 @@ import frc.robot.Constants.IndexerConstants;
 
 public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
- 
-  //Spark used for indexer motor
+
+  // Spark used for indexer motor
   public final CANSparkMax m_IndexerMotor;
   public final DigitalInput m_NoteDectector;
-
 
   /**
    * Creates a new Indexer.
    */
   public Indexer() {
-      // Creates an note dectector instance
-      m_NoteDectector = new DigitalInput(IndexerConstants.kBeamBreakPort);
-      // Creates an indexer motor instance
-      m_IndexerMotor = new com.revrobotics.CANSparkMax(IndexerConstants.kIndexMotorPort, MotorType.kBrushless);
+    // Creates an note dectector instance
+    m_NoteDectector = new DigitalInput(IndexerConstants.kBeamBreakPort);
+    // Creates an indexer motor instance
+    m_IndexerMotor = new com.revrobotics.CANSparkMax(IndexerConstants.kIndexMotorPort, MotorType.kBrushless);
   }
-    // Determines whether note is detected or not
+
+  // Determines whether note is detected or not
   public boolean isNotePresent() {
-      return !m_NoteDectector.get();
+    return m_NoteDectector.get();
   }
-   
-  //PID of motor
-  public void initMotor(boolean invert){
+
+  // Determines the note's prescense for source intake
+  public boolean sourceIsNotePresent() {
+    boolean state1 = false;
+    boolean state2 = false;
+    boolean isDone = false;
+    int count = 0;
+
+    while (count < 2) {
+      if (isNotePresent()) {
+        state1 = isNotePresent();
+        if ((state1 == isNotePresent())) {
+          count++;
+          state1 = false;
+        }
+
+      }
+      isDone = (count == 2);
+    }
+    /**
+     * if ((isNotePresent() && (count == 0))) {
+     * count++;
+     * state1 = isNotePresent();
+     * }
+     * 
+     * 
+     * while (state1 != state2) {
+     * if (state1 != isNotePresent()) {
+     * state1 = isNotePresent();
+     * }
+     * }
+     * 
+     * if (isNotePresent() && (state1 == state2)) {
+     * count++;
+     * }
+     * 
+     * isDone = (count == 2);
+     */
+
+    return isDone;
+
+  }
+
+  // PID of motor
+  public void initMotor(boolean invert) {
     this.m_IndexerMotor.restoreFactoryDefaults();
-    this.m_IndexerMotor.setIdleMode(com.revrobotics.CANSparkMax.IdleMode.kCoast);
+    this.m_IndexerMotor.setIdleMode(com.revrobotics.CANSparkMax.IdleMode.kBrake);
     this.m_IndexerMotor.setSmartCurrentLimit(kCurrentLimit);
     this.m_IndexerMotor.setInverted(invert);
-    this.m_IndexerMotor.setSmartCurrentLimit(kStallLimit);
+    this.m_IndexerMotor.burnFlash();
   }
 
   public void runIndexer(double speed) {
-    //speed in percent
-    m_IndexerMotor.set(speed);
+    // speed in percent
+    m_IndexerMotor.set(-speed);
   }
-    //Sets motor at indexer speed, 50%, (runs motor)
-  public void runNoteThrough() {
-    runIndexer(IndexerConstants.kIndexerSpeed);
+
+  // Sets motor at indexer speed, 50%, (runs motor)
+  public void runNoteThrough(boolean source) {
+    runIndexer(source ? -IndexerConstants.kIndexerSpeed : IndexerConstants.kIndexerSpeed);
   }
 
   public void stop() {
-    //Sets motor at speed 0 (stops running the motor)
+    // Sets motor at speed 0 (stops running the motor)
     m_IndexerMotor.set(0);
   }
-   
-  public Double getIndexerRPM(){
+
+  public Double getIndexerRPM() {
     return ((m_IndexerMotor.getEncoder().getVelocity()));
   }
 

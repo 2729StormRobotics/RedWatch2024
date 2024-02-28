@@ -13,9 +13,40 @@ import com.ctre.phoenix.led.RainbowAnimation;
 import com.ctre.phoenix.led.SingleFadeAnimation;
 import com.ctre.phoenix.led.StrobeAnimation;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LightsConstants;
+import frc.robot.presets.matrixPresets;
+/*
+ * USAGE:
+ * ANYWHERE YOU WANT TO USE LEDS
+ * import the LEDSegment
+ * then run:
+ * LEDSegment.StatusLEDs.(whatever command)
+ * if any questions, ask Krithik
+ * 
+ * remember, the LED count includes the 8 onboard candle LEDS.
+ * 
+ * To SET A GENERAL COLOR
+ * USE LEDs.(whatever color) as a parameter
+ * 
+ * To use a SPECIFIC color do:
+ * new Color(0, 0, 0) as a parameter
+ * 
+ * Request Note Ground: setColor(orange)
+ * Request Note: setBandAnimationf(orange)
+ * Aligning to speaker: setColor(red)
+ * Aligned to speaker: setColor(green)
+ * Default: setFadeAnimation(red)
+ * Partymode: setRainbowAnimation(1)
+ * 
+ * MATRIX USAGE:
+ * Create an order for the matrix in the matrixPresets.java file
+ * use the command setMatrixToGrid with your preset as a parameter
+ * if needs to be offset make sure to offset both the led segment AND 
+ * variable "no" in the setMatrixToGrid function
+ */
 
 public class LEDs extends SubsystemBase {
     public static final CANdle candle = new CANdle(LightsConstants.CANDLE_PORT);
@@ -24,7 +55,11 @@ public class LEDs extends SubsystemBase {
     public static final Color red = new Color(255, 0, 0);
     public static final Color black = new Color(0, 0, 0);
     public static final Color brown = new Color(139,69,19);
-     
+    
+    int r=0;
+    int g=0;
+    int b=0;
+    public Color ElasticColor = new Color(r, g, b);
 
     // Game piece colors
     public static final Color yellow = new Color(242, 60, 0);
@@ -39,6 +74,9 @@ public class LEDs extends SubsystemBase {
   
     
     public LEDs() {
+        SmartDashboard.putNumber("LED R", r);
+        SmartDashboard.putNumber("LED G", g);
+        SmartDashboard.putNumber("LED B", b);
         CANdleConfiguration candleConfiguration = new CANdleConfiguration();
         candleConfiguration.statusLedOffWhenActive = true;
         candleConfiguration.enableOptimizations = true;
@@ -56,13 +94,18 @@ public class LEDs extends SubsystemBase {
 
     public Command defaultCommand() {
         // setBrightness(1);
-        // return new runMatrixAnimation(this);
         return runOnce(() -> {
-            // LEDSegment.Matrix.setStrobeAnimation(red, 0.8);
-            LEDSegment.Underglow.setRainbowAnimation(1);
-            // setMatrixToGrid(matrixPresets.ggMatrix);
+            LEDSegment.MainStrip.setFadeAnimation(ElasticColor, 0.5);
+            // LEDSegment.Matrix.setRainbowAnimation(1);
             });
     }
+    public Command Partymode(){
+        return runOnce(() -> {
+
+            LEDSegment.MainStrip.setRainbowAnimation(1);
+
+        });
+    } 
 
     public Command clearSegmentCommand(LEDSegment segment) {
         return runOnce(() -> {
@@ -74,13 +117,15 @@ public class LEDs extends SubsystemBase {
         return runOnce(() -> {
         });
     }
+    public void periodic(){
+        r = (int)SmartDashboard.getNumber("LED R", 255);
+        g = (int)SmartDashboard.getNumber("LED G", 255);
+        b = (int)SmartDashboard.getNumber("LED B", 255);
+        ElasticColor = new Color(r, g, b);
+    }
     public static enum LEDSegment {
-        // ALL THIS ABOVE CODE IS TO BE TESTED ONCE WE HAVE OUR LED STRIPS
-        StatusLEDs(0,7,0),
-        Underglow(7,100,1),
-        MainStrip(107, 100, 2),
-        Matrix(207,150,3);
-        // MAIN STRIP SHOULD BE STARTING AT INDEX 8, leave at 0 when testing
+        StatusLEDs(0, 7, 0),
+        MainStrip(7,60,1);
 
         public final int startIndex;
         public final int segmentSize;
