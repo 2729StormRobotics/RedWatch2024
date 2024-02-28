@@ -93,7 +93,7 @@ public class Indexer extends SubsystemBase {
 
   // Sets motor at indexer speed, 50%, (runs motor)
   public void runNoteThrough(boolean source) {
-    runIndexer(source ? -IndexerConstants.kIndexerSpeed : IndexerConstants.kIndexerSpeed);
+    runIndexer(source ? IndexerConstants.kSourceIndexerSpeed : IndexerConstants.kIndexerSpeed);
   }
 
   public void stop() {

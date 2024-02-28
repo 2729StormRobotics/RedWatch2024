@@ -39,8 +39,6 @@ public class Load extends Command {
   // When called stops running the motor
   @Override
   public void end(boolean interrupted) {
-    
-    LEDSegment.MainStrip.setColor(LEDs.orange);
     m_indexer.stop();
   }
 

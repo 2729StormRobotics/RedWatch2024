@@ -92,7 +92,7 @@ public class AutoPivot extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    LEDSegment.MainStrip.setColor(LEDs.green);
+    LEDSegment.MainStrip.setColor(LEDs.allianceColor);
   }
 
   // Returns true when the command should end.

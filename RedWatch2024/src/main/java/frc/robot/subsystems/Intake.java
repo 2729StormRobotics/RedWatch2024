@@ -14,7 +14,7 @@ import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
 public class Intake extends SubsystemBase {
   //Initialize intake motor
-  private final CANSparkMax m_intakeMotor;
+  public final CANSparkMax m_intakeMotor;
   private final RelativeEncoder m_intakeEncoder;
 
   // Direction of the Intake (intake, eject, none)

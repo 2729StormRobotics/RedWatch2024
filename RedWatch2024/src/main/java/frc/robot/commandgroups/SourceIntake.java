@@ -40,11 +40,14 @@ public class SourceIntake extends SequentialCommandGroup {
       // Turn on shooter motor, motor values are placeholders
       new SetPower(m_shooter, -ShooterConstants.kLeftPowerAmp, -ShooterConstants.kRightPowerAmp),
 
-      // Checks if the note passed through the beam break twice, returing true once it does
-      new SourceFeed(m_indexer),
+      new SourceFeed(m_indexer, true),
+      new SourceFeed(m_indexer, false),
+      new SourceFeed(m_indexer, true),
 
       // Stop shooter and indexer once note is intaken
-      new StopShooter(m_shooter)
+      new StopShooter(m_shooter),
+      new InstantCommand(() -> {m_indexer.stop();})
+      
     
     );
 

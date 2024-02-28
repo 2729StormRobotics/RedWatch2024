@@ -31,8 +31,10 @@ public class IntakeItem extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
+    LEDSegment.MainStrip.setColor(LEDs.orange);
     m_intake.intakeItem();
-    LEDSegment.MainStrip.setColor(LEDs.yellow);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
