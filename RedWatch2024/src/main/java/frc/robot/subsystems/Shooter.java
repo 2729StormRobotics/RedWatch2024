@@ -64,12 +64,12 @@ public class Shooter extends SubsystemBase {
    * SETTERS
    */
 
-  // Sets pivot speed in a percentage, from 0-1
+  // Sets pivot speed in a voltage, from 0-12
   public void setPivotSpeed(double power) {
     m_rightPivot.setVoltage(power*12);
   }
 
-  // Sets shooter speed in a percentage, from 0-1
+  // Sets shooter speed in a voltage, from 0-12
   public void setShooterSpeed(double leftPower, double rightPower) {
     m_leftFlywheel.setVoltage(leftPower*12);
     m_rightFlywheel.setVoltage(rightPower*12);
@@ -93,6 +93,10 @@ public class Shooter extends SubsystemBase {
 
   public double getRightVoltage() {
     return m_rightFlywheel.getBusVoltage();
+  }
+
+  public double getRightPower(){
+    return m_rightFlywheelEncoder.getVelocity() * m_rightFlywheelEncoder.getVelocityConversionFactor();
   }
 
   // returns rpm of left shooter motor
@@ -131,7 +135,9 @@ public class Shooter extends SubsystemBase {
     // Put RPM and pivot angle on shuffleboard
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
     SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
-    SmartDashboard.putNumber("Shooter Voltage", getLeftVoltage());
+    SmartDashboard.putNumber("Left Shooter Voltage", getLeftVoltage()); //check value on smart dashbord for a rev cmd
+    SmartDashboard.putNumber("Right Shoot Power", getRightPower()); //check value on smart dashbord for a rev cmd
+
 
     // if (getPivotAngle() >= 65 ){
     //   CommandScheduler.getInstance().schedule(new SoftStop(this, getPivotAngle()));
