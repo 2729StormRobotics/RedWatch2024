@@ -70,6 +70,14 @@ public class AutoPivot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    if (m_vision.getY() == 0){
+      LEDSegment.MainStrip.setColor(LEDs.blue);
+    }
+    else
+    {
+      LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
+    }
     timeElapsed += 0.02;
 
     deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;

@@ -29,6 +29,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.ScoringSequence;
+import frc.robot.commandgroups.AutoCommandGroups.AutoScoringSequence;
+import frc.robot.commandgroups.AutoCommandGroups.FirstShot;
 import frc.robot.commands.Meltdown;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.LEDs.PartyMode;
@@ -98,7 +100,8 @@ public class RobotContainer {
      m_shooter.setDefaultCommand(
       new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.05 + m_shooter.getPivotFeedForward()), m_shooter));    
     
-    NamedCommands.registerCommand("Shoot", new ScoringSequence(m_vision, m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("FirstShot", new FirstShot(m_vision, m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("Shoot", new AutoScoringSequence(m_vision, m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("IntakeItem", new ParallelCommandGroup(new IntakeThenLoad(m_intake, m_indexer), new Pivot(m_shooter, 75)));
     NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator));
@@ -156,7 +159,7 @@ public class RobotContainer {
     new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new Pivot(m_shooter, 75)); //37.5 at .55
 
     //CALL FOR NOTE - X 
-    new JoystickButton(m_weaponsController, Button.kStart.value).onTrue(new InstantCommand(() -> {LEDSegment.MainStrip.setStrobeAnimation(LEDs.orange, 0.25);}));
+    new JoystickButton(m_weaponsController, Button.kStart.value).onTrue(new InstantCommand(() -> {LEDSegment.MainStrip.setStrobeAnimation(LEDs.orange, 0.1);}));
 
     //PIVOT SPEAKER - Y
     // new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new Pivot(

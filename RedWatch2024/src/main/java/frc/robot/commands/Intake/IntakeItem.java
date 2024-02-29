@@ -32,7 +32,7 @@ public class IntakeItem extends Command {
   @Override
   public void initialize() {
 
-    LEDSegment.MainStrip.setColor(LEDs.orange);
+    LEDSegment.MainStrip.setBandAnimation(LEDs.orange, 0.5);
     m_intake.intakeItem();
     
   }

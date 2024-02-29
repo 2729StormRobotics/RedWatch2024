@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commandgroups;
+package frc.robot.commandgroups.AutoCommandGroups;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -23,12 +23,12 @@ import frc.robot.Constants;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class FeedAndShoot extends SequentialCommandGroup {
+public class AutoFeedAndShoot extends SequentialCommandGroup {
   private final Indexer m_indexer;
   private final Shooter m_shooter; 
 
   /** Creates a new Shoot. */
-  public FeedAndShoot(Shooter shooter, Indexer indexer, double leftSpeed, double rightSpeed, double indexerSpeed) {
+  public AutoFeedAndShoot(Shooter shooter, Indexer indexer, double leftSpeed, double rightSpeed, double indexerSpeed) {
     m_indexer = indexer;
     m_shooter = shooter;
 
@@ -36,8 +36,8 @@ public class FeedAndShoot extends SequentialCommandGroup {
       // new WaitCommand(2),
       new InstantCommand(() -> {m_indexer.runIndexer(indexerSpeed);}),
       new WaitCommand(1.5),
-      new StopShooter(m_shooter),
-      new InstantCommand(() -> {m_indexer.stop();LEDSegment.MainStrip.setFadeAnimation(LEDs.red,0.3);})
+      // new StopShooter(m_shooter),
+      new InstantCommand(() -> {m_indexer.stop();LEDSegment.MainStrip.setColor(LEDs.green);})
 
     );
   }

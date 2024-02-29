@@ -1,6 +1,12 @@
 {
   "version": 1.0,
-  "startingPose": null,
+  "startingPose": {
+    "position": {
+      "x": 0.77,
+      "y": 6.62
+    },
+    "rotation": -120.0
+  },
   "command": {
     "type": "sequential",
     "data": {
@@ -8,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "FirstShot"
           }
         },
         {
@@ -41,15 +47,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "IntakeItem"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "AMP n1-n2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeItem"
                 }
               }
             ]
