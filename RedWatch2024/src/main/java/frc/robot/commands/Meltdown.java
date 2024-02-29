@@ -9,22 +9,26 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class Meltdown extends InstantCommand {
   /** Creates a new Meltdown. */
   private final Shooter m_shooter;
+  private final Pivot m_pivot;
   private final Intake m_intake;
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
-  public Meltdown(Shooter shooter, Intake intake, Drivetrain drivetrain, Indexer indexer) {
+  public Meltdown(Shooter shooter, Pivot pivot, Intake intake, Drivetrain drivetrain, Indexer indexer) {
     m_shooter = shooter;
+    m_pivot = pivot;
     m_intake = intake;
     m_drivetrain = drivetrain;
     m_indexer = indexer;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
+    addRequirements(m_pivot);
     addRequirements(m_intake);
     addRequirements(m_indexer);
   }
@@ -39,7 +43,7 @@ public class Meltdown extends InstantCommand {
     m_indexer.stop();
     m_intake.stopIntake();
     m_shooter.stopShooterMotors();
-    m_shooter.stopPivotMotors();
+    m_pivot.stopPivotMotors();
     LEDSegment.MainStrip.setStrobeAnimation(LEDs.red, 0.1);;
   }
 

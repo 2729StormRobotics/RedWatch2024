@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Shooter;
+package frc.robot.commands.Pivot;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.LEDs.LEDSegment;
 
 /*
@@ -19,9 +19,9 @@ import frc.robot.subsystems.LEDs.LEDSegment;
  * Works based off of a profiledPID controller
  */
 
-public class Pivot extends Command {
+public class PivotToAngle extends Command {
   // initialize shooter, angle, and PID constraints/controllers
-  private final Shooter m_shooter;
+  private final Pivot m_pivot;
   private final double m_angle;
 
   // private final TrapezoidProfile.Constraints m_constraints;
@@ -32,24 +32,19 @@ public class Pivot extends Command {
   public double timeElapsed = 0; // Keep track of time
 
   /** Creates a new Pivot. */
-  public Pivot(Shooter shooter, double angle) {
-    m_shooter = shooter;
+  public PivotToAngle(Pivot pivot, double angle) {
+    m_pivot = pivot;
     m_angle = angle;
 
-    // ProfiledPID Constraints
-    // m_constraints = new TrapezoidProfile.Constraints(
-    //   Constants.ShooterConstants.kMaxPivotVelocity,
-    //   Constants.ShooterConstants.kMaxPivotAcceleration);
-
     // PID Controller
-    m_controller = new PIDController(Constants.ShooterConstants.kPPivot,
-    Constants.ShooterConstants.kIPivot, Constants.ShooterConstants.kDPivot);
+    m_controller = new PIDController(Constants.PivotConstants.kPPivot,
+    Constants.PivotConstants.kIPivot, Constants.PivotConstants.kDPivot);
     SmartDashboard.putData(m_controller);
     // Set the goal and tolerances of the PID Controller
     m_controller.setSetpoint(m_angle);
-    m_controller.setTolerance(Constants.ShooterConstants.kPivotTolerance);
+    m_controller.setTolerance(Constants.PivotConstants.kPivotTolerance);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_shooter);
+    addRequirements(m_pivot);
   }
 
   // Called when the command is initially scheduled.
@@ -65,17 +60,14 @@ public class Pivot extends Command {
   public void execute() {
     timeElapsed += 0.02; // this updates every 20 ms
     // Set pivot speed to the value calculated by the PID Controller
-    // error = m_angle - m_shooter.getPivotAngle();
-    // power = error * Constants.ShooterConstants.kPPivot +  m_shooter.getPivotFeedForward();
-    power =  m_controller.calculate(m_shooter.getPivotAngle(), m_angle); // + m_shooter.getPivotFeedForward();
+    power =  m_controller.calculate(m_pivot.getPivotAngle(), m_angle);
     if (power > 0.2) {
       power = 0.2;
     }
     else if (power < -0.2) {
       power = -0.2;
     }
-    m_shooter.setPivotSpeed(power+ m_shooter.getPivotFeedForward());
-      // m_controller.calculate(m_shooter.getPivotAngle(), m_angle) + m_shooter.getPivotFeedForward());
+    m_pivot.setPivotSpeed(power+ m_pivot.getPivotFeedForward());
     SmartDashboard.putNumber("PID pivot speed", power);
   }
 
@@ -83,7 +75,7 @@ public class Pivot extends Command {
   @Override
   public void end(boolean interrupted) {
     // Stop pivot motors
-    // m_shooter.stopPivotMotors();
+    // m_pivot.stopPivotMotors();
     LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.7);
 
   }
@@ -91,9 +83,7 @@ public class Pivot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
     // Finish command when shooter is at the setpoint
-    // return Math.abs(error) < Constants.ShooterConstants.kPivotTolerance;
     return m_controller.atSetpoint() || timeElapsed > 2;
   }
 }
