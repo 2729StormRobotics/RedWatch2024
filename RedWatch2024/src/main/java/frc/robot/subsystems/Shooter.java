@@ -4,47 +4,31 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.Shooter.SoftStop;
 
 public class Shooter extends SubsystemBase {
-  // Motors and absolute encoder for pivoting for the shooter
-  public final CANSparkMax m_rightPivot;
-  public final AbsoluteEncoder m_PivotEncoder;
-
-
   // Motors and encoders for the flywheels
   public final CANSparkMax m_leftFlywheel;
   public final RelativeEncoder m_leftFlywheelEncoder;
   public final CANSparkMax m_rightFlywheel;
   public final RelativeEncoder m_rightFlywheelEncoder;
-
-  public static double iterations = 0; // counter used for the number of iteration in Newton's Method
   
   /** Creates a new Shooter. */
   public Shooter() {
     // All motors initialization
-    m_rightPivot = new CANSparkMax(Constants.ShooterConstants.kRightPivotID, MotorType.kBrushless);
     m_leftFlywheel = new CANSparkMax(Constants.ShooterConstants.kLeftFlywheelID, MotorType.kBrushless);
     m_rightFlywheel = new CANSparkMax(Constants.ShooterConstants.kRightFlywheelID, MotorType.kBrushless);
 
     motorInit(m_leftFlywheel, Constants.ShooterConstants.kLeftFlywheelInverted);
     motorInit(m_rightFlywheel, Constants.ShooterConstants.kRightFlywheelInverted);
-    motorInit(m_rightPivot, Constants.ShooterConstants.kRightPivotInverted);
-
-
-    // Pivot encoder initialization
-    m_PivotEncoder = m_rightPivot.getAbsoluteEncoder(Type.kDutyCycle);
 
     // Flywheel encoder initialization
     m_leftFlywheelEncoder = m_leftFlywheel.getEncoder();
@@ -64,19 +48,10 @@ public class Shooter extends SubsystemBase {
    * SETTERS
    */
 
-  // Sets pivot speed in a voltage, from 0-12
-  public void setPivotSpeed(double power) {
-    m_rightPivot.setVoltage(power*12);
-  }
-
   // Sets shooter speed in a voltage, from 0-12
   public void setShooterSpeed(double leftPower, double rightPower) {
     m_leftFlywheel.setVoltage(leftPower*12);
     m_rightFlywheel.setVoltage(rightPower*12);
-  }
-
-  public void stopPivotMotors() {
-    m_rightPivot.set(0);
   }
 
   public void stopShooterMotors() {
@@ -114,32 +89,11 @@ public class Shooter extends SubsystemBase {
     return (getLeftRPM() + getRightRPM())/2;
   }
 
-  // returns pivot angle of shooter in degrees
-  public double getPivotAngle() {
-    if ((m_PivotEncoder.getPosition())* 360 > 300) {
-      return 0;
-    }
-    return (m_PivotEncoder.getPosition()) * 360;
-  }
-
-  public double getOptimalAngle(double distance) {
-    return Constants.ShooterConstants.ShooterInterpolationTable.getOutput(distance);
-  }
-
-  public double getPivotFeedForward() {
-    return Constants.ShooterConstants.kPivotFF * Math.cos(Math.toRadians(getPivotAngle() + 40));
-  }
-
   @Override
   public void periodic() {
     // Put RPM and pivot angle on shuffleboard
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
-    SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
     SmartDashboard.putNumber("Left Shooter Voltage", getLeftVoltage()); //check value on smart dashbord for a rev cmd
     SmartDashboard.putNumber("Right Shooter Voltage", getRightVoltage());
-
-    // if (getPivotAngle() >= 65 ){
-    //   CommandScheduler.getInstance().schedule(new SoftStop(this, getPivotAngle()));
-    // }
   }
 }

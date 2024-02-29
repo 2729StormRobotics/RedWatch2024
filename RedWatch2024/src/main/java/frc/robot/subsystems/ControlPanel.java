@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IndexerConstants;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.subsystems.LEDs.Color;
@@ -28,18 +29,20 @@ public class ControlPanel extends SubsystemBase {
   private final LEDs m_leds;
   private final Intake m_intake;
   private final Shooter m_shooter;
+  private final Pivot m_pivot;
   private final Vision m_vision;
   public int r=225;
   public int b=0;
   public int g=0;
 
   /** Creates a new ControlPanel. */
-  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, LEDs leds, Vision vision) {
+  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, Pivot pivot, LEDs leds, Vision vision) {
     m_drivetrain = drivetrain;
     m_indexer = indexer;
     m_leds = leds;
     m_intake = intake;
     m_shooter = shooter;
+    m_pivot = pivot;
     m_vision = vision;
 
     PowerDistribution m_PD = new PowerDistribution(20,ModuleType.kRev);
@@ -85,7 +88,7 @@ public class ControlPanel extends SubsystemBase {
  // How fast the indexer is
     SmartDashboard.putBoolean("Beam break status", m_indexer.isNotePresent());
     // Shooter
-    SmartDashboard.putNumber("Pivot Encoder", m_shooter.getPivotAngle()); // Angle of shooter
+    SmartDashboard.putNumber("Pivot Encoder", m_pivot.getPivotAngle()); // Angle of shooter
     SmartDashboard.putNumber("Flywheel RPM", m_shooter.getAverageRPM());
     // setkPPivot = m_shooterStatus.add("Pivot PID", m_shooter.pivot)
     // setShooterSpeeds = m_shooterStatus.add("Shooter Speed", 1)
@@ -94,8 +97,8 @@ public class ControlPanel extends SubsystemBase {
     // .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
     SmartDashboard.putNumber("Speaker Shooter Speeds", 0.75);
     // SmartDashboard.putNumber("pivot Speeds", 0.1);
-    SmartDashboard.putNumber("kPPivot", ShooterConstants.kPPivot);
-    SmartDashboard.putNumber("kDPivot", ShooterConstants.kDPivot);
+    SmartDashboard.putNumber("kPPivot", PivotConstants.kPPivot);
+    SmartDashboard.putNumber("kDPivot", PivotConstants.kDPivot);
 
 
     // Intake a
@@ -132,11 +135,11 @@ public class ControlPanel extends SubsystemBase {
     Constants.ShooterConstants.kLeftPowerSpeaker = SmartDashboard.getNumber("Speaker Shooter Speeds", 0.75);
     Constants.ShooterConstants.kRightPowerSpeaker = SmartDashboard.getNumber("Speaker Shooter Speeds", 0.75);
     // Constants.ShooterConstants.kPivotFF = SmartDashboard.getNumber("pivot FF", 0.0465);
-    Constants.ShooterConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0);
-    Constants.ShooterConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);
+    Constants.PivotConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0);
+    Constants.PivotConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);
     Constants.IndexerConstants.kIndexerSpeed = SmartDashboard.getNumber("Indexer Speed", 0.7);
     // LEDSegment.MainStrip.setFadeAnimation(new Color(r, g, b), 0.5);
-    SmartDashboard.putNumber("Auto angle", m_shooter.getOptimalAngle(m_vision.getSpeakerDistance()));
+    SmartDashboard.putNumber("Auto angle", m_pivot.getOptimalAngle(m_vision.getSpeakerDistance()));
     // SmartDashboard.putData("Scheduler", CommandScheduler.getInstance());
     SmartDashboard.putNumber("Fused Heading",m_drivetrain.m_gyro.getFusedHeading());
     SmartDashboard.putNumber("f_angle",m_drivetrain.m_gyro.getAngle());

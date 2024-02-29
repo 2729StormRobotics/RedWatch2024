@@ -189,35 +189,15 @@ public final class Constants {
   public static class ShooterConstants {
     // Motor ID/initialization values
 
-    // public static final int kLeftPivotID = 12; NO MORE LEFT PIVOT ONLY RIGHT PIVOT
-    public static final int kRightPivotID = 9;
     public static final int kLeftFlywheelID = 10;
     public static final int kRightFlywheelID = 14;
     public static final int kCurrentLimit = 35;
 
-    // manual control speed limiters
-    public static final double kPivotSpeedLimiter = 1;
 
     // Make sure that the two pivot motors and two shooting motors rotate in
     // opposite directions
     public static final boolean kLeftFlywheelInverted = false;
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
-    public static final boolean kLeftPivotInverted = true;
-    public static final boolean kRightPivotInverted = false;
-
-    // Absolute encoder offsets
-    public static final double kLeftPivotOffset = 0;
-    public static final double kRightPivotOffset = 0;
-
-    // Pivot PID values
-    public static double kPPivot = 0.0055;//0.006
-    public static final double kIPivot = 0;
-    public static double kDPivot = 0;//0.0001;
-    public static double kMaxPivotVelocity = 10; // Measured in degrees/s
-    public static final double kMaxPivotAcceleration = 45; // Measured in degrees/s^2
-    public static final double kPivotTolerance = 0; // degrees
-    public static double pivotPower;
-    public static final double kSourcePivotAngle = 0; // Angle of intake for source
 
     // Flywheel PID values
     public static final double kMaxRPM = 6000;
@@ -232,19 +212,34 @@ public final class Constants {
     public static double kRightPowerAmp = .148; // 0.17 speed for backward amp shot
     public static double kLeftPowerSpeaker = 0.55;
     public static double kRightPowerSpeaker = 0.55; //55
+    public static final double steadyPower = 0; // 0.15 // 0.25
 
+  }
+
+  public static class PivotConstants {
+    // motor configuration
+    public static final int kRightPivotID = 9;
+    public static final int kCurrentLimit = 35;
+    public static final double kPivotSpeedLimiter = 1;
+    public static final boolean kRightPivotInverted = false;
+
+    // Pivot PID values
     public static double kPivotFF = 0.034; // 0.35 tested and works but too high while shooting
+    public static double kPPivot = 0.0055;//0.006
+    public static final double kIPivot = 0;
+    public static double kDPivot = 0;//0.0001;
+    public static double kMaxPivotVelocity = 10; // Measured in degrees/s
+    public static final double kMaxPivotAcceleration = 45; // Measured in degrees/s^2
+    public static final double kPivotTolerance = 0; // degrees
+    public static double pivotPower;
 
-    // Field and Robot Measurements
-    // All units are in meters
-    public static final double goalHeight = Units.inchesToMeters(78.129);
-    public static final double shooterLength = Units.inchesToMeters(12.01);
-    public static final double exitVelocity = 15;
-    public static final double g = 9.81;
-    public static final double k = -g / (2 * Math.pow(exitVelocity, 2)); // substitution used in angle calculation
+    // Setpositions
+    public static final double kSourcePivotAngle = 0; // Angle of pivot for source
+    public static final double kIntakeAngle = 75;
 
     // Interpolation table for getting shooting angle based off distance
     public static final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
+      new Point2D.Double(-0.01, 54),
       new Point2D.Double(0.93, 54),
       new Point2D.Double(1.77, 43.5),
       new Point2D.Double(2, 39.32),
@@ -252,22 +247,7 @@ public final class Constants {
       new Point2D.Double(2.6, 34.75),
       new Point2D.Double(2.9, 32.3)
     };
-    public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
-
-    public static InterpolatingDoubleTreeMap shooterMap = new InterpolatingDoubleTreeMap();
-
-    static {
-      shooterMap.put(0.93, 54.0);
-      shooterMap.put(1.77, 43.5);
-      shooterMap.put(2.0, 39.32);
-      shooterMap.put(2.32, 36.17);
-      shooterMap.put(2.6, 34.75);
-      shooterMap.put(2.9, 32.3);
-
-    }
-    
-    // Set Positions
-    public static final double kIntakeAngle = 47;
+    public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints); 
   }
 
   public static class VisionConstants {

@@ -10,12 +10,14 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Indexer.Load;
 import frc.robot.commands.Intake.IntakeItem;
 import frc.robot.commands.Intake.StopIntake;
+import frc.robot.commands.Pivot.PivotToAngle;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Pivot;
 import frc.robot.commands.Indexer.SourceFeed;
 import frc.robot.subsystems.Shooter;
-import frc.robot.commands.Shooter.Pivot;
 import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Shooter.StopShooter;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.ShooterConstants;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -25,17 +27,19 @@ public class SourceIntake extends SequentialCommandGroup {
   // Intialize subsystems
   private final Shooter m_shooter;
   private final Indexer m_indexer;
+  private final Pivot m_pivot;
 
   /** Creates a new SourceIntake. */
-  public SourceIntake(Shooter shooter, Indexer indexer) {
+  public SourceIntake(Shooter shooter, Pivot pivot, Indexer indexer) {
     m_indexer = indexer;
     m_shooter = shooter;
+    m_pivot = pivot;
     
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       // Shooter turns to source angle
-      new Pivot(m_shooter, ShooterConstants.kSourcePivotAngle),
+      new PivotToAngle(m_pivot, PivotConstants.kSourcePivotAngle),
 
       // Turn on shooter motor, motor values are placeholders
       new SetPower(m_shooter, -ShooterConstants.kLeftPowerAmp, -ShooterConstants.kRightPowerAmp),
