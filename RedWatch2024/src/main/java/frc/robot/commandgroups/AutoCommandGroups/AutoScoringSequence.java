@@ -8,8 +8,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.PivotAndRev;
-import frc.robot.commands.Shooter.AutoPivot;
+import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 
@@ -25,18 +26,20 @@ import frc.robot.subsystems.Vision;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoScoringSequence extends SequentialCommandGroup {
   private final Indexer m_indexer;
-  private final Shooter m_shooter; 
+  private final Shooter m_shooter;
+  private final Pivot m_pivot; 
   private final Vision m_vision;
 
   /** Creates a new AutoScore. */
-  public AutoScoringSequence(Vision vision, Shooter shooter, Indexer indexer, double leftPower, double rightPower, double indexerPower) {
+  public AutoScoringSequence(Vision vision, Shooter shooter, Pivot pivot, Indexer indexer, double leftPower, double rightPower, double indexerPower) {
     m_indexer = indexer;
     m_shooter = shooter;
+    m_pivot = pivot;
     m_vision = vision;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoPivot(m_vision, m_shooter),
+      new AutoPivot(m_vision, m_pivot),
       // new WaitCommand(0.1),
       new AutoFeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower)
     );
