@@ -6,8 +6,8 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
-import frc.robot.commands.Shooter.PivotToAngle;
-import frc.robot.commands.Shooter.AutoPivot;
+import frc.robot.commands.Pivot.PivotToAngle;
+import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Shooter.RevShooter;
 import frc.robot.commands.Shooter.SetPower;
 import frc.robot.subsystems.Pivot;

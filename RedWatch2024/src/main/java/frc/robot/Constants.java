@@ -212,7 +212,7 @@ public final class Constants {
     public static double kRightPowerAmp = .148; // 0.17 speed for backward amp shot
     public static double kLeftPowerSpeaker = 0.55;
     public static double kRightPowerSpeaker = 0.55; //55
-    public static final double steadyPower = 0.25;
+    public static final double steadyPower = 0; // 0.15 // 0.25
 
   }
 

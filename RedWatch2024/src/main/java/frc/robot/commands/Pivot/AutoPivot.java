@@ -76,6 +76,9 @@ public class AutoPivot extends Command {
     dist = deltaHeight / Math.tan(deltaAngle);
 
     m_setpoint = ShooterInterpolationTable.getOutput(dist);
+    if (m_setpoint < 10) {
+      m_setpoint = 10;
+    }
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
     m_turnPower = m_turnError * Constants.PivotConstants.kPPivot;
     if (m_turnPower > 0.2) {

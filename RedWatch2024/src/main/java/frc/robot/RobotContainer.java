@@ -32,8 +32,8 @@ import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commands.Meltdown;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.LEDs.PartyMode;
-import frc.robot.commands.Shooter.AutoPivot;
-import frc.robot.commands.Shooter.PivotToAngle;
+import frc.robot.commands.Pivot.AutoPivot;
+import frc.robot.commands.Pivot.PivotToAngle;
 import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Vision.AprilTagAlign;
 import frc.robot.subsystems.ControlPanel;
@@ -103,7 +103,7 @@ public class RobotContainer {
       new RunCommand(() -> m_pivot.setPivotSpeed(-m_weaponsController.getLeftY() * 0.05 + m_pivot.getPivotFeedForward()), m_pivot));
     
     //keep steady rpm for the shooter
-    m_shooter.setDefaultCommand(new SetPower(m_shooter, Constants.ShooterConstants.steadyPower, Constants.ShooterConstants.steadyPower));
+    m_shooter.setDefaultCommand(new RunCommand(() -> m_shooter.setShooterSpeed(Constants.ShooterConstants.steadyPower, Constants.ShooterConstants.steadyPower), m_shooter));
      
     
     NamedCommands.registerCommand("Shoot", new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
