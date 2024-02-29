@@ -4,22 +4,23 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Vision.AprilTagAlign;
-import frc.robot.commands.Vision.NoteAlign;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Vision;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import frc.robot.subsystems.LEDs.LEDSegment;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -29,15 +30,18 @@ import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commands.Meltdown;
+import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.commands.Shooter.AutoPivot;
 import frc.robot.commands.Shooter.Pivot;
+import frc.robot.commands.Vision.AprilTagAlign;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Vision;
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -53,7 +57,10 @@ public class RobotContainer {
   final Shooter m_shooter;
   private final ControlPanel m_controlPanel;
   private final LEDs m_leds;
-
+  
+  // Will allow to choose which auto command to run from the shuffleboard
+  private final SendableChooser<Command> autoChooser;
+  
   private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
   private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
   private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);
@@ -81,15 +88,24 @@ public class RobotContainer {
           // -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
           // -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier*1, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier*1, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
           true, true),
         m_drivetrain));
 
     //manual pivot control
      m_shooter.setDefaultCommand(
       new RunCommand(() -> m_shooter.setPivotSpeed(-m_weaponsController.getLeftY() * 0.05 + m_shooter.getPivotFeedForward()), m_shooter));    
+    
+    NamedCommands.registerCommand("Shoot", new ScoringSequence(m_vision, m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("IntakeItem", new ParallelCommandGroup(new IntakeThenLoad(m_intake, m_indexer), new Pivot(m_shooter, 75)));
+    NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
+    NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator));
+
+    // Puts auto chooser onto shuffleboard
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   /**
@@ -171,6 +187,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return autoChooser.getSelected();
   }
 }

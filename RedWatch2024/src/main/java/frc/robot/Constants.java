@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import frc.robot.lib.LinearInterpolationTable;
 import java.awt.geom.Point2D;
@@ -71,6 +72,9 @@ public final class Constants {
     // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = Units.inchesToMeters(26.5);
     // Distance between front and back wheels on robot
+
+    public static final double kRobotRadius = DriveConstants.kTrackWidth * Math.sqrt(2) / 2; // robot radius
+
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
@@ -97,6 +101,24 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
   }
+
+  public static class AutoConstants {
+    public static final double kMaxSpeedMetersPerSecond = 4.8;
+    public static final double kMaxAngularSpeedRadiansPerSecond = Math.toRadians(540);
+    public static final double kMaxAcceletrationMetersPerSecondSquared = 3;
+    public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.toRadians(720);
+    public static final double kPXController = 1.5;
+    public static final double kPYController = 1.5;
+    public static final double kPThetaController = 3;
+
+    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
+    new TrapezoidProfile.Constraints(
+            kMaxAngularSpeedRadiansPerSecond,
+            kMaxAngularAccelerationRadiansPerSecondSquared);
+
+  }
+
+
 
   public static final class ModuleConstants {
     // The MAXSwerve module can be configured with one of three pinion gears: 12T,

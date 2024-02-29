@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Path 1"
+                  "pathName": "AMP s1-n1"
                 }
               }
             ]
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Path 2"
+                  "pathName": "AMP n1-c1-L1"
                 }
               }
             ]
@@ -80,32 +80,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Path 4"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Path 3"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "IntakeItem"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Path 5"
+                  "pathName": "AMP L1-c2-L1"
                 }
               }
             ]
@@ -114,6 +89,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "AmpSide",
   "choreoAuto": false
 }

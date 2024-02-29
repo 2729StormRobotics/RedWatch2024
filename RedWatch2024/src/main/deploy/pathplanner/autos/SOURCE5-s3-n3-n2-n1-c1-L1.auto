@@ -1,0 +1,43 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.77,
+      "y": 4.46
+    },
+    "rotation": 120.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SOURCE s3-n3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SOURCE n3-n2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SOURCE n2-n1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SOURCE n1-c1-L1"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "SourceSide",
+  "choreoAuto": false
+}
