@@ -48,7 +48,7 @@ public final class Constants {
     // Assigns Indexer moftor to port
     public static final int kIndexMotorPort = 12;
     // Assigns Beam break sensor to port 1
-    public static final int kBeamBreakPort = 8;
+    public static final int kBeamBreakPort = 4;
     // Sets the indexer motor to 50% power
     public static double kIndexerSpeed = 0.7;
     // Sets the indexer motor to 50% power in the opposite direction
@@ -210,8 +210,8 @@ public final class Constants {
     public static final double kRightRPM = 1000;
     public static double kLeftPowerAmp = .148; // 0.183 for forward shot amp, 57 degrees
     public static double kRightPowerAmp = .148; // 0.17 speed for backward amp shot
-    public static double kLeftPowerSpeaker = 0.55;
-    public static double kRightPowerSpeaker = 0.55; //55
+    public static double kLeftPowerSpeaker = 0.75;
+    public static double kRightPowerSpeaker = 0.75; //75
     public static final double steadyPower = 0; // 0.15 // 0.25
 
   }
@@ -224,8 +224,8 @@ public final class Constants {
     public static final boolean kRightPivotInverted = false;
 
     // Pivot PID values
-    public static double kPivotFF = 0.034; // 0.35 tested and works but too high while shooting
-    public static double kPPivot = 0.0055;//0.006
+    public static double kPivotFF = 0.03; // 0.35 tested and works but too high while shooting
+    public static double kPPivot = 0.005;//0.006
     public static final double kIPivot = 0;
     public static double kDPivot = 0;//0.0001;
     public static double kMaxPivotVelocity = 10; // Measured in degrees/s

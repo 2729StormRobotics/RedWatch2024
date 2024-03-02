@@ -32,7 +32,7 @@ public class Indexer extends SubsystemBase {
 
   // Determines whether note is detected or not
   public boolean isNotePresent() {
-    return m_NoteDectector.get();
+    return !m_NoteDectector.get();
   }
 
   // Determines the note's prescense for source intake
