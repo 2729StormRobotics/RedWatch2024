@@ -19,8 +19,8 @@ public final class Constants {
   }
 
   public static final class HangerConstants {
-		public static final int kLeftHanger = 4;
-		public static final int kRightHanger = 10;
+		public static final int kLeftHanger = 16;
+		public static final int kRightHanger = 15;
 
     public static final int kCurrentLimit = 35;
     public static final double kSpeedLimiter = 1;

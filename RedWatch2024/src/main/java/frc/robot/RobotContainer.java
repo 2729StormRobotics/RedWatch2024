@@ -39,7 +39,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     m_Hanger = new Hanger();
-    m_Hanger.setDefaultCommand(new HangerControl(m_weaponsController.getLeftY(), m_weaponsController.getRightY(), m_Hanger));
+    m_Hanger.setDefaultCommand(new HangerControl(m_weaponsController.getLeftY()*0.25, m_weaponsController.getRightY()*0.25, m_Hanger));
     
     SmartDashboard.putData(CommandScheduler.getInstance());
     configureBindings();
