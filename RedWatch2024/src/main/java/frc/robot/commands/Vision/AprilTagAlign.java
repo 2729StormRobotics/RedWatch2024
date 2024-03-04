@@ -60,12 +60,16 @@ public class AprilTagAlign extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_drivetrain.drive(
+      0, 0, 0,
+            true, true);
+    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return Math.abs(m_turnError) < Constants.VisionConstants.aprilTagAlignTolerance;
-    return false;
+    return Math.abs(m_turnError) < Constants.VisionConstants.aprilTagAlignTolerance;
+    // return false;
   }
 }

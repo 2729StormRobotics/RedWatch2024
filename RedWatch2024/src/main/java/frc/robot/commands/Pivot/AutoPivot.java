@@ -71,24 +71,33 @@ public class AutoPivot extends Command {
   @Override
   public void execute() {
 
-    if (m_vision.getY() == 0){
-      LEDSegment.MainStrip.setColor(LEDs.blue);
-    }
-    else
-    {
-      LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
-    }
+    
     timeElapsed += 0.02;
 
     deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
     dist = deltaHeight / Math.tan(deltaAngle);
 
-    m_setpoint = ShooterInterpolationTable.getOutput(dist);
+    m_setpoint = ShooterInterpolationTable.getOutput(dist) - 1.75;
     if (m_setpoint < 10) {
       m_setpoint = 10;
     }
+    if (m_vision.getY() == 0){
+      LEDSegment.MainStrip.setColor(LEDs.blue);
+      m_setpoint = 54;
+    }
+    else
+    {
+      LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
+    }
+
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
-    m_turnPower = m_turnError * Constants.PivotConstants.kPPivot;
+
+    if (m_setpoint < m_pivot.getPivotAngle())
+      m_turnPower = m_turnError * Constants.PivotConstants.kPPivotDown;
+    
+    if (m_setpoint > m_pivot.getPivotAngle())
+      m_turnPower = m_turnError * Constants.PivotConstants.kPPivotUp;
+
     if (m_turnPower > 0.2) {
       m_turnPower = 0.2;
     }

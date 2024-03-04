@@ -41,7 +41,7 @@ public class FirstShot extends SequentialCommandGroup {
     addCommands(
       new PivotAndRev(m_shooter, m_pivot, m_vision, leftPower, rightPower),
       new WaitCommand(0.1),
-      new FeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower)
+      new AutoFeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower)
     );
   }
 }

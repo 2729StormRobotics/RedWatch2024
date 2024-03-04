@@ -37,7 +37,7 @@ public class PivotToAngle extends Command {
     m_angle = angle;
 
     // PID Controller
-    m_controller = new PIDController(Constants.PivotConstants.kPPivot,
+    m_controller = new PIDController(Constants.PivotConstants.kPPivotUp,
     Constants.PivotConstants.kIPivot, Constants.PivotConstants.kDPivot);
     SmartDashboard.putData(m_controller);
     // Set the goal and tolerances of the PID Controller

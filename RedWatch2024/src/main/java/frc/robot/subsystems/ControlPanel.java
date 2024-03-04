@@ -97,7 +97,7 @@ public class ControlPanel extends SubsystemBase {
     // .withWidget(BuiltInWidgets.kNumberSlider).withProperties(Map.of("min", 0, "max", 1)).getEntry();
     SmartDashboard.putNumber("Speaker Shooter Speeds", 0.75);
     // SmartDashboard.putNumber("pivot Speeds", 0.1);
-    SmartDashboard.putNumber("kPPivot", PivotConstants.kPPivot);
+    SmartDashboard.putNumber("kPPivot", PivotConstants.kPPivotUp);
     SmartDashboard.putNumber("kDPivot", PivotConstants.kDPivot);
 
 
@@ -135,7 +135,7 @@ public class ControlPanel extends SubsystemBase {
     Constants.ShooterConstants.kLeftPowerSpeaker = SmartDashboard.getNumber("Speaker Shooter Speeds", 0.75);
     Constants.ShooterConstants.kRightPowerSpeaker = SmartDashboard.getNumber("Speaker Shooter Speeds", 0.75);
     // Constants.ShooterConstants.kPivotFF = SmartDashboard.getNumber("pivot FF", 0.0465);
-    Constants.PivotConstants.kPPivot = SmartDashboard.getNumber("kPPivot", 0);
+    Constants.PivotConstants.kPPivotUp= SmartDashboard.getNumber("kPPivot", 0);
     Constants.PivotConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);
     Constants.IndexerConstants.kIndexerSpeed = SmartDashboard.getNumber("Indexer Speed", 0.7);
     // LEDSegment.MainStrip.setFadeAnimation(new Color(r, g, b), 0.5);
