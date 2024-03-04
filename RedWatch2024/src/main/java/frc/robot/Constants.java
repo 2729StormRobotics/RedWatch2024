@@ -224,13 +224,13 @@ public final class Constants {
     public static final boolean kRightPivotInverted = false;
 
     // Pivot PID values
-    public static double kPivotFF = 0.03; // 0.35 tested and works but too high while shooting
-    public static double kPPivot = 0.005;//0.006
+    public static double kPivotFF = 0.037; // 0.35, 34 tested but drifts from 60-70
+    public static double kPPivot = 0.0055;//0.006
     public static final double kIPivot = 0;
     public static double kDPivot = 0;//0.0001;
     public static double kMaxPivotVelocity = 10; // Measured in degrees/s
     public static final double kMaxPivotAcceleration = 45; // Measured in degrees/s^2
-    public static final double kPivotTolerance = 0; // degrees
+    public static final double kPivotTolerance = 0.5; // degrees
     public static double pivotPower;
 
     // Setpositions

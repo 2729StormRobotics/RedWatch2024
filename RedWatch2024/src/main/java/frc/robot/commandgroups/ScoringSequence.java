@@ -30,7 +30,7 @@ public class ScoringSequence extends SequentialCommandGroup {
   /** Creates a new AutoScore. */
   public ScoringSequence(Vision vision, Shooter shooter, Pivot pivot, Indexer indexer, double leftPower, double rightPower, double indexerPower) {
     m_indexer = indexer;
-    m_shooter = shooter;
+    m_shooter = shooter;  
     m_pivot = pivot;
     m_vision = vision;
     // Add your commands in the addCommands() call, e.g.
