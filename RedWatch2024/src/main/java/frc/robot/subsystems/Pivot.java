@@ -67,7 +67,7 @@ public class Pivot extends SubsystemBase {
   }
 
   public double getPivotFeedForward() {
-    return Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(getPivotAngle() + 40));//40 //33
+    return Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(getPivotAngle() + 43));//47 for 50deg, 39 for 32deg
   }
 
   @Override

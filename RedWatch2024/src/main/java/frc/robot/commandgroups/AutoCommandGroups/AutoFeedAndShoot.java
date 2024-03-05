@@ -36,7 +36,7 @@ public class AutoFeedAndShoot extends SequentialCommandGroup {
       // new WaitCommand(2),
       new InstantCommand(() -> {m_indexer.runIndexer(indexerSpeed);}),
       new WaitCommand(1.5),
-      // new StopShooter(m_shooter),
+      new RevShooter(m_shooter, 0.25, 0.25),
       new InstantCommand(() -> {m_indexer.stop();LEDSegment.MainStrip.setColor(LEDs.green);})
 
     );

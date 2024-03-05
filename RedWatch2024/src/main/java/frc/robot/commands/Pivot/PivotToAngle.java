@@ -4,15 +4,12 @@
 
 package frc.robot.commands.Pivot;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.LEDs.LEDSegment;
+import frc.robot.subsystems.Pivot;
 
 /*
  * Will pivot the shooter to the specified angle
@@ -25,7 +22,6 @@ public class PivotToAngle extends Command {
   private final double m_angle;
 
   // private final TrapezoidProfile.Constraints m_constraints;
-  private final PIDController m_controller;
   double error;
   double power;
 
@@ -35,15 +31,6 @@ public class PivotToAngle extends Command {
   public PivotToAngle(Pivot pivot, double angle) {
     m_pivot = pivot;
     m_angle = angle;
-
-    // PID Controller
-    m_controller = new PIDController(Constants.PivotConstants.kPPivotUp,
-    Constants.PivotConstants.kIPivot, Constants.PivotConstants.kDPivot);
-    SmartDashboard.putData(m_controller);
-    // Set the goal and tolerances of the PID Controller
-    m_controller.setSetpoint(m_angle);
-    m_controller.setTolerance(Constants.PivotConstants.kPivotTolerance);
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_pivot);
   }
 
@@ -60,12 +47,19 @@ public class PivotToAngle extends Command {
   public void execute() {
     timeElapsed += 0.02; // this updates every 20 ms
     // Set pivot speed to the value calculated by the PID Controller
-    power =  m_controller.calculate(m_pivot.getPivotAngle(), m_angle);
-    if (power > 0.2) {
-      power = 0.2;
+    
+    error = m_angle - m_pivot.getPivotAngle();
+    if (m_angle < m_pivot.getPivotAngle())
+      power = error * Constants.PivotConstants.kPPivotDown;
+
+    if (m_angle > m_pivot.getPivotAngle())
+      power = error * Constants.PivotConstants.kPPivotUp;
+
+    if (power > 0.4) {
+      power = 0.4;
     }
-    else if (power < -0.2) {
-      power = -0.2;
+    else if (power < -0.4) {
+      power = -0.4;
     }
     m_pivot.setPivotSpeed(power+ m_pivot.getPivotFeedForward());
     SmartDashboard.putNumber("PID pivot speed", power);
@@ -84,6 +78,6 @@ public class PivotToAngle extends Command {
   @Override
   public boolean isFinished() {
     // Finish command when shooter is at the setpoint
-    return m_controller.atSetpoint() || timeElapsed > 2;
+    return (Math.abs(error) < Constants.PivotConstants.kPivotTolerance) || timeElapsed > 2;
   }
 }

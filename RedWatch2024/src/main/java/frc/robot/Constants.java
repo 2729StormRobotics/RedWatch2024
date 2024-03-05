@@ -225,7 +225,7 @@ public final class Constants {
 
     // Pivot PID values
     public static double kPivotFF = 0.035; // 0.35, 34 tested but drifts from 60-70
-    public static double kPPivotUp = 0.00525;//0.006upper 5lower 
+    public static double kPPivotUp = 0.0054;//0.006upper 5lower 
     public static double kPPivotDown = 0.00575;//
     public static final double kIPivot = 0;
     public static double kDPivot = 0;//0.0001;

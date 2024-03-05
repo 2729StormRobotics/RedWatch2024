@@ -23,6 +23,7 @@ public class AutoPivot extends Command {
   private double m_turnError;
   private double m_turnPower;
   private double m_setpoint;
+  private double m_ff;
 
   double deltaHeight;
   double deltaAngle;
@@ -55,6 +56,7 @@ public class AutoPivot extends Command {
   public void initialize() {
     m_turnError = 0;
     m_turnPower = 0;
+    m_ff = 0;
     m_setpoint = 0;
     timeElapsed = 0;
     deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
@@ -77,7 +79,7 @@ public class AutoPivot extends Command {
     deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
     dist = deltaHeight / Math.tan(deltaAngle);
 
-    m_setpoint = ShooterInterpolationTable.getOutput(dist) - 1.75;
+    m_setpoint = ShooterInterpolationTable.getOutput(dist);
     if (m_setpoint < 10) {
       m_setpoint = 10;
     }
@@ -90,22 +92,29 @@ public class AutoPivot extends Command {
       LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
     }
 
+    // if (m_setpoint > 48){
+    //   m_setpoint -= 1.75;
+    // } 
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
 
     if (m_setpoint < m_pivot.getPivotAngle())
       m_turnPower = m_turnError * Constants.PivotConstants.kPPivotDown;
+      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 39));
+
     
     if (m_setpoint > m_pivot.getPivotAngle())
       m_turnPower = m_turnError * Constants.PivotConstants.kPPivotUp;
+      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 43));
 
-    if (m_turnPower > 0.2) {
-      m_turnPower = 0.2;
+
+    if (m_turnPower > 0.4) {
+      m_turnPower = 0.4;
     }
-    else if (m_turnPower < -0.2) {
-      m_turnPower = -0.2;
+    else if (m_turnPower < -0.4) {
+      m_turnPower = -0.4;
     }
 
-    m_turnPower += m_pivot.getPivotFeedForward();
+    m_turnPower += m_ff;
     m_pivot.setPivotSpeed(m_turnPower);
   }
 
