@@ -73,7 +73,8 @@ public class ControlPanel extends SubsystemBase {
         builder.addDoubleProperty("Robot Angle", () -> Math.toRadians(m_drivetrain.getHeading()), null);
       }
     });
-    
+    SmartDashboard.putData("ResetGyro-180", new InstantCommand(() -> {m_drivetrain.m_gyro.setAngleAdjustment(-180);m_drivetrain.m_gyro.reset();}));
+
 
     // voltage
     SmartDashboard.putNumber("Total Voltage", m_PD.getVoltage());
