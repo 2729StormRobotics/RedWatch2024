@@ -224,7 +224,7 @@ public final class Constants {
     public static final boolean kRightPivotInverted = false;
 
     // Pivot PID values
-    public static double kPivotFF = 0.035; // 0.35, 34 tested but drifts from 60-70
+    public static double kPivotFF = 0.041; // 0.35, 34 tested but drifts from 60-70
     public static double kPPivotUp = 0.0054;//0.006upper 5lower 
     public static double kPPivotDown = 0.00575;//
     public static final double kIPivot = 0;
@@ -262,8 +262,10 @@ public final class Constants {
     public static final double kSDrive = 0;
     public static final double kPY = 0;
     public static final double kTolerance = 0;
-    public static final double kPTurn = 0.012;
-    public static final double kSTurn = 0;
+    public static final double kPTurn = 0.008;//0.012
+    public static final double kITurn = 0;
+    public static final double kDTurn = 0.001;
+    public static final double kSTurn = .02;
 
     // Heights for detecting distance away from apriltag
     public static final double limelightHeight = Units.inchesToMeters(11.5);

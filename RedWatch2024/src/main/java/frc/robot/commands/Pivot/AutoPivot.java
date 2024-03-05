@@ -30,14 +30,26 @@ public class AutoPivot extends Command {
   double dist;
   double timeElapsed = 0;
 
-  private final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
-      new Point2D.Double(-0.01, 54),
-      new Point2D.Double(0.93, 54),
-      new Point2D.Double(1.77, 43.5),
-      new Point2D.Double(2, 39.32),
-      new Point2D.Double(2.32, 36.17),
-      new Point2D.Double(2.6, 34.75),
-      new Point2D.Double(2.9, 32.3)
+  // private final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
+  //     new Point2D.Double(-0.01, 54),
+  //     new Point2D.Double(0.93, 54),
+  //     new Point2D.Double(1.77, 43.5),
+  //     new Point2D.Double(2, 39.32),
+  //     new Point2D.Double(2.32, 36.17),
+  //     new Point2D.Double(2.6, 34.75),
+  //     new Point2D.Double(2.9, 32.3)
+  //   };
+    private final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
+      new Point2D.Double(-0.01, 52),
+      new Point2D.Double(0.94, 52),
+      new Point2D.Double(1.25, 46),
+      new Point2D.Double(1.5, 43.5),
+      new Point2D.Double(2.3, 35)
+      //1.88 38
+      //1.25 46
+      //2.3  35
+      //1.5 43.5
+
     };
   private final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
 

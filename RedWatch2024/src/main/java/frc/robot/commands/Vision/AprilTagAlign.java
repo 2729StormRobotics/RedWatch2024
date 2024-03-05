@@ -5,6 +5,7 @@
 package frc.robot.commands.Vision;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,6 +21,7 @@ public class AprilTagAlign extends Command {
   private final Vision m_vision; 
   private final Drivetrain m_drivetrain;
   private final Joystick m_translator;
+  private final PIDController m_controller;
   private double m_turnError;
   private double m_turnPower;
   /** Creates a new AprilTagAlign. */
@@ -27,6 +29,7 @@ public class AprilTagAlign extends Command {
     m_vision = vision;
     m_drivetrain = drivetrain;
     m_translator = joystick;
+    m_controller = new PIDController(Constants.VisionConstants.kPTurn, Constants.VisionConstants.kITurn, Constants.VisionConstants.kDTurn);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_vision);
     addRequirements(m_drivetrain);
@@ -52,7 +55,7 @@ public class AprilTagAlign extends Command {
     m_drivetrain.drive(
       MathUtil.applyDeadband(-m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
       MathUtil.applyDeadband(-m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-      (-m_turnPower),
+      (m_controller.calculate(m_vision.getX()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getX()))),
       true, true);
     
   }

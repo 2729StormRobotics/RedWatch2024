@@ -40,6 +40,6 @@ public class RevShooter extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_shooter.getLeftVoltage() >= m_leftPower*12) && (m_shooter.getRightVoltage() >= m_rightPower*12);
+    return (m_shooter.getLeftVoltage() >= m_leftPower*11.75) && (m_shooter.getRightVoltage() >= m_rightPower*11.75);
   }
 }

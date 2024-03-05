@@ -112,6 +112,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeItem", new ParallelCommandGroup(new IntakeThenLoad(m_intake, m_indexer), new PivotToAngle(m_pivot, 75)));
     NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator).withTimeout(1));
+    NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.35, 0.35)));
 
     // Puts auto chooser onto shuffleboard
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -156,11 +157,11 @@ public class RobotContainer {
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
     (new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
     
-    // //RUN INTAKE - A
-    // new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
+    //RUN INTAKE - A
+    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
 
-    // //MELTDOWN - B
-    // new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_pivot, m_intake, m_drivetrain, m_indexer));
+    //MELTDOWN - B
+    new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_pivot, m_intake, m_drivetrain, m_indexer));
     
     //INTAKE PIVOT - X 
     new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new PivotToAngle(m_pivot, 75)); //37.5 at .55
@@ -170,8 +171,6 @@ public class RobotContainer {
 
     //PIVOT SPEAKER - Y
     new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new AutoPivot(m_vision, m_pivot));
-    new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new PivotToAngle(m_pivot, 2));
-    new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new PivotToAngle(m_pivot, 32));
 
     // Shooter overrides 
     new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}, m_shooter));
