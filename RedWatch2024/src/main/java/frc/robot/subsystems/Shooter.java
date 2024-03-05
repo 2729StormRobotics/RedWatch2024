@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
+  public static double passivePower = 0;
+
   // Motors and encoders for the flywheels
   public final CANSparkMax m_leftFlywheel;
   public final RelativeEncoder m_leftFlywheelEncoder;
