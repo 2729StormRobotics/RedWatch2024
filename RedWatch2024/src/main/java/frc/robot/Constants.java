@@ -43,7 +43,7 @@ public final class Constants {
 
   public static final class IndexerConstants {
     public static final double kFeedSpeakerSpeed = 1;
-    public static final double kFeedAmpSpeed = 0.5;
+    public static final double kFeedAmpSpeed = 0.75;
 
     // Assigns Indexer moftor to port
     public static final int kIndexMotorPort = 12;
@@ -208,8 +208,8 @@ public final class Constants {
     // Flywheel Shooting values
     public static final double kLeftRPM = 1000;
     public static final double kRightRPM = 1000;
-    public static double kLeftPowerAmp = .148; // 0.183 for forward shot amp, 57 degrees
-    public static double kRightPowerAmp = .148; // 0.17 speed for backward amp shot
+    public static double kLeftPowerAmp = .1525; // 0.183 for forward shot amp, 57 degrees
+    public static double kRightPowerAmp = .1525; // 0.17 speed for backward amp shot
     public static double kLeftPowerSpeaker = 0.75;
     public static double kRightPowerSpeaker = 0.75; //75
     public static final double steadyPower = 0; // 0.15 // 0.25
@@ -240,13 +240,11 @@ public final class Constants {
 
     // Interpolation table for getting shooting angle based off distance
     public static final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
-      new Point2D.Double(-0.01, 54),
-      new Point2D.Double(0.93, 54),
-      new Point2D.Double(1.77, 43.5),
-      new Point2D.Double(2, 39.32),
-      new Point2D.Double(2.32, 36.17),
-      new Point2D.Double(2.6, 34.75),
-      new Point2D.Double(2.9, 32.3)
+      new Point2D.Double(-0.01, 52),
+      new Point2D.Double(0.94, 52),
+      new Point2D.Double(1.25, 46),
+      new Point2D.Double(1.5, 43.5),
+      new Point2D.Double(2.3, 35)
     };
     public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints); 
   }
