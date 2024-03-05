@@ -75,7 +75,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "MID n1-n2"
+                  "pathName": "mid n1-n2"
                 }
               },
               {
@@ -85,7 +85,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.5
+                        "waitTime": 0.5
                       }
                     },
                     {
@@ -126,7 +126,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "MID n2-n3"
+                  "pathName": "AMP n2-n3"
                 }
               },
               {
@@ -136,7 +136,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 2.0
+                        "waitTime": 0.5
                       }
                     },
                     {
