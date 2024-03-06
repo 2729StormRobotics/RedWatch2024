@@ -166,13 +166,19 @@ public class RobotContainer {
     new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_pivot, m_intake, m_drivetrain, m_indexer));
     
     //INTAKE PIVOT - X 
-    new JoystickButton(m_weaponsController, Button.kX.value).onTrue(new PivotToAngle(m_pivot, 75)); //37.5 at .55
+    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new PivotToAngle(m_pivot, 75)); //37.5 at .55
+    new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new PivotToAngle(m_pivot, 2));
 
-    //CALL FOR NOTE - Start
-    new JoystickButton(m_weaponsController, Button.kStart.value).onTrue(new InstantCommand(() -> {LEDSegment.MainStrip.setStrobeAnimation(LEDs.orange, 0.1);}));
+    // //CALL FOR NOTE - Start
+    // new JoystickButton(m_weaponsController, Button.kStart.value).onTrue(new InstantCommand(() -> {LEDSegment.MainStrip.setStrobeAnimation(LEDs.orange, 0.1);}));
+    
+    //PIVOT AMP - start
+    new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new PivotToAngle(m_pivot, 103));
 
     //PIVOT SPEAKER - Y
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new AutoPivot(m_vision, m_pivot));
+    new JoystickButton(m_weaponsController, Button.kY.value).whileTrue(new AutoPivot(m_vision, m_pivot));
+    new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new PivotToAngle(m_pivot, 2));
+
 
     // Shooter overrides 
     new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}, m_shooter));

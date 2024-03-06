@@ -78,6 +78,6 @@ public class PivotToAngle extends Command {
   @Override
   public boolean isFinished() {
     // Finish command when shooter is at the setpoint
-    return (Math.abs(error) < Constants.PivotConstants.kPivotTolerance) || timeElapsed > 2;
+    return (Math.abs(error) < Constants.PivotConstants.kPivotTolerance) || timeElapsed > 1;
   }
 }

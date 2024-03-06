@@ -97,7 +97,7 @@ public class AutoPivot extends Command {
     }
     if (m_vision.getY() == 0){
       LEDSegment.MainStrip.setColor(LEDs.blue);
-      m_setpoint = 54;
+      m_setpoint = 52;//52
     }
     else
     {
@@ -111,12 +111,12 @@ public class AutoPivot extends Command {
 
     if (m_setpoint < m_pivot.getPivotAngle())
       m_turnPower = m_turnError * Constants.PivotConstants.kPPivotDown;
-      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 39));
+      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 37)); //adj
 
     
     if (m_setpoint > m_pivot.getPivotAngle())
       m_turnPower = m_turnError * Constants.PivotConstants.kPPivotUp;
-      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 43));
+      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 46)); //43
 
 
     if (m_turnPower > 0.4) {
