@@ -175,9 +175,9 @@ public class RobotContainer {
     new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new PivotToAngle(m_pivot, 103));
 
     //BUMPER UP SHOT - Y
-    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue
     (new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 0.5, 0.5, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onFalse(new InstantCommand(() -> m_indexer.stop()).andThen(new PivotToAngle(m_pivot, 2)));
+    new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new InstantCommand(() -> m_indexer.stop()).andThen(new PivotToAngle(m_pivot, 2)));
 
 
     // Shooter overrides 
