@@ -28,6 +28,12 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "IntakeAngle"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -79,6 +85,12 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "IntakeAngle"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -126,7 +138,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP n2-n3"
+                  "pathName": "MID n2-n3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeAngle"
                 }
               },
               {

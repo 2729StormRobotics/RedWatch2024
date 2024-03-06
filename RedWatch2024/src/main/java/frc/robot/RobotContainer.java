@@ -114,7 +114,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeAngle", new PivotToAngle(m_pivot, 75));
     NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator).withTimeout(1));
-    NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.35, 0.35)));
+    NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.75, 0.75)));
 
     // Puts auto chooser onto shuffleboard
     autoChooser = AutoBuilder.buildAutoChooser();

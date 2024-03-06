@@ -37,7 +37,7 @@ public class ScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new PivotAndRev(m_shooter, m_pivot, m_vision, leftPower, rightPower).withTimeout(2),
+      new PivotAndRev(m_shooter, m_pivot, m_vision, leftPower, rightPower).withTimeout(1),
       new WaitCommand(0.1),
       new FeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower)
     );
