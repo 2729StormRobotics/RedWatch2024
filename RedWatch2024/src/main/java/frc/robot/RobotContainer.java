@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
@@ -39,7 +40,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     m_Hanger = new Hanger();
-    m_Hanger.setDefaultCommand(new HangerControl(m_weaponsController.getLeftY()*0.25, m_weaponsController.getRightY()*0.25, m_Hanger));
+    // m_Hanger.setDefaultCommand(new HangerControl(m_weaponsController.getLeftY()*0.5, m_weaponsController.getLeftY()*0.5, m_Hanger));
+    m_Hanger.setDefaultCommand(new RunCommand(() -> m_Hanger.setSpeed(m_weaponsController.getLeftY()), m_Hanger));
     
     SmartDashboard.putData(CommandScheduler.getInstance());
     configureBindings();

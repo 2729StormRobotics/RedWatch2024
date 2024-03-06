@@ -65,6 +65,12 @@ public class Hanger extends SubsystemBase {
   public void setRightSpeed(double speed) {
     m_hangRight.set(speed);
   }
+
+  public void setSpeed(double speed) {
+    m_hangRight.set(speed);
+    m_hangLeft.set(speed);
+  }
+
   public void stopMotors (){
     m_hangLeft.set(0);
     m_hangRight.set(0);

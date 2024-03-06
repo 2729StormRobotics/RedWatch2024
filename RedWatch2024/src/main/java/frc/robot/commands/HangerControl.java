@@ -18,6 +18,7 @@ public class HangerControl extends Command {
     m_hanger = hanger;
     m_leftPower = leftPower;
     m_rightPower = rightPower;
+    addRequirements(m_hanger);
   }
 
   // Called when the command is initially scheduled.
