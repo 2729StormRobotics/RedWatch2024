@@ -5,6 +5,7 @@
 package frc.robot.commands.Vision;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,40 +22,39 @@ public class NoteAlign extends Command {
   Vision m_vision; 
   Drivetrain m_driveSubsystem;
   Joystick m_driverController;
-  double turnError;
-  double turnPower;
-
-  private final double m_rotationMultiplier = 1;
-  private final double m_translationMultiplier = 0.6;
+  private final PIDController m_controller;
+  private double m_turnError;
+  private double m_turnPower;
 
   public NoteAlign(Drivetrain driveSubsystem, Vision vision, Joystick driverController) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_vision = vision; 
     m_driveSubsystem = driveSubsystem;
     m_driverController = driverController;
+    m_controller = new PIDController(0.001, Constants.VisionConstants.kITurn, 0);
     addRequirements(driveSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    turnError = 0;
-    turnPower = 0;
+    m_turnError = 0;
+    m_turnPower = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turnError = m_vision.getNoteXSkew();
-    turnPower = turnError * Constants.VisionConstants.kPNoteTurn;
-
-    SmartDashboard.putNumber("turnpower", turnPower);
-    SmartDashboard.putNumber("turnerror", turnError);
+    m_turnError = m_vision.getX(); // Horizontal angle away from target
+    m_turnPower = m_turnError * Constants.VisionConstants.kPTurn; // Calculate P value
+    m_turnPower += Math.copySign(Constants.VisionConstants.kSTurn, m_turnPower); // Add feedforward value
+    SmartDashboard.putNumber("turnError", m_turnError);
+    // drive the robot
     m_driveSubsystem.drive(
-      -MathUtil.applyDeadband(m_driverController.getY()*m_translationMultiplier, OperatorConstants.kDriveDeadband),
-      -MathUtil.applyDeadband(m_driverController.getX()*m_translationMultiplier, OperatorConstants.kDriveDeadband),
-        (-turnPower),
-        false, true);
+      MathUtil.applyDeadband(-m_driverController.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+      MathUtil.applyDeadband(-m_driverController.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+      (m_controller.calculate(m_vision.getNoteXSkew()) + m_controller.calculate(m_vision.getNoteXSkew()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getNoteXSkew()))),
+      false, true);
 
   }
 

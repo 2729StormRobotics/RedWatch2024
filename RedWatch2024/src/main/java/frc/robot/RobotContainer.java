@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -39,6 +40,7 @@ import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Pivot.PivotToAngle;
 import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Vision.AprilTagAlign;
+import frc.robot.commands.Vision.NoteAlign;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
@@ -115,6 +117,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator).withTimeout(1));
     NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.75, 0.75)));
+    NamedCommands.registerCommand("OffsetGyro60", new InstantCommand(() -> Drivetrain.gyroOffset += -60));
 
     // Puts auto chooser onto shuffleboard
     autoChooser = AutoBuilder.buildAutoChooser();
@@ -140,12 +143,13 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_drivetrain.setX(),
             m_drivetrain));
+    new JoystickButton(m_translator, Button.kA.value).whileTrue(new NoteAlign(m_drivetrain, m_vision, m_translator));
 
     // reset gyro
     new JoystickButton(m_rotator, Button.kA.value).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
    
     // vision align
-    new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_vision, m_drivetrain, m_translator));
+    // new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_vision, m_drivetrain, m_translator));
   
   
   /*
@@ -161,13 +165,14 @@ public class RobotContainer {
     
     //RUN INTAKE - A
     new JoystickButton(m_weaponsController, Button.kA.value).onTrue(new IntakeThenLoad(m_intake, m_indexer));
+  
 
     //MELTDOWN - B
     new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_pivot, m_intake, m_drivetrain, m_indexer));
     
     //INTAKE PIVOT - X 
-    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new PivotToAngle(m_pivot, 75)); //37.5 at .55
-    new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new PivotToAngle(m_pivot, 2));
+    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new IntakeThenLoad(m_intake, m_indexer), new PivotToAngle(m_pivot, 75)).andThen(new PivotToAngle(m_pivot, 2))); //37.5 at .55
+    new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new PivotToAngle(m_pivot, 2), new StopIntake(m_intake), new InstantCommand(() -> {m_indexer.stop();}, m_indexer)));
 
     // //CALL FOR NOTE - Start
     // new JoystickButton(m_weaponsController, Button.kStart.value).onTrue(new InstantCommand(() -> {LEDSegment.MainStrip.setStrobeAnimation(LEDs.orange, 0.1);}));

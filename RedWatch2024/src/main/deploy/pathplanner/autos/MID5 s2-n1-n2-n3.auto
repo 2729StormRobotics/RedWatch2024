@@ -187,6 +187,24 @@
           "data": {
             "name": "Shoot"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OffsetGyro60"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OffsetGyro60"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OffsetGyro60"
+          }
         }
       ]
     }

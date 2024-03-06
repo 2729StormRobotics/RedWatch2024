@@ -30,6 +30,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Drivetrain extends SubsystemBase {
+  public static double gyroOffset;
+
   // Create MAXSwerveModules
   public final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
@@ -307,7 +309,7 @@ public class Drivetrain extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return -Math.IEEEremainder(m_gyro.getAngle(), -360);
+    return -Math.IEEEremainder(m_gyro.getAngle() + Drivetrain.gyroOffset, -360);
   }
 
   /**
