@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -47,6 +48,7 @@ import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Pivot.PivotToAngle;
+import frc.robot.commands.Shooter.RevShooter;
 import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Vision.AprilTagAlign;
 import frc.robot.commands.Vision.NoteAlign;
@@ -99,7 +101,7 @@ public class RobotContainer {
     // Configure the trigger bindings
     m_Hanger = new Hanger();
     // m_Hanger.setDefaultCommand(new HangerControl(m_weaponsController.getLeftY()*0.5, m_weaponsController.getLeftY()*0.5, m_Hanger));
-    m_Hanger.setDefaultCommand(new RunCommand(() -> m_Hanger.setSpeed(m_weaponsController.getLeftY()), m_Hanger));
+    m_Hanger.setDefaultCommand(new RunCommand(() -> m_Hanger.setSpeed(MathUtil.applyDeadband(m_weaponsController.getRightY(), 0.1)), m_Hanger));
     
     SmartDashboard.putData(CommandScheduler.getInstance());
     configureBindings();
@@ -170,7 +172,10 @@ public class RobotContainer {
   /*
   * WEAPONS
   */
-    //SHOOT SPEAKER - RB
+    //TESTING BUTTON - RB
+    // new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue(new RevShooter(m_shooter, 0.75, 0.75).andThen(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, 1)));
+    
+    // //SHOOT SPEAKER - RB
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
     (new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onFalse(new InstantCommand(() -> m_indexer.stop()).andThen(new PivotToAngle(m_pivot, 2)));
@@ -178,9 +183,10 @@ public class RobotContainer {
     // SHOOT AMP - LB
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
     (new AmpScoringSequence(m_shooter, m_pivot, m_indexer, Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
-    
+
+
     //INTAKE PIVOT - X 
-    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new IntakeThenLoad(m_intake, m_indexer), new PivotToAngle(m_pivot, 75)).andThen(new PivotToAngle(m_pivot, 2))); //37.5 at .55
+    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.25).andThen(new IntakeThenLoad(m_intake, m_indexer)), new PivotToAngle(m_pivot, 75)).andThen(new PivotToAngle(m_pivot, 2))); //37.5 at .55
     new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new PivotToAngle(m_pivot, 2), new StopIntake(m_intake), new InstantCommand(() -> {m_indexer.stop();}, m_indexer)));
 
     //MELTDOWN - B
