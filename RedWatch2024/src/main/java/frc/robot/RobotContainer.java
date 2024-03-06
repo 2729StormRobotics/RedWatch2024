@@ -7,6 +7,15 @@ package frc.robot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.HangerControl;
+import frc.robot.subsystems.Hanger;
 import frc.robot.subsystems.LEDs.LEDSegment;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -65,7 +74,8 @@ public class RobotContainer {
   private final Pivot m_pivot;
   private final ControlPanel m_controlPanel;
   private final LEDs m_leds;
-  
+  private final Hanger m_Hanger;
+
   // Will allow to choose which auto command to run from the shuffleboard
   private final SendableChooser<Command> autoChooser;
   
@@ -87,6 +97,11 @@ public class RobotContainer {
     SmartDashboard.putData("command scheduler", CommandScheduler.getInstance());
 
     // Configure the trigger bindings
+    m_Hanger = new Hanger();
+    // m_Hanger.setDefaultCommand(new HangerControl(m_weaponsController.getLeftY()*0.5, m_weaponsController.getLeftY()*0.5, m_Hanger));
+    m_Hanger.setDefaultCommand(new RunCommand(() -> m_Hanger.setSpeed(m_weaponsController.getLeftY()), m_Hanger));
+    
+    SmartDashboard.putData(CommandScheduler.getInstance());
     configureBindings();
 
     // Configure default commands
