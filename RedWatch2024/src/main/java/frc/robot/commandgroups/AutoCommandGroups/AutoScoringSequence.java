@@ -39,9 +39,10 @@ public class AutoScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoPivot(m_vision, m_pivot),
+      new PivotAndRev(m_shooter, m_pivot, m_vision, leftPower, rightPower).withTimeout(1),
       // new WaitCommand(0.1),
       new AutoFeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower)
     );
+
   }
 }

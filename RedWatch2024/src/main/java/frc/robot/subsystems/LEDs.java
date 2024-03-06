@@ -96,7 +96,7 @@ public class LEDs extends SubsystemBase {
     public Command defaultCommand() {
         // setBrightness(1);
         return runOnce(() -> {
-            // LEDSegment.MainStrip.setFadeAnimation(allianceColor, 0.5);
+            LEDSegment.MainStrip.setFadeAnimation(allianceColor, 0.5);
             // LEDSegment.Matrix.setRainbowAnimation(1);
             });
     }

@@ -27,17 +27,22 @@ public class PivotAndRev extends ParallelCommandGroup {
   private final Shooter m_shooter;
   private final Pivot m_pivot;
   private final Vision m_vision;
+  private final double m_leftPower;
+  private final double m_rightPower;
+
 
   /** Creates a new ShootingPreset. */
   public PivotAndRev(Shooter shooter, Pivot pivot, Vision vision, double leftPower, double rightPower) {
     m_shooter = shooter;
     m_vision = vision;
     m_pivot = pivot;
+    m_leftPower = leftPower;
+    m_rightPower = rightPower;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutoPivot(m_vision, m_pivot),
-      new RevShooter(m_shooter, leftPower, rightPower)
+      new RevShooter(m_shooter, m_leftPower, m_rightPower)
     );
   }
 }

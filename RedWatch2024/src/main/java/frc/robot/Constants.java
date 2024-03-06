@@ -37,7 +37,7 @@ public final class Constants {
 
     // joystick settings
     public static final double kDriveDeadband = 0.1;
-    public static final double translationMultiplier = 0.25;
+    public static final double translationMultiplier = 1;
     public static final double rotationMultiplier = 1;
   }
 

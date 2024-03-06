@@ -27,6 +27,8 @@ public class ScoringSequence extends SequentialCommandGroup {
   private final Shooter m_shooter;
   private final Pivot m_pivot; 
   private final Vision m_vision;
+  private final double  m_leftPower;
+  private final double  m_rightPower;
 
   /** Creates a new AutoScore. */
   public ScoringSequence(Vision vision, Shooter shooter, Pivot pivot, Indexer indexer, double leftPower, double rightPower, double indexerPower) {
@@ -34,12 +36,14 @@ public class ScoringSequence extends SequentialCommandGroup {
     m_shooter = shooter;  
     m_pivot = pivot;
     m_vision = vision;
+    m_rightPower = rightPower;
+    m_leftPower = leftPower;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new PivotAndRev(m_shooter, m_pivot, m_vision, leftPower, rightPower).withTimeout(1),
+      new PivotAndRev(m_shooter, m_pivot, m_vision, m_leftPower, m_rightPower).withTimeout(1),
       new WaitCommand(0.1),
-      new FeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower)
+      new FeedAndShoot(m_shooter, m_indexer, m_leftPower, m_rightPower, indexerPower)
     );
   }
 }
