@@ -300,6 +300,7 @@ public class Drivetrain extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
+    Drivetrain.gyroOffset = 0;
     m_gyro.reset();
   }
 
