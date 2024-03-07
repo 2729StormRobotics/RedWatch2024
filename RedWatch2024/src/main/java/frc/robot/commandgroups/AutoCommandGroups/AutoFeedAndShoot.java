@@ -38,5 +38,5 @@ public class AutoFeedAndShoot extends SequentialCommandGroup {
       new StopShooter(m_shooter),
       new InstantCommand(() -> {m_indexer.stop();LEDSegment.MainStrip.setFadeAnimation(LEDs.red,0.3);})
     );
-  }
+  } 
 }

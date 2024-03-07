@@ -41,6 +41,7 @@ import frc.robot.commandgroups.AmpScoringSequence;
 import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.ScoringSequence;
+import frc.robot.commandgroups.AutoCommandGroups.AutoFeedAndShoot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoScoringSequence;
 import frc.robot.commandgroups.AutoCommandGroups.FirstShot;
 import frc.robot.commands.Meltdown;
@@ -135,6 +136,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator).withTimeout(1));
     NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.75, 0.75)));
     NamedCommands.registerCommand("OffsetGyro60", new InstantCommand(() -> Drivetrain.gyroOffset += -60));
+    NamedCommands.registerCommand("PivotBumperUp", new AutoPivot(m_vision, m_pivot).withTimeout(0.4));
+    NamedCommands.registerCommand("SetShooterPower50", new InstantCommand(() -> m_shooter.setShooterSpeed(0.5, 0.5)));
+    NamedCommands.registerCommand("Feed", new AutoFeedAndShoot(m_shooter, m_indexer, 0.5, 0.5, Constants.IndexerConstants.kFeedSpeakerSpeed));
+  
 
     // Puts auto chooser onto shuffleboard
     autoChooser = AutoBuilder.buildAutoChooser();
