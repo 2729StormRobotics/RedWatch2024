@@ -14,7 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "FirstShot"
+            "name": "SetShooterPower50"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotBumperUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Feed"
           }
         },
         {

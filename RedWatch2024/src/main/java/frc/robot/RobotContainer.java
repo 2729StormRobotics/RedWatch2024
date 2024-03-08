@@ -48,6 +48,7 @@ import frc.robot.commands.Meltdown;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.commands.Pivot.AutoPivot;
+import frc.robot.commands.Pivot.PivotBumperUp;
 import frc.robot.commands.Pivot.PivotToAngle;
 import frc.robot.commands.Shooter.RevShooter;
 import frc.robot.commands.Shooter.SetPower;
@@ -136,7 +137,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator).withTimeout(1));
     NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.75, 0.75)));
     NamedCommands.registerCommand("OffsetGyro60", new InstantCommand(() -> Drivetrain.gyroOffset += -60));
-    NamedCommands.registerCommand("PivotBumperUp", new AutoPivot(m_vision, m_pivot).withTimeout(0.4));
+    NamedCommands.registerCommand("PivotBumperUp", new PivotBumperUp(m_pivot).withTimeout(0.75));
     NamedCommands.registerCommand("SetShooterPower50", new InstantCommand(() -> m_shooter.setShooterSpeed(0.5, 0.5)));
     NamedCommands.registerCommand("Feed", new AutoFeedAndShoot(m_shooter, m_indexer, 0.5, 0.5, Constants.IndexerConstants.kFeedSpeakerSpeed));
   
