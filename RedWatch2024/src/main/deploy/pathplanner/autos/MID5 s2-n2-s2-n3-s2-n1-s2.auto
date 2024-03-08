@@ -14,7 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "FirstShot"
+            "name": "SetShooterPower50"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotBumperUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Feed"
           }
         },
         {
@@ -22,30 +34,76 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "MID s2-n2"
+                  "commands": [
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeItem"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeAngle"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "PivotBumperUp"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "SetShooterPower50"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "IntakeItem"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MID s2-n2"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MID n2-s2"
+                      }
+                    }
+                  ]
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "MID n2-s2"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Feed"
           }
         },
         {
@@ -53,30 +111,76 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "MID s2-n3"
+                  "commands": [
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeItem"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeAngle"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "PivotBumperUp"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "SetShooterPower50"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "IntakeItem"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MID s2-n3"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MID n3-s2"
+                      }
+                    }
+                  ]
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "MID n3-s2"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Feed"
           }
         },
         {
@@ -84,30 +188,76 @@
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "MID s2-n1"
+                  "commands": [
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeItem"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeAngle"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "PivotBumperUp"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "SetShooterPower50"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "IntakeItem"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MID s2-n1"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "MID n1-s2"
+                      }
+                    }
+                  ]
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "MID n1-s2"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "Feed"
           }
         }
       ]
