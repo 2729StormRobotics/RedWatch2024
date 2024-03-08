@@ -76,13 +76,8 @@ public class AutoPivot extends Command {
     m_setpoint = 0;
     timeElapsed = 0;
     deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
-    if (m_vision.getY() == 0){
-      LEDSegment.MainStrip.setColor(LEDs.blue);
-    }
-    else
-    {
-      LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
-    }
+    LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
+  
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -99,14 +94,8 @@ public class AutoPivot extends Command {
     if (m_setpoint < 10) {
       m_setpoint = 10;
     }
-    if (m_vision.getY() == 0){
-      LEDSegment.MainStrip.setColor(LEDs.blue);
-      m_setpoint = 52;//52
-    }
-    else
-    {
-      LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
-    }
+    LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
+
 
     // if (m_setpoint > 48){
     //   m_setpoint -= 1.75;
@@ -137,7 +126,6 @@ public class AutoPivot extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    LEDSegment.MainStrip.setColor(LEDs.allianceColor);
   }
 
   // Returns true when the command should end.

@@ -127,7 +127,7 @@ public class LEDs extends SubsystemBase {
     }
     public static enum LEDSegment {
         StatusLEDs(0, 7, 0),
-        MainStrip(7,60,1);
+        MainStrip(8,200,1);
 
         public final int startIndex;
         public final int segmentSize;
