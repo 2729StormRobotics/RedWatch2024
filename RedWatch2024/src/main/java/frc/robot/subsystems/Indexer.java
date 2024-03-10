@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import frc.robot.Constants.IndexerConstants;
-import frc.robot.subsystems.LEDs.LEDSegment;
+
 
 public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
@@ -90,8 +90,6 @@ public class Indexer extends SubsystemBase {
   public void runIndexer(double speed) {
     // speed in percent
     m_IndexerMotor.set(-speed);
-    LEDSegment.MainStrip.setColor(LEDs.green);
-
   }
 
   // Sets motor at indexer speed, 50%, (runs motor)

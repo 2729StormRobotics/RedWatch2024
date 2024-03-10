@@ -36,8 +36,10 @@ public class FeedAndShoot extends SequentialCommandGroup {
       // new WaitCommand(2),
       new InstantCommand(() -> {m_indexer.runIndexer(indexerSpeed);}),
       new WaitCommand(1.5),
-      new StopShooter(m_shooter),
-      new InstantCommand(() -> {m_indexer.stop(); LEDSegment.MainStrip.setColor(LEDs.allianceColor);;})
+      new StopShooter(m_shooter)
+      //new InstantCommand(() -> {m_indexer.stop();LEDSegment.MainStrip.setColor(LEDs.green);})
+      //new WaitCommand(0.3)
+      //new InstantCommand(() -> {m_indexer.stop();LEDSegment.MainStrip.setFadeAnimation(LEDs.red,0.5);})
 
     );
   }
