@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Indexer.Load;
 import frc.robot.commands.Intake.IntakeItem;
 import frc.robot.commands.Intake.StopIntake;
-import frc.robot.commands.Pivot.PivotToAngle;
+import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Pivot;
 import frc.robot.commands.Indexer.SourceFeed;
@@ -39,7 +39,7 @@ public class SourceIntake extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       // Shooter turns to source angle
-      new PivotToAngle(m_pivot, PivotConstants.kSourcePivotAngle),
+      new AutoPivot(PivotConstants.kSourcePivotAngle, m_pivot),
 
       // Turn on shooter motor, motor values are placeholders
       new SetPower(m_shooter, -ShooterConstants.kLeftPowerAmp, -ShooterConstants.kRightPowerAmp),

@@ -6,7 +6,7 @@ package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.Pivot.PivotToAngle;
+import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Shooter.RevShooter;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Pivot;
@@ -39,7 +39,7 @@ public class AmpScoringSequence extends SequentialCommandGroup {
       new RevShooter(m_shooter, leftPower, rightPower).withTimeout(2),
       new WaitCommand(0.1),
       new FeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower),
-      new PivotToAngle(m_pivot, 2).withTimeout(1)
+      new AutoPivot(2, m_pivot).withTimeout(1)
     );
   }
 }

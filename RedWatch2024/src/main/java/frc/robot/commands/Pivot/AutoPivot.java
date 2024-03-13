@@ -18,12 +18,14 @@ import java.lang.invoke.ConstantBootstraps;
 
 
 public class AutoPivot extends Command {
-  private final Vision m_vision;
   private final Pivot m_pivot;
   private double m_turnError;
   private double m_turnPower;
   private double m_setpoint;
   private double m_ff;
+  private double m_angle = 0;
+  private Vision m_vision;
+
 
   double deltaHeight;
   double deltaAngle;
@@ -67,6 +69,14 @@ public class AutoPivot extends Command {
     addRequirements(m_pivot);
   }
 
+  public AutoPivot(double angle, Pivot pivot) {
+    m_angle = angle;
+    m_pivot = pivot;
+
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_pivot);
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -95,14 +105,11 @@ public class AutoPivot extends Command {
       m_setpoint = 10;
     }
 
-    // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
-
-
-    // if (m_setpoint > 48){
-    //   m_setpoint -= 1.75;
-    // } 
+    if(m_angle != 0)
+      m_setpoint = m_angle;
+    
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
-
+  
     if (m_setpoint < m_pivot.getPivotAngle())
       m_turnPower = m_turnError * Constants.PivotConstants.kPPivotDown;
       m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 37)); //adj
@@ -127,11 +134,12 @@ public class AutoPivot extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_angle = 0;
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_turnError) < Constants.PivotConstants.kPivotTolerance) || timeElapsed > 2;
+    return (Math.abs(m_turnError) < Constants.PivotConstants.kPivotTolerance) || timeElapsed > 1;
   }
 }
