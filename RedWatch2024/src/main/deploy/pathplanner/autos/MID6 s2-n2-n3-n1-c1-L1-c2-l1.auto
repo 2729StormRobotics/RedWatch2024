@@ -49,7 +49,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "AMP n2-c1-L1"
+                  "pathName": "MID n2-n3"
                 }
               },
               {
@@ -59,12 +59,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "L1-Shot"
           }
         },
         {
@@ -81,6 +75,56 @@
                 "type": "path",
                 "data": {
                   "pathName": "MID n3-n1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeItem"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "MID n1-c1-L1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "IntakeItem"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "AMP L1-c2-L1"
                 }
               },
               {

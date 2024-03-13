@@ -5,6 +5,8 @@
 package frc.robot.commands.Intake;
 
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.LEDSegment;
 import edu.wpi.first.wpilibj2.command.*;
 
 // Creates a command for the intake subsystem to run motors to grab an object from the intake
@@ -31,6 +33,7 @@ public class IntakeItem extends Command {
   public void initialize() {
 
     m_intake.intakeItem();
+    LEDSegment.MainStrip.setBandAnimation(LEDs.orange, 0.7);
     
   }
 
