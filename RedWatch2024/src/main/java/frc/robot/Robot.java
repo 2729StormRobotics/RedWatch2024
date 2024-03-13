@@ -10,9 +10,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.Pivot.PivotToAngle;
-import frc.robot.subsystems.LEDs;
+// import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.LEDs.LEDSegment;
+// import frc.robot.subsystems.LEDs.LEDSegment;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -62,8 +62,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-      LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.5);
-      LEDSegment.StatusLEDs.setFadeAnimation(LEDs.red, 0.5);
+      // LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.5);
+      // LEDSegment.StatusLEDs.setFadeAnimation(LEDs.red, 0.5);
 
   }
 

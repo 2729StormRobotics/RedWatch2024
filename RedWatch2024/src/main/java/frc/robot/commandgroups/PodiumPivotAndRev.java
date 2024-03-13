@@ -7,6 +7,7 @@ package frc.robot.commandgroups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.Constants;
 import frc.robot.commands.Pivot.PivotToAngle;
+import frc.robot.commands.Pivot.PodiumPivot;
 import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Shooter.RevShooter;
 import frc.robot.commands.Shooter.SetPower;
@@ -23,25 +24,25 @@ import frc.robot.subsystems.Vision;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class PivotAndRev extends ParallelCommandGroup {
+public class PodiumPivotAndRev extends ParallelCommandGroup {
   private final Shooter m_shooter;
   private final Pivot m_pivot;
-  private final Vision m_vision;
   private final double m_leftPower;
   private final double m_rightPower;
+  private final Vision m_vision;
 
 
   /** Creates a new ShootingPreset. */
-  public PivotAndRev(Shooter shooter, Pivot pivot, Vision vision, double leftPower, double rightPower) {
+  public PodiumPivotAndRev(Shooter shooter, Pivot pivot, Vision vision, double leftPower, double rightPower) {
     m_shooter = shooter;
-    m_vision = vision;
     m_pivot = pivot;
     m_leftPower = leftPower;
     m_rightPower = rightPower;
+    m_vision = vision;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoPivot(m_vision, m_pivot),
+      new PodiumPivot(m_vision, m_pivot),
       new RevShooter(m_shooter, m_leftPower, m_rightPower).withTimeout(2)
     );
   }

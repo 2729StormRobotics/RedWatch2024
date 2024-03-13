@@ -15,8 +15,8 @@ import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.commands.Shooter.StopShooter;
 import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs.LEDSegment;
+// import frc.robot.subsystems.LEDs;
+// import frc.robot.subsystems.LEDs.LEDSegment;
 import frc.robot.subsystems.Shooter;
 import frc.robot.Constants;
 
@@ -37,7 +37,7 @@ public class FeedAndShoot extends SequentialCommandGroup {
       new InstantCommand(() -> {m_indexer.runIndexer(indexerSpeed);}),
       new WaitCommand(1.5),
       new StopShooter(m_shooter),
-      new InstantCommand(() -> {m_indexer.stop(); LEDSegment.MainStrip.setColor(LEDs.allianceColor);;})
+      new InstantCommand(() -> {m_indexer.stop();})
 
     );
   }

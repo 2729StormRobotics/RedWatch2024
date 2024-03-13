@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.lib.LinearInterpolationTable;
-import frc.robot.subsystems.LEDs;
+// import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Vision;
-import frc.robot.subsystems.LEDs.LEDSegment;
+// import frc.robot.subsystems.LEDs.LEDSegment;
 
 import java.awt.geom.Point2D;
 import java.lang.invoke.ConstantBootstraps;
@@ -76,7 +76,7 @@ public class AutoPivot extends Command {
     m_setpoint = 0;
     timeElapsed = 0;
     deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
-    LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
+    // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
   
   }
 
@@ -94,7 +94,8 @@ public class AutoPivot extends Command {
     if (m_setpoint < 10) {
       m_setpoint = 10;
     }
-    LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
+
+    // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
 
 
     // if (m_setpoint > 48){

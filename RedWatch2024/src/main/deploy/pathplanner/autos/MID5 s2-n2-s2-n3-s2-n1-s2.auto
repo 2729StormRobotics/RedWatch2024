@@ -20,7 +20,7 @@
         {
           "type": "named",
           "data": {
-            "name": "PivotBumperUp"
+            "name": "PivotBumperUpFirst"
           }
         },
         {
@@ -63,12 +63,6 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "PivotBumperUp"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
                               "name": "SetShooterPower50"
                             }
                           }
@@ -98,6 +92,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotBumperUp"
           }
         },
         {
@@ -180,6 +180,12 @@
         {
           "type": "named",
           "data": {
+            "name": "PivotBumperUp"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Feed"
           }
         },
@@ -217,12 +223,6 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "PivotBumperUp"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
                               "name": "SetShooterPower50"
                             }
                           }
@@ -252,6 +252,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "PivotBumperUp"
           }
         },
         {

@@ -10,13 +10,15 @@ import frc.robot.Constants.VisionConstants;
 import frc.robot.lib.LinearInterpolationTable;
 // import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Vision;
 // import frc.robot.subsystems.LEDs.LEDSegment;
 
 import java.awt.geom.Point2D;
 import java.lang.invoke.ConstantBootstraps;
 
 
-public class PivotBumperUp extends Command {
+public class PodiumPivot extends Command {
+  private final Vision m_vision;
   private final Pivot m_pivot;
   private double m_turnError;
   private double m_turnPower;
@@ -27,11 +29,41 @@ public class PivotBumperUp extends Command {
   double deltaAngle;
   double dist;
   double timeElapsed = 0;
-  /** Creates a new PivotBumperUp. */
-  public PivotBumperUp(Pivot pivot) {
+
+  // private final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
+  //     new Point2D.Double(-0.01, 54),
+  //     new Point2D.Double(0.93, 54),
+  //     new Point2D.Double(1.77, 43.5),
+  //     new Point2D.Double(2, 39.32),
+  //     new Point2D.Double(2.32, 36.17),
+  //     new Point2D.Double(2.6, 34.75),
+  //     new Point2D.Double(2.9, 32.3)
+  //   };
+    private final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
+      new Point2D.Double(-0.01, 52),
+      new Point2D.Double(0.94, 52),
+      new Point2D.Double(1.25, 46),
+      new Point2D.Double(1.5, 43.5),
+      new Point2D.Double(1.9, 38),
+
+      new Point2D.Double(2.3, 35),
+      new Point2D.Double(2.73, 30.5)
+
+      //1.88 38
+      //1.25 46
+      //2.3  35
+      //1.5 43.5
+
+    };
+  private final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
+
+  /** Creates a new AutoPivot. */
+  public PodiumPivot(Vision vision, Pivot pivot) {
+    m_vision = vision;
     m_pivot = pivot;
 
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(m_vision);
     addRequirements(m_pivot);
   }
 
@@ -41,22 +73,34 @@ public class PivotBumperUp extends Command {
     m_turnError = 0;
     m_turnPower = 0;
     m_ff = 0;
-    m_setpoint = 52;
+    m_setpoint = 0;
     timeElapsed = 0;
+    deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
+    // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
+  
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+    
     timeElapsed += 0.02;
+
+    deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
+    dist = deltaHeight / Math.tan(deltaAngle);
+
+    m_setpoint = 33;
     if (m_setpoint < 10) {
       m_setpoint = 10;
     }
-    else
-    {
-      // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.6);
-    }
 
+    // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
+
+
+    // if (m_setpoint > 48){
+    //   m_setpoint -= 1.75;
+    // } 
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
 
     if (m_setpoint < m_pivot.getPivotAngle())
@@ -83,7 +127,6 @@ public class PivotBumperUp extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // LEDSegment.MainStrip.setColor(LEDs.allianceColor);
   }
 
   // Returns true when the command should end.

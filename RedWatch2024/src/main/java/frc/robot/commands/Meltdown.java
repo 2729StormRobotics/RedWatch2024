@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LEDs;
+// import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.LEDs.LEDSegment;
+// import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class Meltdown extends InstantCommand {
   /** Creates a new Meltdown. */
@@ -44,7 +44,7 @@ public class Meltdown extends InstantCommand {
     m_intake.stopIntake();
     m_shooter.stopShooterMotors();
     m_pivot.stopPivotMotors();
-    LEDSegment.MainStrip.setStrobeAnimation(LEDs.red, 0.1);;
+    // LEDSegment.MainStrip.setStrobeAnimation(LEDs.red, 0.1);;
   }
 
   // Called once the command ends or is interrupted.

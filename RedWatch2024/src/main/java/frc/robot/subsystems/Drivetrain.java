@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Drivetrain extends SubsystemBase {
-  public static double gyroOffset;
+  public static double gyroOffset = 180;
 
   // Create MAXSwerveModules
   public final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
@@ -107,11 +107,12 @@ public class Drivetrain extends SubsystemBase {
         new ReplanningConfig()
       ),
       () -> {
-        var alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-          return alliance.get() == DriverStation.Alliance.Red;
-        }
-        return false;
+        // var alliance = DriverStation.getAlliance();
+        // if (alliance.isPresent()) {
+        //   return alliance.get() == DriverStation.Alliance.Red;
+        // }
+        // return false;
+        return true; // red = true
       },
       this
     );

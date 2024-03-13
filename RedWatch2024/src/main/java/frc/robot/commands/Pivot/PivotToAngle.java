@@ -7,8 +7,6 @@ package frc.robot.commands.Pivot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs.LEDSegment;
 import frc.robot.subsystems.Pivot;
 
 /*
@@ -38,7 +36,7 @@ public class PivotToAngle extends Command {
   @Override
   public void initialize() {
     timeElapsed = 0;
-    LEDSegment.MainStrip.setBandAnimation(LEDs.green, 0.7);
+    // LEDSegment.MainStrip.setBandAnimation(LEDs.green, 0.7);
 
   }
 
@@ -70,7 +68,7 @@ public class PivotToAngle extends Command {
   public void end(boolean interrupted) {
     // Stop pivot motors
     // m_pivot.stopPivotMotors();
-    LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.7);
+    // LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.7);
 
   }
 

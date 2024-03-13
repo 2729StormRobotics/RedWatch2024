@@ -36,7 +36,7 @@ public final class Constants {
     public static final int kWeaponsControllerPort = 0;
 
     // joystick settings
-    public static final double kDriveDeadband = 0.1;
+    public static final double kDriveDeadband = 0.025;
     public static final double translationMultiplier = 1;
     public static final double rotationMultiplier = 1;
   }
@@ -215,10 +215,10 @@ public final class Constants {
     // Flywheel Shooting values
     public static final double kLeftRPM = 1000;
     public static final double kRightRPM = 1000;
-    public static double kLeftPowerAmp = .1525; // 0.183 for forward shot amp, 57 degrees
-    public static double kRightPowerAmp = .1525; // 0.17 speed for backward amp shot
-    public static double kLeftPowerSpeaker = 0.75;
-    public static double kRightPowerSpeaker = 0.75; //75
+    public static double kLeftPowerAmp = .153; //525 // 0.183 for forward shot amp, 57 degrees
+    public static double kRightPowerAmp = .153; // 0.17 speed for backward amp shot
+    public static double kLeftPowerSpeaker = 0.85;
+    public static double kRightPowerSpeaker = 0.85; //75
     public static final double steadyPower = 0; // 0.15 // 0.25
 
   }
@@ -276,8 +276,7 @@ public final class Constants {
     public static final double limelightHeight = Units.inchesToMeters(11.5);
     public static final double limelightAngle = 30.5; // degrees
     public static final double apriltagWidth = Units.inchesToMeters(6.5);
-    public static final double speakerTagHeight = Units.inchesToMeters(53.875);
-        // + Units.inchesToMeters(apriltagWidth / 2);
+    public static final double speakerTagHeight = Units.inchesToMeters(54) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double ampTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double aprilTagAlignTolerance = 1;

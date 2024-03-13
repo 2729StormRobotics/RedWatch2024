@@ -18,15 +18,15 @@ import frc.robot.Constants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.LEDs.PartyMode;
-import frc.robot.subsystems.LEDs.Color;
-import frc.robot.subsystems.LEDs.LEDSegment;
+// import frc.robot.commands.LEDs.PartyMode;
+// import frc.robot.subsystems.LEDs.Color;
+// import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class ControlPanel extends SubsystemBase {
 
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
-  private final LEDs m_leds;
+  // private final LEDs m_leds;
   private final Intake m_intake;
   private final Shooter m_shooter;
   private final Pivot m_pivot;
@@ -36,10 +36,10 @@ public class ControlPanel extends SubsystemBase {
   public int g=0;
 
   /** Creates a new ControlPanel. */
-  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, Pivot pivot, LEDs leds, Vision vision) {
+  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, Pivot pivot, Vision vision) {
     m_drivetrain = drivetrain;
     m_indexer = indexer;
-    m_leds = leds;
+    // m_leds = leds;
     m_intake = intake;
     m_shooter = shooter;
     m_pivot = pivot;
@@ -108,10 +108,10 @@ public class ControlPanel extends SubsystemBase {
     // Lights
     // SmartDashboard.putData("Set LEDs to Red", new LEDs.defaultCommand());  
     // m_lightsStatus.add("Set to Default",new setDefault());  
-    SmartDashboard.putData("setLEDsToElastic", new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(m_leds.ElasticColor, 0.6);}));
-    SmartDashboard.putData("setDefaultColorRed", new InstantCommand(() -> {m_leds.defaultColor = new Color(255, 0, 0);}));
-    SmartDashboard.putData("setDefaultColorBlue", new InstantCommand(() -> {m_leds.defaultColor = new Color(0, 0, 255);}));
-    SmartDashboard.putData("Party Mode", new PartyMode(m_leds));  
+    // SmartDashboard.putData("setLEDsToElastic", new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(m_leds.ElasticColor, 0.6);}));
+    // SmartDashboard.putData("setDefaultColorRed", new InstantCommand(() -> {m_leds.defaultColor = new Color(255, 0, 0);}));
+    // SmartDashboard.putData("setDefaultColorBlue", new InstantCommand(() -> {m_leds.defaultColor = new Color(0, 0, 255);}));
+    // SmartDashboard.putData("Party Mode", new PartyMode(m_leds));  
 
     // Motor voltages
     SmartDashboard.putNumber("Average Shooter Voltages", (getMotorAppliedVoltage(m_shooter.m_leftFlywheel) + getMotorAppliedVoltage(m_shooter.m_rightFlywheel))/2);
