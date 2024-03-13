@@ -85,6 +85,7 @@ public class AutoPivot extends Command {
     m_ff = 0;
     m_setpoint = 0;
     timeElapsed = 0;
+    if(m_angle == 0)
     deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
     // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
   
@@ -93,10 +94,11 @@ public class AutoPivot extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    
     timeElapsed += 0.02;
 
+    if(m_angle != 0)
+      m_setpoint = m_angle;
+    else{
     deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
     dist = deltaHeight / Math.tan(deltaAngle);
 
@@ -104,12 +106,9 @@ public class AutoPivot extends Command {
     if (m_setpoint < 10) {
       m_setpoint = 10;
     }
-
-    if(m_angle != 0)
-      m_setpoint = m_angle;
-    
+    }
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
-  
+    
     if (m_setpoint < m_pivot.getPivotAngle())
       m_turnPower = m_turnError * Constants.PivotConstants.kPPivotDown;
       m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 37)); //adj

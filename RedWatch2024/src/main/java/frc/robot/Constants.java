@@ -207,7 +207,7 @@ public final class Constants {
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
 
     // Flywheel PID values
-    public static final double kMaxRPM = 6700;
+    public static final double kMaxRPM = 5600;
     public static final double kPShoot = 0; //0.00002
     public static final double kRPMTolerance = 50;
 
