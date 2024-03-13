@@ -182,7 +182,7 @@ public class RobotContainer {
   */
 
     //MANUAL REV - LT
-    // m_weaponsController.rightTrigger(0.5, new SetRPM(m_shooter, 0.85, 0.85));
+    new Trigger(() -> (m_weaponsController.getRightTriggerAxis() > 0.5)).onTrue(new SetRPM(m_shooter, 1000, 1000));
 
     //MANUAL SHOOT - A
     new JoystickButton(m_weaponsController, Button.kA.value).onTrue((new RevShooter(m_shooter, 0.85, 0.85).withTimeout(2)).andThen(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, 1)));
