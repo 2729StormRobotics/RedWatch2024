@@ -43,7 +43,7 @@ public class PivotAndRev extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutoPivot(m_vision, m_pivot, true),
-      new RevShooter(m_shooter, m_leftPower, m_rightPower).withTimeout(2)
+      new RevShooter(m_shooter, m_leftPower, m_rightPower)
     );
   }
 
