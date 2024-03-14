@@ -9,6 +9,7 @@ import frc.robot.Constants;
 import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Shooter.RevShooter;
 import frc.robot.commands.Shooter.SetPower;
+import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
@@ -41,7 +42,7 @@ public class PivotAndRev extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoPivot(m_vision, m_pivot),
+      new AutoPivot(m_vision, m_pivot, true),
       new RevShooter(m_shooter, m_leftPower, m_rightPower).withTimeout(2)
     );
   }
@@ -55,8 +56,8 @@ public class PivotAndRev extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AutoPivot(m_angle, m_pivot),
-      new RevShooter(m_shooter, m_leftPower, m_rightPower).withTimeout(2)
+      new AutoPivot(m_angle, m_pivot, false),
+      new SetRPM(m_shooter, m_leftPower, m_rightPower)
     );
   }
 }

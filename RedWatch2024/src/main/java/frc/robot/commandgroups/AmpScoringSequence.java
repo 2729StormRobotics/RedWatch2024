@@ -39,7 +39,7 @@ public class AmpScoringSequence extends SequentialCommandGroup {
       new RevShooter(m_shooter, leftPower, rightPower).withTimeout(2),
       new WaitCommand(0.1),
       new FeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower),
-      new AutoPivot(2, m_pivot).withTimeout(1)
+      new AutoPivot(2, m_pivot, false).withTimeout(1)
     );
   }
 }

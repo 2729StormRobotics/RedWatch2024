@@ -207,14 +207,15 @@ public final class Constants {
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
 
     // Flywheel PID values
-    public static final double kMaxRPM = 5600;
+    public static final double kMaxRPM = 5784;
     public static final double kPShoot = 0; //0.00002
     public static final double kRPMTolerance = 50;
 
     
     // Flywheel Shooting values
-    public static double kLeftPowerAmp = .153; //525 // 0.183 for forward shot amp, 57 degrees
-    public static double kRightPowerAmp = .153; // 0.17 speed for backward amp shot
+    public static double kLeftPowerAmp = .165; //525 // 0.183 for forward shot amp, 57 degrees
+    public static double kRightPowerAmp = .165; // 0.17 speed for backward amp shot
+    //.153
     public static double kLeftPowerSpeaker = 0.85;
     public static double kRightPowerSpeaker = 0.85; //75
     public static final double steadyPower = 0; // 0.15 // 0.25

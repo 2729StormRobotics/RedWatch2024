@@ -23,10 +23,10 @@ public class AutoPivot extends Command {
   private double m_turnPower;
   private double m_setpoint;
   private double m_ff;
-  private double m_angle = 0;
+  private double m_angle;
   private Vision m_vision;
 
-
+  boolean isVision;
   double deltaHeight;
   double deltaAngle;
   double dist;
@@ -60,16 +60,18 @@ public class AutoPivot extends Command {
   private final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
 
   /** Creates a new AutoPivot. */
-  public AutoPivot(Vision vision, Pivot pivot) {
+  public AutoPivot(Vision vision, Pivot pivot, boolean IsVision) {
     m_vision = vision;
     m_pivot = pivot;
+    isVision = IsVision;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_vision);
     addRequirements(m_pivot);
   }
 
-  public AutoPivot(double angle, Pivot pivot) {
+  public AutoPivot(double angle, Pivot pivot, boolean IsVision) {
+    isVision = IsVision;
     m_angle = angle;
     m_pivot = pivot;
 
@@ -85,7 +87,7 @@ public class AutoPivot extends Command {
     m_ff = 0;
     m_setpoint = 0;
     timeElapsed = 0;
-    if(m_angle == 0)
+    if(isVision)
     deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
     // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
   
@@ -96,7 +98,7 @@ public class AutoPivot extends Command {
   public void execute() {
     timeElapsed += 0.02;
 
-    if(m_angle != 0)
+    if(!isVision)
       m_setpoint = m_angle;
     else{
     deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
@@ -133,7 +135,6 @@ public class AutoPivot extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_angle = 0;
   }
 
   // Returns true when the command should end.

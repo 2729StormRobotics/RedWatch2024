@@ -39,7 +39,7 @@ public class SourceIntake extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       // Shooter turns to source angle
-      new AutoPivot(PivotConstants.kSourcePivotAngle, m_pivot),
+      new AutoPivot(PivotConstants.kSourcePivotAngle, m_pivot, false),
 
       // Turn on shooter motor, motor values are placeholders
       new SetPower(m_shooter, -ShooterConstants.kLeftPowerAmp, -ShooterConstants.kRightPowerAmp),
