@@ -5,6 +5,8 @@
 package frc.robot.commands.Shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.LEDSegment;
 // import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Shooter;
 // import frc.robot.subsystems.LEDs.LEDSegment;
@@ -25,7 +27,7 @@ public class RevShooter extends Command {
   @Override
   public void initialize() {
     m_shooter.setShooterSpeed(m_leftPower, m_rightPower);
-    // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow,0.8);
+    LEDSegment.MainStrip.setBandAnimation(LEDs.yellow,0.8);
 
   }
 

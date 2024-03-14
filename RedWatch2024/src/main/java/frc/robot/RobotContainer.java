@@ -59,6 +59,7 @@ import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDs;
 // import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
@@ -78,7 +79,7 @@ public class RobotContainer {
   private final Shooter m_shooter;
   private final Pivot m_pivot;
   private final ControlPanel m_controlPanel;
-  // private final LEDs m_leds;
+  private final LEDs m_leds;
   private final Hanger m_Hanger;
 
   // Will allow to choose which auto command to run from the shuffleboard
@@ -95,7 +96,7 @@ public class RobotContainer {
     m_shooter = new Shooter();
     m_pivot = new Pivot();
     m_vision = new Vision();
-    // m_leds = new LEDs();
+    m_leds = new LEDs();
     m_drivetrain = new Drivetrain();
     m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_pivot, m_vision);
 

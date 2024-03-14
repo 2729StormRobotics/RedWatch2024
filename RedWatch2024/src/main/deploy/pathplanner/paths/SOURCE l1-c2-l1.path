@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.355333089078288,
-        "y": 6.721176693185203
+        "x": 6.339919082904123,
+        "y": 7.011832704802649
       },
       "isLocked": false,
       "linkedName": "L1"
@@ -20,12 +20,12 @@
         "y": 5.732449633338214
       },
       "prevControl": {
-        "x": 7.995716382759852,
-        "y": 5.848405773314623
+        "x": 8.002312337170457,
+        "y": 5.323187963230353
       },
       "nextControl": {
-        "x": 7.986652474325881,
-        "y": 5.672529152539927
+        "x": 7.970538945199981,
+        "y": 6.357535163749523
       },
       "isLocked": false,
       "linkedName": "c2"
@@ -36,8 +36,8 @@
         "y": 6.2
       },
       "prevControl": {
-        "x": 5.894192118121225,
-        "y": 6.515586970150326
+        "x": 5.840577189327395,
+        "y": 6.694418564838374
       },
       "nextControl": null,
       "isLocked": false,
@@ -62,13 +62,14 @@
   "goalEndState": {
     "velocity": 0,
     "rotation": -170.0,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
-  "folder": "AmpSide",
+  "folder": "SourceSide",
   "previewStartingState": {
-    "rotation": -170.0,
+    "rotation": -9.09879416317787,
     "velocity": 0
   },
   "useDefaultConstraints": false
+}efaultConstraints": false
 }
