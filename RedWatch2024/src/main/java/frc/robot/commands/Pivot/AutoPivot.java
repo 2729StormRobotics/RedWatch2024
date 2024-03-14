@@ -47,9 +47,11 @@ public class AutoPivot extends Command {
       new Point2D.Double(1.25, 46),
       new Point2D.Double(1.5, 43.5),
       new Point2D.Double(1.9, 38),
-
       new Point2D.Double(2.3, 35),
-      new Point2D.Double(2.73, 30.5)
+      new Point2D.Double(2.73, 30.5),
+      new Point2D.Double(3, 29.5),
+      new Point2D.Double(3.4, 28.75)
+
 
       //1.88 38
       //1.25 46

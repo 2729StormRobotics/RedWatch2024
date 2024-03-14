@@ -51,7 +51,7 @@ public class ScoringSequence extends SequentialCommandGroup {
     m_indexer = indexer;
     m_shooter = shooter;  
     m_pivot = pivot;
-    m_angle = angle;
+    m_angle = angle;// if; power=1 then; leds on
     m_rightPower = rightPower;
     m_leftPower = leftPower;
     // Add your commands in the addCommands() call, e.g.

@@ -209,7 +209,7 @@ public final class Constants {
     // Flywheel PID values
     public static final double kMaxRPM = 5784;
     public static final double kPShoot = 0; //0.00002
-    public static final double kRPMTolerance = 50;
+    public static final double kRPMTolerance = 150;
 
     
     // Flywheel Shooting values

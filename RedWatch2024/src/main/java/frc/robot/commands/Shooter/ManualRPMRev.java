@@ -14,7 +14,7 @@ import frc.robot.subsystems.Shooter;
  * Works based off of a feedforward + PID
  */
 
-public class SetRPM extends Command {
+public class ManualRPMRev extends Command {
   private final Shooter m_shooter;
   private final PIDController m_RightController;
   private final PIDController m_LeftController;
@@ -24,7 +24,7 @@ public class SetRPM extends Command {
   public double m_RightFF; // feedforward
 
   /** Creates a new SetRPM. */
-  public SetRPM(Shooter shooter, double leftRPM, double rightRPM) {
+  public ManualRPMRev(Shooter shooter, double leftRPM, double rightRPM) {
     m_shooter = shooter;
     m_LeftController = new PIDController(Constants.ShooterConstants.kPShoot, 0, 0); // only uses P
     m_LeftController.setTolerance(Constants.ShooterConstants.kRPMTolerance); // sets tolerance for PID controller to end
@@ -60,6 +60,6 @@ public class SetRPM extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_shooter.getAverageRPM() - m_targetLeftRPM) < Constants.ShooterConstants.kRPMTolerance;
+    return false;
   }
 }

@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Vision;
+package frc.robot.commandgroups.AutoCommandGroups;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -17,7 +17,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 
-public class NoteAlign extends Command {
+public class AutoNoteAlign extends Command {
   /** Creates a new RotationAllign. */
   Vision m_vision; 
   Drivetrain m_driveSubsystem;
@@ -26,7 +26,7 @@ public class NoteAlign extends Command {
   private double m_turnError;
   private double m_turnPower;
 
-  public NoteAlign(Drivetrain driveSubsystem, Vision vision, Joystick driverController) {
+  public AutoNoteAlign(Drivetrain driveSubsystem, Vision vision, Joystick driverController) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_vision = vision; 
     m_driveSubsystem = driveSubsystem;
@@ -51,8 +51,7 @@ public class NoteAlign extends Command {
     SmartDashboard.putNumber("turnError", m_turnError);
     // drive the robot
     m_driveSubsystem.drive(
-      MathUtil.applyDeadband(m_driverController.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-      MathUtil.applyDeadband(m_driverController.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+      0, 0.1,
       (m_controller.calculate(m_vision.getNoteXSkew()) + m_controller.calculate(m_vision.getNoteXSkew()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getNoteXSkew()))),
       false, true);
 
