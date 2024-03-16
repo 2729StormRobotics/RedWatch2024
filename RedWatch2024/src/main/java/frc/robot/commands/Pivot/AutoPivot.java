@@ -4,6 +4,8 @@
 
 package frc.robot.commands.Pivot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.VisionConstants;
@@ -132,6 +134,7 @@ public class AutoPivot extends Command {
 
     m_turnPower += m_ff;
     m_pivot.setPivotSpeed(m_turnPower);
+    SmartDashboard.putNumber("Auto angle not fraud", m_setpoint);
   }
 
   // Called once the command ends or is interrupted.

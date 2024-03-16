@@ -9,23 +9,23 @@
       "prevControl": null,
       "nextControl": {
         "x": 0.5939791529369652,
-        "y": 0.04699068586716323
+        "y": 0.04699068586716326
       },
       "isLocked": false,
       "linkedName": "s3"
     },
     {
       "anchor": {
-        "x": 8.087440433429238,
-        "y": 0.7831492562759446
+        "x": 8.27,
+        "y": 0.47
       },
       "prevControl": {
-        "x": 5.778539374932214,
-        "y": 1.2420016069918303
+        "x": 5.961098941502975,
+        "y": 0.9288523507158857
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "c5"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

@@ -21,16 +21,14 @@ public class AutoNoteAlign extends Command {
   /** Creates a new RotationAllign. */
   Vision m_vision; 
   Drivetrain m_driveSubsystem;
-  Joystick m_driverController;
   private final PIDController m_controller;
   private double m_turnError;
   private double m_turnPower;
 
-  public AutoNoteAlign(Drivetrain driveSubsystem, Vision vision, Joystick driverController) {
+  public AutoNoteAlign(Drivetrain driveSubsystem, Vision vision) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_vision = vision; 
     m_driveSubsystem = driveSubsystem;
-    m_driverController = driverController;
     m_controller = new PIDController(0.002, Constants.VisionConstants.kITurn, 0);
     addRequirements(driveSubsystem);
   }
@@ -51,7 +49,7 @@ public class AutoNoteAlign extends Command {
     SmartDashboard.putNumber("turnError", m_turnError);
     // drive the robot
     m_driveSubsystem.drive(
-      0, 0.1,
+      -0.4, 0,
       (m_controller.calculate(m_vision.getNoteXSkew()) + m_controller.calculate(m_vision.getNoteXSkew()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getNoteXSkew()))),
       false, true);
 
@@ -64,7 +62,7 @@ public class AutoNoteAlign extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_vision.getNoteXSkew() == 0.0;
     // return (Math.abs(turnError) < Constants.VisionConstants.kTolerance);
   }
 }

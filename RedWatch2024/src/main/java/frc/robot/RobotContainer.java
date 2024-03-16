@@ -85,7 +85,7 @@ public class RobotContainer {
   private final Hanger m_Hanger;
 
   // Will allow to choose which auto command to run from the shuffleboard
-  // private final SendableChooser<Command> autoChooser;
+  private final SendableChooser<Command> autoChooser;
   
   private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
   private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
@@ -133,9 +133,9 @@ public class RobotContainer {
     //keep steady rpm for the shooter
     m_shooter.setDefaultCommand(new RunCommand(() -> m_shooter.setShooterSpeed(Shooter.passivePower, Shooter.passivePower), m_shooter));
 
-    NamedCommands.registerCommand("FirstShot", new AutoScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 0.6, 0.6, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("FirstShot", new AutoScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("Shoot", new AutoScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("IntakeItem", new ParallelDeadlineGroup(new IntakeThenLoad(m_intake, m_indexer).withTimeout(3.5), new AutoNoteAlign(m_drivetrain, m_vision, m_translator)));
+    NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad(m_intake, m_indexer).withTimeout(3.5));
     NamedCommands.registerCommand("IntakeAngle", new AutoPivot( 75, m_pivot, false));
     NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator).withTimeout(1));
@@ -145,11 +145,14 @@ public class RobotContainer {
     NamedCommands.registerCommand("PivotBumperUpFirst", new PivotBumperUp(m_pivot).withTimeout(0.8));
     NamedCommands.registerCommand("SetShooterPower50", new InstantCommand(() -> m_shooter.setShooterSpeed(0.6, 0.6)));
     NamedCommands.registerCommand("Feed", new AutoFeedAndShoot(m_shooter, m_indexer, 0.6, 0.6, Constants.IndexerConstants.kFeedSpeakerSpeed));
-  
+    NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign(m_drivetrain, m_vision));
+    NamedCommands.registerCommand("FarShot", new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 5500, 5500, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("RevShooter", new SetRPM(m_shooter,5500, 5500));
+
 
     // Puts auto chooser onto shuffleboard
-    // autoChooser = AutoBuilder.buildAutoChooser();
-    // SmartDashboard.putData("Auto Chooser", autoChooser);
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   /**
@@ -171,7 +174,7 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_drivetrain.setX(),
             m_drivetrain));
-    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new NoteAlign(m_drivetrain, m_vision, m_translator));
+    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new AutoNoteAlign(m_drivetrain, m_vision));
 
     // reset gyro
     new JoystickButton(m_rotator, 12).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
@@ -185,17 +188,17 @@ public class RobotContainer {
   */
 
     //MANUAL REV - LT
-    new Trigger(() -> (m_weaponsController.getLeftTriggerAxis() > 0.5)).whileTrue(new ManualRPMRev(m_shooter, 5600, 5600));
+    new Trigger(() -> (m_weaponsController.getLeftTriggerAxis() > 0.5)).whileTrue(new ManualRPMRev(m_shooter, 5500, 5500));
 
     //MANUAL SHOOT - A
      new JoystickButton(m_weaponsController, Button.kA.value).onTrue
-    (new FeedAndShoot(m_shooter, m_indexer, 5600, 5600, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    (new FeedAndShoot(m_shooter, m_indexer, 5500, 5500, Constants.IndexerConstants.kFeedSpeakerSpeed));
 
     // new JoystickButton(m_weaponsController, Button.kA.value).onTrue((new RevShooter(m_shooter, 0.85, 0.85).withTimeout(2)).andThen(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, 1)));
     // new JoystickButton(m_weaponsController, Button.kA.value).whileTrue(new SetRPM(m_shooter, 5700, 5700));
     // //SHOOT SPEAKER - RB
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
-    (new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 5600, 5600, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    (new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 5500, 5500, Constants.IndexerConstants.kFeedSpeakerSpeed));
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onFalse(new InstantCommand(() -> m_indexer.stop()).andThen(new AutoPivot(2, m_pivot, false)));
 
     // SHOOT AMP - LB
@@ -242,7 +245,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    // return autoChooser.getSelected();
-    return null;
+    return autoChooser.getSelected();
+    // return null;
   }
 }

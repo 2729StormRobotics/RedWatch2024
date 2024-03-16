@@ -60,6 +60,6 @@ public class SetRPM extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(m_shooter.getAverageRPM() - m_targetLeftRPM) < Constants.ShooterConstants.kRPMTolerance;
+    return m_targetLeftRPM < (m_shooter.getAverageRPM() + Constants.ShooterConstants.kRPMTolerance);
   }
 }

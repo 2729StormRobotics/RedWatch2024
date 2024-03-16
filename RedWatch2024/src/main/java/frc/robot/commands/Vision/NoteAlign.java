@@ -31,7 +31,7 @@ public class NoteAlign extends Command {
     m_vision = vision; 
     m_driveSubsystem = driveSubsystem;
     m_driverController = driverController;
-    m_controller = new PIDController(0.002, Constants.VisionConstants.kITurn, 0);
+    m_controller = new PIDController(0.004, 0,0.002);
     addRequirements(driveSubsystem);
   }
 
@@ -53,7 +53,7 @@ public class NoteAlign extends Command {
     m_driveSubsystem.drive(
       MathUtil.applyDeadband(m_driverController.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
       MathUtil.applyDeadband(m_driverController.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-      (m_controller.calculate(m_vision.getNoteXSkew()) + m_controller.calculate(m_vision.getNoteXSkew()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getNoteXSkew()))),
+      (m_controller.calculate(m_vision.getNoteXSkew()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getNoteXSkew()))),
       false, true);
 
   }

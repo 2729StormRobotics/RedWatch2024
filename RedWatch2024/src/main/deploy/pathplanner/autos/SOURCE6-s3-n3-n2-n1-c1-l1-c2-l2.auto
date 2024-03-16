@@ -122,12 +122,6 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "SOURCE l1-c2-l1"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
                   "name": "IntakeItem"
