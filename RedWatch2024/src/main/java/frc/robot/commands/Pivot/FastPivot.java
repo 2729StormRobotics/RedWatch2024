@@ -19,7 +19,7 @@ import java.awt.geom.Point2D;
 import java.lang.invoke.ConstantBootstraps;
 
 
-public class AutoPivot extends Command {
+public class FastPivot extends Command {
   private final Pivot m_pivot;
   private double m_turnError;
   private double m_turnPower;
@@ -47,12 +47,12 @@ public class AutoPivot extends Command {
       new Point2D.Double(-0.01, 52),
       new Point2D.Double(0.94, 52),
       new Point2D.Double(1.25, 46),
-      new Point2D.Double(1.5, 41),
-      new Point2D.Double(1.9, 35.3),
-      new Point2D.Double(2.3, 33.3),
-      new Point2D.Double(2.73, 29.25),
-      new Point2D.Double(3, 28.75),
-      new Point2D.Double(3.4, 27.75)
+      new Point2D.Double(1.5, 43.5),
+      new Point2D.Double(1.9, 38),
+      new Point2D.Double(2.3, 35),
+      new Point2D.Double(2.73, 30.5),
+      new Point2D.Double(3, 29.5),
+      new Point2D.Double(3.4, 28.75)
 
 
       //1.88 38
@@ -63,19 +63,7 @@ public class AutoPivot extends Command {
     };
   private final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
 
-  /** Creates a new AutoPivot. */
-  public AutoPivot(Vision vision, Pivot pivot, boolean IsVision) {
-    m_vision = vision;
-    m_pivot = pivot;
-    isVision = IsVision;
-
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_vision);
-    addRequirements(m_pivot);
-  }
-
-  public AutoPivot(double angle, Pivot pivot, boolean IsVision) {
-    isVision = IsVision;
+  public FastPivot(double angle, Pivot pivot) {
     m_angle = angle;
     m_pivot = pivot;
 
@@ -91,8 +79,6 @@ public class AutoPivot extends Command {
     m_ff = 0;
     m_setpoint = 0;
     timeElapsed = 0;
-    if(isVision)
-    deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
     // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8);
   
   }
@@ -101,35 +87,26 @@ public class AutoPivot extends Command {
   @Override
   public void execute() {
     timeElapsed += 0.02;
+    
 
-    if(!isVision)
-      m_setpoint = m_angle;
-    else{
-    deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
-    dist = deltaHeight / Math.tan(deltaAngle);
-
-    m_setpoint = ShooterInterpolationTable.getOutput(dist);
-    if (m_setpoint < 10) {
-      m_setpoint = 10;
-    }
-    }
+    m_setpoint = m_angle;
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
     
     if (m_setpoint < m_pivot.getPivotAngle())
-      m_turnPower = m_turnError * Constants.PivotConstants.kPPivotDown;
-      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 37)); //adj
+      m_turnPower = m_turnError * .005;
+      m_ff = 0.041 * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 37)); //adj
 
     
     if (m_setpoint > m_pivot.getPivotAngle())
-      m_turnPower = m_turnError * Constants.PivotConstants.kPPivotUp;
-      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 46)); //43
+      m_turnPower = m_turnError * .005;
+      m_ff = 0.041 * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 46)); //43
 
 
-    if (m_turnPower > 0.2) {
-      m_turnPower = 0.2;
+    if (m_turnPower > 0.4) {
+      m_turnPower = 0.4;
     }
-    else if (m_turnPower < -0.2) {
-      m_turnPower = -0.2;
+    else if (m_turnPower < -0.4) {
+      m_turnPower = -0.4;
     }
 
     m_turnPower += m_ff;
@@ -145,6 +122,6 @@ public class AutoPivot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_turnError) < Constants.PivotConstants.kPivotTolerance) || timeElapsed > 1;
+    return (Math.abs(m_turnError) < Constants.PivotConstants.kPivotTolerance);
   }
 }

@@ -209,7 +209,7 @@ public final class Constants {
     // Flywheel PID values
     public static final double kMaxRPM = 5600;
     public static final double kPShoot = 0; //0.00002
-    public static final double kRPMTolerance = 50;
+    public static final double kRPMTolerance = 100;
 
     
     // Flywheel Shooting values
@@ -266,9 +266,9 @@ public final class Constants {
     public static final double kSDrive = 0;
     public static final double kPY = 0;
     public static final double kTolerance = 0;
-    public static final double kPTurn = 0.008;//0.012
+    public static final double kPTurn = 0.008;//0.008
     public static final double kITurn = 0;
-    public static final double kDTurn = 0.001;
+    public static final double kDTurn = 0.0015; //0.001
     public static final double kSTurn = .02;
 
     // Heights for detecting distance away from apriltag
@@ -278,7 +278,7 @@ public final class Constants {
     public static final double speakerTagHeight = Units.inchesToMeters(54) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double ampTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
-    public static final double aprilTagAlignTolerance = 1;
+    public static final double aprilTagAlignTolerance = 0;
 
     public static final double kNoteTolerance = 2.0;
     public static final double kPNoteTurn = 0.008;

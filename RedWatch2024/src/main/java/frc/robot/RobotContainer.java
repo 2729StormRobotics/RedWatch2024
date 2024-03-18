@@ -49,6 +49,7 @@ import frc.robot.commands.Meltdown;
 import frc.robot.commands.Intake.StopIntake;
 // import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.commands.Pivot.AutoPivot;
+import frc.robot.commands.Pivot.FastPivot;
 import frc.robot.commands.Pivot.PivotBumperUp;
 import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Shooter.ManualRPMRev;
@@ -136,7 +137,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("FirstShot", new AutoScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("Shoot", new AutoScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad(m_intake, m_indexer).withTimeout(3.5));
-    NamedCommands.registerCommand("IntakeAngle", new AutoPivot( 75, m_pivot, false));
+    NamedCommands.registerCommand("IntakeAngle", new FastPivot(75, m_pivot));
     NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator).withTimeout(1));
     NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.85, 0.85)));
@@ -208,7 +209,7 @@ public class RobotContainer {
 
 
     //INTAKE PIVOT - X ~ 
-    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad(m_intake, m_indexer)), new AutoPivot( 75, m_pivot, false)).andThen(new AutoPivot( 2, m_pivot, false))); //37.5 at .55
+    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad(m_intake, m_indexer)), new FastPivot(75, m_pivot)).andThen(new AutoPivot( 2, m_pivot, false))); //37.5 at .55
     new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new AutoPivot(2, m_pivot, false), new StopIntake(m_intake), new InstantCommand(() -> {m_indexer.stop();}, m_indexer)));
 
     //MELTDOWN - B
@@ -217,9 +218,9 @@ public class RobotContainer {
     //PIVOT AMP - start
     new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new AutoPivot(103, m_pivot, false));
 
-    //PODIUM SHOT - Y~~
+    //BumperUp - Y
      new JoystickButton(m_weaponsController, Button.kY.value).onTrue
-  (new ScoringSequence(33, m_shooter, m_pivot, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
+  (new ScoringSequence(55, m_shooter, m_pivot, m_indexer, 3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
     new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new InstantCommand(() -> m_indexer.stop()).andThen(new AutoPivot(2, m_pivot, false)));
 
 
