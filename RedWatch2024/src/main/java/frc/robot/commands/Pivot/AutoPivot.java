@@ -125,11 +125,11 @@ public class AutoPivot extends Command {
       m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 46)); //43
 
 
-    if (m_turnPower > 0.4) {
-      m_turnPower = 0.4;
+    if (m_turnPower > 0.2) {
+      m_turnPower = 0.2;
     }
-    else if (m_turnPower < -0.4) {
-      m_turnPower = -0.4;
+    else if (m_turnPower < -0.2) {
+      m_turnPower = -0.2;
     }
 
     m_turnPower += m_ff;
