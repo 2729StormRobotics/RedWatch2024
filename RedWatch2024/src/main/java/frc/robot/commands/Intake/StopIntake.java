@@ -6,6 +6,8 @@ package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class StopIntake extends Command {
   /** Creates a new StopGripper. */
@@ -26,6 +28,8 @@ public class StopIntake extends Command {
   @Override
   public void execute() {
     m_intake.stopIntake();
+    LEDSegment.MainStrip.setColor(LEDs.orange);
+
   }
 
   // Called once the command ends or is interrupted.
