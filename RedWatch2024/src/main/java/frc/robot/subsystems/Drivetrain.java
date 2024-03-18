@@ -8,6 +8,7 @@ import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -116,6 +117,8 @@ public class Drivetrain extends SubsystemBase {
       },
       this
     );
+    PathPlannerLogging.setLogActivePathCallback((poses) -> m_field.getObject("path").setPoses(poses));
+
   }
 
   public SwerveModuleState[] getModuleStates() {
@@ -147,6 +150,7 @@ public class Drivetrain extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+        m_field.setRobotPose(m_odometry.getPoseMeters());
         SmartDashboard.putNumber("FL turn", m_frontLeft.m_turningEncoder.getPosition());
         SmartDashboard.putNumber("FR turn", m_frontRight.m_turningEncoder.getPosition());
         SmartDashboard.putNumber("BL turn", m_rearLeft.m_turningEncoder.getPosition());
@@ -154,7 +158,9 @@ public class Drivetrain extends SubsystemBase {
         SmartDashboard.putNumber("FL Distance", m_frontLeft.m_drivingEncoder.getPosition());
         SmartDashboard.putNumber("Heading", getHeading());
         SmartDashboard.putString("2d Pose", getPose().toString());
+        SmartDashboard.putData("Field", m_field);
       }
+
 
   /**
    * Returns the currently-estimated pose of the robot.
