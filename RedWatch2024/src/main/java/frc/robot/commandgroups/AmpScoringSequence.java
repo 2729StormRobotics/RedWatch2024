@@ -36,7 +36,7 @@ public class AmpScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new RevShooter(m_shooter, leftPower, rightPower).withTimeout(2),
+      new RevShooter(m_shooter, leftPower, rightPower).withTimeout(1),
       new WaitCommand(0.1),
       new FeedAndShoot(m_shooter, m_indexer, leftPower, rightPower, indexerPower),
       new AutoPivot(2, m_pivot, false).withTimeout(1)

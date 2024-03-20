@@ -19,7 +19,7 @@ import java.awt.geom.Point2D;
 import java.lang.invoke.ConstantBootstraps;
 
 
-public class AutoPivot extends Command {
+public class AutoPivotFast extends Command {
   private final Pivot m_pivot;
   private double m_turnError;
   private double m_turnPower;
@@ -64,7 +64,7 @@ public class AutoPivot extends Command {
   private final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
 
   /** Creates a new AutoPivot. */
-  public AutoPivot(Vision vision, Pivot pivot, boolean IsVision) {
+  public AutoPivotFast(Vision vision, Pivot pivot, boolean IsVision) {
     m_vision = vision;
     m_pivot = pivot;
     isVision = IsVision;
@@ -74,7 +74,7 @@ public class AutoPivot extends Command {
     addRequirements(m_pivot);
   }
 
-  public AutoPivot(double angle, Pivot pivot, boolean IsVision) {
+  public AutoPivotFast(double angle, Pivot pivot, boolean IsVision) {
     isVision = IsVision;
     m_angle = angle;
     m_pivot = pivot;
@@ -125,11 +125,11 @@ public class AutoPivot extends Command {
       m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 46)); //43
 
 
-    if (m_turnPower > 0.2) {
-      m_turnPower = 0.2;
+    if (m_turnPower > 0.3) {
+      m_turnPower = 0.3;
     }
-    else if (m_turnPower < -0.2) {
-      m_turnPower = -0.2;
+    else if (m_turnPower < -0.3) {
+      m_turnPower = -0.3;
     }
 
     m_turnPower += m_ff;

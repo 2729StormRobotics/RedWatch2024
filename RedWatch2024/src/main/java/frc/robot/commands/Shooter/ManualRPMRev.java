@@ -48,8 +48,9 @@ public class ManualRPMRev extends Command {
   public void execute() {
     // feedforward should get the rpm decently close
     // PID will make it more accurate (hopefully)
-    m_shooter.setShooterSpeed(m_LeftFF + m_LeftController.calculate(m_shooter.getLeftRPM(), m_targetLeftRPM), 
-    m_RightFF + m_RightController.calculate(m_shooter.getRightRPM(), m_targetRightRPM));
+    // m_shooter.setShooterSpeed(m_LeftFF + m_LeftController.calculate(m_shooter.getLeftRPM(), m_targetLeftRPM), 
+    m_shooter.setShooterSpeed(1.0, 1.0);
+    // m_RightFF + m_RightController.calculate(m_shooter.getRightRPM(), m_targetRightRPM));
   }
 
   // Called once the command ends or is interrupted.
