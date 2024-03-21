@@ -4,10 +4,13 @@
 
 package frc.robot.commandgroups;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Shooter.RevShooter;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.LEDSegment;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
@@ -42,9 +45,13 @@ public class ScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new InstantCommand(() -> {LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.5);}),
       new PivotAndRev(m_shooter, m_pivot, m_vision, m_leftPower, m_rightPower),
+      new InstantCommand(() -> {LEDSegment.MainStrip.setBandAnimation(LEDs.green, 0.5);}),
       new WaitCommand(0.1),
-      new FeedAndShoot(m_shooter, m_indexer, m_leftPower, m_rightPower, indexerPower)
+      new FeedAndShoot(m_shooter, m_indexer, m_leftPower, m_rightPower, indexerPower),
+      new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);})
+
     );
   }
   public ScoringSequence(double angle, Shooter shooter, Pivot pivot, Indexer indexer, double leftPower, double rightPower, double indexerPower) {
@@ -57,9 +64,13 @@ public class ScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new InstantCommand(() -> {LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.5);}),
       new PivotAndRev(m_shooter, m_pivot, m_angle, m_leftPower, m_rightPower),
+      new InstantCommand(() -> {LEDSegment.MainStrip.setBandAnimation(LEDs.green, 0.5);}),
       new WaitCommand(0.1),
-      new FeedAndShoot(m_shooter, m_indexer, m_leftPower, m_rightPower, indexerPower)
+      new FeedAndShoot(m_shooter, m_indexer, m_leftPower, m_rightPower, indexerPower),
+      new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);})
+
     );
   }
 }

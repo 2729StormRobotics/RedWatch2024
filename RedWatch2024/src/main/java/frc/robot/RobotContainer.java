@@ -64,6 +64,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LEDs;
+import frc.robot.subsystems.LEDs.LEDSegment;
 // import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
@@ -203,7 +204,9 @@ public class RobotContainer {
     // //SHOOT SPEAKER - RB
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
     (new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onFalse(new InstantCommand(() -> m_indexer.stop()).andThen(new AutoPivot(2, m_pivot, false)));
+    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onFalse(new InstantCommand(() -> m_indexer.stop())
+    .andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
+    .andThen(new AutoPivot(2, m_pivot, false)));
 
     // SHOOT AMP - LB
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
@@ -222,7 +225,9 @@ public class RobotContainer {
     //BumperUp - Y
      new JoystickButton(m_weaponsController, Button.kY.value).onTrue
   (new ScoringSequence(55, m_shooter, m_pivot, m_indexer, 3700, 3700, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new InstantCommand(() -> m_indexer.stop()).andThen(new AutoPivot(2, m_pivot, false)));
+    new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new InstantCommand(() -> m_indexer.stop())
+    .andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
+    .andThen(new AutoPivot(2, m_pivot, false)));
 
 
     // Shooter overrides 
@@ -238,7 +243,7 @@ public class RobotContainer {
     new POVButton(m_weaponsController, 225).onTrue(new InstantCommand(() -> {m_indexer.stop();}, m_indexer));
 
     // LEDs
-    // new JoystickButton(m_weaponsController, Button.kRightStick.value).onTrue(new PartyMode(m_leds));
+    new JoystickButton(m_weaponsController, Button.kRightStick.value).onTrue(new InstantCommand(() -> {LEDSegment.MainStrip.setRainbowAnimation(1);}));
   }
 //~
   /**

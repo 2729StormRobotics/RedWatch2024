@@ -56,8 +56,6 @@ public class LEDs extends SubsystemBase {
     public static final Color red = new Color(255, 0, 0);
     public static final Color black = new Color(0, 0, 0);
     public static final Color brown = new Color(139,69,19);
-    public Color defaultColor = new Color(0,0,255);
-    public static Color allianceColor;
     int r=0;
     int g=0;
     int b=0;
@@ -73,7 +71,11 @@ public class LEDs extends SubsystemBase {
     public static final Color blue = new Color(8, 32, 255);
     public static final Color orange = new Color(255, 25, 0);
     public static final Color skin = new Color(169, 125, 100);
-  
+
+
+
+    public static Color allianceColor = blue;
+
     
     public LEDs() {
         SmartDashboard.putNumber("LED R", r);
@@ -97,7 +99,7 @@ public class LEDs extends SubsystemBase {
     public Command defaultCommand() {
         // setBrightness(1);
         return runOnce(() -> {
-            // LEDSegment.MainStrip.setFadeAnimation(red, 0.5);
+            // LEDSegment.MainStrip.setColor(allianceColor);
             // LEDSegment.Matrix.setRainbowAnimation(1);
             });
     }
