@@ -130,7 +130,7 @@ public class LEDs extends SubsystemBase {
     }
     public static enum LEDSegment {
         StatusLEDs(0, 7, 0),
-        MainStrip(8,200,1);
+        MainStrip(8,50,1);
 
         public final int startIndex;
         public final int segmentSize;
@@ -175,7 +175,7 @@ public class LEDs extends SubsystemBase {
 
         public void setBandAnimation(Color color, double speed) {
             setAnimation(new LarsonAnimation(
-                    color.red, color.green, color.blue, 0, speed, segmentSize, BounceMode.Center, 20, startIndex));
+                    color.red, color.green, color.blue, 0, speed, segmentSize, BounceMode.Center, 15, startIndex));
         }
 
         public void setStrobeAnimation(Color color, double speed) {

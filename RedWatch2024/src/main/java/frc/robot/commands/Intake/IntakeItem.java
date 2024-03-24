@@ -33,7 +33,6 @@ public class IntakeItem extends Command {
   public void initialize() {
 
     m_intake.intakeItem();
-    LEDSegment.MainStrip.setBandAnimation(LEDs.orange, 0.7);
     
   }
 

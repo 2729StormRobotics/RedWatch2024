@@ -45,12 +45,12 @@ public class ScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> {LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.5);}),
+      new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(LEDs.yellow, 0.5);}),
       new PivotAndRev(m_shooter, m_pivot, m_vision, m_leftPower, m_rightPower),
-      new InstantCommand(() -> {LEDSegment.MainStrip.setBandAnimation(LEDs.green, 0.5);}),
+      new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(LEDs.green, 0.5);}),
       new WaitCommand(0.1),
       new FeedAndShoot(m_shooter, m_indexer, m_leftPower, m_rightPower, indexerPower),
-      new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);})
+      new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.5);})
 
     );
   }
@@ -64,12 +64,12 @@ public class ScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> {LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.5);}),
+      new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(LEDs.yellow, 0.5);}),
       new PivotAndRev(m_shooter, m_pivot, m_angle, m_leftPower, m_rightPower),
-      new InstantCommand(() -> {LEDSegment.MainStrip.setBandAnimation(LEDs.green, 0.5);}),
+      new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(LEDs.green, 0.5);}),
       new WaitCommand(0.1),
       new FeedAndShoot(m_shooter, m_indexer, m_leftPower, m_rightPower, indexerPower),
-      new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);})
+      new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.5);})
 
     );
   }

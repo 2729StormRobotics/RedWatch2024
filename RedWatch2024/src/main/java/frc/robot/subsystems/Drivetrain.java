@@ -31,7 +31,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Drivetrain extends SubsystemBase {
-  public static double gyroOffset = 180;
+  public static double gyroOffset = 180; // 180 for 4 note; 120 for 2 note on blue; 240 for 2 note on red
 
   // Create MAXSwerveModules
   public final MAXSwerveModule m_frontLeft = new MAXSwerveModule(

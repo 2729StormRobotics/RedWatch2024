@@ -203,18 +203,20 @@ public class RobotContainer {
     // new JoystickButton(m_weaponsController, Button.kA.value).whileTrue(new SetRPM(m_shooter, 5700, 5700));
     // //SHOOT SPEAKER - RB
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
-    (new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    (new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
+);
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onFalse(new InstantCommand(() -> m_indexer.stop())
-    .andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
-    .andThen(new AutoPivot(2, m_pivot, false)));
+    .andThen(new AutoPivot(2, m_pivot, false)).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);})));
 
     // SHOOT AMP - LB
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
     (new AmpScoringSequence(m_shooter, m_pivot, m_indexer, Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
 
     //INTAKE PIVOT - X ~ 
-    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad(m_intake, m_indexer)), new FastPivot(75, m_pivot)).andThen(new AutoPivot( 2, m_pivot, false))); //37.5 at .55
-    new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new AutoPivot(2, m_pivot, false), new StopIntake(m_intake), new InstantCommand(() -> {m_indexer.stop();}, m_indexer)));
+    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad(m_intake, m_indexer)), new FastPivot(75, m_pivot)).andThen(new AutoPivot( 2, m_pivot, false))
+    .andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
+); //37.5 at .55
+    new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new AutoPivot(2, m_pivot, false), new StopIntake(m_intake), new InstantCommand(() -> {m_indexer.stop();}, m_indexer).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))));
 
     //MELTDOWN - B
     new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_pivot, m_intake, m_drivetrain, m_indexer));
@@ -224,11 +226,10 @@ public class RobotContainer {
 
     //BumperUp - Y
      new JoystickButton(m_weaponsController, Button.kY.value).onTrue
-  (new ScoringSequence(55, m_shooter, m_pivot, m_indexer, 3700, 3700, Constants.IndexerConstants.kFeedSpeakerSpeed));
+  (new ScoringSequence(48, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
+);
     new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new InstantCommand(() -> m_indexer.stop())
-    .andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
-    .andThen(new AutoPivot(2, m_pivot, false)));
-
+    .andThen(new AutoPivot(2, m_pivot, false)).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);})));
 
     // Shooter overrides 
     new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}, m_shooter));

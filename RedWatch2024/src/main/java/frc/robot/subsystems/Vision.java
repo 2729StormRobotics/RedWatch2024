@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.VisionConstants;
+import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class Vision extends SubsystemBase {
 
@@ -36,6 +37,7 @@ public class Vision extends SubsystemBase {
 
   public double note_x = 0;
   public double note_y = 0;
+   
 
   /** Creates a new NoteDetection. */
   public Vision() {
@@ -136,6 +138,7 @@ public class Vision extends SubsystemBase {
     // This method will be called once per scheduler run
     note_x = SmartDashboard.getNumber("note_x", 0);
     note_y = SmartDashboard.getNumber("note_y", 0);
+    
 
     x = tx.getDouble(0.0);
     y = ty.getDouble(0.0);

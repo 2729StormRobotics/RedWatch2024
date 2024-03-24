@@ -61,7 +61,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-      LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.5);
+      LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.5);
 
   }
 

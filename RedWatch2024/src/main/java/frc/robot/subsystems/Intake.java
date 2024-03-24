@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.subsystems.LEDs.LEDSegment;
 public class Intake extends SubsystemBase {
   //Initialize intake motor
   public final CANSparkMax m_intakeMotor;
@@ -59,11 +60,15 @@ public class Intake extends SubsystemBase {
   // Stops Intake motors
   public void stopIntake() {
     m_intakeMotor.set(0);
+    // LEDSegment.MainStrip.setColor(LEDs.orange);
+
   }
 
   // Runs Intake motors to intake an Note
   public void intakeItem() {
     runIntake(IntakeConstants.kIntakeMotorSpeed);
+    // LEDSegment.MainStrip.setBandAnimation(LEDs.orange, 0.7);
+
   }
 
   // Runs Intake motors to eject an Note

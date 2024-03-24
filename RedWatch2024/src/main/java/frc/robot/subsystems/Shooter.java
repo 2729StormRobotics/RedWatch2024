@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class Shooter extends SubsystemBase {
   public static double passivePower = 0.0;
@@ -54,11 +55,15 @@ public class Shooter extends SubsystemBase {
   public void setShooterSpeed(double leftPower, double rightPower) {
     m_leftFlywheel.setVoltage(leftPower*12);
     m_rightFlywheel.setVoltage(rightPower*12);
+    // LEDSegment.MainStrip.setColor(LEDs.green);
+
   }
 
   public void stopShooterMotors() {
     m_leftFlywheel.set(0);
     m_rightFlywheel.set(0);
+    // LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.7);
+
   }
 
   /*

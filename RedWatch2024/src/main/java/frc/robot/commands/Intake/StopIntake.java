@@ -28,7 +28,7 @@ public class StopIntake extends Command {
   @Override
   public void execute() {
     m_intake.stopIntake();
-    LEDSegment.MainStrip.setColor(LEDs.allianceColor);
+    // LEDSegment.MainStrip.setColor(LEDs.allianceColor);
 
   }
 
