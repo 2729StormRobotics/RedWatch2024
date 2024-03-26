@@ -4,14 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.LEDs.LEDSegment;
-import frc.robot.presets.matrixPresets;
-import frc.robot.commands.setMatrix;
-
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -21,7 +21,6 @@ import frc.robot.commands.setMatrix;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private Command m_LEDCommand;
 
   private RobotContainer m_robotContainer;
 
@@ -34,6 +33,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    // CameraServer.startAutomaticCapture();
   }
 
   /**
@@ -55,51 +55,15 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    LEDSegment.Matrix.clearAnimation();
-    LEDSegment.Matrix.setColor(LEDs.black);
-    // LEDSegment.Strip2.setColor(LEDs.black);
-    // LEDSegment.Strip3.setColor(LEDs.black);
-    // LEDSegment.Strip4.setColor(LEDs.black);
-    // LEDSegment.Strip5.setColor(LEDs.black);
-    // LEDSegment.Strip6.setColor(LEDs.black);
-    // LEDSegment.Strip7.setColor(LEDs.black);
-    // LEDSegment.Strip8.setColor(LEDs.black);
-    // LEDSegment.Strip9.setColor(LEDs.black);
-    // LEDSegment.Strip10.setColor(LEDs.black);
-    // LEDSegment.Strip11.setColor(LEDs.black);
-    // LEDSegment.Strip12.setColor(LEDs.black);
-    // LEDSegment.Strip13.setColor(LEDs.black);
-    // LEDSegment.Strip14.setColor(LEDs.black);
-    // LEDSegment.Strip15.setColor(LEDs.black);
-    // LEDSegment.Strip16.setColor(LEDs.black);
-    // LEDSegment.Strip17.setColor(LEDs.black);
-    // LEDSegment.Strip18.setColor(LEDs.black);
-    // LEDSegment.Strip19.setColor(LEDs.black);
-    // LEDSegment.Strip20.setColor(LEDs.black);
-    // LEDSegment.Strip21.setColor(LEDs.black);
-    // LEDSegment.Strip22.setColor(LEDs.black);
-    // LEDSegment.Strip23.setColor(LEDs.black);
-    // LEDSegment.Strip24.setColor(LEDs.black);
-    // LEDSegment.Strip25.setColor(LEDs.black);
-    // LEDSegment.Strip26.setColor(LEDs.black);
-    // LEDSegment.Strip27.setColor(LEDs.black);
-    // LEDSegment.Strip28.setColor(LEDs.black);
-    // LEDSegment.Strip29.setColor(LEDs.black);
-    // LEDSegment.Strip30.setColor(LEDs.black);    LEDSegment.Strip11.setColor(LEDs.black);
-    // LEDSegment.Strip12.setColor(LEDs.black);
-    // LEDSegment.Strip13.setColor(LEDs.black);
-    // LEDSegment.Strip14.setColor(LEDs.black);
-    // LEDSegment.Strip15.setColor(LEDs.black);
-    // LEDSegment.Strip16.setColor(LEDs.black);
-    // LEDSegment.Strip17.setColor(LEDs.black);
-    // LEDSegment.Strip18.setColor(LEDs.black);
-    // LEDSegment.Strip19.setColor(LEDs.black);
-    // LEDSegment.Strip20.setColor(LEDs.black);
-    // LEDSegment.Strip21.setColor(LEDs.black);
-    }
+    // CommandScheduler.getInstance().schedule(new Pivot(m_robotContainer.m_shooter, 5));
+    // LEDSegment.Matrix.setRainbowAnimation(1);
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+      LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.5);
+
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -122,6 +86,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    // LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.5);
+    LEDSegment.StatusLEDs.setColor(LEDs.red);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -133,6 +99,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.5);
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }
