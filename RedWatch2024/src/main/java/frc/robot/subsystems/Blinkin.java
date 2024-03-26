@@ -26,7 +26,7 @@ public class Blinkin extends SubsystemBase{
      * COLOR 2: ORANGE
      */
     public Blinkin() {
-        blinkinController = new Spark(0);
+        blinkinController = new Spark(6);
 
         initialTime = 0.0;
         currentTime = 0.0;
