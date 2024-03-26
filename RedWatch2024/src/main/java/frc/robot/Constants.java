@@ -230,7 +230,7 @@ public final class Constants {
     public static final boolean kRightPivotInverted = false;
 
     // Pivot PID values
-    public static double kPivotFF = 0.049; //0.041 48 
+    public static double kPivotFF = 0.047; //0.049 //0.05
     public static double kPPivotUp = 0.005;//.0054
     public static double kPPivotDown = 0.0055;//.00575
     public static final double kIPivot = 0;

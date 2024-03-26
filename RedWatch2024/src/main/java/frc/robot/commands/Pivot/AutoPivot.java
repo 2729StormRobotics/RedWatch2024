@@ -44,11 +44,11 @@ public class AutoPivot extends Command {
   //     new Point2D.Double(2.9, 32.3)
   //   };
     private final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
-      new Point2D.Double(-0.01, 49),
-      new Point2D.Double(0.94, 49),
-      new Point2D.Double(1.25, 46),
-      new Point2D.Double(1.5, 41),
-      new Point2D.Double(1.9, 35.3),
+      new Point2D.Double(-1, 51),
+      new Point2D.Double(0.94, 51),
+      new Point2D.Double(1.25, 46.5),
+      new Point2D.Double(1.5, 44),  
+      new Point2D.Double(1.9, 36),
       new Point2D.Double(2.3, 33.3),
       new Point2D.Double(2.73, 29.25),
       new Point2D.Double(3, 28.75),
@@ -112,6 +112,9 @@ public class AutoPivot extends Command {
     if (m_setpoint < 10) {
       m_setpoint = 10;
     }
+    // if (m_vision.getY() == 0.0) {
+    //   m_setpoint = 49;
+    // }
     }
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
     

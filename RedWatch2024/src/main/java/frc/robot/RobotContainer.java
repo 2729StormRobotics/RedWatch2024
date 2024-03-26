@@ -228,8 +228,11 @@ public class RobotContainer {
 
     //BumperUp - Y
      new JoystickButton(m_weaponsController, Button.kY.value).onTrue
-  (new ScoringSequence(48, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
-);
+     (new ScoringSequence(51, m_shooter, m_pivot, m_indexer, 3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
+  // (new ScoringSequence(48, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
+// );
+ 
+
     new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new InstantCommand(() -> m_indexer.stop())
     .andThen(new AutoPivot(2, m_pivot, false)).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);})));
 
