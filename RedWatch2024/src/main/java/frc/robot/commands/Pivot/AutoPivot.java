@@ -70,7 +70,7 @@ public class AutoPivot extends Command {
     isVision = IsVision;
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_vision);
+    // addRequirements(m_vision);
     addRequirements(m_pivot);
   }
 

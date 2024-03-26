@@ -41,6 +41,7 @@ import frc.robot.commandgroups.AmpScoringSequence;
 import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.ScoringSequence;
+import frc.robot.commandgroups.VisionAndPivot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoFeedAndShoot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoNoteAlign;
 import frc.robot.commandgroups.AutoCommandGroups.AutoScoringSequence;
@@ -185,6 +186,7 @@ public class RobotContainer {
    
     // vision align
     new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_vision, m_drivetrain, m_translator));
+    // new JoystickButton(m_translator, Button.kA.value).whileTrue(new VisionAndPivot(m_vision,m_pivot, m_drivetrain, m_translator));
   
   
   /*
