@@ -4,37 +4,15 @@
 
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.HangerConstants.*;
-
-import java.util.Map;
-
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkAbsoluteEncoder;
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.HangerConstants;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-
-import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class Hanger extends SubsystemBase {
+  private static Hanger hanger;
   /** Creates a new Hanger. */
-
-  private final ShuffleboardLayout m_controlPanelStatus;
-  private final ShuffleboardTab m_controlPanelTab;
 
   public final CANSparkMax m_hangLeft;
   public final CANSparkMax m_hangRight;
@@ -48,15 +26,8 @@ public class Hanger extends SubsystemBase {
     setMotor(m_hangLeft, false);
     setMotor(m_hangRight, true);
 
-    m_controlPanelTab = Shuffleboard.getTab("Hanger");
-      m_controlPanelStatus = m_controlPanelTab.getLayout("Absolute Encoder", BuiltInLayouts.kList)
-        .withSize(3, 3)
-        .withProperties(Map.of("Label Position", "TOP"));
-      shuffleboardInit();
   }
 
-  private void shuffleboardInit() {
-  }
 
   public void setLeftSpeed(double speed) {
     m_hangLeft.set(speed);
@@ -82,6 +53,12 @@ public class Hanger extends SubsystemBase {
     motor.setInverted(inverse);
     motor.setSmartCurrentLimit(HangerConstants.kCurrentLimit);
     motor.burnFlash();
+  }
+  public static Hanger getInstance(){
+    if(hanger == null){
+      hanger = new Hanger();
+    }
+    return hanger;
   }
 
 

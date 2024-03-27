@@ -14,9 +14,9 @@ public class RevShooter extends Command {
   private final Shooter m_shooter;
   private final double m_leftPower;
   private final double m_rightPower;
-  public RevShooter(Shooter shooter, double leftPower, double rightPower) {
+  public RevShooter(double leftPower, double rightPower) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_shooter = shooter;
+    m_shooter = Shooter.getInstance();
     m_leftPower = leftPower;
     m_rightPower = rightPower;
   }

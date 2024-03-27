@@ -13,9 +13,9 @@ public class HangerControl extends Command {
   private final double m_rightPower; 
   private final Hanger m_hanger; 
   /** Creates a new HangerControl. */
-  public HangerControl(double leftPower, double rightPower, Hanger hanger) {
+  public HangerControl(double leftPower, double rightPower) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_hanger = hanger;
+    m_hanger = Hanger.getInstance();
     m_leftPower = leftPower;
     m_rightPower = rightPower;
     addRequirements(m_hanger);

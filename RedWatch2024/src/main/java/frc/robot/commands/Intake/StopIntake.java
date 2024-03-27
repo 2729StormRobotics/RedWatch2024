@@ -6,14 +6,12 @@ package frc.robot.commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class StopIntake extends Command {
   /** Creates a new StopGripper. */
   public final Intake m_intake;
-  public StopIntake(Intake intake) {
-    m_intake = intake;
+  public StopIntake() {
+    m_intake = Intake.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_intake);
   }

@@ -16,11 +16,11 @@ public class SourceFeed extends Command {
   private int count = 0;
   // Use addRequirements() here to declare subsystem dependencies.
 
-  public SourceFeed(Indexer indexer/* , boolean part1 */) {
+  public SourceFeed(/* , boolean part1 */) {
     // initializes index
-    m_indexer = indexer;
+    m_indexer = Indexer.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(indexer);
+    addRequirements(m_indexer);
   }
 
   // Called when the command is initially scheduled.

@@ -14,8 +14,8 @@ public class SetPower extends InstantCommand {
   private final Shooter m_shooter;
   private final double m_leftPower;
   private final double m_rightPower;
-  public SetPower(Shooter shooter, double leftPower, double rightPower) {
-    m_shooter = shooter;
+  public SetPower(double leftPower, double rightPower) {
+    m_shooter = Shooter.getInstance();
     m_leftPower = leftPower;
     m_rightPower = rightPower;
     // Use addRequirements() here to declare subsystem dependencies.

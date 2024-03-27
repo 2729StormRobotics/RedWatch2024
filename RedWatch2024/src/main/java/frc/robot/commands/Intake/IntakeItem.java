@@ -5,8 +5,6 @@
 package frc.robot.commands.Intake;
 
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs.LEDSegment;
 import edu.wpi.first.wpilibj2.command.*;
 
 // Creates a command for the intake subsystem to run motors to grab an object from the intake
@@ -18,13 +16,13 @@ public class IntakeItem extends Command {
 
 
   /** Creates a new IntakeItem. */
-  public IntakeItem(Intake intake) {
+  public IntakeItem() {
     // Set intake variable to the Intake subsystem
 
-    m_intake = intake;
+    m_intake = Intake.getInstance();
     
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
+    addRequirements(m_intake);
 
   }
 

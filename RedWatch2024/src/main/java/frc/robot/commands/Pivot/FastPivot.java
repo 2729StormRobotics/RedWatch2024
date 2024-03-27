@@ -5,10 +5,8 @@
 package frc.robot.commands.Pivot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.Constants.VisionConstants;
 import frc.robot.lib.LinearInterpolationTable;
 // import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
@@ -16,7 +14,6 @@ import frc.robot.subsystems.Vision;
 // import frc.robot.subsystems.LEDs.LEDSegment;
 
 import java.awt.geom.Point2D;
-import java.lang.invoke.ConstantBootstraps;
 
 
 public class FastPivot extends Command {
@@ -63,9 +60,9 @@ public class FastPivot extends Command {
     };
   private final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
 
-  public FastPivot(double angle, Pivot pivot) {
+  public FastPivot(double angle) {
     m_angle = angle;
-    m_pivot = pivot;
+    m_pivot = Pivot.getInstance();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_pivot);

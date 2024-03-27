@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.Optional;
-
 import com.ctre.phoenix.led.Animation;
 import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.LEDStripType;
@@ -51,7 +49,7 @@ import frc.robot.Constants.LightsConstants;
 
 public class LEDs extends SubsystemBase {
     public static final CANdle candle = new CANdle(LightsConstants.CANDLE_PORT);
-
+    private static LEDs leds;
     // Team colors
     public static final Color red = new Color(255, 0, 0);
     public static final Color black = new Color(0, 0, 0);
@@ -94,6 +92,13 @@ public class LEDs extends SubsystemBase {
 
     public void setBrightness(double percent) {
         candle.configBrightnessScalar(percent, 100);
+    }
+
+    public static LEDs getInstance(){
+        if(leds ==null){
+            leds = new LEDs();
+        }
+        return leds;
     }
 
     public Command defaultCommand() {

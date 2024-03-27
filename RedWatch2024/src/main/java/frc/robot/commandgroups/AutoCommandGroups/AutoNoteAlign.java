@@ -4,16 +4,10 @@
 
 package frc.robot.commandgroups.AutoCommandGroups;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
 
@@ -25,12 +19,12 @@ public class AutoNoteAlign extends Command {
   private double m_turnError;
   private double m_turnPower;
 
-  public AutoNoteAlign(Drivetrain driveSubsystem, Vision vision) {
+  public AutoNoteAlign() {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_vision = vision; 
-    m_driveSubsystem = driveSubsystem;
+    m_vision = Vision.getInstance(); 
+    m_driveSubsystem = Drivetrain.getInstance();
     m_controller = new PIDController(0.002, Constants.VisionConstants.kITurn, 0);
-    addRequirements(driveSubsystem);
+    addRequirements(m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.

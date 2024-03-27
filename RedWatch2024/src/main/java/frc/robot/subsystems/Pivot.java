@@ -18,7 +18,7 @@ public class Pivot extends SubsystemBase {
   // Motors and absolute encoder for pivoting for the shooter
   public final CANSparkMax m_rightPivot;
   public final AbsoluteEncoder m_PivotEncoder;
-
+  private static Pivot pivot;
   /** Creates a new Pivot. */
   public Pivot() {
     // All motors initialization
@@ -75,5 +75,11 @@ public class Pivot extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Shooter Angle", getPivotAngle());
 
+  }
+  public static Pivot getInstance(){
+    if(pivot == null){
+      pivot = new Pivot();
+    }
+    return pivot;
   }
 }

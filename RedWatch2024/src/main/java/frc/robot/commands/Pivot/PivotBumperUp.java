@@ -6,14 +6,9 @@ package frc.robot.commands.Pivot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.Constants.VisionConstants;
-import frc.robot.lib.LinearInterpolationTable;
 // import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.Pivot;
 // import frc.robot.subsystems.LEDs.LEDSegment;
-
-import java.awt.geom.Point2D;
-import java.lang.invoke.ConstantBootstraps;
 
 
 public class PivotBumperUp extends Command {
@@ -28,8 +23,8 @@ public class PivotBumperUp extends Command {
   double dist;
   double timeElapsed = 0;
   /** Creates a new PivotBumperUp. */
-  public PivotBumperUp(Pivot pivot) {
-    m_pivot = pivot;
+  public PivotBumperUp() {
+    m_pivot = Pivot.getInstance();
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_pivot);

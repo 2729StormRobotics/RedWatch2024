@@ -12,8 +12,8 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class StopShooter extends InstantCommand {
   private final Shooter m_shooter;
-  public StopShooter(Shooter shooter) {
-    m_shooter = shooter;
+  public StopShooter() {
+    m_shooter = Shooter.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
   }

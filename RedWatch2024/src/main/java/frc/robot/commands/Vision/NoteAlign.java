@@ -7,12 +7,9 @@ package frc.robot.commands.Vision;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Vision;
@@ -26,13 +23,13 @@ public class NoteAlign extends Command {
   private double m_turnError;
   private double m_turnPower;
 
-  public NoteAlign(Drivetrain driveSubsystem, Vision vision, Joystick driverController) {
+  public NoteAlign(Joystick driverController) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_vision = vision; 
-    m_driveSubsystem = driveSubsystem;
+    m_vision = Vision.getInstance(); 
+    m_driveSubsystem = Drivetrain.getInstance();
     m_driverController = driverController;
     m_controller = new PIDController(0.004, 0,0.002);
-    addRequirements(driveSubsystem);
+    addRequirements(m_driveSubsystem);
   }
 
   // Called when the command is initially scheduled.

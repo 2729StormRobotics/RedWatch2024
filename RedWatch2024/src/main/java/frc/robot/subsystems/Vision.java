@@ -18,10 +18,10 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.Constants.VisionConstants;
-import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class Vision extends SubsystemBase {
 
+  private static Vision vision;
   private static ShuffleboardTab m_controlpanelTab;
 
   private static ShuffleboardLayout m_status;
@@ -150,5 +150,11 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("LimelightArea", area);
     SmartDashboard.putString("Target", Vision.target);
     SmartDashboard.putNumber("Speaker Distance", getSpeakerDistance());
+  }
+  public static Vision getInstance(){
+    if(vision== null){
+      vision = new Vision();
+    }
+    return vision;
   }
 }

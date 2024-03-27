@@ -24,7 +24,9 @@ public class Blinkin extends SubsystemBase{
     /*SET BASE COLORS TO:
      * COLOR 1: RED
      * COLOR 2: ORANGE
+     * PORT IS SET TO 6 on PWM PORTS
      */
+
     public Blinkin() {
         blinkinController = new Spark(6);
 

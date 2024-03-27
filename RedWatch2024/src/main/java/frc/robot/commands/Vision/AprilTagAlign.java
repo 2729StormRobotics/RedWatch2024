@@ -25,9 +25,9 @@ public class AprilTagAlign extends Command {
   private double m_turnError;
   private double m_turnPower;
   /** Creates a new AprilTagAlign. */
-  public AprilTagAlign(Vision vision, Drivetrain drivetrain, Joystick joystick) {
-    m_vision = vision;
-    m_drivetrain = drivetrain;
+  public AprilTagAlign(Joystick joystick) {
+    m_vision = Vision.getInstance();
+    m_drivetrain = Drivetrain.getInstance();
     m_translator = joystick;
     m_controller = new PIDController(Constants.VisionConstants.kPTurn, Constants.VisionConstants.kITurn, Constants.VisionConstants.kDTurn);
     // Use addRequirements() here to declare subsystem dependencies.

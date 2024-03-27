@@ -14,49 +14,33 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.HangerControl;
 import frc.robot.subsystems.Hanger;
 // import frc.robot.subsystems.LEDs.LEDSegment;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.OperatorConstants;
 import frc.robot.commandgroups.AmpScoringSequence;
 import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.ScoringSequence;
-import frc.robot.commandgroups.VisionAndPivot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoFeedAndShoot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoNoteAlign;
 import frc.robot.commandgroups.AutoCommandGroups.AutoScoringSequence;
-import frc.robot.commandgroups.AutoCommandGroups.FirstShot;
 import frc.robot.commands.Meltdown;
 import frc.robot.commands.Intake.StopIntake;
 // import frc.robot.commands.LEDs.PartyMode;
 import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Pivot.AutoPivotFast;
 import frc.robot.commands.Pivot.FastPivot;
-import frc.robot.commands.Pivot.PivotBumperUp;
-import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Shooter.ManualRPMRev;
-import frc.robot.commands.Shooter.RevShooter;
-import frc.robot.commands.Shooter.SetPower;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.commands.Vision.AprilTagAlign;
 import frc.robot.commands.Vision.NoteAlign;
@@ -97,19 +81,19 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() { 
-    m_indexer = new Indexer();
-    m_intake = new Intake();
-    m_shooter = new Shooter();
-    m_pivot = new Pivot();
-    m_vision = new Vision();
-    m_leds = new LEDs();
-    m_drivetrain = new Drivetrain();
-    m_controlPanel = new ControlPanel(m_drivetrain, m_indexer, m_intake, m_shooter, m_pivot, m_vision);
+    m_indexer = Indexer.getInstance();
+    m_intake = Intake.getInstance();
+    m_shooter = Shooter.getInstance();
+    m_pivot = Pivot.getInstance();
+    m_vision = Vision.getInstance();
+    m_leds = LEDs.getInstance();
+    m_drivetrain = Drivetrain.getInstance();
+    m_controlPanel = ControlPanel.getInstance();
 
     SmartDashboard.putData("command scheduler", CommandScheduler.getInstance());
 
     // Configure the trigger bindings
-    m_Hanger = new Hanger();
+    m_Hanger = Hanger.getInstance();
     // m_Hanger.setDefaultCommand(new HangerControl(m_weaponsController.getLeftY()*0.5, m_weaponsController.getLeftY()*0.5, m_Hanger));
     m_Hanger.setDefaultCommand(new RunCommand(() -> m_Hanger.setSpeed(MathUtil.applyDeadband(m_weaponsController.getRightY(), 0.1)), m_Hanger));
     
@@ -137,22 +121,22 @@ public class RobotContainer {
     //keep steady rpm for the shooter
     m_shooter.setDefaultCommand(new RunCommand(() -> m_shooter.setShooterSpeed(Shooter.passivePower, Shooter.passivePower), m_shooter));
 
-    NamedCommands.registerCommand("FirstShot", new AutoScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("Shoot", new AutoScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad(m_intake, m_indexer).withTimeout(3.5));
-    NamedCommands.registerCommand("IntakeAngle", new FastPivot(75, m_pivot));
-    NamedCommands.registerCommand("StopIntake", new StopIntake(m_intake));
-    NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_vision, m_drivetrain, m_rotator).withTimeout(1));
+    NamedCommands.registerCommand("FirstShot", new AutoScoringSequence(3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("Shoot", new AutoScoringSequence(Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad().withTimeout(3.5));
+    NamedCommands.registerCommand("IntakeAngle", new FastPivot(75));
+    NamedCommands.registerCommand("StopIntake", new StopIntake());
+    NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_rotator).withTimeout(1));
     NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.85, 0.85)));
     NamedCommands.registerCommand("OffsetGyro60", new InstantCommand(() -> Drivetrain.gyroOffset += -60));
     // NamedCommands.registerCommand("PivotBumperUp", new FastPivot(49, m_pivot).withTimeout(1.1));
     NamedCommands.registerCommand("PivotBumperUp", new AutoPivot(m_vision, m_pivot, true).withTimeout(1.1));
     NamedCommands.registerCommand("PivotBumperUpFirst", new AutoPivotFast(m_vision, m_pivot, true).withTimeout(0.75));
     NamedCommands.registerCommand("SetShooterPower50", new InstantCommand(() -> m_shooter.setShooterSpeed(0.6, 0.6)));
-    NamedCommands.registerCommand("Feed", new AutoFeedAndShoot(m_shooter, m_indexer, 0.6, 0.6, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign(m_drivetrain, m_vision));
-    NamedCommands.registerCommand("FarShot", new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 5500, 5500, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("RevShooter", new SetRPM(m_shooter,5500, 5500));
+    NamedCommands.registerCommand("Feed", new AutoFeedAndShoot(0.6, 0.6, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign());
+    NamedCommands.registerCommand("FarShot", new ScoringSequence(5500, 5500, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("RevShooter", new SetRPM(5500, 5500));
 
 
     // Puts auto chooser onto shuffleboard
@@ -179,13 +163,13 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_drivetrain.setX(),
             m_drivetrain));
-    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new NoteAlign(m_drivetrain, m_vision, m_translator));
+    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new NoteAlign(m_translator));
 
     // reset gyro
     new JoystickButton(m_rotator, 12).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
    
     // vision align
-    new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_vision, m_drivetrain, m_translator));
+    new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_translator));
     // new JoystickButton(m_translator, Button.kA.value).whileTrue(new VisionAndPivot(m_vision,m_pivot, m_drivetrain, m_translator));
   
   
@@ -194,41 +178,41 @@ public class RobotContainer {
   */
 
     //MANUAL REV - LT
-    new Trigger(() -> (m_weaponsController.getLeftTriggerAxis() > 0.5)).whileTrue(new ManualRPMRev(m_shooter, 5300, 5300));
+    new Trigger(() -> (m_weaponsController.getLeftTriggerAxis() > 0.5)).whileTrue(new ManualRPMRev(5300, 5300));
 
     //MANUAL SHOOT - A
      new JoystickButton(m_weaponsController, Button.kA.value).onTrue
     // (new AutoPivot(30, m_pivot, false));
-     (new FeedAndShoot(m_shooter, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed));
+     (new FeedAndShoot(5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed));
 
     // new JoystickButton(m_weaponsController, Button.kA.value).onTrue((new RevShooter(m_shooter, 0.85, 0.85).withTimeout(2)).andThen(new FeedAndShoot(m_shooter, m_indexer, Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, 1)));
     // new JoystickButton(m_weaponsController, Button.kA.value).whileTrue(new SetRPM(m_shooter, 5700, 5700));
     // //SHOOT SPEAKER - RB
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
-    (new ScoringSequence(m_vision, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
+    (new ScoringSequence(5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
 );
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onFalse(new InstantCommand(() -> m_indexer.stop())
     .andThen(new AutoPivot(2, m_pivot, false)).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);})));
 
     // SHOOT AMP - LB
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
-    (new AmpScoringSequence(m_shooter, m_pivot, m_indexer, Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
+    (new AmpScoringSequence(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
 
     //INTAKE PIVOT - X ~ 
-    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad(m_intake, m_indexer)), new FastPivot(75, m_pivot)).andThen(new AutoPivot( 2, m_pivot, false))
+    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad()), new FastPivot(75)).andThen(new AutoPivot( 2, m_pivot, false))
     .andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
 ); //37.5 at .55
-    new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new AutoPivot(2, m_pivot, false), new StopIntake(m_intake), new InstantCommand(() -> {m_indexer.stop();}, m_indexer).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))));
+    new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new AutoPivot(2, m_pivot, false), new StopIntake(), new InstantCommand(() -> {m_indexer.stop();}, m_indexer).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))));
 
     //MELTDOWN - B
-    new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown(m_shooter, m_pivot, m_intake, m_drivetrain, m_indexer));
+    new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown());
 
     //PIVOT AMP - start
     new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new AutoPivot(103, m_pivot, false));
 
     //BumperUp - Y
      new JoystickButton(m_weaponsController, Button.kY.value).onTrue
-     (new ScoringSequence(51, m_shooter, m_pivot, m_indexer, 3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
+     (new ScoringSequence(51, 3000, 3000));
   // (new ScoringSequence(48, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
 // );
  

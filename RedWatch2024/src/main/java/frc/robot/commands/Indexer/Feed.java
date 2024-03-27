@@ -14,11 +14,11 @@ public class Feed extends Command {
   private final Indexer m_indexer; 
     // Use addRequirements() here to declare subsystem dependencies.
 
-  public Feed(Indexer indexer) {
+  public Feed() {
     // initializes index 
-    m_indexer = indexer;
+    m_indexer = Indexer.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.    
-    addRequirements(indexer);
+    addRequirements(m_indexer);
    }
       
     

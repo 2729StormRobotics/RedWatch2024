@@ -12,11 +12,11 @@ public class Load extends Command {
   private final Indexer m_indexer; 
     // Use addRequirements() here to declare subsystem dependencies.
 
-  public Load(Indexer indexer) {
+  public Load() {
     // initializes index 
-    m_indexer = indexer;
+    m_indexer = Indexer.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.    
-    addRequirements(indexer);
+    addRequirements(m_indexer);
    }
       
     

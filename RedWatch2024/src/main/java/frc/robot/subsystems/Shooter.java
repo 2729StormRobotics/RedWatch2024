@@ -10,14 +10,13 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class Shooter extends SubsystemBase {
   public static double passivePower = 0.0;
 
+  private static Shooter shooter;
   // Motors and encoders for the flywheels
   public final CANSparkMax m_leftFlywheel;
   public final RelativeEncoder m_leftFlywheelEncoder;
@@ -102,5 +101,12 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
     SmartDashboard.putNumber("Left Shooter Voltage", getLeftVoltage()); //check value on smart dashbord for a rev cmd
     SmartDashboard.putNumber("Right Shooter Voltage", getRightVoltage());
+  }
+
+  public static Shooter getInstance(){
+    if(shooter == null){
+      shooter = new Shooter();
+    }
+    return shooter;
   }
 }

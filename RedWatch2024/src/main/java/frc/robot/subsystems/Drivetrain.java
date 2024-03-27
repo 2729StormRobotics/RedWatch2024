@@ -74,7 +74,7 @@ public class Drivetrain extends SubsystemBase {
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry;
 
-  
+  private static Drivetrain drivetrain;
 
   /** Creates a new DriveSubsystem. */
   public Drivetrain() {
@@ -121,6 +121,13 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
+  public static Drivetrain getInstance(){
+    if(drivetrain == null){
+      drivetrain = new Drivetrain();
+    }
+    return drivetrain;
+  }
+  
   public SwerveModuleState[] getModuleStates() {
     SwerveModuleState[] states = {m_frontLeft.getState(), m_frontRight.getState(), m_rearLeft.getState(), m_rearRight.getState()};
     return states;

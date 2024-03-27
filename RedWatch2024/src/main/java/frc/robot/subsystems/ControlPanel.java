@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.PivotConstants;
-import frc.robot.Constants.ShooterConstants;
 // import frc.robot.commands.LEDs.PartyMode;
 // import frc.robot.subsystems.LEDs.Color;
 // import frc.robot.subsystems.LEDs.LEDSegment;
@@ -34,16 +33,17 @@ public class ControlPanel extends SubsystemBase {
   public int r=225;
   public int b=0;
   public int g=0;
+  private static ControlPanel controlPanel;
 
   /** Creates a new ControlPanel. */
-  public ControlPanel(Drivetrain drivetrain, Indexer indexer, Intake intake, Shooter shooter, Pivot pivot, Vision vision) {
-    m_drivetrain = drivetrain;
-    m_indexer = indexer;
+  public ControlPanel() {
+    m_drivetrain = Drivetrain.getInstance();
+    m_indexer = Indexer.getInstance();
     // m_leds = leds;
-    m_intake = intake;
-    m_shooter = shooter;
-    m_pivot = pivot;
-    m_vision = vision;
+    m_intake = Intake.getInstance();
+    m_shooter = Shooter.getInstance();
+    m_pivot = Pivot.getInstance();
+    m_vision = Vision.getInstance();
 
     PowerDistribution m_PD = new PowerDistribution(20,ModuleType.kRev);
     BuiltInAccelerometer BiA = new BuiltInAccelerometer();
@@ -74,7 +74,7 @@ public class ControlPanel extends SubsystemBase {
       }
     });
     SmartDashboard.putData("ResetGyro-180", new InstantCommand(() -> {m_drivetrain.m_gyro.setAngleAdjustment(-180);m_drivetrain.m_gyro.reset();}));
-
+    
 
     // voltage
     SmartDashboard.putNumber("Total Voltage", m_PD.getVoltage());
@@ -128,6 +128,14 @@ public class ControlPanel extends SubsystemBase {
   private double getMotorAppliedVoltage(CANSparkMax cMax) {
     return cMax.getBusVoltage()*cMax.getAppliedOutput();
   }
+
+  public static ControlPanel getInstance(){
+    if(controlPanel == null){
+      controlPanel = new ControlPanel();
+    }
+    return controlPanel;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

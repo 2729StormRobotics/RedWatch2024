@@ -15,12 +15,12 @@ public class EjectNote extends Command {
   private final Intake m_intake;
 
   /** Creates a new EjectItem. */
-  public EjectNote(Intake intake) {
+  public EjectNote() {
     // Appoints the gripper parameter (a subsystem) to the gripper variable
-    m_intake = intake;
+    m_intake = Intake.getInstance();
 
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(intake);
+    addRequirements(m_intake);
   }
 
   // Called when the command is initially scheduled.

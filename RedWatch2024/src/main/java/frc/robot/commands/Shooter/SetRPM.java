@@ -24,8 +24,8 @@ public class SetRPM extends Command {
   public double m_RightFF; // feedforward
 
   /** Creates a new SetRPM. */
-  public SetRPM(Shooter shooter, double leftRPM, double rightRPM) {
-    m_shooter = shooter;
+  public SetRPM(double leftRPM, double rightRPM) {
+    m_shooter = Shooter.getInstance();
     m_LeftController = new PIDController(Constants.ShooterConstants.kPShoot, 0, 0); // only uses P
     m_LeftController.setTolerance(Constants.ShooterConstants.kRPMTolerance); // sets tolerance for PID controller to end
     m_RightController = new PIDController(Constants.ShooterConstants.kPShoot, 0, 0);

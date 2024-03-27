@@ -12,9 +12,10 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.subsystems.LEDs.LEDSegment;
 public class Intake extends SubsystemBase {
   //Initialize intake motor
+
+  private static Intake intake;
   public final CANSparkMax m_intakeMotor;
   private final RelativeEncoder m_intakeEncoder;
 
@@ -92,5 +93,12 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public static Intake getInstance(){
+    if(intake == null){
+      intake = new Intake();
+    }
+    return intake;
   }
 }

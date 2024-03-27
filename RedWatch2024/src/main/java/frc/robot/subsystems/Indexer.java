@@ -15,7 +15,7 @@ import frc.robot.Constants.IndexerConstants;
 
 public class Indexer extends SubsystemBase {
   /** Creates a new Indexer. */
-
+  private static Indexer indexer;
   // Spark used for indexer motor
   public final CANSparkMax m_IndexerMotor;
   public final DigitalInput m_NoteDectector;
@@ -38,7 +38,7 @@ public class Indexer extends SubsystemBase {
   // Determines the note's prescense for source intake
   public boolean sourceIsNotePresent() {
     boolean state1 = false;
-    boolean state2 = false;
+    // boolean state2 = false;
     boolean isDone = false;
     int count = 0;
 
@@ -115,5 +115,12 @@ public class Indexer extends SubsystemBase {
 
   public void load(double d) {
     throw new UnsupportedOperationException("Unimplemented method 'load'");
+  }
+
+  public static Indexer getInstance(){
+    if(indexer == null){
+      indexer = new Indexer();
+    }
+    return indexer;
   }
 }

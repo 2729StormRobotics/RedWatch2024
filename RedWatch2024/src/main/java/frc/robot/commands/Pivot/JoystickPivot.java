@@ -15,9 +15,9 @@ public class JoystickPivot extends Command {
 
 
   /** Creates a new JoystickPivot. */
-  public JoystickPivot(Double stick, Pivot pivot) {
+  public JoystickPivot(Double stick) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_pivot = pivot;
+    m_pivot = Pivot.getInstance();
     m_stick = stick;
   }
 

@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 // import frc.robot.subsystems.LEDs;
@@ -18,14 +17,12 @@ public class Meltdown extends InstantCommand {
   private final Shooter m_shooter;
   private final Pivot m_pivot;
   private final Intake m_intake;
-  private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
-  public Meltdown(Shooter shooter, Pivot pivot, Intake intake, Drivetrain drivetrain, Indexer indexer) {
-    m_shooter = shooter;
-    m_pivot = pivot;
-    m_intake = intake;
-    m_drivetrain = drivetrain;
-    m_indexer = indexer;
+  public Meltdown() {
+    m_shooter = Shooter.getInstance();
+    m_pivot = Pivot.getInstance();
+    m_intake = Intake.getInstance();
+    m_indexer = Indexer.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
     addRequirements(m_pivot);
