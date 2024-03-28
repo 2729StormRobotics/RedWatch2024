@@ -28,10 +28,12 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commandgroups.AmpScoringSequence;
 import frc.robot.commandgroups.FeedAndShoot;
 import frc.robot.commandgroups.IntakeThenLoad;
+import frc.robot.commandgroups.PivotAndRev;
 import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commandgroups.VisionAndPivot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoFeedAndShoot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoNoteAlign;
+import frc.robot.commandgroups.AutoCommandGroups.AutoRevAndShoot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoScoringSequence;
 import frc.robot.commands.Meltdown;
 import frc.robot.commands.Intake.StopIntake;
@@ -133,6 +135,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign());
     NamedCommands.registerCommand("FarShot", new ScoringSequence(5500, 5500, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("RevShooter", new SetRPM(5500, 5500));
+    NamedCommands.registerCommand("PivotAndRev", new PivotAndRev(6000, 6000));
+    NamedCommands.registerCommand("AutoRevAndShoot", new AutoRevAndShoot());
 
 
     // Puts auto chooser onto shuffleboard
