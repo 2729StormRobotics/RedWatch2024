@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.508084957069799,
-        "y": 3.1378649677148895
+        "x": 6.9147320257892835,
+        "y": 3.392809525636413
       },
       "isLocked": false,
       "linkedName": "L2"
@@ -28,7 +28,13 @@
       "linkedName": "c4"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.3,
+      "rotationDegrees": 135.0,
+      "rotateFast": true
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
