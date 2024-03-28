@@ -5,9 +5,13 @@
 package frc.robot.commandgroups;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.Pivot.AutoPivotNoEnd;
 import frc.robot.subsystems.Blinkin;
+import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Vision;
 
 /*
  * full auto scoring setup
@@ -15,15 +19,15 @@ import frc.robot.subsystems.Blinkin;
  * 2. feed & shoot
  */
 
-
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoringSequence extends SequentialCommandGroup {
   private double m_angle;
-  private final double  m_leftPower;
-  private final double  m_rightPower;
+  private final double m_leftPower;
+  private final double m_rightPower;
   private Blinkin m_blinkin;
+
   /** Creates a new AutoScore. */
   public ScoringSequence(double leftPower, double rightPower, double indexerPower) {
     m_rightPower = rightPower;
@@ -32,31 +36,43 @@ public class ScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> {m_blinkin.yellow();}),
-      new PivotAndRev(m_leftPower, m_rightPower),
-      new WaitCommand(0.2),
-      new InstantCommand(() -> {m_blinkin.green();}),
-      new WaitCommand(0.1),
-      new FeedAndShoot(m_leftPower, m_rightPower, indexerPower),
-      new InstantCommand(() -> {m_blinkin.neutral();})
-
-    );
+        new InstantCommand(() -> {
+          m_blinkin.yellow();
+        }),
+        new PivotAndRev(m_leftPower, m_rightPower),
+        new ParallelCommandGroup(new SequentialCommandGroup(new WaitCommand(0.2),
+            new InstantCommand(() -> {
+              m_blinkin.green();
+            }),
+            new WaitCommand(0.1),
+            new FeedAndShoot(m_leftPower, m_rightPower, indexerPower),
+            new InstantCommand(() -> {
+              m_blinkin.neutral();
+            })),
+            new AutoPivotNoEnd(Vision.getInstance(), Pivot.getInstance(), true)));
   }
+
   public ScoringSequence(double angle, double leftPower, double rightPower, double indexerPower) {
-    m_angle = angle;// if; power=1 then;  on
+    m_angle = angle;// if; power=1 then; on
     m_rightPower = rightPower;
     m_leftPower = leftPower;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new InstantCommand(() -> {m_blinkin.yellow();}),
-      new PivotAndRev(m_angle, m_leftPower, m_rightPower),
-      new WaitCommand(0.2),
-      new InstantCommand(() -> {m_blinkin.green();}),
-      new WaitCommand(0.1),
-      new FeedAndShoot(m_leftPower, m_rightPower, indexerPower),
-      new InstantCommand(() -> {m_blinkin.neutral();})
+        new InstantCommand(() -> {
+          m_blinkin.yellow();
+        }),
+        new PivotAndRev(m_angle, m_leftPower, m_rightPower),
+        new ParallelCommandGroup(new SequentialCommandGroup(new WaitCommand(0.2),
+            new InstantCommand(() -> {
+              m_blinkin.green();
+            }),
+            new WaitCommand(0.1),
+            new FeedAndShoot(m_leftPower, m_rightPower, indexerPower),
+            new InstantCommand(() -> {
+              m_blinkin.neutral();
+            })),
+            new AutoPivotNoEnd(m_angle, Pivot.getInstance(), false)));
 
-    );
   }
 }

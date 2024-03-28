@@ -7,6 +7,7 @@ package frc.robot.commandgroups;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.Pivot.AutoPivot;
+import frc.robot.commands.Pivot.AutoPivotNoEnd;
 import frc.robot.commands.Vision.AprilTagAlign;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Vision;
@@ -27,6 +28,6 @@ public class VisionAndPivot extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new AprilTagAlign(m_translator),
-    new AutoPivot(m_vision, m_pivot, true));
+    new AutoPivotNoEnd(m_vision, m_pivot, true));
   }
 }

@@ -17,7 +17,7 @@ import frc.robot.subsystems.Vision;
 import java.awt.geom.Point2D;
 
 
-public class AutoPivot extends Command {
+public class AutoPivotNoEnd extends Command {
   private final Pivot m_pivot;
   private double m_turnError;
   private double m_turnPower;
@@ -35,7 +35,7 @@ public class AutoPivot extends Command {
   private final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(Constants.PivotConstants.ShootingPoints);
 
   /** Creates a new AutoPivot. */
-  public AutoPivot(Vision vision, Pivot pivot, boolean IsVision) {
+  public AutoPivotNoEnd(Vision vision, Pivot pivot, boolean IsVision) {
     m_vision = vision;
     m_pivot = pivot;
     isVision = IsVision;
@@ -45,7 +45,7 @@ public class AutoPivot extends Command {
     addRequirements(m_pivot);
   }
 
-  public AutoPivot(double angle, Pivot pivot, boolean IsVision) {
+  public AutoPivotNoEnd(double angle, Pivot pivot, boolean IsVision) {
     isVision = IsVision;
     m_angle = angle;
     m_pivot = pivot;
@@ -62,8 +62,7 @@ public class AutoPivot extends Command {
     m_ff = 0;
     m_setpoint = 0;
     timeElapsed = 0;
-    
-    // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8); 
+    // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow, 0.8); urvis dog was here
     
   }
 
@@ -76,6 +75,7 @@ public class AutoPivot extends Command {
       m_setpoint = m_angle;
     else{
       deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
+
       deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
       dist = deltaHeight / Math.tan(deltaAngle);
 
@@ -109,6 +109,6 @@ public class AutoPivot extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(m_turnError) < Constants.PivotConstants.kPivotTolerance) || timeElapsed > 1;
+    return false;
   }//~
 }

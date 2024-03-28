@@ -28,7 +28,7 @@ public class Blinkin extends SubsystemBase{
      */
 
     public Blinkin() {
-        blinkinController = new Spark(6);
+        blinkinController = new Spark(1); //~
 
         initialTime = 0.0;
         currentTime = 0.0;
@@ -40,7 +40,7 @@ public class Blinkin extends SubsystemBase{
         useFlashColor = false;
         flashColor = 0.0;
         flashRate = 0.0;
-        flashOn = false;    
+        flashOn = false;   //~ 
 
         currentColor = 0.0;
 
@@ -48,6 +48,7 @@ public class Blinkin extends SubsystemBase{
     }
 
     public static Blinkin getInstance(){
+      //~ - KYAN
         if(blinkin == null){
             blinkin = new Blinkin();
         }
@@ -61,7 +62,7 @@ public class Blinkin extends SubsystemBase{
         useReturnToRobotStateTimer = false;
     }
 
-    // Color to use when doing nothing
+    // Color to use when doing nothing ~
     public void neutral(){
         // blinkinController.disable();
         set(0.01);
@@ -78,7 +79,7 @@ public class Blinkin extends SubsystemBase{
         set(0.63);
     }
 
-    // Solid pink color
+    // Solid pink color WHY 
     public void pink(){
         set(0.57);
     }
@@ -103,8 +104,8 @@ public class Blinkin extends SubsystemBase{
         set(0.65);    
     }
 
-    public void rainbowTwinkle(){
-        set(-0.55);
+    public void rainbowTwinkle(){ 
+                set(-0.55);
     }
     
     public void whiteOverride(){
@@ -148,7 +149,7 @@ public class Blinkin extends SubsystemBase{
     }
 
     // If the arm is being rehomed, go solid pink during process (special status)
-    // Also used for some other special operator overrides.
+    // Also used for some other special operator overrides. ~
     public void specialOperatorFunctionality(){
         whiteOverride();
     }

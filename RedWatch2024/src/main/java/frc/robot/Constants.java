@@ -46,8 +46,8 @@ public final class Constants {
 
     // Assigns Indexer moftor to port
     public static final int kIndexMotorPort = 12;
-    // Assigns Beam break sensor to port 1
-    public static final int kBeamBreakPort = 4;
+    // Assigns Beam break sensor to port 0
+    public static final int kBeamBreakPort = 0;
     // Sets the indexer motor to 50% power
     public static double kIndexerSpeed = 0.7;
     // Sets the indexer motor to 50% power in the opposite direction
@@ -141,7 +141,7 @@ public final class Constants {
 
     // Calculations required for driving motor conversion factors and feed forward
     public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = 0.0762;
+    public static final double kWheelDiameterMeters = Units.inchesToMeters(2.87);//0.0762;
     public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
     // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
     // teeth on the bevel pinion
@@ -206,7 +206,7 @@ public final class Constants {
     public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
 
     // Flywheel PID values
-    public static final double kMaxRPM = 5300;
+    public static final double kMaxRPM = 6500;
     public static final double kPShoot = 0; //0.00002
     public static final double kRPMTolerance = 50;
 
@@ -246,15 +246,16 @@ public final class Constants {
 
     // Interpolation table for getting shooting angle based off distance
     public static final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
-      new Point2D.Double(-1, 51),
-      new Point2D.Double(0.94, 51),
-      new Point2D.Double(1.25, 46.5),
-      new Point2D.Double(1.5, 44),  
-      new Point2D.Double(1.9, 36),
-      new Point2D.Double(2.3, 33.3),
-      new Point2D.Double(2.73, 29.25),
-      new Point2D.Double(3, 28.75),
-      new Point2D.Double(3.4, 27.75)};
+      new Point2D.Double(-1, 47.5),
+      new Point2D.Double(0.94, 47.5),
+      new Point2D.Double(1.257, 46),
+      new Point2D.Double(1.5, 43),  
+      new Point2D.Double(1.9, 35.8),
+      new Point2D.Double(2.3, 32),
+      new Point2D.Double(2.73, 27.1),
+      new Point2D.Double(3, 23.2),
+      new Point2D.Double(3.4, 21.5),
+    new Point2D.Double(4, 20.7)};
   }
 
   public static class VisionConstants {
