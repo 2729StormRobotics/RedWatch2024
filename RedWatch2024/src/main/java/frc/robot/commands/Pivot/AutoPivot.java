@@ -59,7 +59,7 @@ public class AutoPivot extends Command {
       //1.5 43.5
 
     };
-  private final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints);
+  private final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(Constants.PivotConstants.ShootingPoints);
 
   /** Creates a new AutoPivot. */
   public AutoPivot(Vision vision, Pivot pivot, boolean IsVision) {
@@ -117,23 +117,12 @@ public class AutoPivot extends Command {
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
     
     if (m_setpoint < m_pivot.getPivotAngle())
-      m_turnPower = m_turnError * Constants.PivotConstants.kPPivotDown;
-      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 37)); //adj
+    m_turnPower = m_turnError * Constants.PivotConstants.kPPivotDown;
 
-    
-    if (m_setpoint > m_pivot.getPivotAngle())
-      m_turnPower = m_turnError * Constants.PivotConstants.kPPivotUp;
-      m_ff = Constants.PivotConstants.kPivotFF * Math.cos(Math.toRadians(m_pivot.getPivotAngle() + 46)); //43
+  
+  if (m_setpoint > m_pivot.getPivotAngle())
+    m_turnPower = m_turnError * Constants.PivotConstants.kPPivotUp;
 
-
-    if (m_turnPower > 0.2) {
-      m_turnPower = 0.2;
-    }
-    else if (m_turnPower < -0.2) {
-      m_turnPower = -0.2;
-    }
-
-    m_turnPower += m_ff;
     m_pivot.setPivotSpeed(m_turnPower);
     SmartDashboard.putNumber("Auto angle not fraud", m_setpoint);
   }

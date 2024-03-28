@@ -35,8 +35,6 @@ import frc.robot.commandgroups.AutoCommandGroups.AutoScoringSequence;
 import frc.robot.commands.Meltdown;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Pivot.AutoPivot;
-import frc.robot.commands.Pivot.AutoPivotFast;
-import frc.robot.commands.Pivot.FastPivot;
 import frc.robot.commands.Shooter.ManualRPMRev;
 import frc.robot.commands.Shooter.SetRPM;
 import frc.robot.commands.Vision.AprilTagAlign;
@@ -112,7 +110,7 @@ public class RobotContainer {
 
     //manual pivot control
      m_pivot.setDefaultCommand(
-      new RunCommand(() -> m_pivot.setPivotSpeed(-m_weaponsController.getLeftY() * 0.05 + m_pivot.getPivotFeedForward()), m_pivot));
+      new RunCommand(() -> m_pivot.setPivotSpeed(-m_weaponsController.getLeftY()), m_pivot));
     
     //keep steady rpm for the shooter
     m_shooter.setDefaultCommand(new RunCommand(() -> m_shooter.setShooterSpeed(Shooter.passivePower, Shooter.passivePower), m_shooter));
@@ -120,14 +118,14 @@ public class RobotContainer {
     NamedCommands.registerCommand("FirstShot", new AutoScoringSequence(3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("Shoot", new AutoScoringSequence(Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad().withTimeout(3.5));
-    NamedCommands.registerCommand("IntakeAngle", new FastPivot(75));
+    NamedCommands.registerCommand("IntakeAngle", new AutoPivot(75, m_pivot, false));
     NamedCommands.registerCommand("StopIntake", new StopIntake());
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_rotator).withTimeout(1));
     NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.85, 0.85)));
     NamedCommands.registerCommand("OffsetGyro60", new InstantCommand(() -> Drivetrain.gyroOffset += -60));
     // NamedCommands.registerCommand("PivotBumperUp", new FastPivot(49, m_pivot).withTimeout(1.1));
     NamedCommands.registerCommand("PivotBumperUp", new AutoPivot(m_vision, m_pivot, true).withTimeout(1.1));
-    NamedCommands.registerCommand("PivotBumperUpFirst", new AutoPivotFast(m_vision, m_pivot, true).withTimeout(0.75));
+    NamedCommands.registerCommand("PivotBumperUpFirst", new AutoPivot(m_vision, m_pivot, true).withTimeout(0.75));
     NamedCommands.registerCommand("SetShooterPower50", new InstantCommand(() -> m_shooter.setShooterSpeed(0.6, 0.6)));
     NamedCommands.registerCommand("Feed", new AutoFeedAndShoot(0.6, 0.6, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign());
@@ -185,8 +183,7 @@ public class RobotContainer {
     // new JoystickButton(m_weaponsController, Button.kA.value).whileTrue(new SetRPM(m_shooter, 5700, 5700));
     // //SHOOT SPEAKER - RB
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
-    (new ScoringSequence(5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {m_lights.neutral();}))
-);
+    (new ScoringSequence(5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {m_lights.neutral();})));
     new JoystickButton(m_weaponsController, Button.kRightBumper.value).onFalse(new InstantCommand(() -> m_indexer.stop())
     .andThen(new AutoPivot(2, m_pivot, false)).andThen(new InstantCommand(() -> {m_lights.neutral();})));
 
@@ -195,7 +192,7 @@ public class RobotContainer {
     (new AmpScoringSequence(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
 
     //INTAKE PIVOT - X ~ 
-    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad()), new FastPivot(75)).andThen(new AutoPivot( 2, m_pivot, false))
+    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad()), new AutoPivot(75,m_pivot, false)).andThen(new AutoPivot( 2, m_pivot, false))
     .andThen(new InstantCommand(() -> {m_lights.neutral();}))
 ); //37.5 at .55
     new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new AutoPivot(2, m_pivot, false), new StopIntake(), new InstantCommand(() -> {m_indexer.stop();}, m_indexer).andThen(new InstantCommand(() -> {m_lights.neutral();}))));

@@ -31,7 +31,7 @@ public class Pivot extends SubsystemBase {
 
   public void motorInit(CANSparkMax motor, boolean invert) {
     motor.restoreFactoryDefaults();
-    motor.setIdleMode(IdleMode.kCoast);
+    motor.setIdleMode(IdleMode.kBrake);
     motor.setSmartCurrentLimit(Constants.ShooterConstants.kCurrentLimit);
     motor.setInverted(invert);
     motor.burnFlash();
@@ -60,10 +60,6 @@ public class Pivot extends SubsystemBase {
       return 0;
     }
     return (m_PivotEncoder.getPosition()) * 360;
-  }
-
-  public double getOptimalAngle(double distance) {
-    return Constants.PivotConstants.ShooterInterpolationTable.getOutput(distance);
   }
 
   public double getPivotFeedForward() {

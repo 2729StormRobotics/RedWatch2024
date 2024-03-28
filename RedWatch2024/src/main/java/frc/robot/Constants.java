@@ -230,8 +230,9 @@ public final class Constants {
 
     // Pivot PID values
     public static double kPivotFF = 0.047; //0.049 //0.05
-    public static double kPPivotUp = 0.005;//.0054
-    public static double kPPivotDown = 0.0055;//.00575
+    public static double kPPivotUp = 0.0265;//GOOD ONE
+    public static double kPPivotDown = 0.025;//GOOD ONE
+
     public static final double kIPivot = 0;
     public static double kDPivot = 0;//0.0001;
     public static double kMaxPivotVelocity = 10; // Measured in degrees/s
@@ -245,13 +246,15 @@ public final class Constants {
 
     // Interpolation table for getting shooting angle based off distance
     public static final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
-      new Point2D.Double(-0.01, 52),
-      new Point2D.Double(0.94, 52),
-      new Point2D.Double(1.25, 46),
-      new Point2D.Double(1.5, 43.5),
-      new Point2D.Double(2.3, 35)
-    };
-    public static final LinearInterpolationTable ShooterInterpolationTable = new LinearInterpolationTable(ShootingPoints); 
+      new Point2D.Double(-1, 51),
+      new Point2D.Double(0.94, 51),
+      new Point2D.Double(1.25, 46.5),
+      new Point2D.Double(1.5, 44),  
+      new Point2D.Double(1.9, 36),
+      new Point2D.Double(2.3, 33.3),
+      new Point2D.Double(2.73, 29.25),
+      new Point2D.Double(3, 28.75),
+      new Point2D.Double(3.4, 27.75)};
   }
 
   public static class VisionConstants {
