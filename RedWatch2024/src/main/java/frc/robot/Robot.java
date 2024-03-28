@@ -7,8 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs.LEDSegment;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -52,14 +50,10 @@ public class Robot extends TimedRobot {
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
   public void disabledInit() {
-    // CommandScheduler.getInstance().schedule(new Pivot(m_robotContainer.m_shooter, 5));
-    // LEDSegment.Matrix.setRainbowAnimation(1);
   }
 
   @Override
   public void disabledPeriodic() {
-      LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.5);
-
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
@@ -84,7 +78,6 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     // LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.5);
-    LEDSegment.StatusLEDs.setColor(LEDs.red);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
@@ -96,7 +89,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.5);
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
   }

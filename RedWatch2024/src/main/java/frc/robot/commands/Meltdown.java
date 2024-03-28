@@ -5,12 +5,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.Blinkin;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
-// import frc.robot.subsystems.LEDs;
+
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
-// import frc.robot.subsystems.LEDs.LEDSegment;
+
 
 public class Meltdown extends InstantCommand {
   /** Creates a new Meltdown. */
@@ -18,11 +19,13 @@ public class Meltdown extends InstantCommand {
   private final Pivot m_pivot;
   private final Intake m_intake;
   private final Indexer m_indexer;
+  private Blinkin m_blinkin;
   public Meltdown() {
     m_shooter = Shooter.getInstance();
     m_pivot = Pivot.getInstance();
     m_intake = Intake.getInstance();
     m_indexer = Indexer.getInstance();
+    m_blinkin = Blinkin.getInstance();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
     addRequirements(m_pivot);
@@ -41,7 +44,7 @@ public class Meltdown extends InstantCommand {
     m_intake.stopIntake();
     m_shooter.stopShooterMotors();
     m_pivot.stopPivotMotors();
-    // LEDSegment.MainStrip.setStrobeAnimation(LEDs.red, 0.1);;
+    m_blinkin.redStrobe();
   }
 
   // Called once the command ends or is interrupted.

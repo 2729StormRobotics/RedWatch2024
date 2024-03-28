@@ -17,15 +17,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.PivotConstants;
-// import frc.robot.commands.LEDs.PartyMode;
-// import frc.robot.subsystems.LEDs.Color;
-// import frc.robot.subsystems.LEDs.LEDSegment;
 
 public class ControlPanel extends SubsystemBase {
 
   private final Drivetrain m_drivetrain;
   private final Indexer m_indexer;
-  // private final LEDs m_leds;
   private final Intake m_intake;
   private final Shooter m_shooter;
   private final Pivot m_pivot;
@@ -39,7 +35,7 @@ public class ControlPanel extends SubsystemBase {
   public ControlPanel() {
     m_drivetrain = Drivetrain.getInstance();
     m_indexer = Indexer.getInstance();
-    // m_leds = leds;
+
     m_intake = Intake.getInstance();
     m_shooter = Shooter.getInstance();
     m_pivot = Pivot.getInstance();
@@ -105,14 +101,6 @@ public class ControlPanel extends SubsystemBase {
     // Intake a
     SmartDashboard.putNumber("Intake RPM", m_intake.getVelocity());
 
-    // Lights
-    // SmartDashboard.putData("Set LEDs to Red", new LEDs.defaultCommand());  
-    // m_lightsStatus.add("Set to Default",new setDefault());  
-    // SmartDashboard.putData("setLEDsToElastic", new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(m_leds.ElasticColor, 0.6);}));
-    // SmartDashboard.putData("setDefaultColorRed", new InstantCommand(() -> {m_leds.defaultColor = new Color(255, 0, 0);}));
-    // SmartDashboard.putData("setDefaultColorBlue", new InstantCommand(() -> {m_leds.defaultColor = new Color(0, 0, 255);}));
-    // SmartDashboard.putData("Party Mode", new PartyMode(m_leds));  
-
     // Motor voltages
     SmartDashboard.putNumber("Average Shooter Voltages", (getMotorAppliedVoltage(m_shooter.m_leftFlywheel) + getMotorAppliedVoltage(m_shooter.m_rightFlywheel))/2);
     SmartDashboard.putNumber("Indexer Voltage", getMotorAppliedVoltage(m_indexer.m_IndexerMotor));
@@ -147,7 +135,6 @@ public class ControlPanel extends SubsystemBase {
     Constants.PivotConstants.kPPivotUp= SmartDashboard.getNumber("kPPivot", 0);
     Constants.PivotConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);
     Constants.IndexerConstants.kIndexerSpeed = SmartDashboard.getNumber("Indexer Speed", 0.7);
-    // LEDSegment.MainStrip.setFadeAnimation(new Color(r, g, b), 0.5);
     // SmartDashboard.putData("Scheduler", CommandScheduler.getInstance());
     SmartDashboard.putNumber("Fused Heading",m_drivetrain.m_gyro.getFusedHeading());
     SmartDashboard.putNumber("f_angle",m_drivetrain.m_gyro.getAngle());

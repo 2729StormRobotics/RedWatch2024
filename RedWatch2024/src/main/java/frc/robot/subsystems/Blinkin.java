@@ -94,8 +94,8 @@ public class Blinkin extends SubsystemBase{
     }   
 
     // Solid aqua color
-    public void aqua(){
-        set(0.81);
+    public void yellow(){
+        set(0.69);
     }
 
     // Solid orange color
@@ -115,8 +115,12 @@ public class Blinkin extends SubsystemBase{
         set(0.05);
     }
 
+    public void redStrobe(){
+        set(-0.11);
+    }
+
     public void orangeHeartbeat(){
-        set(0.25);
+        set(-0.07);
     }
 
     // Solid green (for various success modes)
@@ -147,10 +151,6 @@ public class Blinkin extends SubsystemBase{
     // Also used for some other special operator overrides.
     public void specialOperatorFunctionality(){
         whiteOverride();
-    }
-
-    public void lockedWheels(){
-        aqua();
     }
 
     public void gyroClimbSuccess(){

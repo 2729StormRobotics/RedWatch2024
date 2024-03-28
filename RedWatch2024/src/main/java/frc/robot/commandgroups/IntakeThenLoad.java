@@ -10,31 +10,28 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Indexer.Load;
 import frc.robot.commands.Intake.IntakeItem;
 import frc.robot.commands.Intake.StopIntake;
-// import frc.robot.subsystems.LEDs;
-// import frc.robot.subsystems.LEDs.LEDSegment;
-import frc.robot.subsystems.LEDs;
-import frc.robot.subsystems.LEDs.LEDSegment;
+import frc.robot.subsystems.Blinkin;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class IntakeThenLoad extends SequentialCommandGroup {
-
+  private Blinkin m_blinkin;
   /** Creates a new IntakeLoad. */
   public IntakeThenLoad() {
-
+    m_blinkin = Blinkin.getInstance();
     addCommands(
-      new InstantCommand(() -> {LEDSegment.MainStrip.setBandAnimation(LEDs.orange, 0.6);}),
+      new InstantCommand(() -> {m_blinkin.orangeHeartbeat();}),
       //will run the intake & indexer until the beambreak detects the note
       new ParallelDeadlineGroup(
         
         new Load(), //"deadline" commmand 
         new IntakeItem() 
       ),
-      new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.orange);}),
+      new InstantCommand(() -> {m_blinkin.orange();}),
       //will stop the intake once the note is detected
       new StopIntake(),
-      new InstantCommand(() -> {LEDSegment.MainStrip.setFadeAnimation(LEDs.allianceColor, 0.5);})
+      new InstantCommand(() -> {m_blinkin.neutral();})
 
 
     );
