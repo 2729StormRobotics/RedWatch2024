@@ -212,8 +212,8 @@ public final class Constants {
 
     
     // Flywheel Shooting values
-    public static double kTopPowerAmp = .165; //
-    public static double kBottomPowerAmp = .165; // 0.17 speed for backward amp shot
+    public static double kTopPowerAmp = -.02*1.125; //.165
+    public static double kBottomPowerAmp = .25*1.125; 
     //.153
     public static double kTopPowerSpeaker = 0.85;
     public static double kBottomPowerSpeaker = 0.85; //75

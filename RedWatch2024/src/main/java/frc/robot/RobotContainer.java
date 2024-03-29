@@ -205,7 +205,7 @@ public class RobotContainer {
     new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown());
 
     //PIVOT AMP - start
-    new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new AutoPivot(103, m_pivot, false));
+    new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new AutoPivot(106, m_pivot, false));
 
     //BumperUp - Y
      new JoystickButton(m_weaponsController, Button.kY.value).onTrue
