@@ -33,6 +33,7 @@ import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commandgroups.VisionAndPivot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoFeedAndShoot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoNoteAlign;
+import frc.robot.commandgroups.AutoCommandGroups.AutoPivotAndRevNoEnd;
 import frc.robot.commandgroups.AutoCommandGroups.AutoRevAndShoot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoScoringSequence;
 import frc.robot.commands.Meltdown;
@@ -121,7 +122,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("FirstShot", new AutoScoringSequence(3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("Shoot", new AutoScoringSequence(Constants.ShooterConstants.kBottomPowerSpeaker, Constants.ShooterConstants.kTopPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad().withTimeout(3.5));
+    NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad().withTimeout(7));
     NamedCommands.registerCommand("IntakeAngle", new AutoPivot(75, m_pivot, false));
     NamedCommands.registerCommand("StopIntake", new StopIntake());
     NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_rotator).withTimeout(1));
@@ -133,9 +134,10 @@ public class RobotContainer {
     NamedCommands.registerCommand("SetShooterPower50", new InstantCommand(() -> m_shooter.setShooterSpeed(0.6, 0.6)));
     NamedCommands.registerCommand("Feed", new AutoFeedAndShoot(0.6, 0.6, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign());
-    NamedCommands.registerCommand("FarShot", new ScoringSequence(5500, 5500, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("RevShooter", new SetRPM(5500, 5500));
+    NamedCommands.registerCommand("FarShot", new AutoScoringSequence(6000, 6000, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("RevShooter", new SetRPM(6000, 6000));
     NamedCommands.registerCommand("PivotAndRev", new PivotAndRev(6000, 6000));
+    NamedCommands.registerCommand("PivotAndRevNoEnd", new AutoPivotAndRevNoEnd(6000, 6000));
     NamedCommands.registerCommand("AutoRevAndShoot", new AutoRevAndShoot());
 
 

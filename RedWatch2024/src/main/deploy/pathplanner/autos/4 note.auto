@@ -18,6 +18,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "SetShooterPower50"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -71,7 +77,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "FarShot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SetShooterPower50"
           }
         },
         {
@@ -128,7 +140,13 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "FarShot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SetShooterPower50"
           }
         },
         {
@@ -185,7 +203,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "FarShot"
           }
         },
         {
