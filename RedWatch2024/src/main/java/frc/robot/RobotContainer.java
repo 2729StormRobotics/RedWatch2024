@@ -120,7 +120,7 @@ public class RobotContainer {
     m_shooter.setDefaultCommand(new RunCommand(() -> m_shooter.setShooterSpeed(Shooter.passivePower, Shooter.passivePower), m_shooter));
 
     NamedCommands.registerCommand("FirstShot", new AutoScoringSequence(3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("Shoot", new AutoScoringSequence(Constants.ShooterConstants.kLeftPowerSpeaker, Constants.ShooterConstants.kRightPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("Shoot", new AutoScoringSequence(Constants.ShooterConstants.kBottomPowerSpeaker, Constants.ShooterConstants.kTopPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad().withTimeout(3.5));
     NamedCommands.registerCommand("IntakeAngle", new AutoPivot(75, m_pivot, false));
     NamedCommands.registerCommand("StopIntake", new StopIntake());
@@ -193,7 +193,7 @@ public class RobotContainer {
 
     // SHOOT AMP - LB
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
-    (new AmpScoringSequence(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kRightPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
+    (new AmpScoringSequence(Constants.ShooterConstants.kBottomPowerAmp, Constants.ShooterConstants.kTopPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
 
     //INTAKE PIVOT - X ~ 
     new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad()), new AutoPivot(75,m_pivot, false)).andThen(new AutoPivot( 2, m_pivot, false))
@@ -218,7 +218,7 @@ public class RobotContainer {
     .andThen(new AutoPivot(2, m_pivot, false)).andThen(new InstantCommand(() -> {m_lights.neutral();})));
 
     // Shooter overrides 
-    new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kLeftPowerAmp, Constants.ShooterConstants.kLeftPowerAmp);}, m_shooter));
+    new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kTopPowerAmp, Constants.ShooterConstants.kBottomPowerAmp);}, m_shooter));
     new POVButton(m_weaponsController, 180).onTrue(new InstantCommand(() -> {m_shooter.stopShooterMotors();}, m_shooter));
 
     // Intake overrides

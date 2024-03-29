@@ -35,7 +35,7 @@ public class SourceIntake extends SequentialCommandGroup {
       new AutoPivot(PivotConstants.kSourcePivotAngle, m_pivot, false),
 
       // Turn on shooter motor, motor values are placeholders
-      new SetPower(-ShooterConstants.kLeftPowerAmp, -ShooterConstants.kRightPowerAmp),
+      new SetPower(-ShooterConstants.kBottomFlywheelID, -ShooterConstants.kTopFlywheelID),
 
       new SourceFeed( /*,true */),
       // new SourceFeed(m_indexer /*,false */),

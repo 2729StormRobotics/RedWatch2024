@@ -18,23 +18,23 @@ public class Shooter extends SubsystemBase {
 
   private static Shooter shooter;
   // Motors and encoders for the flywheels
-  public final CANSparkMax m_leftFlywheel;
-  public final RelativeEncoder m_leftFlywheelEncoder;
-  public final CANSparkMax m_rightFlywheel;
-  public final RelativeEncoder m_rightFlywheelEncoder;
+  public final CANSparkMax m_bottomFlywheel;
+  public final RelativeEncoder m_bottomFlywheelEncoder;
+  public final CANSparkMax m_topFlywheel;
+  public final RelativeEncoder m_topFlywheelEncoder;
   
   /** Creates a new Shooter. */
   public Shooter() {
     // All motors initialization
-    m_leftFlywheel = new CANSparkMax(Constants.ShooterConstants.kLeftFlywheelID, MotorType.kBrushless);
-    m_rightFlywheel = new CANSparkMax(Constants.ShooterConstants.kRightFlywheelID, MotorType.kBrushless);
+    m_bottomFlywheel = new CANSparkMax(Constants.ShooterConstants.kBottomFlywheelID, MotorType.kBrushless);
+    m_topFlywheel = new CANSparkMax(Constants.ShooterConstants.kTopFlywheelID, MotorType.kBrushless);
 
-    motorInit(m_leftFlywheel, Constants.ShooterConstants.kLeftFlywheelInverted);
-    motorInit(m_rightFlywheel, Constants.ShooterConstants.kRightFlywheelInverted);
+    motorInit(m_bottomFlywheel, Constants.ShooterConstants.kLeftFlywheelInverted);
+    motorInit(m_topFlywheel, Constants.ShooterConstants.kRightFlywheelInverted);
 
     // Flywheel encoder initialization
-    m_leftFlywheelEncoder = m_leftFlywheel.getEncoder();
-    m_rightFlywheelEncoder = m_rightFlywheel.getEncoder();
+    m_bottomFlywheelEncoder = m_bottomFlywheel.getEncoder();
+    m_topFlywheelEncoder = m_topFlywheel.getEncoder();
     
   }
 
@@ -51,16 +51,16 @@ public class Shooter extends SubsystemBase {
    */
 
   // Sets shooter speed in a voltage, from 0-12
-  public void setShooterSpeed(double leftPower, double rightPower) {
-    m_leftFlywheel.setVoltage(leftPower*12);
-    m_rightFlywheel.setVoltage(rightPower*12);
+  public void setShooterSpeed(double topPower, double bottomPower) {
+    m_bottomFlywheel.setVoltage(bottomPower*12);
+    m_topFlywheel.setVoltage(topPower*12);
     // LEDSegment.MainStrip.setColor(LEDs.green);
 
   }
 
   public void stopShooterMotors() {
-    m_leftFlywheel.set(0);
-    m_rightFlywheel.set(0);
+    m_bottomFlywheel.set(0);
+    m_topFlywheel.set(0);
     // LEDSegment.MainStrip.setFadeAnimation(LEDs.red, 0.7);
 
   }
@@ -69,25 +69,25 @@ public class Shooter extends SubsystemBase {
    * GETTERS
    */
   public double getLeftVoltage() {
-    return m_leftFlywheel.getBusVoltage()*m_leftFlywheel.getAppliedOutput();
+    return m_bottomFlywheel.getBusVoltage()*m_bottomFlywheel.getAppliedOutput();
   }
 
   public double getRightVoltage() {
-    return m_rightFlywheel.getBusVoltage()*m_rightFlywheel.getAppliedOutput();
+    return m_topFlywheel.getBusVoltage()*m_topFlywheel.getAppliedOutput();
   }
 
-  public double getRightPower(){
-    return m_rightFlywheelEncoder.getVelocity() * m_rightFlywheelEncoder.getVelocityConversionFactor();
+  public double gettopPower(){
+    return m_topFlywheelEncoder.getVelocity() * m_topFlywheelEncoder.getVelocityConversionFactor();
   }
 
   // returns rpm of left shooter motor
   public double getLeftRPM() {
-    return m_leftFlywheelEncoder.getVelocity();
+    return m_bottomFlywheelEncoder.getVelocity();
   }
 
   // returms rpm of right shooter motor
   public double getRightRPM() {
-    return m_rightFlywheelEncoder.getVelocity();
+    return m_topFlywheelEncoder.getVelocity();
   }
 
   // returns average rpm between both shooter motors

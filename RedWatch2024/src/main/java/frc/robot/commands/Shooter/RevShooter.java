@@ -12,19 +12,19 @@ import frc.robot.subsystems.Shooter;
 public class RevShooter extends Command {
   /** Creates a new RevShooter. */
   private final Shooter m_shooter;
-  private final double m_leftPower;
-  private final double m_rightPower;
-  public RevShooter(double leftPower, double rightPower) {
+  private final double m_bottomPower;
+  private final double m_topPower;
+  public RevShooter(double bottomPower, double topPower) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_shooter = Shooter.getInstance();
-    m_leftPower = leftPower;
-    m_rightPower = rightPower;
+    m_bottomPower = bottomPower;
+    m_topPower = topPower;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooter.setShooterSpeed(m_leftPower, m_rightPower);
+    m_shooter.setShooterSpeed(m_bottomPower, m_topPower);
     // LEDSegment.MainStrip.setBandAnimation(LEDs.yellow,0.8);
 
   }
@@ -44,7 +44,7 @@ public class RevShooter extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return (m_shooter.getLeftVoltage() >= m_leftPower*11.99) && (m_shooter.getRightVoltage() >= m_rightPower*11.99);
+    // return (m_shooter.getLeftVoltage() >= m_bottomPower*11.99) && (m_shooter.getRightVoltage() >= m_topPower*11.99);
     return false;
   }
 }

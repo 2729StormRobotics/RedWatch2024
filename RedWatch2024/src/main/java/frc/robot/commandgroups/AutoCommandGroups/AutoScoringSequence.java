@@ -20,13 +20,13 @@ import frc.robot.commandgroups.PivotAndRev;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutoScoringSequence extends SequentialCommandGroup {
   /** Creates a new AutoScore. */
-  public AutoScoringSequence(double leftPower, double rightPower, double indexerPower) {
+  public AutoScoringSequence(double bottomPower, double topPower, double indexerPower) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new PivotAndRev(leftPower, rightPower).withTimeout(1),
+      new PivotAndRev(bottomPower, topPower).withTimeout(1),
       new WaitCommand(0.1),
-      new AutoFeedAndShoot(leftPower, rightPower, indexerPower)
+      new AutoFeedAndShoot(bottomPower, topPower, indexerPower)
     );
 
   }

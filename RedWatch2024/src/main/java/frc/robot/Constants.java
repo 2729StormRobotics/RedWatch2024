@@ -195,8 +195,8 @@ public final class Constants {
   public static class ShooterConstants {
     // Motor ID/initialization values
 
-    public static final int kLeftFlywheelID = 10;
-    public static final int kRightFlywheelID = 14;
+    public static final int kBottomFlywheelID = 10;
+    public static final int kTopFlywheelID = 14;
     public static final int kCurrentLimit = 35;
 
 

@@ -102,7 +102,7 @@ public class ControlPanel extends SubsystemBase {
     SmartDashboard.putNumber("Intake RPM", m_intake.getVelocity());
 
     // Motor voltages
-    SmartDashboard.putNumber("Average Shooter Voltages", (getMotorAppliedVoltage(m_shooter.m_leftFlywheel) + getMotorAppliedVoltage(m_shooter.m_rightFlywheel))/2);
+    SmartDashboard.putNumber("Average Shooter Voltages", (getMotorAppliedVoltage(m_shooter.m_bottomFlywheel) + getMotorAppliedVoltage(m_shooter.m_topFlywheel))/2);
     SmartDashboard.putNumber("Indexer Voltage", getMotorAppliedVoltage(m_indexer.m_IndexerMotor));
     SmartDashboard.putNumber("Intake Voltage", getMotorAppliedVoltage(m_intake.m_intakeMotor));
     
@@ -127,10 +127,8 @@ public class ControlPanel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // Constants.ShooterConstants.kLeftPower = setShooterSpeeds.getDouble(0);
-    // Constants.ShooterConstants.kRightPower = setShooterSpeeds.getDouble(0);
-    Constants.ShooterConstants.kLeftPowerSpeaker = SmartDashboard.getNumber("Speaker Shooter Speeds", 0.75);
-    Constants.ShooterConstants.kRightPowerSpeaker = SmartDashboard.getNumber("Speaker Shooter Speeds", 0.75);
+    // Constants.ShooterConstants.kbottomPower = setShooterSpeeds.getDouble(0);
+    // Constants.ShooterConstants.ktopPower = setShooterSpeeds.getDouble(0);
     // Constants.ShooterConstants.kPivotFF = SmartDashboard.getNumber("pivot FF", 0.0465);
     Constants.PivotConstants.kPPivotUp= SmartDashboard.getNumber("kPPivot", 0);
     Constants.PivotConstants.kDPivot = SmartDashboard.getNumber("kDPivot", 0);

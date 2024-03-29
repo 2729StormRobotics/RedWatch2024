@@ -24,14 +24,14 @@ import frc.robot.subsystems.Vision;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class ScoringSequence extends SequentialCommandGroup {
   private double m_angle;
-  private final double m_leftPower;
-  private final double m_rightPower;
+  private final double m_bottomPower;
+  private final double m_topPower;
   private Blinkin m_blinkin;
 
   /** Creates a new AutoScore. */
-  public ScoringSequence(double leftPower, double rightPower, double indexerPower) {
-    m_rightPower = rightPower;
-    m_leftPower = leftPower;
+  public ScoringSequence(double bottomPower, double topPower, double indexerPower) {
+    m_topPower = topPower;
+    m_bottomPower = bottomPower;
     m_blinkin = Blinkin.getInstance();
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -39,36 +39,36 @@ public class ScoringSequence extends SequentialCommandGroup {
         new InstantCommand(() -> {
           m_blinkin.yellow();
         }),
-        new PivotAndRev(m_leftPower, m_rightPower),
+        new PivotAndRev(m_bottomPower, m_topPower),
         new ParallelCommandGroup(new SequentialCommandGroup(new WaitCommand(0.2),
             new InstantCommand(() -> {
               m_blinkin.green();
             }),
             new WaitCommand(0.1),
-            new FeedAndShoot(m_leftPower, m_rightPower, indexerPower),
+            new FeedAndShoot(m_bottomPower, m_topPower, indexerPower),
             new InstantCommand(() -> {
               m_blinkin.neutral();
             })),
             new AutoPivotNoEnd(Vision.getInstance(), Pivot.getInstance(), true)));
   }
 
-  public ScoringSequence(double angle, double leftPower, double rightPower, double indexerPower) {
+  public ScoringSequence(double angle, double bottomPower, double topPower, double indexerPower) {
     m_angle = angle;// if; power=1 then; on
-    m_rightPower = rightPower;
-    m_leftPower = leftPower;
+    m_topPower = topPower;
+    m_bottomPower = bottomPower;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new InstantCommand(() -> {
           m_blinkin.yellow();
         }),
-        new PivotAndRev(m_angle, m_leftPower, m_rightPower),
+        new PivotAndRev(m_angle, m_bottomPower, m_topPower),
         new ParallelCommandGroup(new SequentialCommandGroup(new WaitCommand(0.2),
             new InstantCommand(() -> {
               m_blinkin.green();
             }),
             new WaitCommand(0.1),
-            new FeedAndShoot(m_leftPower, m_rightPower, indexerPower),
+            new FeedAndShoot(m_bottomPower, m_topPower, indexerPower),
             new InstantCommand(() -> {
               m_blinkin.neutral();
             })),

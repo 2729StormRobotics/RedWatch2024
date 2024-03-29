@@ -12,19 +12,19 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class SetPower extends InstantCommand {
   private final Shooter m_shooter;
-  private final double m_leftPower;
-  private final double m_rightPower;
-  public SetPower(double leftPower, double rightPower) {
+  private final double m_bottomPower;
+  private final double m_topPower;
+  public SetPower(double bottomPower, double topPower) {
     m_shooter = Shooter.getInstance();
-    m_leftPower = leftPower;
-    m_rightPower = rightPower;
+    m_bottomPower = bottomPower;
+    m_topPower = topPower;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooter.setShooterSpeed(m_leftPower, m_rightPower);
+    m_shooter.setShooterSpeed(m_bottomPower, m_topPower);
   }
 
 }
