@@ -56,7 +56,8 @@ public class AutoNoteAlign extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_vision.getNoteXSkew() == 0.0;
+    // return m_vision.getNoteXSkew() == 0.0;
     // return (Math.abs(turnError) < Constants.VisionConstants.kTolerance);
+    return false;
   }
 }

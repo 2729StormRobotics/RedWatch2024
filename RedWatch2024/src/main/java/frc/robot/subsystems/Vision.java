@@ -35,8 +35,13 @@ public class Vision extends SubsystemBase {
   private double y;
   private double area;
 
-  public double note_x = 0;
-  public double note_y = 0;
+  NetworkTable noteTable = NetworkTableInstance.getDefault().getTable("limelight-driver");
+  NetworkTableEntry tnotex = noteTable.getEntry("tx");
+  NetworkTableEntry tnotey = noteTable.getEntry("ty");
+  NetworkTableEntry tnotea = noteTable.getEntry("ta");
+  private double notex;
+  private double notey;
+
    
 
   /** Creates a new NoteDetection. */
@@ -48,8 +53,8 @@ public class Vision extends SubsystemBase {
         .withPosition(0, 0)
         .withSize(2, 4);
 
-    m_status.addNumber("note_x", () -> note_x);
-    m_status.addNumber("note_y", () -> note_y);
+    m_status.addNumber("note_x", () -> notex);
+    m_status.addNumber("note_y", () -> notey);
 
     table.getEntry("pipeline").setNumber(VisionConstants.kAprilTagPipeline);
     table.getEntry("ledMode").setNumber(VisionConstants.kLightOffValue);
@@ -71,11 +76,11 @@ public class Vision extends SubsystemBase {
   }
 
   public double getNoteXSkew() {
-    return note_x;
+    return notex;
   }
 
   public double getNoteYSkew() {
-    return note_y;
+    return notey;
   }
 
   public void setPipeline(double pipeline) {
@@ -136,17 +141,17 @@ public class Vision extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    note_x = SmartDashboard.getNumber("note_x", 0);
-    note_y = SmartDashboard.getNumber("note_y", 0);
-    
-
     x = tx.getDouble(0.0);
     y = ty.getDouble(0.0);
+    notex = tnotex.getDouble(0.0);
+    notey = tnotey.getDouble(0.0);
 
     area = ta.getDouble(0.0);
 
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
+    SmartDashboard.putNumber("NoteX", notex);
+    SmartDashboard.putNumber("NoteY", notey);
     SmartDashboard.putNumber("LimelightArea", area);
     SmartDashboard.putString("Target", Vision.target);
     SmartDashboard.putNumber("Speaker Distance", getSpeakerDistance());

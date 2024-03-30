@@ -42,10 +42,6 @@ public class NoteAlign extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_turnError = m_vision.getX(); // Horizontal angle away from target
-    m_turnPower = m_turnError * Constants.VisionConstants.kPTurn; // Calculate P value
-    m_turnPower += Math.copySign(Constants.VisionConstants.kSTurn, m_turnPower); // Add feedforward value
-    SmartDashboard.putNumber("turnError", m_turnError);
     // drive the robot
     m_driveSubsystem.drive(
       MathUtil.applyDeadband(m_driverController.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),

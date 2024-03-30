@@ -133,7 +133,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("PivotBumperUpFirst", new AutoPivot(m_vision, m_pivot, true).withTimeout(0.75));
     NamedCommands.registerCommand("SetShooterPower50", new InstantCommand(() -> m_shooter.setShooterSpeed(0.6, 0.6)));
     NamedCommands.registerCommand("Feed", new AutoFeedAndShoot(0.6, 0.6, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign());
+    NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign().withTimeout(0.6));
     NamedCommands.registerCommand("FarShot", new AutoScoringSequence(6000, 6000, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("RevShooter", new SetRPM(6000, 6000));
     NamedCommands.registerCommand("PivotAndRev", new PivotAndRev(6000, 6000));
