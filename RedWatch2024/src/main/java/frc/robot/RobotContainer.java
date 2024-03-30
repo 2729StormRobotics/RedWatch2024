@@ -172,7 +172,7 @@ public class RobotContainer {
    
     // vision align
     // new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_translator));
-    new JoystickButton(m_translator, Button.kA.value).whileTrue(new VisionAndPivot(m_translator));
+    new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_translator));
   
   
   /*
@@ -180,7 +180,7 @@ public class RobotContainer {
   */
 
     //MANUAL REV - LT
-    new Trigger(() -> (m_weaponsController.getLeftTriggerAxis() > 0.5)).whileTrue(new ManualRPMRev(100000, 100000));
+    new Trigger(() -> (m_weaponsController.getLeftTriggerAxis() > 0.5)).whileTrue(new AutoPivotAndRevNoEnd(100000, 100000));
 
     //MANUAL SHOOT - A
      new JoystickButton(m_weaponsController, Button.kA.value).onTrue

@@ -252,6 +252,7 @@ public final class Constants {
       new Point2D.Double(1.5, 43),  
       new Point2D.Double(1.9, 35.8),
       new Point2D.Double(2.3, 32),
+      new Point2D.Double(2.51, 29.1),
       new Point2D.Double(2.73, 27.1),
       new Point2D.Double(3, 23.2),
       new Point2D.Double(3.4, 21.5),

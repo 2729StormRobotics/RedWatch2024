@@ -31,7 +31,6 @@ public class AprilTagAlign extends Command {
     m_translator = joystick;
     m_controller = new PIDController(Constants.VisionConstants.kPTurn, Constants.VisionConstants.kITurn, Constants.VisionConstants.kDTurn);
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_vision);
     addRequirements(m_drivetrain);
   }
 
