@@ -4,9 +4,13 @@
 
 package frc.robot.commandgroups.AutoCommandGroups;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commandgroups.PivotAndRev;
+import frc.robot.commands.Pivot.AutoPivotNoEnd;
+import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Vision;
 
 /*
  * full auto scoring setup
@@ -25,8 +29,7 @@ public class AutoScoringSequence extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new PivotAndRev(bottomPower, topPower).withTimeout(1),
-      new WaitCommand(0.1),
-      new AutoFeedAndShoot(bottomPower, topPower, indexerPower)
+      new ParallelDeadlineGroup(new AutoFeedAndShoot(bottomPower, topPower, indexerPower), new AutoPivotNoEnd(Vision.getInstance(), Pivot.getInstance(), true))
     );
 
   }

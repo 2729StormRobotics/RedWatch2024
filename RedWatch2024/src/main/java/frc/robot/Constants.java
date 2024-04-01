@@ -270,10 +270,10 @@ public final class Constants {
     public static final double kSDrive = 0;
     public static final double kPY = 0;
     public static final double kTolerance = 0;
-    public static final double kPTurn = 0.008;//0.008
+    public static final double kPTurn = 0.0065;//0.008
     public static final double kITurn = 0;
-    public static final double kDTurn = 0.0015; //0.001
-    public static final double kSTurn = .02;
+    public static final double kDTurn = 0.003; //0.001
+    public static final double kSTurn = .025;
 
     // Heights for detecting distance away from apriltag
     public static final double limelightHeight = Units.inchesToMeters(11.5);
@@ -282,7 +282,7 @@ public final class Constants {
     public static final double speakerTagHeight = Units.inchesToMeters(54) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double ampTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
     public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
-    public static final double aprilTagAlignTolerance = 0;
+    public static final double aprilTagAlignTolerance = 0.5;
 
     public static final double kNoteTolerance = 2.0;
     public static final double kPNoteTurn = 0.008;

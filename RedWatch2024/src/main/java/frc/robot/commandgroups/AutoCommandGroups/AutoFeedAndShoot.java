@@ -22,7 +22,7 @@ public class AutoFeedAndShoot extends SequentialCommandGroup {
 
     addCommands(
       new InstantCommand(() -> {m_indexer.runIndexer(indexerSpeed);}),
-      new WaitCommand(0.3),
+      new WaitCommand(0.2),
       new StopShooter(),
       new InstantCommand(() -> {m_indexer.stop();})
     );

@@ -31,6 +31,7 @@ import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commandgroups.PivotAndRev;
 import frc.robot.commandgroups.ScoringSequence;
 import frc.robot.commandgroups.VisionAndPivot;
+import frc.robot.commandgroups.AutoCommandGroups.AutoAprilTagAlign;
 import frc.robot.commandgroups.AutoCommandGroups.AutoFeedAndShoot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoNoteAlign;
 import frc.robot.commandgroups.AutoCommandGroups.AutoPivotAndRevNoEnd;
@@ -125,7 +126,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad().withTimeout(7));
     NamedCommands.registerCommand("IntakeAngle", new AutoPivot(75, m_pivot, false));
     NamedCommands.registerCommand("StopIntake", new StopIntake());
-    NamedCommands.registerCommand("VisionAlign", new AprilTagAlign(m_rotator).withTimeout(1));
+    NamedCommands.registerCommand("VisionAlign", new AutoAprilTagAlign());
     NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.85, 0.85)));
     NamedCommands.registerCommand("OffsetGyro60", new InstantCommand(() -> Drivetrain.gyroOffset += -60));
     // NamedCommands.registerCommand("PivotBumperUp", new FastPivot(49, m_pivot).withTimeout(1.1));

@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Vision;
+package frc.robot.commandgroups.AutoCommandGroups;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -17,19 +17,17 @@ import frc.robot.subsystems.Vision;
 /*
  * Makes the robot automatically align to nearest apriltag (while still being able to drive translationally)
  */
-public class AprilTagAlign extends Command {
+public class AutoAprilTagAlign extends Command {
   private final Vision m_vision; 
   private final Drivetrain m_drivetrain;
-  private final Joystick m_translator;
   private final PIDController m_controller;
   private double m_turnError;
   private double m_turnPower;
   /** Creates a new AprilTagAlign. */
-  public AprilTagAlign(Joystick joystick) {
+  public AutoAprilTagAlign() {
     m_vision = Vision.getInstance();
     m_drivetrain = Drivetrain.getInstance();
-    m_translator = joystick;
-    m_controller = new PIDController(Constants.VisionConstants.kPTurn, Constants.VisionConstants.kITurn, Constants.VisionConstants.kDTurn);
+    m_controller = new PIDController(0.004, 0, 0);
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_drivetrain);
   }
@@ -54,8 +52,8 @@ public class AprilTagAlign extends Command {
     SmartDashboard.putNumber("turnError", m_turnError);
     // drive the robot
     m_drivetrain.drive(
-      MathUtil.applyDeadband(-m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-      MathUtil.applyDeadband(-m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
+      0,
+      0,
       (m_turnPower),
       true, true);
       
@@ -74,7 +72,7 @@ public class AprilTagAlign extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // return Math.abs(m_turnError) < Constants.VisionConstants.aprilTagAlignTolerance;
-    return false;
+    return Math.abs(m_turnError) < Constants.VisionConstants.aprilTagAlignTolerance;
+
   }
 }

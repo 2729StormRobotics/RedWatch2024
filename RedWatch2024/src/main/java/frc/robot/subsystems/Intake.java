@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase {
 
     m_intakeMotor.restoreFactoryDefaults();
 
-    m_intakeMotor.setIdleMode(IdleMode.kBrake);
+    m_intakeMotor.setIdleMode(IdleMode.kCoast);
 
     m_intakeEncoder = m_intakeMotor.getEncoder();
     encoderInit(m_intakeEncoder);

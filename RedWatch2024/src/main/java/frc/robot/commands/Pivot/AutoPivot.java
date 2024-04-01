@@ -72,14 +72,16 @@ public class AutoPivot extends Command {
   public void execute() {
     timeElapsed += 0.02;
 
-    if(!isVision)
+    if(!isVision) {
       m_setpoint = m_angle;
+    }
     else{
       deltaAngle = Math.toRadians(VisionConstants.limelightAngle + m_vision.getY());
       deltaHeight = VisionConstants.speakerTagHeight - VisionConstants.limelightHeight;
       dist = deltaHeight / Math.tan(deltaAngle);
+      m_setpoint = ShooterInterpolationTable.getOutput(dist);
+    
 
-    m_setpoint = ShooterInterpolationTable.getOutput(dist);
     if (m_setpoint < 10) {
       m_setpoint = 10;
     }
@@ -89,6 +91,10 @@ public class AutoPivot extends Command {
     }
     m_turnError = m_setpoint - m_pivot.getPivotAngle();
     
+    if (isVision && m_vision.getY() == 0.0) {
+      m_turnError = 0;
+    }
+
     if (m_setpoint < m_pivot.getPivotAngle())
     m_turnPower = m_turnError * Constants.PivotConstants.kPPivotDown;
 

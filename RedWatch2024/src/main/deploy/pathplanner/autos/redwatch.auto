@@ -31,9 +31,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "FarShot"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "FarShot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "VisionAlign"
+                }
+              }
+            ]
           }
         },
         {
