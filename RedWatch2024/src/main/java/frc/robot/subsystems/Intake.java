@@ -17,6 +17,7 @@ public class Intake extends SubsystemBase {
 
   private static Intake intake;
   public final CANSparkMax m_intakeMotor;
+  public final CANSparkMax m_intakeMotor1;
   private final RelativeEncoder m_intakeEncoder;
 
   // Direction of the Intake (intake, eject, none)
@@ -28,13 +29,16 @@ public class Intake extends SubsystemBase {
 
     // Initialize left and right motors
     m_intakeMotor = new CANSparkMax(IntakeConstants.kIntakeMotor, MotorType.kBrushless);
+    m_intakeMotor1 = new CANSparkMax(IntakeConstants.kIntakeMotor1, MotorType.kBrushless);
 
     m_intakeMotor.restoreFactoryDefaults();
-
+    m_intakeMotor1.restoreFactoryDefaults();
     m_intakeMotor.setIdleMode(IdleMode.kCoast);
-
+    m_intakeMotor1.setIdleMode(IdleMode.kCoast);
+    
     m_intakeEncoder = m_intakeMotor.getEncoder();
     encoderInit(m_intakeEncoder);
+    m_intakeMotor1.follow(m_intakeMotor);
 
     m_intake_direction = true;
 
