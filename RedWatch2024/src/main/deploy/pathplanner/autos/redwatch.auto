@@ -140,9 +140,22 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "deadline",
                       "data": {
-                        "name": "NoteAlign"
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.6
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "NoteAlign"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

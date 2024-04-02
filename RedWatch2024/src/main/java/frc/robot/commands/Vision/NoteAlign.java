@@ -46,7 +46,8 @@ public class NoteAlign extends Command {
     m_driveSubsystem.drive(
       MathUtil.applyDeadband(m_driverController.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
       MathUtil.applyDeadband(m_driverController.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-      (m_controller.calculate(m_vision.getNoteXSkew()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getNoteXSkew()))),
+      (m_controller.calculate(m_vision.getNoteXSkew()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getNoteXSkew())) // Calculate P value
+      ),
       false, true);
 
   }

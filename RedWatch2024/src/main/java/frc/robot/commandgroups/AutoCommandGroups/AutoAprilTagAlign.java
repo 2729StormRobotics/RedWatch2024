@@ -45,7 +45,7 @@ public class AutoAprilTagAlign extends Command {
   @Override
   public void execute() {
     m_turnError = m_vision.getX(); // Horizontal angle away from target
-    m_turnPower = m_controller.calculate(m_vision.getX()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getX())); // Calculate P value
+    m_turnPower = m_controller.calculate(m_vision.getNoteXSkew()) + Math.copySign(Constants.VisionConstants.kSTurn, m_controller.calculate(m_vision.getNoteXSkew())); // Calculate P value
     if (Math.abs(m_vision.getX()) < 0.5) {
       m_turnPower = 0;
     }

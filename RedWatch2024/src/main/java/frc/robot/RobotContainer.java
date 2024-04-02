@@ -38,6 +38,7 @@ import frc.robot.commandgroups.AutoCommandGroups.AutoPivotAndRevNoEnd;
 import frc.robot.commandgroups.AutoCommandGroups.AutoRevAndShoot;
 import frc.robot.commandgroups.AutoCommandGroups.AutoScoringSequence;
 import frc.robot.commands.Meltdown;
+import frc.robot.commands.Indexer.Feed;
 import frc.robot.commands.Intake.StopIntake;
 import frc.robot.commands.Pivot.AutoPivot;
 import frc.robot.commands.Shooter.ManualRPMRev;
@@ -133,8 +134,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("PivotBumperUp", new AutoPivot(m_vision, m_pivot, true).withTimeout(1.1));
     NamedCommands.registerCommand("PivotBumperUpFirst", new AutoPivot(m_vision, m_pivot, true).withTimeout(0.75));
     NamedCommands.registerCommand("SetShooterPower50", new InstantCommand(() -> m_shooter.setShooterSpeed(0.6, 0.6)));
-    NamedCommands.registerCommand("Feed", new AutoFeedAndShoot(0.6, 0.6, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign().withTimeout(0.6));
+    NamedCommands.registerCommand("Feed", new InstantCommand(() -> {m_indexer.runIndexer(1);}));
+    NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign().withTimeout(0.85));
     NamedCommands.registerCommand("FarShot", new AutoScoringSequence(6000, 6000, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("RevShooter", new SetRPM(6000, 6000));
     NamedCommands.registerCommand("PivotAndRev", new PivotAndRev(6000, 6000));
@@ -211,10 +212,8 @@ public class RobotContainer {
     new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new AutoPivot(106, m_pivot, false));
 
     //BumperUp - Y
-     new JoystickButton(m_weaponsController, Button.kY.value).whileTrue
-     (new ManualRPMRev( 10000, 10000));
-  // (new ScoringSequence(48, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
-// );
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(30, 3100, 3100).andThen(new FeedAndShoot(3100, 3100, 1)));
+    
  
 
     new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new InstantCommand(() -> m_indexer.stop())
