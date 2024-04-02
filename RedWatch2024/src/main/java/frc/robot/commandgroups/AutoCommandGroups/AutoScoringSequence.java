@@ -28,7 +28,7 @@ public class AutoScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new PivotAndRev(bottomPower, topPower).withTimeout(1),
+      new PivotAndRev(bottomPower, topPower).withTimeout(1.5),
       new ParallelDeadlineGroup(new AutoFeedAndShoot(bottomPower, topPower, indexerPower), new AutoPivotNoEnd(Vision.getInstance(), Pivot.getInstance(), true))
     );
 

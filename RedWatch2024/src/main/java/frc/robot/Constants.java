@@ -248,15 +248,17 @@ public final class Constants {
     public static final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
       new Point2D.Double(-1, 47.5),
       new Point2D.Double(0.94, 47.5),
-      new Point2D.Double(1.257, 46),
-      new Point2D.Double(1.5, 43),  
-      new Point2D.Double(1.9, 35.8),
-      new Point2D.Double(2.3, 32),
-      new Point2D.Double(2.51, 29.1),
-      new Point2D.Double(2.73, 27.1),
+      new Point2D.Double(1.247, 44.5),
+      new Point2D.Double(1.507, 40.3), 
+      new Point2D.Double(1.75, 35.8), 
+      new Point2D.Double(1.9, 34.5),
+      new Point2D.Double(2.3, 30.2),
+      new Point2D.Double(2.495, 26.3),
+      new Point2D.Double(2.755, 24.9),
       new Point2D.Double(3, 23.2),
-      new Point2D.Double(3.4, 21.5),
-    new Point2D.Double(4, 20.7)};
+      new Point2D.Double(3.395, 21.85),
+      new Point2D.Double(3.75, 20),
+      new Point2D.Double(4.03, 19.6)};
   }
 
   public static class VisionConstants {

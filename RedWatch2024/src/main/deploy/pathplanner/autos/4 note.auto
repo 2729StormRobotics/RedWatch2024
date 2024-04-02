@@ -75,9 +75,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "FarShot"
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "FarShot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "VisionAlign"
+                }
+              }
+            ]
           }
         },
         {
@@ -135,6 +154,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
           }
         },
         {
@@ -201,27 +226,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "wait",
           "data": {
-            "name": "FarShot"
+            "waitTime": 0.1
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "OffsetGyro60"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "OffsetGyro60"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "OffsetGyro60"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "FarShot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "VisionAlign"
+                }
+              }
+            ]
           }
         }
       ]

@@ -115,7 +115,7 @@ public class RobotContainer {
 
     //manual pivot control
      m_pivot.setDefaultCommand(
-      new RunCommand(() -> m_pivot.setPivotSpeed(Math.copySign(Math.pow(m_weaponsController.getLeftY(), 2), -m_weaponsController.getLeftY()))
+      new RunCommand(() -> m_pivot.setPivotSpeed(Math.copySign(Math.pow(m_weaponsController.getLeftY(), 5), -m_weaponsController.getLeftY()))
         , m_pivot));
     
     //keep steady rpm for the shooter
@@ -211,8 +211,8 @@ public class RobotContainer {
     new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new AutoPivot(106, m_pivot, false));
 
     //BumperUp - Y
-     new JoystickButton(m_weaponsController, Button.kY.value).onTrue
-     (new ScoringSequence(51, 3000, 3000));
+     new JoystickButton(m_weaponsController, Button.kY.value).whileTrue
+     (new ManualRPMRev( 10000, 10000));
   // (new ScoringSequence(48, m_shooter, m_pivot, m_indexer, 5300, 5300, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {LEDSegment.MainStrip.setColor(LEDs.allianceColor);}))
 // );
  
