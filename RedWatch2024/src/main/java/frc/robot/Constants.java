@@ -187,8 +187,6 @@ public final class Constants {
 
   public static class IntakeConstants {
     public static final int kIntakeMotor = 13;
-    public static final int kIntakeMotor1 = 16;
-
     public static final int kCurrentLimit = 35;
     public static double kIntakeMotorSpeed = 0.8;
     public static double kEjectMotorSpeed = -0.8;
