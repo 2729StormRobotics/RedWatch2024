@@ -36,10 +36,8 @@ public class ScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new InstantCommand(() -> {m_blinkin.yellow();}),
         new PivotAndRev(m_bottomPower, m_topPower),
         new ParallelCommandGroup(new SequentialCommandGroup(new WaitCommand(0.2),
-            new InstantCommand(() -> {m_blinkin.green();}),
             new WaitCommand(0.1),
             new FeedAndShoot(m_bottomPower, m_topPower, indexerPower),
             new InstantCommand(() -> {m_blinkin.neutral();})),
@@ -53,14 +51,8 @@ public class ScoringSequence extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-        new InstantCommand(() -> {
-          m_blinkin.yellow();
-        }),
         new PivotAndRev(m_angle, m_bottomPower, m_topPower),
         new ParallelCommandGroup(new SequentialCommandGroup(new WaitCommand(0.2),
-            new InstantCommand(() -> {
-              m_blinkin.green();
-            }),
             new WaitCommand(0.1),
             new FeedAndShoot(m_bottomPower, m_topPower, indexerPower),
             new InstantCommand(() -> {
