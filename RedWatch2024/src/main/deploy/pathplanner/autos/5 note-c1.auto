@@ -77,6 +77,12 @@
         {
           "type": "named",
           "data": {
+            "name": "FarShot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "SetShooterPower50"
           }
         },
@@ -91,26 +97,19 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "IntakeAngle"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "deadline",
+                      "type": "wait",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.0
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "PivotAndRevNoEnd"
-                            }
-                          }
-                        ]
+                        "waitTime": 0.5
                       }
                     },
                     {
@@ -126,7 +125,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeAngle"
+                              "name": "SetShooterPower"
                             }
                           }
                         ]
@@ -136,6 +135,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FarShot"
           }
         },
         {
@@ -155,26 +160,19 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "IntakeAngle"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "deadline",
+                      "type": "wait",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 1.5
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "PivotAndRevNoEnd"
-                            }
-                          }
-                        ]
+                        "waitTime": 0.5
                       }
                     },
                     {
@@ -190,7 +188,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "IntakeAngle"
+                              "name": "SetShooterPower"
                             }
                           }
                         ]
