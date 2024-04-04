@@ -113,7 +113,7 @@ public class Drivetrain extends SubsystemBase {
         //   return alliance.get() == DriverStation.Alliance.Red;
         // }
         // return false;
-        return true; // red = true
+        return false; // red = true
       },
       this
     );

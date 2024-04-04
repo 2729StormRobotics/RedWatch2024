@@ -122,7 +122,7 @@ public class RobotContainer {
     //keep steady rpm for the shooter
     m_shooter.setDefaultCommand(new RunCommand(() -> m_shooter.setShooterSpeed(Shooter.passivePower, Shooter.passivePower), m_shooter));
 
-    NamedCommands.registerCommand("FirstShot", new AutoScoringSequence(3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    NamedCommands.registerCommand("FirstShot", new ScoringSequence(47.5, 3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed).withTimeout(2));
     NamedCommands.registerCommand("Shoot", new AutoScoringSequence(Constants.ShooterConstants.kBottomPowerSpeaker, Constants.ShooterConstants.kTopPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
     NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad().withTimeout(7));
     NamedCommands.registerCommand("IntakeAngle", new AutoPivot(75, m_pivot, false));
@@ -180,6 +180,8 @@ public class RobotContainer {
   /*
   * WEAPONS~
   */
+  // PIVOT SOFT STOP
+    new Trigger(()-> (m_pivot.getPivotAngle() >=103.7)).whileTrue(new AutoPivot(103.7-2, m_pivot, false));
 
     //MANUAL REV - LT
     new Trigger(() -> (m_weaponsController.getLeftTriggerAxis() > 0.5)).whileTrue(new AutoPivotAndRevNoEnd(100000, 100000));
@@ -197,23 +199,25 @@ public class RobotContainer {
 
     // SHOOT AMP - LB
     new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
-    (new AmpScoringSequence(Constants.ShooterConstants.kBottomPowerAmp, Constants.ShooterConstants.kTopPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
+    (new PivotAndRev(47.5, 3000, 3000).andThen(new FeedAndShoot(3000, 3000, 1)));
 
     //INTAKE PIVOT - X ~ 
     new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad()), new AutoPivot(75,m_pivot, false)).andThen(new AutoPivot( 2, m_pivot, false))
-    .andThen(new InstantCommand(() -> {m_lights.neutral();}))
-); //37.5 at .55
+    .andThen(new InstantCommand(() -> {m_lights.neutral();})));
     new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new AutoPivot(2, m_pivot, false), new StopIntake(), new InstantCommand(() -> {m_indexer.stop();}, m_indexer).andThen(new InstantCommand(() -> {m_lights.neutral();}))));
 
     //MELTDOWN - B
     new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown());
 
     //PIVOT AMP - start
-    new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new AutoPivot(106, m_pivot, false));
+    new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new AutoPivot(103.5, m_pivot, false));//106
 
-    //BumperUp - Y
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(30, 3100, 3100).andThen(new FeedAndShoot(3100, 3100, 1)));
+    //PASS - Y
+    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(30, 3900, 3900).andThen(new FeedAndShoot(3900, 3900, 1)));
     
+    new JoystickButton(m_weaponsController, Button.kBack.value).onTrue
+    (new AmpScoringSequence(Constants.ShooterConstants.kBottomPowerAmp, Constants.ShooterConstants.kTopPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
+
  
 
     new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new InstantCommand(() -> m_indexer.stop())
@@ -242,8 +246,8 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
+    // return new PivotAndRev(47.5, 3000, 3000).andThen(new FeedAndShoot(3000, 3000, 1));
     return autoChooser.getSelected();
-    // return null;
   }
 }
 // {if; buttonx=1 then; :Itanke work

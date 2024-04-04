@@ -101,12 +101,12 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Shooter RPM", getAverageRPM());
     SmartDashboard.putNumber("Left Shooter Voltage", getLeftVoltage()); //check value on smart dashbord for a rev cmd
     SmartDashboard.putNumber("Right Shooter Voltage", getRightVoltage());
-    if (getAverageRPM()>=1500){
-      Blinkin.getInstance().yellow();
+    if (getAverageRPM()>=5800){
+      Blinkin.getInstance().green();
     }
     else{
-      if(getAverageRPM()>=6000){
-        Blinkin.getInstance().green();
+      if(getAverageRPM()>=2500){
+        Blinkin.getInstance().yellow();
       }
     }
   }

@@ -65,7 +65,7 @@ public class Blinkin extends SubsystemBase{
     // Color to use when doing nothing ~
     public void neutral(){
         // blinkinController.disable();
-        set(-0.93);
+        set(0.53);
         // set(0.99);
     }
 
