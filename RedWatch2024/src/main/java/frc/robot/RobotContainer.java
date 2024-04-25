@@ -4,251 +4,465 @@
 
 package frc.robot;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
+import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
+import org.apache.commons.math3.ode.SecondaryEquations;
+import org.lasarobotics.hardware.revrobotics.Blinkin;
+
+import com.pathplanner.lib.auto.NamedCommands;
+import com.revrobotics.REVPhysicsSim;
+
+import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commandgroups.AmpScoringSequence;
-import frc.robot.commandgroups.FeedAndShoot;
-import frc.robot.commandgroups.IntakeThenLoad;
-import frc.robot.commandgroups.PivotAndRev;
-import frc.robot.commandgroups.ScoringSequence;
-import frc.robot.commandgroups.VisionAndPivot;
-import frc.robot.commandgroups.AutoCommandGroups.AutoAprilTagAlign;
-import frc.robot.commandgroups.AutoCommandGroups.AutoFeedAndShoot;
-import frc.robot.commandgroups.AutoCommandGroups.AutoNoteAlign;
-import frc.robot.commandgroups.AutoCommandGroups.AutoPivotAndRevNoEnd;
-import frc.robot.commandgroups.AutoCommandGroups.AutoRevAndShoot;
-import frc.robot.commandgroups.AutoCommandGroups.AutoScoringSequence;
-import frc.robot.commands.Meltdown;
-import frc.robot.commands.Indexer.Feed;
-import frc.robot.commands.Intake.StopIntake;
-import frc.robot.commands.Pivot.AutoPivot;
-import frc.robot.commands.Shooter.ManualRPMRev;
-import frc.robot.commands.Shooter.SetRPM;
-import frc.robot.commands.Vision.AprilTagAlign;
-import frc.robot.commands.Vision.NoteAlign;
-import frc.robot.subsystems.Blinkin;
-import frc.robot.subsystems.ControlPanel;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Hanger;
-import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Pivot;
-import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Vision;
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
+import frc.robot.Constants.Shooter;
+import frc.robot.commands.autonomous.SimpleAuto;
+import frc.robot.subsystems.climber.ClimberSubsystem;
+import frc.robot.subsystems.drive.AutoTrajectory;
+import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.shooter.ShooterSubsystem;
+import frc.robot.subsystems.shooter.ShooterSubsystem.State;
+import frc.robot.subsystems.vision.VisionSubsystem;
+
+@SuppressWarnings("unused")
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain;
-  private final Vision m_vision;
-  private final Indexer m_indexer;
-  private final Intake m_intake;
-  private final Shooter m_shooter;
-  private final Pivot m_pivot;
-  private final ControlPanel m_controlPanel;
-  private final Blinkin m_lights;
-  private final Hanger m_Hanger;
+  private static final DriveSubsystem DRIVE_SUBSYSTEM = new DriveSubsystem(
+    DriveSubsystem.initializeHardware(),
+    Constants.Drive.DRIVE_ROTATE_PID,
+    Constants.Drive.DRIVE_CONTROL_CENTRICITY,
+    Constants.Drive.DRIVE_THROTTLE_INPUT_CURVE,
+    Constants.Drive.DRIVE_TURN_INPUT_CURVE,
+    Constants.Drive.DRIVE_TURN_SCALAR,
+    Constants.HID.CONTROLLER_DEADBAND,
+    Constants.Drive.DRIVE_LOOKAHEAD
+  );
 
-  // Will allow to choose which auto command to run from the shuffleboard
-  private final SendableChooser<Command> autoChooser;
-  
-  private final Joystick m_translator = new Joystick(OperatorConstants.kDriveTranslatorPort);
-  private final Joystick m_rotator = new Joystick(OperatorConstants.kDriveRotatorPort);
-  private final XboxController m_weaponsController = new XboxController(OperatorConstants.kWeaponsControllerPort);
+  private static final ShooterSubsystem SHOOTER_SUBSYSTEM = new ShooterSubsystem(
+    ShooterSubsystem.initializeHardware(),
+    Constants.Shooter.FLYWHEEL_CONFIG,
+    Constants.Shooter.ANGLE_CONFIG,
+    Constants.Shooter.ANGLE_MOTION_CONSTRAINT,
+    Constants.Shooter.TOP_FLYWHEEL_DIAMETER,
+    Constants.Shooter.BOTTOM_FLYWHEEL_DIAMETER,
+    Constants.Shooter.SHOOTER_MAP,
+    DRIVE_SUBSYSTEM::getPose,
+    () -> speakerSupplier()
+  );
+  private static final IntakeSubsystem INTAKE_SUBSYSTEM = new IntakeSubsystem(
+    IntakeSubsystem.initializeHardware(),
+    Constants.Intake.ROLLER_VELOCITY
+  );
+  private static final VisionSubsystem VISION_SUBSYSTEM = VisionSubsystem.getInstance();
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() { 
-    m_indexer = Indexer.getInstance();
-    m_intake = Intake.getInstance();
-    m_shooter = Shooter.getInstance();
-    m_pivot = Pivot.getInstance();
-    m_vision = Vision.getInstance();
-    m_lights = Blinkin.getInstance();
-    m_drivetrain = Drivetrain.getInstance();
-    m_controlPanel = ControlPanel.getInstance();
+  private static final CommandXboxController PRIMARY_CONTROLLER = new CommandXboxController(Constants.HID.PRIMARY_CONTROLLER_PORT);
+  private static final CommandXboxController OPERATOR_KEYPAD = new CommandXboxController(Constants.HID.SECONDARY_CONTROLLER_PORT);
 
-    SmartDashboard.putData("command scheduler", CommandScheduler.getInstance());
+  private static SendableChooser<Command> m_automodeChooser = new SendableChooser<>();
 
-    // Configure the trigger bindings
-    m_Hanger = Hanger.getInstance();
-    // m_Hanger.setDefaultCommand(new HangerControl(m_weaponsController.getLeftY()*0.5, m_weaponsController.getLeftY()*0.5, m_Hanger));
-    m_Hanger.setDefaultCommand(new RunCommand(() -> m_Hanger.setSpeed(MathUtil.applyDeadband(m_weaponsController.getRightY(), 0.1)), m_Hanger));
-    
-    SmartDashboard.putData(CommandScheduler.getInstance());
+  public RobotContainer() {
+    // Set drive command
+    DRIVE_SUBSYSTEM.setDefaultCommand(
+      DRIVE_SUBSYSTEM.driveCommand(
+        () -> PRIMARY_CONTROLLER.getLeftY(),
+        () -> PRIMARY_CONTROLLER.getLeftX(),
+        () -> PRIMARY_CONTROLLER.getRightX()
+      )
+    );
+
+    // Configure auto builder
+    DRIVE_SUBSYSTEM.configureAutoBuilder();
+
+    // Register named commands
+    NamedCommands.registerCommand(Constants.NamedCommands.INTAKE_COMMAND_NAME, autoIntakeCommand().withTimeout(7));
+    NamedCommands.registerCommand(Constants.NamedCommands.PRELOAD_COMMAND_NAME, SHOOTER_SUBSYSTEM.shootSpeakerCommand().withTimeout(1.1));
+    NamedCommands.registerCommand(Constants.NamedCommands.SHOOT_COMMAND_NAME, SHOOTER_SUBSYSTEM.shootSpeakerCommand().withTimeout(0.7));
+    NamedCommands.registerCommand(Constants.NamedCommands.SPINUP_COMMAND_NAME, SHOOTER_SUBSYSTEM.spinupCommand());
+    NamedCommands.registerCommand(Constants.NamedCommands.FEEDTHROUGH_COMMAND_NAME, feedThroughCommand().withTimeout(2));
+    NamedCommands.registerCommand(Constants.NamedCommands.AUTO_SHOOT_COMMAND_NAME, shootCommand().withTimeout(0.9));
+    NamedCommands.registerCommand(Constants.NamedCommands.AUTO_SHOOT_LONG_COMMAND_NAME, shootCommand().withTimeout(2.0));
+    NamedCommands.registerCommand(Constants.NamedCommands.AUTO_INTAKE_COMMAND_NAME, aimAndIntakeObjectCommand());
+
+    VISION_SUBSYSTEM.setPoseSupplier(() -> DRIVE_SUBSYSTEM.getPose());
+
+    // Bind buttons and triggers
     configureBindings();
 
-    // Configure default commands
-     //Joystick drive
-    m_drivetrain.setDefaultCommand(
-      new RunCommand(
-        () -> m_drivetrain.drive(
-          // -MathUtil.applyDeadband(m_driverController.getLeftY()/4, OperatorConstants.kDriveDeadband),
-          // -MathUtil.applyDeadband(m_driverController.getLeftX()/4, OperatorConstants.kDriveDeadband),
-          // -MathUtil.applyDeadband(m_driverController.getRightX()/4, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getY()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_translator.getX()*OperatorConstants.translationMultiplier, OperatorConstants.kDriveDeadband),
-          -MathUtil.applyDeadband(m_rotator.getX()*OperatorConstants.rotationMultiplier, OperatorConstants.kDriveDeadband),
-          true, true),
-        m_drivetrain));
-
-    //manual pivot control
-     m_pivot.setDefaultCommand(
-      new RunCommand(() -> m_pivot.setPivotSpeed(Math.copySign(Math.pow(m_weaponsController.getLeftY(), 5), -m_weaponsController.getLeftY()))
-        , m_pivot));
-    
-    //keep steady rpm for the shooter
-    m_shooter.setDefaultCommand(new RunCommand(() -> m_shooter.setShooterSpeed(Shooter.passivePower, Shooter.passivePower), m_shooter));
-
-    NamedCommands.registerCommand("FirstShot", new ScoringSequence(47.5, 3000, 3000, Constants.IndexerConstants.kFeedSpeakerSpeed).withTimeout(2));
-    NamedCommands.registerCommand("Shoot", new AutoScoringSequence(Constants.ShooterConstants.kBottomPowerSpeaker, Constants.ShooterConstants.kTopPowerSpeaker, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("IntakeItem", new IntakeThenLoad().withTimeout(7));
-    NamedCommands.registerCommand("IntakeAngle", new AutoPivot(75, m_pivot, false));
-    NamedCommands.registerCommand("StopIntake", new StopIntake());
-    NamedCommands.registerCommand("VisionAlign", new AutoAprilTagAlign());
-    NamedCommands.registerCommand("SetShooterPower", new InstantCommand(() -> m_shooter.setShooterSpeed(0.85, 0.85)));
-    NamedCommands.registerCommand("OffsetGyro60", new InstantCommand(() -> Drivetrain.gyroOffset += -60));
-    // NamedCommands.registerCommand("PivotBumperUp", new FastPivot(49, m_pivot).withTimeout(1.1));
-    NamedCommands.registerCommand("PivotBumperUp", new AutoPivot(m_vision, m_pivot, true).withTimeout(1.1));
-    NamedCommands.registerCommand("PivotBumperUpFirst", new AutoPivot(m_vision, m_pivot, true).withTimeout(0.75));
-    NamedCommands.registerCommand("SetShooterPower50", new InstantCommand(() -> m_shooter.setShooterSpeed(0.6, 0.6)));
-    NamedCommands.registerCommand("Feed", new InstantCommand(() -> {m_indexer.runIndexer(1);}));
-    NamedCommands.registerCommand("NoteAlign", new AutoNoteAlign().withTimeout(0.85));
-    NamedCommands.registerCommand("FarShot", new AutoScoringSequence(6000, 6000, Constants.IndexerConstants.kFeedSpeakerSpeed));
-    NamedCommands.registerCommand("RevShooter", new SetRPM(6000, 6000));
-    NamedCommands.registerCommand("PivotAndRev", new PivotAndRev(6000, 6000));
-    NamedCommands.registerCommand("PivotAndRevNoEnd", new AutoPivotAndRevNoEnd(6000, 6000));
-    NamedCommands.registerCommand("AutoRevAndShoot", new AutoRevAndShoot());
-
-
-    // Puts auto chooser onto shuffleboard
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    // Configure ShuffleBoard
+    defaultShuffleboardTab();
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureBindings() {
+    // Start button - toggle traction control
+    PRIMARY_CONTROLLER.start().onTrue(DRIVE_SUBSYSTEM.toggleTractionControlCommand());
 
-    /*
-     * Driver
-     */
-    // locks wheels
-    new JoystickButton(m_translator, Button.kX.value)
-        .whileTrue(new RunCommand(
-            () -> m_drivetrain.setX(),
-            m_drivetrain));
-    new JoystickButton(m_rotator, Button.kA.value).whileTrue(new NoteAlign(m_translator));
+    // Back button - toggles centricity between robot and field centric
+    PRIMARY_CONTROLLER.back().onTrue(DRIVE_SUBSYSTEM.toggleCentricityCommand());
 
-    // reset gyro
-    new JoystickButton(m_rotator, 12).whileTrue(new RunCommand(() -> m_drivetrain.zeroHeading(), m_drivetrain));
-   
-    // vision align
-    // new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_translator));
-    new JoystickButton(m_translator, Button.kA.value).whileTrue(new AprilTagAlign(m_translator));
-  
-  
-  /*
-  * WEAPONS~
-  */
-  // PIVOT SOFT STOP
-    new Trigger(()-> (m_pivot.getPivotAngle() >=103.7)).whileTrue(new AutoPivot(103.7-2, m_pivot, false));
+    // Right trigger button - aim and shoot at speaker, shooting only if speaker tag is visible and robot is in range
+    // Click DPAD down to override and shoot now
+    PRIMARY_CONTROLLER.rightTrigger().whileTrue(shootCommand(() -> PRIMARY_CONTROLLER.a().getAsBoolean()));
 
-    //MANUAL REV - LT
-    new Trigger(() -> (m_weaponsController.getLeftTriggerAxis() > 0.5)).whileTrue(new AutoPivotAndRevNoEnd(100000, 100000));
+    // Right bumper button - amp score, also use for outtake
+    PRIMARY_CONTROLLER.rightBumper().whileTrue(SHOOTER_SUBSYSTEM.scoreAmpCommand());
 
-    //MANUAL SHOOT - A
-     new JoystickButton(m_weaponsController, Button.kA.value).onTrue
-    // (new AutoPivot(30, m_pivot, false));
-     (new FeedAndShoot(6000, 6000, Constants.IndexerConstants.kFeedSpeakerSpeed));
+    // Left trigger button - intake game piece
+    PRIMARY_CONTROLLER.leftTrigger().whileTrue(intakeCommand());
 
-    // //SHOOT SPEAKER - RB
-    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onTrue
-    (new ScoringSequence(6000, 6000, Constants.IndexerConstants.kFeedSpeakerSpeed).andThen(new InstantCommand(() -> {m_lights.neutral();})));
-    new JoystickButton(m_weaponsController, Button.kRightBumper.value).onFalse(new InstantCommand(() -> m_indexer.stop())
-    .andThen(new AutoPivot(2, m_pivot, false)).andThen(new InstantCommand(() -> {m_lights.neutral();})));
+    // Left bumper button - intake game piece from source
+    PRIMARY_CONTROLLER.leftBumper().whileTrue(sourceIntakeCommand());
 
-    // SHOOT AMP - LB
-    new JoystickButton(m_weaponsController, Button.kLeftBumper.value).onTrue
-    (new PivotAndRev(47.5, 3000, 3000).andThen(new FeedAndShoot(3000, 3000, 1)));
+    // A button - go to amp and score
+    // PRIMARY_CONTROLLER.a().whileTrue(
+    //   DRIVE_SUBSYSTEM.goToPoseCommand(
+    //     Constants.Field.AMP,
+    //     SHOOTER_SUBSYSTEM.prepareForAmpCommand(),
+    //     SHOOTER_SUBSYSTEM.scoreAmpCommand()
+    //   )
+    // );
 
-    //INTAKE PIVOT - X ~ 
-    new JoystickButton(m_weaponsController, Button.kX.value).whileTrue(new ParallelDeadlineGroup(new WaitCommand(0.5).andThen(new IntakeThenLoad()), new AutoPivot(75,m_pivot, false)).andThen(new AutoPivot( 2, m_pivot, false))
-    .andThen(new InstantCommand(() -> {m_lights.neutral();})));
-    new JoystickButton(m_weaponsController, Button.kX.value).onFalse(new ParallelCommandGroup(new AutoPivot(2, m_pivot, false), new StopIntake(), new InstantCommand(() -> {m_indexer.stop();}, m_indexer).andThen(new InstantCommand(() -> {m_lights.neutral();}))));
+    // Left stick click - pass note
+    PRIMARY_CONTROLLER.leftStick().whileTrue(SHOOTER_SUBSYSTEM.passCommand());
 
-    //MELTDOWN - B
-    new JoystickButton(m_weaponsController, Button.kB.value).onTrue(new Meltdown());
+    // B button - go to source and intake game piece
+    // PRIMARY_CONTROLLER.b().whileTrue(
+    //   DRIVE_SUBSYSTEM.goToPoseCommand(
+    //     Constants.Field.SOURCE,
+    //     SHOOTER_SUBSYSTEM.sourceIntakeCommand(),
+    //     SHOOTER_SUBSYSTEM.sourceIntakeCommand()
+    //   )
+    // );
 
-    //PIVOT AMP - start
-    new JoystickButton(m_weaponsController, Button.kStart.value).onFalse(new AutoPivot(103.5, m_pivot, false));//106
+    // Right stick click - snap robot to the nearest cardinal direction
+    PRIMARY_CONTROLLER.rightStick().whileTrue(
+      DRIVE_SUBSYSTEM.snapToCardinalDirectionCommand(
+        () -> PRIMARY_CONTROLLER.getLeftY(),
+        () -> PRIMARY_CONTROLLER.getLeftX()
+      )
+    );
 
-    //PASS - Y
-    new JoystickButton(m_weaponsController, Button.kY.value).onTrue(new PivotAndRev(30, 3900, 3900).andThen(new FeedAndShoot(3900, 3900, 1)));
-    
-    new JoystickButton(m_weaponsController, Button.kBack.value).onTrue
-    (new AmpScoringSequence(Constants.ShooterConstants.kBottomPowerAmp, Constants.ShooterConstants.kTopPowerAmp, Constants.IndexerConstants.kFeedAmpSpeed));
+    // B Button - automatically aim at object
+    // PRIMARY_CONTROLLER.b().whileTrue(aimAtObject());
 
- 
+    // X button - shoot note into speaker from against the subwoofer
+    PRIMARY_CONTROLLER.x().whileTrue(SHOOTER_SUBSYSTEM.shootSpeakerCommand());
 
-    new JoystickButton(m_weaponsController, Button.kY.value).onFalse(new InstantCommand(() -> m_indexer.stop())
-    .andThen(new AutoPivot(2, m_pivot, false)).andThen(new InstantCommand(() -> {m_lights.neutral();})));
+    // Y button - spit out note
+    PRIMARY_CONTROLLER.y().whileTrue(outtakeCommand());
 
-    // Shooter overrides 
-    new POVButton(m_weaponsController, 0).onTrue(new RunCommand(() -> {m_shooter.setShooterSpeed(Constants.ShooterConstants.kTopPowerAmp, Constants.ShooterConstants.kBottomPowerAmp);}, m_shooter));
-    new POVButton(m_weaponsController, 180).onTrue(new InstantCommand(() -> {m_shooter.stopShooterMotors();}, m_shooter));
+    // DPAD up - shoot manual
+    PRIMARY_CONTROLLER.povUp().whileTrue(SHOOTER_SUBSYSTEM.shootManualCommand(() -> dashboardStateSupplier()));
 
-    // Intake overrides
-    new POVButton(m_weaponsController, 90).onTrue(new RunCommand(() -> {m_intake.ejectItem();}, m_intake));
-    new POVButton(m_weaponsController, 270).onTrue(new InstantCommand(() -> {m_intake.stopIntake();}, m_intake));
+    // DPAD right - feed a note through
+    PRIMARY_CONTROLLER.povRight().whileTrue(feedThroughCommand());
 
-    // Indexer overrides
-    new POVButton(m_weaponsController, 45).onTrue(new RunCommand(() -> {m_indexer.runIndexer(Constants.IndexerConstants.kIndexerSpeed);}, m_indexer));
-    new POVButton(m_weaponsController, 225).onTrue(new InstantCommand(() -> {m_indexer.stop();}, m_indexer));
+    // DPAD left - PARTY BUTTON!!
+    PRIMARY_CONTROLLER.povLeft().whileTrue(partyMode());
 
-    // LEDs
-    new JoystickButton(m_weaponsController, Button.kRightStick.value).onTrue(new InstantCommand(() -> {m_lights.set(-0.99);}));
+    // Operator keypad button 1 - PARTY BUTTON!!
+    OPERATOR_KEYPAD.button(1).whileTrue(partyMode());
   }
-//~
+
   /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
+   * Compose command to control controller rumble.
+   * <ul>
+   * <li> If the vision subsystem detects a game piece, the left side of the controller will rumble
+   * <li> If the intake has a game piece inside, the right side of the controller will rumble
+   * <li> Otherwise, no rumble :(
+   * </ul>
+   * @return Command that will automatically make the controller rumble based on the above conditions
+   */
+  private Command rumbleCommand() {
+    return Commands.run(() -> {
+      if (SHOOTER_SUBSYSTEM.isObjectPresent())
+        PRIMARY_CONTROLLER.getHID().setRumble(RumbleType.kBothRumble, 1.0);
+      else PRIMARY_CONTROLLER.getHID().setRumble(RumbleType.kBothRumble, 0.0);
+    }).finallyDo(() -> PRIMARY_CONTROLLER.getHID().setRumble(RumbleType.kBothRumble, 0.0));
+  }
+
+  /**
+   * Compose command to intake a note and rumble controller appropriately
+   * @return Command that will automatically intake a note and prepare it for feeding inside the shooter motor
+   */
+  private Command intakeCommand() {
+    return Commands.parallel(
+      rumbleCommand(),
+      INTAKE_SUBSYSTEM.intakeCommand(),
+      SHOOTER_SUBSYSTEM.intakeCommand()
+    );
+  }
+
+  /**
+   * Compose command to intake a note via the source and rumble controller appropriately
+   * @return Command that will automatically intake a note from source via the shooter flywheels
+   */
+  private Command sourceIntakeCommand() {
+    return Commands.parallel(
+      rumbleCommand(),
+      SHOOTER_SUBSYSTEM.sourceIntakeCommand()
+    );
+  }
+
+  /**
+   * Intake until an object is present in autonomous
+   * @return Command to intake until an object is present
+   */
+  private Command autoIntakeCommand() {
+    return Commands.parallel(
+      INTAKE_SUBSYSTEM.intakeCommand(),
+      SHOOTER_SUBSYSTEM.intakeCommand()
+    ).until(() -> SHOOTER_SUBSYSTEM.isObjectPresent());
+  }
+
+  /**
+   * Compose command to outtake a note
+   * @return Command that will spit out a note from ground intake
+   */
+  private Command outtakeCommand() {
+    return Commands.parallel(
+      rumbleCommand(),
+      INTAKE_SUBSYSTEM.outtakeCommand(),
+      SHOOTER_SUBSYSTEM.outtakeCommand()
+    );
+  }
+
+  /**
+   * Compose command to shoot note
+   * @param override Shoot even if target tag is not visible
+   * @return Command that will automatically aim and shoot note
+   */
+  private Command shootCommand(BooleanSupplier override) {
+    return Commands.parallel(
+      DRIVE_SUBSYSTEM.aimAtPointCommand(
+        () -> PRIMARY_CONTROLLER.getLeftY(),
+        () -> PRIMARY_CONTROLLER.getLeftX(),
+        () -> PRIMARY_CONTROLLER.getRightX(),
+        () -> speakerSupplier().pose.getTranslation().toTranslation2d(),
+        true,
+        true
+      ),
+      SHOOTER_SUBSYSTEM.shootCommand(() -> DRIVE_SUBSYSTEM.isAimed(), override)
+    );
+  }
+
+  /**
+   * Compose command to shoot note, checking if tag is visible and robot is in range
+   * @return Command that will automatically aim and shoot note
+   */
+  private Command shootCommand() {
+    return shootCommand(() -> false);
+  }
+
+  /**
+   * Compose command to feed a note through the robot
+   * @return Command to feed note through the robot
+   */
+  private Command feedThroughCommand() {
+    return Commands.parallel(
+      rumbleCommand(),
+      INTAKE_SUBSYSTEM.intakeCommand(),
+      SHOOTER_SUBSYSTEM.feedThroughCommand(() -> DRIVE_SUBSYSTEM.isAimed())
+    );
+  }
+
+  /**
+   * Command to aim at detected game object automatically, driving normally if none is detected
+   * @return Command to aim at object
+   */
+  private Command aimAtObject() {
+    return DRIVE_SUBSYSTEM.aimAtPointRobotCentric(
+      () -> PRIMARY_CONTROLLER.getLeftY(),
+      () -> PRIMARY_CONTROLLER.getLeftX(),
+      () -> PRIMARY_CONTROLLER.getRightX(),
+      () -> {
+        return VISION_SUBSYSTEM.getObjectLocation().isPresent()
+                ? VISION_SUBSYSTEM.getObjectLocation().get()
+                : null;
+      },
+      false,
+      false
+    );
+  }
+
+  /**
+   * Automatically aim robot heading at object, drive, and intake a game object
+   * @return Command to aim robot at object, drive, and intake a game object
+   */
+   private Command aimAndIntakeObjectCommand() {
+     return Commands.parallel(
+    //   DRIVE_SUBSYSTEM.driveCommand(() -> 0, () -> 0, () -> 0).withTimeout(0.1),
+    //   DRIVE_SUBSYSTEM.aimAtPointCommand(
+    //       () -> VISION_SUBSYSTEM.getObjectLocation().isPresent() ? PRIMARY_CONTROLLER.getLeftY() : 0,
+    //       () -> VISION_SUBSYSTEM.getObjectLocation().isPresent() ? PRIMARY_CONTROLLER.getLeftX() : 0,
+    //       () -> VISION_SUBSYSTEM.getObjectLocation().isPresent() ? PRIMARY_CONTROLLER.getRightX() : 0,
+    //       () -> {
+    //         return VISION_SUBSYSTEM.getObjectLocation().orElse(null);
+    //       },
+    //       false,
+    //       false).until(() -> VISION_SUBSYSTEM.shouldIntake()),
+    //  Commands.parallel(
+      DRIVE_SUBSYSTEM.aimAtPointCommand(
+        () -> VISION_SUBSYSTEM.objectIsVisible() ? -DRIVE_SUBSYSTEM.getPose().getRotation().plus(new Rotation2d(VISION_SUBSYSTEM.getObjectHeading().orElse(Units.Degrees.of(0)))).getCos() * 0.75 : 0,
+        () -> VISION_SUBSYSTEM.objectIsVisible() ? -DRIVE_SUBSYSTEM.getPose().getRotation().plus(new Rotation2d(VISION_SUBSYSTEM.getObjectHeading().orElse(Units.Degrees.of(0)))).getSin() * 0.75 : 0,
+        () -> 0,
+        () -> {
+          return VISION_SUBSYSTEM.getObjectLocation().orElse(null);
+        },
+        false,
+        false),
+
+      INTAKE_SUBSYSTEM.intakeCommand(),
+      SHOOTER_SUBSYSTEM.intakeCommand()
+     )
+     .until(() -> SHOOTER_SUBSYSTEM.isObjectPresent());
+  }
+
+  /**
+   * PARTY BUTTON!!!!
+   * @return Command that spins the robot and moves the shooter up and down
+   */
+  private Command partyMode() {
+    return Commands.parallel(
+      DRIVE_SUBSYSTEM.driveCommand(() -> 0.0, () -> 0.0, () -> 1.0),
+      SHOOTER_SUBSYSTEM.shootPartyMode()
+    );
+  }
+
+  /**
+   * Get correct speaker for current alliance
+   * @return Location of appropriate speaker
+   */
+  private static AprilTag speakerSupplier() {
+    return DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Blue
+      ? Constants.Field.BLUE_SPEAKER
+      : Constants.Field.RED_SPEAKER;
+  }
+
+  /**
+   * Manually retrieve a desired shooter state from the dashboard
+   * @return Shooter state with the desired speed and angle
+   */
+  private ShooterSubsystem.State dashboardStateSupplier() {
+    return new ShooterSubsystem.State(
+      Units.MetersPerSecond.of(SmartDashboard.getNumber(Constants.SmartDashboard.SMARTDASHBOARD_SHOOTER_SPEED, 0.0)),
+      Units.Degrees.of(SmartDashboard.getNumber(Constants.SmartDashboard.SMARTDASHBOARD_SHOOTER_ANGLE, 0.0))
+    );
+  }
+
+  /**
+   * Add auto modes to chooser
+   */
+  private void autoModeChooser() {
+    m_automodeChooser.setDefaultOption("Do nothing", Commands.none());
+    m_automodeChooser.addOption("Simple", new SimpleAuto(DRIVE_SUBSYSTEM));
+    m_automodeChooser.addOption(Constants.AutoNames.CENTER_CLOSETOP_CLOSEMID_CLOSEBOTTOM_AUTO_NAME.getFirst(), new AutoTrajectory(DRIVE_SUBSYSTEM, Constants.AutoNames.CENTER_CLOSETOP_CLOSEMID_CLOSEBOTTOM_AUTO_NAME.getSecond()).getCommand());
+    m_automodeChooser.addOption(Constants.AutoNames.CENTER_CLOSEBOTTOM_CLOSEMID_CLOSETOP_FARTOP_AUTO_NAME.getFirst(), new AutoTrajectory(DRIVE_SUBSYSTEM, Constants.AutoNames.CENTER_CLOSEBOTTOM_CLOSEMID_CLOSETOP_FARTOP_AUTO_NAME.getSecond()).getCommand());
+    m_automodeChooser.addOption(Constants.AutoNames.RIGHT_FARBOTTOM_FARMIDBOTTOM_AUTO_NAME.getFirst(), new AutoTrajectory(DRIVE_SUBSYSTEM, Constants.AutoNames.RIGHT_FARBOTTOM_FARMIDBOTTOM_AUTO_NAME.getSecond()).getCommand());
+    m_automodeChooser.addOption(Constants.AutoNames.LEFT_CLOSETOP_FARTOP_AUTO_NAME.getFirst(), new AutoTrajectory(DRIVE_SUBSYSTEM, Constants.AutoNames.LEFT_CLOSETOP_FARTOP_AUTO_NAME.getSecond()).getCommand());
+    m_automodeChooser.addOption(Constants.AutoNames.LEFT_WAIT_FARTOP_AUTO_NAME.getFirst(), new AutoTrajectory(DRIVE_SUBSYSTEM, Constants.AutoNames.LEFT_WAIT_FARTOP_AUTO_NAME.getSecond()).getCommand());
+    m_automodeChooser.addOption(Constants.AutoNames.RIGHT_FARDISRUPT_FARTOP_AUTO_NAME.getFirst(), new AutoTrajectory(DRIVE_SUBSYSTEM, Constants.AutoNames.RIGHT_FARDISRUPT_FARTOP_AUTO_NAME.getSecond()).getCommand());
+  }
+
+  /**
+   * Run simlation related methods
+   */
+  public void simulationPeriodic() {
+    REVPhysicsSim.getInstance().run();
+  }
+
+  /**
+   * Run checks in auto
+   */
+  public void autonomousPeriodic() {
+    // stop auto if we go too far
+    if (DRIVE_SUBSYSTEM.getAlliance().equals(Alliance.Blue)) {
+      if (DRIVE_SUBSYSTEM.getPose().getX() > 9.73) Commands.run(() -> {}, DRIVE_SUBSYSTEM);
+    }
+    else if (DRIVE_SUBSYSTEM.getAlliance().equals(Alliance.Red)) {
+      if (DRIVE_SUBSYSTEM.getPose().getX() < 6.84) Commands.run(() -> {}, DRIVE_SUBSYSTEM);
+    }
+  }
+
+  /**
+   * Initialization code for disabled mode
+   */
+  public void disabledInit() {
+    DRIVE_SUBSYSTEM.disabledInit();
+  }
+
+  /**
+   * Call while disabled
+   */
+  public void disabledPeriodic() {
+    // Try to get alliance
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isEmpty()) return;
+
+    // Set alliance if available
+    DRIVE_SUBSYSTEM.setAlliance(alliance.get());
+  }
+
+  /**
+   * Exit code for disabled mode
+   */
+  public void disabledExit() {
+    DRIVE_SUBSYSTEM.disabledExit();
+  }
+
+  /**
+   * Get currently selected autonomous command
    *
-   * @return the command to run in autonomous
+   * @return Autonomous command
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    // return new PivotAndRev(47.5, 3000, 3000).andThen(new FeedAndShoot(3000, 3000, 1));
-    return autoChooser.getSelected();
+    return m_automodeChooser.getSelected();
+  }
+
+  /**
+   * Compose command to test intake, amp shoot, and speaker shoot
+   * @return Command that does the intake command, amp shoot command, and speaker shoot command
+   */
+  public Command getTestCommand() {
+    return Commands.sequence(
+      Commands.print("Intaking..."),
+      intakeCommand().withTimeout(Constants.AutoNames.TEST_COMMAND_TIME),
+      Commands.print("Moving shooter down..."),
+      SHOOTER_SUBSYSTEM.shootManualCommand(
+        new State(ShooterSubsystem.ZERO_FLYWHEEL_SPEED, Units.Radians.of(Constants.Shooter.ANGLE_CONFIG.getLowerLimit()))
+      ).withTimeout(Constants.AutoNames.TEST_COMMAND_TIME),
+      Commands.print("Moving shooter up..."),
+      SHOOTER_SUBSYSTEM.shootManualCommand(
+        new State(ShooterSubsystem.ZERO_FLYWHEEL_SPEED, Units.Radians.of(Constants.Shooter.ANGLE_CONFIG.getUpperLimit()))
+      ).withTimeout(Constants.AutoNames.TEST_COMMAND_TIME),
+      Commands.print("Scoring amp..."),
+      SHOOTER_SUBSYSTEM.scoreAmpCommand().withTimeout(Constants.AutoNames.TEST_COMMAND_TIME),
+      Commands.print("Scoring speaker..."),
+      SHOOTER_SUBSYSTEM.shootSpeakerCommand().withTimeout(Constants.AutoNames.TEST_COMMAND_TIME)
+    );
+  }
+
+  /**
+   * Configure default Shuffleboard tab
+   */
+  public void defaultShuffleboardTab() {
+    Shuffleboard.selectTab(Constants.SmartDashboard.SMARTDASHBOARD_DEFAULT_TAB);
+    autoModeChooser();
+    SmartDashboard.putData(Constants.SmartDashboard.SMARTDASHBOARD_AUTO_MODE, m_automodeChooser);
+    SmartDashboard.putNumber(Constants.SmartDashboard.SMARTDASHBOARD_SHOOTER_SPEED, 0.0);
+    SmartDashboard.putNumber(Constants.SmartDashboard.SMARTDASHBOARD_SHOOTER_ANGLE, 0.0);
   }
 }
-// {if; buttonx=1 then; :Itanke work
-  //work=auto pivot:Encoder=100

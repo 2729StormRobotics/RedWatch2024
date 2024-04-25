@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2.37,
-      "y": 5.53
+      "x": 1.3783760900855138,
+      "y": 5.528365618134744
     },
     "rotation": 0
   },
@@ -12,26 +12,44 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "New Path"
+            "name": "preload"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of New Path"
+            "pathName": "close bottom"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of Copy of New Path"
+            "pathName": "close mid"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "close top"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "far top"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "shoot far"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "built",
   "choreoAuto": false
 }

@@ -1,0 +1,9 @@
+left trigger: ground intake
+left bumper: source intake
+right trigger: speaker auto shoot
+right bumper: amp shoot
+
+x: close speaker shot
+click right stick: override speaker isReady
+
+dpad up/down: climb

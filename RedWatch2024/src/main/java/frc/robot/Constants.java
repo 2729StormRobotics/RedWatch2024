@@ -4,15 +4,38 @@
 
 package frc.robot;
 
-import com.revrobotics.CANSparkBase.IdleMode;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
+import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
+import org.lasarobotics.drive.AdvancedSwerveKinematics.ControlCentricity;
+import org.lasarobotics.drive.MAXSwerveModule;
+import org.lasarobotics.hardware.kauailabs.NavX2;
+import org.lasarobotics.hardware.revrobotics.Spark;
+import org.lasarobotics.hardware.revrobotics.SparkPIDConfig;
+import org.lasarobotics.led.LEDStrip;
+import org.lasarobotics.utils.PIDConstants;
+
+import edu.wpi.first.apriltag.AprilTag;
+import edu.wpi.first.math.Pair;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.util.Units;
-import frc.robot.lib.LinearInterpolationTable;
-import java.awt.geom.Point2D;
-
+import edu.wpi.first.units.Dimensionless;
+import edu.wpi.first.units.Distance;
+import edu.wpi.first.units.Measure;
+import edu.wpi.first.units.Units;
+import frc.robot.subsystems.drive.PurplePathPose;
+import frc.robot.subsystems.shooter.ShooterSubsystem.State;
+import frc.robot.subsystems.vision.AprilTagCamera.Resolution;
+import frc.robot.subsystems.vision.VisionSubsystem;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -27,274 +50,201 @@ import java.awt.geom.Point2D;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+  public static class Field {
+    public static final double FIELD_WIDTH = 8.21;
+    public static final double FIELD_LENGTH = 16.54;
 
-  public static class OperatorConstants {
-    // ports
-    public static final int kDriveTranslatorPort = 1;
-    public static final int kDriveRotatorPort = 2;
-    public static final int kWeaponsControllerPort = 0;
+    public static final Translation2d CENTER = new Translation2d(FIELD_LENGTH / 2, FIELD_WIDTH / 2);
+    public static final AprilTag BLUE_SPEAKER = VisionSubsystem.getInstance().getTag(7).get();
+    public static final AprilTag RED_SPEAKER = VisionSubsystem.getInstance().getTag(4).get();
 
-    // joystick settings
-    public static final double kDriveDeadband = 0.025;
-    public static final double translationMultiplier = 1;
-    public static final double rotationMultiplier = 1;
+    public static final PurplePathPose AMP = new PurplePathPose(
+      new Pose2d(Units.Meters.of(1.85), Units.Meters.of(7.77), Rotation2d.fromDegrees(-90.0)),
+      new Pose2d(Units.Meters.of(14.66), Units.Meters.of(7.77), Rotation2d.fromDegrees(-90.0)),
+      Units.Meters.of(0.5),
+      true
+    );
+    public static final PurplePathPose SOURCE = new PurplePathPose(
+      new Pose2d(Units.Meters.of(15.48), Units.Meters.of(0.84), Rotation2d.fromDegrees(+120.00)),
+      new Pose2d(Units.Meters.of(1.07), Units.Meters.of(0.82), Rotation2d.fromDegrees(+60.0)),
+      Units.Meters.of(0.5),
+      true
+    );
   }
 
-  public static final class IndexerConstants {
-    public static final double kFeedSpeakerSpeed = 1;
-    public static final double kFeedAmpSpeed = 0.75;
-
-    // Assigns Indexer moftor to port
-    public static final int kIndexMotorPort = 12;
-    // Assigns Beam break sensor to port 0
-    public static final int kBeamBreakPort = 0;
-    // Sets the indexer motor to 50% power
-    public static double kIndexerSpeed = 0.7;
-    // Sets the indexer motor to 50% power in the opposite direction
-    public static double kSourceIndexerSpeed = -0.7;
-    // Sets the indexer motor current limit to 60 amps
-    public static final int kCurrentLimit = 35;
+  public static class HID {
+    public static final int PRIMARY_CONTROLLER_PORT = 0;
+    public static final int SECONDARY_CONTROLLER_PORT = 1;
+    public static final double CONTROLLER_DEADBAND = 0.05;
   }
 
-  public static final class HangerConstants {
-		public static final int kLeftHanger = 16;
-		public static final int kRightHanger = 15;
-
-    public static final int kCurrentLimit = 35;
-    public static final double kSpeedLimiter = 1;
-	}
-  public static final class DriveConstants {
-    // Driving Parameters - Note that these are not the maximum capable speeds of
-    // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 4.8;
-    public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
-
-    public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
-    public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
-
-    // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(26.5);
-    // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(26.5);
-    // Distance between front and back wheels on robot
-
-    public static final double kRobotRadius = DriveConstants.kTrackWidth * Math.sqrt(2) / 2; // robot radius
-
-    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-        new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-        new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-        new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
-
-    // Angular offsets of the modules relative to the chassis in radians
-    public static final double kFrontLeftChassisAngularOffset = Math.PI / 2;
-    public static final double kFrontRightChassisAngularOffset = 0;
-    public static final double kBackLeftChassisAngularOffset = Math.PI;
-    public static final double kBackRightChassisAngularOffset = -Math.PI / 2;
-
-    // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 4;
-    public static final int kRearLeftDrivingCanId = 2;
-    public static final int kFrontRightDrivingCanId = 6;
-    public static final int kRearRightDrivingCanId = 8;
-
-    public static final int kFrontLeftTurningCanId = 3;
-    public static final int kRearLeftTurningCanId = 1;
-    public static final int kFrontRightTurningCanId = 5;
-    public static final int kRearRightTurningCanId = 7;
-
-    public static final boolean kGyroReversed = false;
-    public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
-  }
-
-  public static class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 4.8;
-    public static final double kMaxAngularSpeedRadiansPerSecond = Math.toRadians(540);
-    public static final double kMaxAcceletrationMetersPerSecondSquared = 3;
-    public static final double kMaxAngularAccelerationRadiansPerSecondSquared = Math.toRadians(720);
-    public static final double kPXController = 1.5;
-    public static final double kPYController = 1.5;
-    public static final double kPThetaController = 3;
-
-    public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
-    new TrapezoidProfile.Constraints(
-            kMaxAngularSpeedRadiansPerSecond,
-            kMaxAngularAccelerationRadiansPerSecondSquared);
-
+  public static class NamedCommands {
+    public static final String INTAKE_COMMAND_NAME = "intake";
+    public static final String START_INTAKE_COMMAND_NAME = "start intake";
+    public static final String STOP_INTAKE_COMMAND_NAME = "stop intake";
+    public static final String SHOOT_COMMAND_NAME = "shoot";
+    public static final String PRELOAD_COMMAND_NAME = "preload";
+    public static final String SPINUP_COMMAND_NAME = "spinup";
+    public static final String FEEDTHROUGH_COMMAND_NAME = "feed through";
+    public static final String AUTO_SHOOT_COMMAND_NAME = "auto shoot";
+    public static final String AUTO_SHOOT_LONG_COMMAND_NAME = "auto shoot long";
+    public static final String AUTO_INTAKE_COMMAND_NAME = "auto intake";
   }
 
 
-
-  public static final class ModuleConstants {
-    // The MAXSwerve module can be configured with one of three pinion gears: 12T,
-    // 13T, or 14T.
-    // This changes the drive speed of the module (a pinion gear with more teeth
-    // will result in a
-    // robot that drives faster).
-    public static final int kDrivingMotorPinionTeeth = 14;
-
-    // Invert the turning encoder, since the output shaft rotates in the opposite
-    // direction of
-    // the steering motor in the MAXSwerve Module.
-    public static final boolean kTurningEncoderInverted = true;
-
-    // Calculations required for driving motor conversion factors and feed forward
-    public static final double kDrivingMotorFreeSpeedRps = NeoMotorConstants.kFreeSpeedRpm / 60;
-    public static final double kWheelDiameterMeters = Units.inchesToMeters(2.6);//0.0762; //2.6
-    public static final double kWheelCircumferenceMeters = kWheelDiameterMeters * Math.PI;
-    // 45 teeth on the wheel's bevel gear, 22 teeth on the first-stage spur gear, 15
-    // teeth on the bevel pinion
-    public static final double kDrivingMotorReduction = (45.0 * 22) / (kDrivingMotorPinionTeeth * 15);
-    public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
-        / kDrivingMotorReduction;
-
-    public static final double kDrivingEncoderPositionFactor = (kWheelDiameterMeters * Math.PI)
-        / kDrivingMotorReduction; // meters
-    public static final double kDrivingEncoderVelocityFactor = ((kWheelDiameterMeters * Math.PI)
-        / kDrivingMotorReduction) / 60.0; // meters per second
-
-    public static final double kTurningEncoderPositionFactor = (2 * Math.PI); // radians
-    public static final double kTurningEncoderVelocityFactor = (2 * Math.PI) / 60.0; // radians per second
-
-    public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
-    public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
-
-    public static final double kDrivingP = 0.04;
-    public static final double kDrivingI = 0;
-    public static final double kDrivingD = 0;
-    public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
-    public static final double kDrivingMinOutput = -1;
-    public static final double kDrivingMaxOutput = 1;
-
-    public static final double kTurningP = 1;
-    public static final double kTurningI = 0;
-    public static final double kTurningD = 0;
-    public static final double kTurningFF = 0;
-    public static final double kTurningMinOutput = -1;
-    public static final double kTurningMaxOutput = 1;
-
-    public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
-    public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
-
-    public static final int kDrivingMotorCurrentLimit = 35; // amps
-    public static final int kTurningMotorCurrentLimit = 20; // amps
+  public static class AutoNames {
+    public static final Pair<String, String> CENTER_CLOSETOP_CLOSEMID_CLOSEBOTTOM_AUTO_NAME = new Pair<String, String>("Belton 4-Note", "Center_CloseTop_CloseMid_CloseBottom");
+    public static final Pair<String, String> CENTER_CLOSEBOTTOM_CLOSEMID_CLOSETOP_FARTOP_AUTO_NAME = new Pair<String, String>("5-Note", "Center_CloseBottom_CloseMid_CloseTop_FarTop");
+    public static final Pair<String, String> RIGHT_FARBOTTOM_FARMIDBOTTOM_AUTO_NAME = new Pair<String, String>("Two far notes closest to source", "Right_FarBottom_FarMidBottom");
+    public static final Pair<String, String> LEFT_CLOSETOP_FARTOP_AUTO_NAME = new Pair<String, String>("Closest amp side close note and far note", "Left_CloseTop_FarTop");
+    public static final Pair<String, String> LEFT_WAIT_FARTOP_AUTO_NAME = new Pair<String, String>("Wait, then do closest amp side far note", "Left_Wait_FarTop");
+    public static final Pair<String, String> RIGHT_FARDISRUPT_FARTOP_AUTO_NAME = new Pair<String, String>("Disrupt auto (amp side - source side)", "Right_FarDisrupt_FarTop");
+    public static final Pair<String, String> SIDEWAYS_AUTO_NAME  = new Pair<String, String>("[Pose-estimation] Go sideways", "sideways auto");
+    public static final Pair<String, String> TEST_180_FAR_PATH_AUTO_NAME  = new Pair<String, String>("[Pose-estimation] Go amp side and flip 180", "test 180 far path");
+    public static final double TEST_COMMAND_TIME = 5.0;
   }
 
-  public static final class NeoMotorConstants {
-    public static final double kFreeSpeedRpm = 5676;
+  public static class Drive {
+    public static final PIDConstants DRIVE_ROTATE_PID = new PIDConstants(8.0, 0.0, 0.3, 0.0, 0.0);
+    public static final double DRIVE_SLIP_RATIO = 0.08;
+    public static final double DRIVE_TURN_SCALAR = 60.0;
+    public static final double DRIVE_LOOKAHEAD = 6;
+
+    public static final ControlCentricity DRIVE_CONTROL_CENTRICITY = ControlCentricity.FIELD_CENTRIC;
+
+    private static final double DRIVE_THROTTLE_INPUT_CURVE_X[] = { 0.0, 0.100, 0.200, 0.300, 0.400, 0.500, 0.600, 0.700, 0.800, 0.900, 1.000 };
+    private static final double DRIVE_THROTTLE_INPUT_CURVE_Y[] = { 0.0, 0.052, 0.207, 0.465, 0.827, 1.293, 1.862, 2.534, 3.310, 4.189, 5.172 };
+    private static final double DRIVE_TURN_INPUT_CURVE_X[] = { 0.0, 0.100, 0.200, 0.300, 0.400, 0.500, 0.600, 0.700, 0.800, 0.900, 1.0 };
+    private static final double DRIVE_TURN_INPUT_CURVE_Y[] = { 0.0, 0.010, 0.050, 0.100, 0.150, 0.200, 0.250, 0.300, 0.400, 0.600, 1.0 };
+
+    private static final SplineInterpolator SPLINE_INTERPOLATOR = new SplineInterpolator();
+    public static final PolynomialSplineFunction DRIVE_THROTTLE_INPUT_CURVE = SPLINE_INTERPOLATOR.interpolate(DRIVE_THROTTLE_INPUT_CURVE_X, DRIVE_THROTTLE_INPUT_CURVE_Y);
+    public static final PolynomialSplineFunction DRIVE_TURN_INPUT_CURVE = SPLINE_INTERPOLATOR.interpolate(DRIVE_TURN_INPUT_CURVE_X, DRIVE_TURN_INPUT_CURVE_Y);
+
+    public static final MAXSwerveModule.GearRatio GEAR_RATIO = MAXSwerveModule.GearRatio.L3;
   }
 
-  public static class IntakeConstants {
-    public static final int kIntakeMotor = 13;
-    public static final int kCurrentLimit = 35;
-    public static double kIntakeMotorSpeed = 0.8;
-    public static double kEjectMotorSpeed = -0.8;
+  public static class Shooter {
+    public static final Measure<Distance> TOP_FLYWHEEL_DIAMETER = Units.Inches.of(2.40);
+    public static final Measure<Distance> BOTTOM_FLYWHEEL_DIAMETER = Units.Inches.of(2.43);
+    public static final SparkPIDConfig FLYWHEEL_CONFIG = new SparkPIDConfig(
+      new PIDConstants(
+        0.32,
+        2e-3,
+        0.08,
+        1 / ((Spark.MotorKind.NEO_VORTEX.getMaxRPM() / 60) * (TOP_FLYWHEEL_DIAMETER.in(Units.Meters) * Math.PI)),
+        0.25
+      ),
+      false,
+      true,
+      0.12
+    );
+    public static final SparkPIDConfig ANGLE_CONFIG = new SparkPIDConfig(
+      new PIDConstants(
+        3.0,
+        0.01,
+        0.0,
+        0.0,
+        0.035
+      ),
+      false,
+      true,
+      Units.Degrees.of(0.5).in(Units.Radians),
+      0.40,
+      1.04,
+      true
+    );
+    public static final TrapezoidProfile.Constraints ANGLE_MOTION_CONSTRAINT = new TrapezoidProfile.Constraints(
+      Units.DegreesPerSecond.of(360.0),
+      Units.DegreesPerSecond.of(360.0 * 10).per(Units.Second)
+    );
+    public static final List<Entry<Measure<Distance>,State>> SHOOTER_MAP = Arrays.asList(
+      Map.entry(Units.Meters.of(0.00), new State(Units.MetersPerSecond.of(14.90),    Units.Degrees.of(53.0))),
+      Map.entry(Units.Meters.of(1.00), new State(Units.MetersPerSecond.of(14.94),    Units.Degrees.of(53.0))),
+      Map.entry(Units.Meters.of(1.50), new State(Units.MetersPerSecond.of(15.00),    Units.Degrees.of(53.0))),
+      Map.entry(Units.Meters.of(2.00), new State(Units.MetersPerSecond.of(15.00781), Units.Degrees.of(44.5))),
+      Map.entry(Units.Meters.of(2.50), new State(Units.MetersPerSecond.of(15.10964), Units.Degrees.of(37.0))),
+      Map.entry(Units.Meters.of(3.00), new State(Units.MetersPerSecond.of(15.50),    Units.Degrees.of(34.0))),
+      Map.entry(Units.Meters.of(3.50), new State(Units.MetersPerSecond.of(16.25786), Units.Degrees.of(30.0))),
+      Map.entry(Units.Meters.of(4.00), new State(Units.MetersPerSecond.of(17.00),    Units.Degrees.of(27.0))),
+      Map.entry(Units.Meters.of(4.50), new State(Units.MetersPerSecond.of(17.34737), Units.Degrees.of(25.5))),
+      Map.entry(Units.Meters.of(5.00), new State(Units.MetersPerSecond.of(17.40),    Units.Degrees.of(25.0))),
+      Map.entry(Units.Meters.of(5.50), new State(Units.MetersPerSecond.of(17.45),    Units.Degrees.of(24.0))),
+      Map.entry(Units.Meters.of(6.00), new State(Units.MetersPerSecond.of(17.50),    Units.Degrees.of(23.5)))
+    );
   }
 
-  public static class ShooterConstants {
-    // Motor ID/initialization values
-
-    public static final int kBottomFlywheelID = 10;
-    public static final int kTopFlywheelID = 14;
-    public static final int kCurrentLimit = 35;
-
-
-    // Make sure that the two pivot motors and two shooting motors rotate in
-    // opposite directions
-    public static final boolean kLeftFlywheelInverted = false;
-    public static final boolean kRightFlywheelInverted = !kLeftFlywheelInverted;
-
-    // Flywheel PID values
-    public static final double kMaxRPM = 6500;
-    public static final double kPShoot = 0; //0.00002
-    public static final double kRPMTolerance = 50;
-
-    
-    // Flywheel Shooting values
-    public static double kTopPowerAmp = -.02*1.125; //.165
-    public static double kBottomPowerAmp = .25*1.125; 
-    //.153
-    public static double kTopPowerSpeaker = 0.85;
-    public static double kBottomPowerSpeaker = 0.85; //75
-    public static final double steadyPower = 0; // 0.15 // 0.25
-
+  public static class Intake {
+    public static final Measure<Dimensionless> ROLLER_VELOCITY = Units.Percent.of(100);
   }
 
-  public static class PivotConstants {
-    // motor configuration
-    public static final int kRightPivotID = 9;
-    public static final int kCurrentLimit = 35;
-    public static final double kPivotSpeedLimiter = 1;
-    public static final boolean kRightPivotInverted = false;
-
-    // Pivot PID values
-    public static double kPivotFF = 0.047; //0.049 //0.05
-    public static double kPPivotUp = 0.0265;//GOOD ONE
-    public static double kPPivotDown = 0.025;//GOOD ONE
-
-    public static final double kIPivot = 0;
-    public static double kDPivot = 0;//0.0001;
-    public static double kMaxPivotVelocity = 10; // Measured in degrees/s
-    public static final double kMaxPivotAcceleration = 45; // Measured in degrees/s^2
-    public static final double kPivotTolerance = 0; // degrees
-    public static double pivotPower;
-
-    // Setpositions
-    public static final double kSourcePivotAngle = 0; // Angle of pivot for source
-    public static final double kIntakeAngle = 75;
-
-    // Interpolation table for getting shooting angle based off distance
-    public static final Point2D[] ShootingPoints = new Point2D[]{ // array of exp determined data points of (dist, angle)
-      new Point2D.Double(-1, 47.5),
-      new Point2D.Double(0.94, 47.5),
-      new Point2D.Double(1.247, 44.5),
-      new Point2D.Double(1.507, 40.3), 
-      new Point2D.Double(1.75, 35.8), 
-      new Point2D.Double(1.9, 34.5),
-      new Point2D.Double(2.3, 30.2),
-      new Point2D.Double(2.495, 26.3),
-      new Point2D.Double(2.755, 24.9),
-      new Point2D.Double(3, 23.2),
-      new Point2D.Double(3.395, 21.85),
-      new Point2D.Double(3.75, 20),
-      new Point2D.Double(4.03, 19.6)};
+  public static class Climber {
+    public static final Measure<Dimensionless> CLIMBER_VELOCITY = Units.Percent.of(50);
   }
 
-  public static class VisionConstants {
-    // Camera configuration
-    public static final double kAprilTagPipeline = 1;
-    public static final double kLightOffValue = 0;
-
-    // PID values for driving with vision
-    public static final double kDistanceTolerance = 0;
-    public static final double kPX = 0;
-    public static final double kSDrive = 0;
-    public static final double kPY = 0;
-    public static final double kTolerance = 0;
-    public static final double kPTurn = 0.0065;//0.008
-    public static final double kITurn = 0;
-    public static final double kDTurn = 0.003; //0.001
-    public static final double kSTurn = .025;
-
-    // Heights for detecting distance away from apriltag
-    public static final double limelightHeight = Units.inchesToMeters(11.5);
-    public static final double limelightAngle = 30.5; // degrees
-    public static final double apriltagWidth = Units.inchesToMeters(6.5);
-    public static final double speakerTagHeight = Units.inchesToMeters(54) + Units.inchesToMeters(apriltagWidth / 2);
-    public static final double ampTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
-    public static final double stageTagHeight = Units.inchesToMeters(53.875) + Units.inchesToMeters(apriltagWidth / 2);
-    public static final double aprilTagAlignTolerance = 0.5;
-
-    public static final double kNoteTolerance = 2.0;
-    public static final double kPNoteTurn = 0.008;
+  public static class DriveHardware {
+    public static final NavX2.ID NAVX_ID = new NavX2.ID("DriveHardware/NavX2");
+    public static final Spark.ID LEFT_FRONT_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftFront/Drive", 4);
+    public static final Spark.ID LEFT_FRONT_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftFront/Rotate", 3);
+    public static final Spark.ID RIGHT_FRONT_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightFront/Drive", 6);
+    public static final Spark.ID RIGHT_FRONT_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightFront/Rotate", 5);
+    public static final Spark.ID LEFT_REAR_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftRear/Drive", 2);
+    public static final Spark.ID LEFT_REAR_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/LeftRear/Rotate", 1);
+    public static final Spark.ID RIGHT_REAR_DRIVE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightRear/Drive", 8);
+    public static final Spark.ID RIGHT_REAR_ROTATE_MOTOR_ID = new Spark.ID("DriveHardware/Swerve/RightRear/Rotate", 7);
   }
 
-  public static class ControlPanelConstants {
-    public static final String kShuffleboardTab = "Control Panel";
+  public static class IntakeHardware {
+    public static final Spark.ID ROLLER_MOTOR_ID = new Spark.ID("IntakeHardware/Roller", 13);
   }
 
-  public static final class LightsConstants {
-    public static final int CANDLE_PORT  = 12;
+  public static class ShooterHardware {
+    public static final Spark.ID TOP_FLYWHEEL_MOTOR_ID = new Spark.ID("ShooterHardware/Flywheel/Top", 14);
+    public static final Spark.ID BOTTOM_FLYWHEEL_MOTOR_ID = new Spark.ID("ShooterHardware/Flywheel/Bottom", 10);
+    public static final Spark.ID ANGLE_MOTOR_ID = new Spark.ID("ShooterHardware/Angle", 9);
+    public static final Spark.ID INDEXER_MOTOR_ID = new Spark.ID("ShooterHardware/Indexer", 12);
+    public static final LEDStrip.ID LED_STRIP_ID = new LEDStrip.ID("ShooterHardware/LEDStrip", 0, 200);
+  }
+
+  public static class VisionHardware {
+    public static final String CAMERA_A_NAME = "Arducam_OV9782_USB_Camera_A";
+    public static final Transform3d CAMERA_A_LOCATION = new Transform3d(
+      new Translation3d(-0.102, -0.279, 0.584),
+      new Rotation3d(0.0, Math.toRadians(-21.5), Math.toRadians(+180.0))
+    );
+    public static final Resolution CAMERA_A_RESOLUTION = Resolution.RES_1280_720;
+    public static final Rotation2d CAMERA_A_FOV = Rotation2d.fromDegrees(79.7);
+
+    public static final String CAMERA_B_NAME = "Arducam_OV9782_USB_Camera_B";
+    public static final Transform3d CAMERA_B_LOCATION = new Transform3d(
+      new Translation3d(0.0254, -0.279, 0.584),
+      new Rotation3d(0.0, Math.toRadians(-21.5), 0.0)
+    );
+    public static final Resolution CAMERA_B_RESOLUTION = Resolution.RES_1280_720;
+    public static final Rotation2d CAMERA_B_FOV = Rotation2d.fromDegrees(79.7);
+
+    public static final String CAMERA_OBJECT_NAME = "Arducam_OV9782_USB_Camera_C";
+    public static final Transform3d CAMERA_OBJECT_LOCATION = new Transform3d(
+      new Translation3d(0.3, 0.0, 0.5),
+      new Rotation3d(0, Math.toRadians(+15.0), Math.toRadians(180))
+    );
+    public static final Resolution CAMERA_OBJECT_RESOLUTION = Resolution.RES_1280_720;
+    public static final Rotation2d CAMERA_OBJECT_FOV = Rotation2d.fromDegrees(79.7);
+  }
+
+  public static class ClimberHardware {
+    public static final Spark.ID LEFT_CLIMBER_MOTOR_ID = new Spark.ID("ClimberHardware/Left", 16);
+    public static final Spark.ID RIGHT_CLIMBER_MOTOR_ID = new Spark.ID("ClimberHardware/Right", 15);
+  }
+
+  public static class AccessoryHardware {
+    public static final int BLINKIN_CHANNEL = 0;
+  }
+
+  public static class SmartDashboard {
+    public static final String SMARTDASHBOARD_DEFAULT_TAB = "SmartDashboard";
+    public static final String SMARTDASHBOARD_AUTO_MODE = "Auto Mode";
+    public static final String SMARTDASHBOARD_SHOOTER_SPEED = "Shooter Speed";
+    public static final String SMARTDASHBOARD_SHOOTER_ANGLE = "Shooter Angle";
   }
 }
