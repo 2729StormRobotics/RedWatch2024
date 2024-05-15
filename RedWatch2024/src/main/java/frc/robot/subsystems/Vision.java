@@ -42,6 +42,14 @@ public class Vision extends SubsystemBase {
   private double notex;
   private double notey;
 
+  NetworkTable colorTable = NetworkTableInstance.getDefault().getTable("limelight-color");
+  NetworkTableEntry tObjx = colorTable.getEntry("cx");
+  NetworkTableEntry tObjy = colorTable.getEntry("cy");
+  NetworkTableEntry tObja = colorTable.getEntry("ca");
+  private double objx;
+  private double objy;
+
+
    
 
   /** Creates a new NoteDetection. */
@@ -145,6 +153,9 @@ public class Vision extends SubsystemBase {
     y = ty.getDouble(0.0);
     notex = tnotex.getDouble(0.0);
     notey = tnotey.getDouble(0.0);
+    objx = tObjx.getDouble(0.0);
+    objy = tObjy.getDouble(0.0);
+
 
     area = ta.getDouble(0.0);
 
@@ -152,6 +163,9 @@ public class Vision extends SubsystemBase {
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("NoteX", notex);
     SmartDashboard.putNumber("NoteY", notey);
+    SmartDashboard.putNumber("ColorObjX,", objx);
+    SmartDashboard.putNumber("ColorObjY,", objy);
+
     SmartDashboard.putNumber("LimelightArea", area);
     SmartDashboard.putString("Target", Vision.target);
     SmartDashboard.putNumber("Speaker Distance", getSpeakerDistance());
