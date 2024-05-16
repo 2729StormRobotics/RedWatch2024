@@ -52,6 +52,10 @@ public class Robot extends TimedRobot {
     limit.get(); // returns true or false if switch is pressed
     SmartDashboard.putBoolean ("Limit", limit.get()); // places the true / false value onto smart dashboard
                                                       // needs a get boolean
+
+    if (limit.get() == true) {
+      
+    }
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
