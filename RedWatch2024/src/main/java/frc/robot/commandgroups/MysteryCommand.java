@@ -45,8 +45,6 @@ public class MysteryCommand extends SequentialCommandGroup {
       new InstantCommand(() -> Hanger.getInstance().setLeftSpeed(Math.random() * 123)),
       new InstantCommand(() -> Drivetrain.getInstance().drive(3, 3, 5, false, false)),
       new ManualRPMRev(Math.random() * 1000, Math.random() * 10000)
-
-      
     );
   }
 }
