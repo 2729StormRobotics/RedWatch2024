@@ -26,6 +26,7 @@ public class DriveControls {
 
   // drive modes
   public static Trigger DRIVE_ROBOT_RELATIVE;
+  public static Trigger DRIVE_FIELD_RELATIVE;
   public static Trigger DRIVE_SPEAKER_AIM;
 
   // Drive Angle Locks
