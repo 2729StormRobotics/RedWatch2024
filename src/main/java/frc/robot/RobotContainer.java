@@ -155,7 +155,7 @@ public class RobotContainer {
             drive,
             () -> -m_translator.getY(),
             () -> -m_translator.getX(),
-            () -> -m_rotator.getX()));
+            () -> -m_translator.getTwist()));
     m_translator.button(Button.kA.value).onTrue(Commands.runOnce(drive::stopWithX, drive));
     m_rotator
         .button(Button.kA.value)
