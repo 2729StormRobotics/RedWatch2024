@@ -45,11 +45,20 @@ public final class Constants {
 
   public static enum Drivers {
     DAN,
+    KRITHIK,
+    AMOGH,
+    NITHILAN,
+    ASHLEIGH,
+    YASHA,
     PROGRAMMERS
   }
 
   public static enum Operators {
     KRITHIK,
+    AMOGH,
+    NITHILAN,
+    ASHLEIGH,
+    YASHA,
     PROGRAMMERS
   }
 
@@ -82,16 +91,12 @@ public final class Constants {
     public static final int CONTROLLER_OPERATOR_ID = 1;
 
     // PLACEHOLDER Intake
-    public static final int INTAKE_MOTOR = 15;
-    public static final int GROUND_INTAKE_MOTOR = 9;
+    public static final int GROUND_INTAKE_MOTOR = 13; // 13
 
     // Intake Sensors
     public static final int INTAKE_PHOTO_ELECTRIC = 9;
 
-    public static final int PIVOT_ARM_ID = 16;
-    public static final int LEFT_SLAVE_ID = 12;
-    public static final int RIGHT_SLAVE_FRONT_ID = 10;
-    public static final int RIGHT_SLAVE_BACK_ID = 11;
+    public static final int PIVOT_ARM_ID = 9;
 
     public static final int ABSOLUTE_ENCODER_ID = 8;
 
@@ -100,7 +105,7 @@ public final class Constants {
 
     // Shooter
     public static final int SHOOTER_LEFT_ID = 14; // master
-    public static final int SHOOTER_RIGHT_ID = 13;
+    public static final int SHOOTER_RIGHT_ID = 10;
     public static final int PHOTOELECTRIC_SENSOR_CHANNEL = 9; // NEEDS TO BE CHANGED
   }
   ;

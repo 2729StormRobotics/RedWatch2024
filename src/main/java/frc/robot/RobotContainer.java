@@ -13,19 +13,25 @@
 
 package frc.robot;
 
+import static frc.robot.util.drive.DriveControls.*;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
+import frc.robot.subsystems.LED.BlinkinLEDController;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOReal;
@@ -36,6 +42,19 @@ import frc.robot.subsystems.flywheel.Flywheel;
 import frc.robot.subsystems.flywheel.FlywheelIO;
 import frc.robot.subsystems.flywheel.FlywheelIOSim;
 import frc.robot.subsystems.flywheel.FlywheelIOSparkMax;
+import frc.robot.subsystems.groundIntake.GroundIntake;
+import frc.robot.subsystems.groundIntake.GroundIntakeConstants;
+import frc.robot.subsystems.groundIntake.GroundIntakeIO;
+import frc.robot.subsystems.groundIntake.GroundIntakeIOSim;
+import frc.robot.subsystems.groundIntake.GroundIntakeIOSparkMax;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterConstants;
+import frc.robot.subsystems.shooter.ShooterIO;
+import frc.robot.subsystems.shooter.ShooterIOSim;
+import frc.robot.subsystems.shooter.ShooterIOSparkMax;
+import frc.robot.util.drive.AllianceFlipUtil;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.LoggedDashboardBoolean;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
@@ -49,6 +68,11 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   private final Flywheel flywheel;
+  private final GroundIntake groundIntake;
+  private final Shooter shooter;
+
+  // LEDs
+  private final BlinkinLEDController ledController = BlinkinLEDController.getInstance();
 
   // Controller
   private final CommandJoystick m_translator = new CommandJoystick(1);
@@ -58,9 +82,22 @@ public class RobotContainer {
   //   private final CommandXboxController controller = new CommandXboxController(0);
 
   // Dashboard inputs
-  private final LoggedDashboardChooser<Command> autoChooser;
+  private LoggedDashboardChooser<Command> autoChooser;
   private final LoggedDashboardNumber flywheelSpeedInput =
       new LoggedDashboardNumber("Flywheel Speed", 1500.0);
+  // crete mode changers
+  private LoggedDashboardNumber autoWait = new LoggedDashboardNumber("AutoWait", 0);
+  private LoggedDashboardNumber rightShooterVolts =
+      new LoggedDashboardNumber("RightShooter", ShooterConstants.SHOOTER_FULL_VOLTAGE);
+  private LoggedDashboardNumber leftShooterVolts =
+      new LoggedDashboardNumber("LeftShooter", ShooterConstants.SHOOTER_FULL_VOLTAGE);
+  private LoggedDashboardBoolean brakeModeDashboard =
+      new LoggedDashboardBoolean("Brake Mode", true);
+  private LoggedDashboardBoolean setStartPosition =
+      new LoggedDashboardBoolean("Set Start Position", false);
+
+  // Field
+  private final Field2d field;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -75,6 +112,8 @@ public class RobotContainer {
                 new ModuleIOSparkMax(2),
                 new ModuleIOSparkMax(3));
         flywheel = new Flywheel(new FlywheelIOSparkMax());
+        shooter = new Shooter(new ShooterIOSparkMax());
+        groundIntake = new GroundIntake(new GroundIntakeIOSparkMax());
         // drive = new Drive(
         // new GyroIOPigeon2(true),
         // new ModuleIOTalonFX(0),
@@ -94,6 +133,9 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim());
         flywheel = new Flywheel(new FlywheelIOSim());
+        shooter = new Shooter(new ShooterIOSim());
+        groundIntake = new GroundIntake(new GroundIntakeIOSim() {});
+
         break;
 
       default:
@@ -106,8 +148,40 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
         flywheel = new Flywheel(new FlywheelIO() {});
+        shooter = new Shooter(new ShooterIO() {});
+        groundIntake = new GroundIntake(new GroundIntakeIO() {});
+
         break;
     }
+
+    field = new Field2d();
+    SmartDashboard.putData("Field", field);
+
+    System.out.println("[Init] Setting up Path Planner Logging");
+
+    // Logging callback for current robot pose
+    PathPlannerLogging.setLogCurrentPoseCallback(
+        (pose) -> {
+          // Do whatever you want with the pose here
+          field.setRobotPose(pose);
+          Logger.recordOutput("PathPlanner/RobotPose", pose);
+        });
+
+    // Logging callback for target robot pose
+    PathPlannerLogging.setLogTargetPoseCallback(
+        (pose) -> {
+          // Do whatever you want with the pose here
+          field.getObject("target pose").setPose(pose);
+          Logger.recordOutput("PathPlanner/TargetPose", pose);
+        });
+
+    // Logging callback for the active path, this is sent as a list of poses
+    PathPlannerLogging.setLogActivePathCallback(
+        (poses) -> {
+          // Do whatever you want with the poses here
+          field.getObject("path").setPoses(poses);
+          Logger.recordOutput("PathPlanner/ActivePath", poses.toArray(new Pose2d[0]));
+        });
 
     // Set up auto routines
     NamedCommands.registerCommand(
@@ -128,21 +202,17 @@ public class RobotContainer {
         "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-    autoChooser.addOption(
-        "Flywheel SysId (Quasistatic Forward)",
-        flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Flywheel SysId (Quasistatic Reverse)",
-        flywheel.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    autoChooser.addOption(
-        "Flywheel SysId (Dynamic Forward)", flywheel.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    autoChooser.addOption(
-        "Flywheel SysId (Dynamic Reverse)", flywheel.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-
     // Configure the button bindings
     configureButtonBindings();
-  }
 
+    // Set up auto routines
+    System.out.println("[Init] Setting up Logged Auto Chooser");
+    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+  }
+  // zero gyro
+  public void reset() {
+    drive.resetYaw();
+  }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -150,27 +220,101 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    // default subsystem commands
     drive.setDefaultCommand(
-        DriveCommands.joystickDrive(
+        DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
+
+    shooter.setDefaultCommand(shooter.runVoltage(SHOOTER_SPEED));
+
+    // Drive setting commands
+    DRIVE_SLOW.onTrue(new InstantCommand(DriveCommands::toggleSlowMode));
+
+    DRIVE_STOP.onTrue(
+        new InstantCommand(
+            () -> {
+              drive.stopWithX();
+              drive.resetYaw();
+            },
+            drive));
+
+    DRIVE_HOLD_STOP.onTrue(
+        new InstantCommand(
+            () -> {
+              drive.stopWithX();
+            },
+            drive));
+
+    // Drive Modes
+    DRIVE_ROBOT_RELATIVE.whileTrue(
+        DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
+
+    DRIVE_SPEAKER_AIM.whileTrue(
+        DriveCommands.joystickSpeakerPoint(drive, DRIVE_FORWARD, DRIVE_STRAFE));
+
+    // Drive Angle Locks
+    LOCK_BACK.whileTrue(
+        DriveCommands.joystickAnglePoint(
             drive,
-            () -> -m_translator.getY(),
-            () -> -m_translator.getX(),
-            () -> -m_translator.getTwist()));
-    m_translator.button(Button.kA.value).onTrue(Commands.runOnce(drive::stopWithX, drive));
-    m_rotator
-        .button(Button.kA.value)
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setPose(
-                            new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-                    drive)
-                .ignoringDisable(true));
-    m_weaponsController
-        .a()
-        .whileTrue(
-            Commands.startEnd(
-                () -> flywheel.runVelocity(flywheelSpeedInput.get()), flywheel::stop, flywheel));
+            DRIVE_FORWARD,
+            DRIVE_STRAFE,
+            () -> {
+              return AllianceFlipUtil.apply(new Rotation2d());
+            }));
+    LOCK_PICKUP.whileTrue(
+        DriveCommands.joystickAnglePoint(
+            drive,
+            DRIVE_FORWARD,
+            DRIVE_STRAFE,
+            () -> {
+              return AllianceFlipUtil.apply(Rotation2d.fromDegrees(-45));
+            }));
+    LOCK_PASS.whileTrue(DriveCommands.joystickPasserPoint(drive, DRIVE_FORWARD, DRIVE_STRAFE));
+
+    // Pivot Commands
+    // PIVOT_AMP.whileTrue(pivot.PIDCommandForever(PivotArmConstants.PIVOT_AMP_ANGLE));
+    // PIVOT_ZERO.whileTrue(pivot.PIDCommandForever(PivotArmConstants.PIVOT_ARM_INTAKE_ANGLE));
+    // PIVOT_TO_SPEAKER.whileTrue(pivot.PIDCommandForever(PivotArmConstants.PIVOT_SUBWOOFER_ANGLE));
+    // PIVOT_PODIUM.whileTrue(pivot.PIDCommandForever(PivotArmConstants.PIVOT_PODIUM_ANGLE));
+    // PIVOT_ANYWHERE.whileTrue(pivot.PIDCommandForever(this::getAngle));
+    // PIVOT_HOLD.whileTrue(pivot.PIDHoldCommand());
+
+    // Intake Commands
+    // INTAKE_IN.whileTrue(indexer.manualCommand(IndexerConstants.INDEXER_IN_VOLTAGE));
+    // INTAKE_OUT.whileTrue(indexer.manualCommand(IndexerConstants.INDEXER_OUT_VOLTAGE));
+    // INTAKE_UNTIL_INTAKED.onTrue(intakeUntilIntaked());
+
+    // Ground Intake Commands
+    GROUND_INTAKE_IN.whileTrue(
+        groundIntake.manualCommand(GroundIntakeConstants.GROUND_INTAKE_IN_VOLTAGE));
+    GROUND_INTAKE_OUT.whileTrue(
+        groundIntake.manualCommand(GroundIntakeConstants.GROUND_INTAKE_OUT_VOLTAGE));
+
+    // Shooter Commands
+    SHOOTER_FULL_SEND.whileTrue(
+        shooter.runVoltageBoth(rightShooterVolts::get, leftShooterVolts::get));
+    // SHOOTER_FULL_SEND_INTAKE.whileTrue(shootNote());
+    // Shimmy shimmy
+    // SHOOTER_UNJAM.whileTrue(
+    //     (indexer.manualCommand(IndexerConstants.INDEXER_OUT_VOLTAGE / 2)
+    //         .alongWith(shooter.runVoltage(ShooterConstants.SHOOTER_UNJAM_VOLTAGE))));
+    SHOOTER_PREPARE_THEN_SHOOT.whileTrue(shooter.runVoltage(ShooterConstants.SHOOTER_FULL_VOLTAGE));
+    // SHOOTER_PREPARE_THEN_SHOOT.onFalse(new WaitCommand(1)
+    //
+    // .deadlineWith(shooter.runVoltage(ShooterConstants.SHOOTER_FULL_VOLTAGE))
+    //
+    // .deadlineWith(indexer.manualCommand(IndexerConstants.INDEXER_IN_VOLTAGE)));
+
+    // add extra commands in tuning mode
+    // if (Constants.tuningMode) {
+    //   SmartDashboard.putData("Pivot Sysid",
+    //     new SequentialCommandGroup(
+    //       pivot.quasistaticForward(),
+    //       pivot.quasistaticBack(),
+    //       pivot.dynamicForward(),
+    //       pivot.dynamicBack()
+    //     )
+    //   );
+    // }
   }
 
   /**
