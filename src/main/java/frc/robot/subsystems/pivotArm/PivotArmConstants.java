@@ -1,21 +1,18 @@
 package frc.robot.subsystems.pivotArm;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.math.util.Units;
-
 
 public class PivotArmConstants {
   public static final double POSITION_CONVERSION_FACTOR = 21.0 / 35.0;
   public static final double PIVOT_ARM_ROTATION_DIAM_M = 1;
 
-  public static final double[] PIVOT_ARM_PID_REAL = { 3.6, 0, 0, 0.01 };
-  public static final double[] PIVOT_ARM_FEEDFORWARD_REAL = { 0, 0.45, 0, 0 };
+  public static final double[] PIVOT_ARM_PID_REAL = {3.6, 0, 0, 0.01};
+  public static final double[] PIVOT_ARM_FEEDFORWARD_REAL = {0, 0.45, 0, 0};
 
   public static final double PIVOT_ARM_PID_TOLERANCE = Units.degreesToRadians(1);
   public static final double PIVOT_ARM_PID_VELOCITY_TOLERANCE = 0.5;
 
-  public static final double PIVOT_ARM_OFFSET = 1.5;// 1.14;
+  public static final double PIVOT_ARM_OFFSET = 1.5; // 1.14;
 
   public static final double PIVOT_MAX_PID_TIME = 3;
 
@@ -32,7 +29,7 @@ public class PivotArmConstants {
   public static final double RAMP_RATE = 0.5;
   public static final double STEP_VOLTAGE = 3.0;
   public static final double PIVOT_ARM_TOLERANCE = 1.0;
-  public static final double[] kPivotSimPID = { 15, 0, 0, 0 };
+  public static final double[] kPivotSimPID = {15, 0, 0, 0};
 
   public static final int kMotorPort = 2;
   public static final int kEncoderAChannel = 2;

@@ -97,7 +97,6 @@ public final class Constants {
     public static final int INTAKE_PHOTO_ELECTRIC = 9;
 
     public static final int PIVOT_ARM_ID = 9;
-    
 
     public static final int ABSOLUTE_ENCODER_ID = 8;
 

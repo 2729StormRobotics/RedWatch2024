@@ -190,7 +190,9 @@ public class Drive extends SubsystemBase {
     }
 
     if (DriverStation.isAutonomousEnabled()) {
-      Pathfinding.setDynamicObstacles(deadzoneChooser.getDeadzone(), getPose().getTranslation());
+      // Pathfinding.setDynamicObstacles(deadzoneChooser.getDeadzone(), getPose().getTranslation());
+      Pathfinding.setDynamicObstacles(List.of(), null);
+
     } else {
       Pathfinding.setDynamicObstacles(List.of(), null);
     }

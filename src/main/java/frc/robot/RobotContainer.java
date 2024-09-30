@@ -19,14 +19,12 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -43,16 +41,19 @@ import frc.robot.subsystems.flywheel.FlywheelIO;
 import frc.robot.subsystems.flywheel.FlywheelIOSim;
 import frc.robot.subsystems.flywheel.FlywheelIOSparkMax;
 import frc.robot.subsystems.groundIntake.GroundIntake;
-import frc.robot.subsystems.groundIntake.GroundIntakeConstants;
 import frc.robot.subsystems.groundIntake.GroundIntakeIO;
 import frc.robot.subsystems.groundIntake.GroundIntakeIOSim;
 import frc.robot.subsystems.groundIntake.GroundIntakeIOSparkMax;
+import frc.robot.subsystems.pivotArm.PivotArm;
+import frc.robot.subsystems.pivotArm.PivotArmIO;
+import frc.robot.subsystems.pivotArm.PivotArmIOSim;
+import frc.robot.subsystems.pivotArm.PivotArmIOSparkMax;
 import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterConstants;
 import frc.robot.subsystems.shooter.ShooterIO;
 import frc.robot.subsystems.shooter.ShooterIOSim;
 import frc.robot.subsystems.shooter.ShooterIOSparkMax;
-import frc.robot.util.drive.AllianceFlipUtil;
+import frc.robot.util.drive.DriveControls;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardBoolean;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -70,6 +71,7 @@ public class RobotContainer {
   private final Flywheel flywheel;
   private final GroundIntake groundIntake;
   private final Shooter shooter;
+  private final PivotArm pivot;
 
   // LEDs
   private final BlinkinLEDController ledController = BlinkinLEDController.getInstance();
@@ -114,6 +116,7 @@ public class RobotContainer {
         flywheel = new Flywheel(new FlywheelIOSparkMax());
         shooter = new Shooter(new ShooterIOSparkMax());
         groundIntake = new GroundIntake(new GroundIntakeIOSparkMax());
+        pivot = new PivotArm(new PivotArmIOSparkMax());
         // drive = new Drive(
         // new GyroIOPigeon2(true),
         // new ModuleIOTalonFX(0),
@@ -135,6 +138,7 @@ public class RobotContainer {
         flywheel = new Flywheel(new FlywheelIOSim());
         shooter = new Shooter(new ShooterIOSim());
         groundIntake = new GroundIntake(new GroundIntakeIOSim() {});
+        pivot = new PivotArm(new PivotArmIOSim());
 
         break;
 
@@ -150,6 +154,7 @@ public class RobotContainer {
         flywheel = new Flywheel(new FlywheelIO() {});
         shooter = new Shooter(new ShooterIO() {});
         groundIntake = new GroundIntake(new GroundIntakeIO() {});
+        pivot = new PivotArm(new PivotArmIO() {});
 
         break;
     }
@@ -221,54 +226,56 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // default subsystem commands
+    DriveControls.configureControls();
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
 
     shooter.setDefaultCommand(shooter.runVoltage(SHOOTER_SPEED));
+    pivot.setDefaultCommand(pivot.ManualCommand(PIVOT_ROTATE));
 
     // Drive setting commands
-    DRIVE_SLOW.onTrue(new InstantCommand(DriveCommands::toggleSlowMode));
+    // DRIVE_SLOW.onTrue(new InstantCommand(DriveCommands::toggleSlowMode));
 
-    DRIVE_STOP.onTrue(
-        new InstantCommand(
-            () -> {
-              drive.stopWithX();
-              drive.resetYaw();
-            },
-            drive));
+    // DRIVE_STOP.onTrue(
+    //     new InstantCommand(
+    //         () -> {
+    //           drive.stopWithX();
+    //           drive.resetYaw();
+    //         },
+    //         drive));
 
-    DRIVE_HOLD_STOP.onTrue(
-        new InstantCommand(
-            () -> {
-              drive.stopWithX();
-            },
-            drive));
+    // DRIVE_HOLD_STOP.onTrue(
+    //     new InstantCommand(
+    //         () -> {
+    //           drive.stopWithX();
+    //         },
+    //         drive));
 
-    // Drive Modes
-    DRIVE_ROBOT_RELATIVE.whileTrue(
-        DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
+    // // Drive Modes
+    // DRIVE_ROBOT_RELATIVE.whileTrue(
+    //     DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
 
-    DRIVE_SPEAKER_AIM.whileTrue(
-        DriveCommands.joystickSpeakerPoint(drive, DRIVE_FORWARD, DRIVE_STRAFE));
+    // DRIVE_SPEAKER_AIM.whileTrue(
+    //     DriveCommands.joystickSpeakerPoint(drive, DRIVE_FORWARD, DRIVE_STRAFE));
 
     // Drive Angle Locks
-    LOCK_BACK.whileTrue(
-        DriveCommands.joystickAnglePoint(
-            drive,
-            DRIVE_FORWARD,
-            DRIVE_STRAFE,
-            () -> {
-              return AllianceFlipUtil.apply(new Rotation2d());
-            }));
-    LOCK_PICKUP.whileTrue(
-        DriveCommands.joystickAnglePoint(
-            drive,
-            DRIVE_FORWARD,
-            DRIVE_STRAFE,
-            () -> {
-              return AllianceFlipUtil.apply(Rotation2d.fromDegrees(-45));
-            }));
-    LOCK_PASS.whileTrue(DriveCommands.joystickPasserPoint(drive, DRIVE_FORWARD, DRIVE_STRAFE));
+    // LOCK_BACK.whileTrue(
+    //     DriveCommands.joystickAnglePoint(
+    //         drive,
+    //         DRIVE_FORWARD,
+    //         DRIVE_STRAFE,
+    //         () -> {
+    //           return AllianceFlipUtil.apply(new Rotation2d());
+    //         }));
+    // LOCK_PICKUP.whileTrue(
+    //     DriveCommands.joystickAnglePoint(
+    //         drive,
+    //         DRIVE_FORWARD,
+    //         DRIVE_STRAFE,
+    //         () -> {
+    //           return AllianceFlipUtil.apply(Rotation2d.fromDegrees(-45));
+    //         }));
+    // LOCK_PASS.whileTrue(DriveCommands.joystickPasserPoint(drive, DRIVE_FORWARD, DRIVE_STRAFE));
 
     // Pivot Commands
     // PIVOT_AMP.whileTrue(pivot.PIDCommandForever(PivotArmConstants.PIVOT_AMP_ANGLE));
@@ -284,20 +291,20 @@ public class RobotContainer {
     // INTAKE_UNTIL_INTAKED.onTrue(intakeUntilIntaked());
 
     // Ground Intake Commands
-    GROUND_INTAKE_IN.whileTrue(
-        groundIntake.manualCommand(GroundIntakeConstants.GROUND_INTAKE_IN_VOLTAGE));
-    GROUND_INTAKE_OUT.whileTrue(
-        groundIntake.manualCommand(GroundIntakeConstants.GROUND_INTAKE_OUT_VOLTAGE));
+    // GROUND_INTAKE_IN.whileTrue(
+    //     groundIntake.manualCommand(GroundIntakeConstants.GROUND_INTAKE_IN_VOLTAGE));
+    // GROUND_INTAKE_OUT.whileTrue(
+    //     groundIntake.manualCommand(GroundIntakeConstants.GROUND_INTAKE_OUT_VOLTAGE));
 
-    // Shooter Commands
-    SHOOTER_FULL_SEND.whileTrue(
-        shooter.runVoltageBoth(rightShooterVolts::get, leftShooterVolts::get));
+    // // Shooter Commands
+    // SHOOTER_FULL_SEND.whileTrue(
+    //     shooter.runVoltageBoth(rightShooterVolts::get, leftShooterVolts::get));
     // SHOOTER_FULL_SEND_INTAKE.whileTrue(shootNote());
     // Shimmy shimmy
     // SHOOTER_UNJAM.whileTrue(
     //     (indexer.manualCommand(IndexerConstants.INDEXER_OUT_VOLTAGE / 2)
     //         .alongWith(shooter.runVoltage(ShooterConstants.SHOOTER_UNJAM_VOLTAGE))));
-    SHOOTER_PREPARE_THEN_SHOOT.whileTrue(shooter.runVoltage(ShooterConstants.SHOOTER_FULL_VOLTAGE));
+    // SHOOTER_PREPARE_THEN_SHOOT.whileTrue(shooter.runVoltage(ShooterConstants.SHOOTER_FULL_VOLTAGE));
     // SHOOTER_PREPARE_THEN_SHOOT.onFalse(new WaitCommand(1)
     //
     // .deadlineWith(shooter.runVoltage(ShooterConstants.SHOOTER_FULL_VOLTAGE))
