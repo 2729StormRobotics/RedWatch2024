@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.RobotBase;
  */
 public final class Constants {
 
-  public static final Mode mode = Mode.REAL;
+  public static final Mode mode = Mode.SIM;
   public static final Drivers driver = Drivers.DAN;
   public static final Operators operator = Operators.KRITHIK;
 
@@ -92,9 +92,10 @@ public final class Constants {
 
     // PLACEHOLDER Intake
     public static final int GROUND_INTAKE_MOTOR = 13; // 13
-
+    // Indexer Motor
+    public static final int INDEXER_MOTOR = 12;
     // Intake Sensors
-    public static final int INTAKE_PHOTO_ELECTRIC = 9;
+    public static final int INTAKE_PHOTO_ELECTRIC = 0;
 
     public static final int PIVOT_ARM_ID = 9;
 
