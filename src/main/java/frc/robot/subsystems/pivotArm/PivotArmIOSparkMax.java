@@ -1,9 +1,6 @@
 package frc.robot.subsystems.pivotArm;
 
-import static frc.robot.Constants.ElectricalLayout.LEFT_SLAVE_ID;
 import static frc.robot.Constants.ElectricalLayout.PIVOT_ARM_ID;
-import static frc.robot.Constants.ElectricalLayout.RIGHT_SLAVE_BACK_ID;
-import static frc.robot.Constants.ElectricalLayout.RIGHT_SLAVE_FRONT_ID;
 
 import org.littletonrobotics.junction.Logger;
 
@@ -15,7 +12,6 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants;
@@ -23,7 +19,7 @@ import frc.robot.Constants.ElectricalLayout;
 
 public class PivotArmIOSparkMax implements PivotArmIO {
     // Motor and Encoders
-    private CANSparkMax pivotMotor, leftSlave, rightSlaveFront, rightSlaveBack;
+    private CANSparkMax pivotMotor;
     private final ProfiledPIDController pidController;
     private ArmFeedforward feedforward = new ArmFeedforward(0, 0, 0, 0);
     
@@ -34,39 +30,22 @@ public class PivotArmIOSparkMax implements PivotArmIO {
 
     public PivotArmIOSparkMax() {
         pivotMotor = new CANSparkMax(PIVOT_ARM_ID, MotorType.kBrushless);
-        leftSlave = new CANSparkMax(LEFT_SLAVE_ID, MotorType.kBrushless);
-        rightSlaveFront = new CANSparkMax(RIGHT_SLAVE_FRONT_ID, MotorType.kBrushless);
-        rightSlaveBack = new CANSparkMax(RIGHT_SLAVE_BACK_ID, MotorType.kBrushless);
 
         pivotMotor.restoreFactoryDefaults();
-        leftSlave.restoreFactoryDefaults();
-        rightSlaveFront.restoreFactoryDefaults();
-        rightSlaveBack.restoreFactoryDefaults();
         //I swear to go these inverts might have to be after the following
         //pivotMotor.setInverted(false);
         //leftSlave.setInverted(false);
         //rightSlaveFront.setInverted(true);
         //rightSlaveBack.setInverted(true);
         //can't invert like this
-        setBrake(true);
-
-        leftSlave.follow(pivotMotor, false);
-        rightSlaveFront.follow(pivotMotor, true);
-        rightSlaveBack.follow(pivotMotor, true);
 
         setBrake(true);
         
         pivotMotor.enableVoltageCompensation(12.0);
 
         pivotMotor.setSmartCurrentLimit(Constants.NEO_CURRENT_LIMIT);
-        leftSlave.setSmartCurrentLimit(Constants.NEO_CURRENT_LIMIT);
-        rightSlaveFront.setSmartCurrentLimit(Constants.NEO_CURRENT_LIMIT);
-        rightSlaveBack.setSmartCurrentLimit(Constants.NEO_CURRENT_LIMIT);
 
         pivotMotor.burnFlash();
-        leftSlave.burnFlash();
-        rightSlaveFront.burnFlash();
-        rightSlaveBack.burnFlash();
 
         //wasn't burning the flash to all the motors, this might be the issue
 
@@ -158,9 +137,6 @@ public class PivotArmIOSparkMax implements PivotArmIO {
     @Override
     public void setBrake(boolean brake) {
         pivotMotor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
-        leftSlave.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
-        rightSlaveFront.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
-        rightSlaveBack.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
     }
 
     @Override

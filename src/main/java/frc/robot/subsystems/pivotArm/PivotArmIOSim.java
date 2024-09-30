@@ -28,21 +28,21 @@ public class PivotArmIOSim implements PivotArmIO {
 
     private SingleJointedArmSim sim = new SingleJointedArmSim(
             m_armGearbox,
-            PivotArmConstants.PivotArmSimConstants.kArmReduction,
-            SingleJointedArmSim.estimateMOI(PivotArmConstants.PivotArmSimConstants.kArmLength, PivotArmConstants.PivotArmSimConstants.kArmMass),
-            PivotArmConstants.PivotArmSimConstants.kArmLength,
-            PivotArmConstants.PivotArmSimConstants.kMinAngleRads,
-            PivotArmConstants.PivotArmSimConstants.kMaxAngleRads,
+            PivotArmConstants.kArmReduction,
+            SingleJointedArmSim.estimateMOI(PivotArmConstants.kArmLength, PivotArmConstants.kArmMass),
+            PivotArmConstants.kArmLength,
+            PivotArmConstants.kMinAngleRads,
+            PivotArmConstants.kMaxAngleRads,
             true, // change this to true later
             0.1);
 
     private final EncoderSim m_encoderSim;
 
     public PivotArmIOSim() {
-        m_encoder = new Encoder(PivotArmConstants.PivotArmSimConstants.kEncoderAChannel, PivotArmConstants.PivotArmSimConstants.kEncoderBChannel);
+        m_encoder = new Encoder(PivotArmConstants.kEncoderAChannel, PivotArmConstants.kEncoderBChannel);
         m_encoderSim = new EncoderSim(m_encoder);
-        m_encoderSim.setDistancePerPulse(PivotArmConstants.PivotArmSimConstants.kArmEncoderDistPerPulse);
-        m_controller = new ProfiledPIDController(PivotArmConstants.PivotArmSimConstants.kPivotSimPID[0], PivotArmConstants.PivotArmSimConstants.kPivotSimPID[1], PivotArmConstants.PivotArmSimConstants.kPivotSimPID[2],
+        m_encoderSim.setDistancePerPulse(PivotArmConstants.kArmEncoderDistPerPulse);
+        m_controller = new ProfiledPIDController(PivotArmConstants.kPivotSimPID[0], PivotArmConstants.kPivotSimPID[1], PivotArmConstants.kPivotSimPID[2],
                 new TrapezoidProfile.Constraints(2.45, 2.45));
         
         m_controller.setTolerance(0.1, 0.05);

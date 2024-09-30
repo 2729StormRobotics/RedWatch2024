@@ -32,25 +32,22 @@ public class PivotArmConstants {
   public static final double RAMP_RATE = 0.5;
   public static final double STEP_VOLTAGE = 3.0;
   public static final double PIVOT_ARM_TOLERANCE = 1.0;
-}
+  public static final double[] kPivotSimPID = { 15, 0, 0, 0 };
 
-public static class PivotArmSimConstants {
-    public static final double[] kPivotSimPID = { 15, 0, 0, 0 };
+  public static final int kMotorPort = 2;
+  public static final int kEncoderAChannel = 2;
+  public static final int kEncoderBChannel = 3;
 
-    public static final int kMotorPort = 2;
-    public static final int kEncoderAChannel = 2;
-    public static final int kEncoderBChannel = 3;
+  // The P gain for the PID controller that drives this arm.
+  public static final double kDefaultArmSetpointDegrees = Units.degreesToRadians(75.0);
 
-    // The P gain for the PID controller that drives this arm.
-    public static final double kDefaultArmSetpointDegrees = Units.degreesToRadians(75.0);
+  // distance per pulse = (angle per revolution) / (pulses per revolution)
+  // = (2 * PI rads) / (4096 pulses)
+  public static final double kArmEncoderDistPerPulse = 1 / 4096;
 
-    // distance per pulse = (angle per revolution) / (pulses per revolution)
-    // = (2 * PI rads) / (4096 pulses)
-    public static final double kArmEncoderDistPerPulse = 1 / 4096;
-
-    public static final double kArmReduction = 200;
-    public static final double kArmMass = 10.0; // Kilograms
-    public static final double kArmLength = Units.inchesToMeters(20);
-    public static final double kMinAngleRads = Units.degreesToRadians(0);
-    public static final double kMaxAngleRads = Units.degreesToRadians(180);
+  public static final double kArmReduction = 200;
+  public static final double kArmMass = 10.0; // Kilograms
+  public static final double kArmLength = Units.inchesToMeters(20);
+  public static final double kMinAngleRads = Units.degreesToRadians(0);
+  public static final double kMaxAngleRads = Units.degreesToRadians(180);
 }
