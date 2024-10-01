@@ -24,7 +24,8 @@ public interface HangerIO {
     /** The speed setpoint for hanger control. */
     public double speedSetpoint = 0.0;
 
-    /** The status of the break beam sensor. */     //we dont need this
+    /** The status of the break beam sensor. */
+    // we dont need this
     public boolean breakBeam = false;
 
     /** The array of current values in amps for each motor. */
