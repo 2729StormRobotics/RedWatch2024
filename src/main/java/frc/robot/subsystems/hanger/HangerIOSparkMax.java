@@ -1,7 +1,7 @@
-package frc.robot.subsystems.indexer;
+package frc.robot.subsystems.hanger;
 
 import static frc.robot.Constants.NEO_CURRENT_LIMIT;
-import static frc.robot.subsystems.indexer.IndexerConstants.IndexerPhysicalConstants.*;
+import static frc.robot.subsystems.hanger.HangerConstants.HangerPhysicalConstants.*;
 
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -14,7 +14,7 @@ import frc.robot.Constants.ElectricalLayout;
 /** Need to import Constants files/classes */
 //
 
-public class IndexerIOSparkMax implements IndexerIO {
+public class HangerIOSparkMax implements HangerIO {
 
   private CANSparkMax motor;
   private RelativeEncoder encoder;
@@ -24,7 +24,7 @@ public class IndexerIOSparkMax implements IndexerIO {
 
   private double desiredSpeed;
 
-  public IndexerIOSparkMax() {
+  public HangerIOSparkMax() {
     /** ID needs to be assigned from constants */
     // setPIDConstants(kIntakeP, kIntakeI, kIntakeD);
     motor = new CANSparkMax(ElectricalLayout.INDEXER_MOTOR, CANSparkMax.MotorType.kBrushless);
@@ -43,7 +43,7 @@ public class IndexerIOSparkMax implements IndexerIO {
 
   /** updates inputs from robot */
   @Override
-  public void updateInputs(IndexerIOInputs inputs) {
+  public void updateInputs(HangerIOInputs inputs) {
     inputs.appliedVoltage = motor.getAppliedOutput() * motor.getBusVoltage();
     inputs.currentAmps = new double[] {motor.getOutputCurrent()};
     inputs.tempCelcius = new double[] {motor.getMotorTemperature()};

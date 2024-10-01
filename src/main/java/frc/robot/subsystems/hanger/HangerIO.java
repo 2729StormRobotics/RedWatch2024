@@ -1,4 +1,4 @@
-package frc.robot.subsystems.indexer;
+package frc.robot.subsystems.hanger;
 
 import org.littletonrobotics.junction.AutoLog;
 
@@ -7,14 +7,14 @@ import org.littletonrobotics.junction.AutoLog;
  * provides methods to update inputs from the robot, control the intake motor, and retrieve PID
  * constants for velocity control.
  */
-public interface IndexerIO {
+public interface HangerIO {
   /**
    * The IntakeIOInputs class represents the input values for the intake subsystem. It contains
    * fields for velocity, applied voltage, speed setpoint, break beam status, current amps, and
    * temperature in Celsius.
    */
   @AutoLog
-  public static class IndexerIOInputs {
+  public static class HangerIOInputs {
     /** The velocity of the intake motor in radians per second. */
     public double velocityRadsPerSec = 0.0;
 
@@ -39,7 +39,7 @@ public interface IndexerIO {
    *
    * @param inputs the IntakeIOInputs object containing the updated input values
    */
-  public default void updateInputs(IndexerIOInputs inputs) {}
+  public default void updateInputs(HangerIOInputs inputs) {}
 
   /**
    * Sets the voltage to run the intake motor if necessary.

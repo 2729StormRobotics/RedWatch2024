@@ -1,4 +1,4 @@
-package frc.robot.subsystems.indexer;
+package frc.robot.subsystems.hanger;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,9 +10,9 @@ import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
-public class Indexer extends SubsystemBase {
-  private final IndexerIO io;
-  IndexerIOInputsAutoLogged inputs = new IndexerIOInputsAutoLogged();
+public class Hanger extends SubsystemBase {
+  private final HangerIO io;
+  HangerIOInputsAutoLogged inputs = new HangerIOInputsAutoLogged();
 
   private LoggedDashboardNumber logP;
   private LoggedDashboardNumber logI;
@@ -31,7 +31,7 @@ public class Indexer extends SubsystemBase {
   private double timeInIntake = 0;
   private final double desiredTimeInIntake = 0.5;
 
-  public Indexer(IndexerIO io) {
+  public Hanger(HangerIO io) {
     this.io = io;
     SmartDashboard.putData(getName(), this);
     logP = new LoggedDashboardNumber("Intake/P", io.getP());
@@ -39,10 +39,10 @@ public class Indexer extends SubsystemBase {
     logD = new LoggedDashboardNumber("Intake/D", io.getD());
   }
 
-  @AutoLogOutput(key = "Indexer/Close")
+  @AutoLogOutput(key = "Hanger/Close")
   public boolean isVoltageClose(double setVoltage) {
     double voltageDifference = Math.abs(setVoltage - inputs.appliedVoltage);
-    return voltageDifference <= IndexerConstants.INDEXER_TOLERANCE;
+    return voltageDifference <= HangerConstants.INDEXER_TOLERANCE;
   }
 
   public void periodic() {
@@ -50,9 +50,9 @@ public class Indexer extends SubsystemBase {
     // Update PID constants to ensure they are up to date
     Logger.processInputs("Intake", inputs);
 
-    Logger.processInputs("Indexer", inputs);
-    Logger.recordOutput("Indexer/State", noteState.name());
-    Logger.recordOutput("Indexer/IndexerMotorConnected", inputs.velocityRadsPerSec != 0);
+    Logger.processInputs("Hanger", inputs);
+    Logger.recordOutput("Hanger/State", noteState.name());
+    Logger.recordOutput("Hanger/HangerMotorConnected", inputs.velocityRadsPerSec != 0);
   }
 
   public void setVoltage(double voltage) {
@@ -94,7 +94,7 @@ public class Indexer extends SubsystemBase {
             // this::isIntakedForEnoughTime,
             this::isIntaked,
             this)
-        .withTimeout(IndexerConstants.getIntakeLoopMaxTime());
+        .withTimeout(HangerConstants.getIntakeLoopMaxTime());
   }
 
   // The above command in reverse
@@ -105,7 +105,7 @@ public class Indexer extends SubsystemBase {
             (stop) -> setVoltage(0.0),
             () -> noteState == NoteState.NOT_ENOUGH,
             this)
-        .withTimeout(IndexerConstants.getIntakeLoopMaxTime());
+        .withTimeout(HangerConstants.getIntakeLoopMaxTime());
   }
   /**
    * Uses input from controller to set speed of the flywheel and is used as the default command for
