@@ -74,7 +74,7 @@ public interface HangerIO {
    *
    * @return true if an object is being intaked, false otherwise
    */
-  public default boolean isIntaked() {
+  public default boolean isHanging() {
     return true;
   }
 

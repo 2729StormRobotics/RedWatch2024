@@ -38,18 +38,20 @@ public final class HangerConstants {
     public static final double GROUND_STOP_BUFFER = 0.0;
     public static final double GROUND_TOLERANCE = 0.0;
 
-    public static final double kHangerP = 0.001;
-    public static final double kHangerI = 0.0;
-    public static final double kHangerD = 0.0;
+    public static final double kIndexerP = 0.001;
+    public static final double kIndexerI = 0.0;
+    public static final double kIndexerD = 0.0;
   }
 
-  public static final double INDEXER_IN_VOLTAGE = 8;
-  public static final double INDEXER_IN_VOLTAGE_WEAK = 4.2;
-  public static final double INDEXER_OUT_VOLTAGE = -2;
-  public static final double INDEXER_TOLERANCE = 1;
+  // do these values need to be adjusted??
+  public static final double HANGER_IN_VOLTAGE = 8;
+  public static final double HANGER_IN_VOLTAGE_WEAK = 4.2;
+  public static final double HANGER_OUT_VOLTAGE = -2;
+  public static final double HANGER_TOLERANCE = 1;
 
   public static final double SHOOTER_UNJAM_TIME = 0.2;
 
+  //do we need this??
   public static double getIntakeLoopMaxTime() {
     switch (Constants.getRobotMode()) {
       case REAL:

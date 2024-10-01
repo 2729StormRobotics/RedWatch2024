@@ -89,7 +89,7 @@ public class HangerIOSim implements HangerIO {
   }
 
   @Override
-  public boolean isIntaked() {
+  public boolean isHanging() {
     return true; // change to try autos
   }
 }

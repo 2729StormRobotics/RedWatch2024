@@ -104,6 +104,10 @@ public final class Constants {
     // LED
     public static final int BLINKIN_LED_CONTROLLER_PORT = 7;
 
+    // Hanger Motors
+    public static final int HANGER_MOTOR_LEFT = 16;
+    public static final int HANGER_MOTOR_RIGHT = 15;
+
     // Shooter
     public static final int SHOOTER_LEFT_ID = 14; // master
     public static final int SHOOTER_RIGHT_ID = 10;

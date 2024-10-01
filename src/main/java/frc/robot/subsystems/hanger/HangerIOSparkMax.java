@@ -1,10 +1,11 @@
 package frc.robot.subsystems.hanger;
 
 import static frc.robot.Constants.NEO_CURRENT_LIMIT;
-import static frc.robot.subsystems.hanger.HangerConstants.HangerPhysicalConstants.*;
+import static frc.robot.subsystems.hanger.HangerConstants.HangerPhysicalConstants;
 
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
@@ -16,56 +17,74 @@ import frc.robot.Constants.ElectricalLayout;
 
 public class HangerIOSparkMax implements HangerIO {
 
-  private CANSparkMax motor;
-  private RelativeEncoder encoder;
+  private CANSparkMax leader;
+  private CANSparkMax follower;
   private SparkPIDController velocityPID;
 
   private DigitalInput photoelectricSensor;
 
   private double desiredSpeed;
-
+  
+  private RelativeEncoder encoder_left;
+  private RelativeEncoder encoder_right;
+  
   public HangerIOSparkMax() {
     /** ID needs to be assigned from constants */
     // setPIDConstants(kIntakeP, kIntakeI, kIntakeD);
-    motor = new CANSparkMax(ElectricalLayout.INDEXER_MOTOR, CANSparkMax.MotorType.kBrushless);
-    motor.restoreFactoryDefaults();
-    motor.setIdleMode(IdleMode.kCoast);
-    motor.setInverted(true);
-    /** Current limit should be added to Constants.java when known */
-    motor.setSmartCurrentLimit(NEO_CURRENT_LIMIT);
+    
+    leader = new CANSparkMax(ElectricalLayout.HANGER_MOTOR_LEFT, CANSparkMax.MotorType.kBrushless);
+    follower = new CANSparkMax(ElectricalLayout.HANGER_MOTOR_RIGHT, CANSparkMax.MotorType.kBrushless); 
 
-    encoder = motor.getEncoder();
+    encoder_left = leader.getEncoder();
+    encoder_right = follower.getEncoder();
 
-    photoelectricSensor = new DigitalInput(ElectricalLayout.INTAKE_PHOTO_ELECTRIC);
+    leader.restoreFactoryDefaults();
+    follower.restoreFactoryDefaults();
 
-    velocityPID = motor.getPIDController();
+    leader.setCANTimeout(250);
+    follower.setCANTimeout(250);
+
+    leader.setInverted(false);
+    follower.follow(leader, false);
+
+    leader.enableVoltageCompensation(12.0);
+    leader.setSmartCurrentLimit(30);
+
+    leader.burnFlash();
+    follower.burnFlash();
+
+    
+
+    
+
+    velocityPID = leader.getPIDController();
   }
 
   /** updates inputs from robot */
   @Override
   public void updateInputs(HangerIOInputs inputs) {
-    inputs.appliedVoltage = motor.getAppliedOutput() * motor.getBusVoltage();
-    inputs.currentAmps = new double[] {motor.getOutputCurrent()};
-    inputs.tempCelcius = new double[] {motor.getMotorTemperature()};
-    inputs.velocityRadsPerSec = encoder.getVelocity();
+    inputs.appliedVoltage = leader.getAppliedOutput() * leader.getBusVoltage();
+    inputs.currentAmps = new double[] {leader.getOutputCurrent()};
+    inputs.tempCelcius = new double[] {leader.getMotorTemperature()};
+    inputs.velocityRadsPerSec = encoder_left.getVelocity();
     inputs.speedSetpoint = desiredSpeed;
     inputs.breakBeam = photoelectricSensor.get();
   }
 
-  /** sets voltage to run motor if necessary */
+  /** sets voltage to run leader if necessary */
   @Override
   public void setVoltage(double voltage) {
-    motor.setVoltage(voltage * 10);
+    leader.setVoltage(voltage * 10);
   }
 
   /** sets brake mode to stop */
   @Override
   public void setBrake(boolean brake) {
-    motor.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
+    leader.setIdleMode(brake ? IdleMode.kBrake : IdleMode.kCoast);
   }
 
   @Override
-  public boolean isIntaked() {
+  public boolean isHanging() {
     return photoelectricSensor.get();
   }
 
@@ -77,7 +96,7 @@ public class HangerIOSparkMax implements HangerIO {
 
   @Override
   public double getSpeed() {
-    return encoder.getVelocity();
+    return encoder_left.getVelocity();
   }
 
   @Override
