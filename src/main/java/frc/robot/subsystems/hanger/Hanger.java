@@ -32,9 +32,9 @@ public class Hanger extends SubsystemBase {
   public Hanger(HangerIO io) {
     this.io = io;
     SmartDashboard.putData(getName(), this);
-    logP = new LoggedDashboardNumber("Intake/P", io.getP());
-    logI = new LoggedDashboardNumber("Intake/I", io.getI());
-    logD = new LoggedDashboardNumber("Intake/D", io.getD());
+    logP = new LoggedDashboardNumber("Hanger/P", io.getP());
+    logI = new LoggedDashboardNumber("Hanger/I", io.getI());
+    logD = new LoggedDashboardNumber("Hanger/D", io.getD());
   }
 
   @AutoLogOutput(key = "Hanger/hanging")
@@ -69,18 +69,13 @@ public class Hanger extends SubsystemBase {
     return io.isHanging();
   }
 
-  // Sets motor speed based on where the note is in the intake
-  public void runIntakeLoop() {
-    setVoltage(currentVoltage);
-  }
-
   // Checks if note has been in the intake for 0.5 seconds
   public boolean isHangingForEnoughTime() {
     return timeInIntake >= desiredTimeInIntake;
   }
   /**
    * Uses input from controller to set speed of the flywheel and is used as the default command for
-   * the ground intake
+   * the hanger
    */
   public Command speedCommand(DoubleSupplier speed) {
     return new FunctionalCommand(

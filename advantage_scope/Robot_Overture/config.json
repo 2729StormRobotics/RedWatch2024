@@ -1,6 +1,6 @@
 {
-  "name": "Overture" ,
-  "sourceUrl": "N/A" ,
+  "name": "Overture",
+  "sourceUrl": "N/A",
   "rotations": [
     {
       "axis": "y",
@@ -14,7 +14,7 @@
       "axis": "z",
       "degrees": 180
     }
-  ], 
+  ],
   "position": [
     0.12,
     0,
@@ -110,5 +110,5 @@
       "fov": 90
     }
   ],
-  "components": [] 
+  "components": []
 }

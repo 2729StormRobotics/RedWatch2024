@@ -23,7 +23,7 @@ public class HangerIOSparkMax implements HangerIO {
 
   public HangerIOSparkMax() {
     /** ID needs to be assigned from constants */
-    // setPIDConstants(kIntakeP, kIntakeI, kIntakeD);
+    // setPIDConstants(kHangerP, kHangerI, kHangerD);
 
     leader = new CANSparkMax(ElectricalLayout.HANGER_MOTOR_LEFT, CANSparkMax.MotorType.kBrushless);
     follower =

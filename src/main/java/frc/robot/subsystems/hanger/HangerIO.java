@@ -3,28 +3,28 @@ package frc.robot.subsystems.hanger;
 import org.littletonrobotics.junction.AutoLog;
 
 /**
- * The IntakeIO interface represents the input/output interface for the intake subsystem. It
- * provides methods to update inputs from the robot, control the intake motor, and retrieve PID
+ * The HangerIO interface represents the input/output interface for the hanger subsystem. It
+ * provides methods to update inputs from the robot, control the hanger motor, and retrieve PID
  * constants for velocity control.
  */
 public interface HangerIO {
   /**
-   * The IntakeIOInputs class represents the input values for the intake subsystem. It contains
+   * The HangerIOInputs class represents the input values for the hanger subsystem. It contains
    * fields for velocity, applied voltage, speed setpoint, break beam status, current amps, and
    * temperature in Celsius.
    */
   @AutoLog
   public static class HangerIOInputs {
-    /** The velocity of the intake motor in radians per second. */
+    /** The velocity of the hanger motor in radians per second. */
     public double velocityRadsPerSec = 0.0;
 
-    /** The applied voltage to run the intake motor. */
+    /** The applied voltage to run the hanger motor. */
     public double appliedVoltage = 0.0;
 
-    /** The speed setpoint for velocity control. */
+    /** The speed setpoint for hanger control. */
     public double speedSetpoint = 0.0;
 
-    /** The status of the break beam sensor. */
+    /** The status of the break beam sensor. */     //we dont need this
     public boolean breakBeam = false;
 
     /** The array of current values in amps for each motor. */
@@ -37,12 +37,12 @@ public interface HangerIO {
   /**
    * Updates the input values from the robot.
    *
-   * @param inputs the IntakeIOInputs object containing the updated input values
+   * @param inputs the HangerIOInputs object containing the updated input values
    */
   public default void updateInputs(HangerIOInputs inputs) {}
 
   /**
-   * Sets the voltage to run the intake motor if necessary.
+   * Sets the voltage to run the hanger motor if necessary.
    *
    * @param voltage the voltage to be applied to the motor
    */
@@ -57,35 +57,35 @@ public interface HangerIO {
    */
   public default void setPIDConstants(double p, double i, double d) {}
 
-  /** Stops the intake motor by setting the voltage to 0. */
+  /** Stops the hanger motor by setting the voltage to 0. */
   public default void stop() {
     setVoltage(0.0);
   }
 
   /**
-   * Sets the brake mode for the intake motor.
+   * Sets the brake mode for the hanger motor.
    *
    * @param brake true to enable brake mode, false otherwise
    */
   public default void setBrake(boolean brake) {}
 
   /**
-   * Checks if an object is currently being intaked.
+   * Checks if the robot is hanging.
    *
-   * @return true if an object is being intaked, false otherwise
+   * @return true if the robot is hanging, false otherwise
    */
   public default boolean isHanging() {
     return true;
   }
 
   /**
-   * Sets the speed of the intake motor.
+   * Sets the speed of the hanger motor.
    *
-   * @param speed the speed of the intake motor
+   * @param speed the speed of the hanger motor
    */
   public default void setSpeed(double speed) {}
 
-  // Returns the current speed of the intake motor
+  // Returns the current speed of the hanger motor
   public default double getSpeed() {
     return 0;
   }
