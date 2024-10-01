@@ -1,5 +1,6 @@
 {
-  "name": "Overture",
+  "name": "Overture" ,
+  "sourceUrl": "N/A" ,
   "rotations": [
     {
       "axis": "y",
@@ -13,7 +14,7 @@
       "axis": "z",
       "degrees": 180
     }
-  ],
+  ], 
   "position": [
     0.12,
     0,
@@ -109,27 +110,5 @@
       "fov": 90
     }
   ],
-  "components": [
-    {
-      "zeroedRotations": [
-        {
-          "axis": "y",
-          "degrees": 0
-        },
-        {
-          "axis": "z",
-          "degrees": 180
-        },
-        {
-          "axis": "x",
-          "degrees": 180
-        }
-      ],
-      "zeroedPosition": [
-        0.18,
-        0,
-        -0.19
-      ]
-    }
-  ]
+  "components": [] 
 }
