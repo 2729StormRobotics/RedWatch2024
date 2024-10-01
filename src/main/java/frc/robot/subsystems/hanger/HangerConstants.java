@@ -51,7 +51,7 @@ public final class HangerConstants {
 
   public static final double SHOOTER_UNJAM_TIME = 0.2;
 
-  //do we need this??
+  // do we need this??
   public static double getIntakeLoopMaxTime() {
     switch (Constants.getRobotMode()) {
       case REAL:

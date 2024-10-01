@@ -1,15 +1,10 @@
 package frc.robot.subsystems.hanger;
 
-import static frc.robot.Constants.NEO_CURRENT_LIMIT;
-import static frc.robot.subsystems.hanger.HangerConstants.HangerPhysicalConstants;
-
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.ElectricalLayout;
 
 /** Need to import Constants files/classes */
@@ -21,19 +16,18 @@ public class HangerIOSparkMax implements HangerIO {
   private CANSparkMax follower;
   private SparkPIDController velocityPID;
 
-  private DigitalInput photoelectricSensor;
-
   private double desiredSpeed;
-  
+
   private RelativeEncoder encoder_left;
   private RelativeEncoder encoder_right;
-  
+
   public HangerIOSparkMax() {
     /** ID needs to be assigned from constants */
     // setPIDConstants(kIntakeP, kIntakeI, kIntakeD);
-    
+
     leader = new CANSparkMax(ElectricalLayout.HANGER_MOTOR_LEFT, CANSparkMax.MotorType.kBrushless);
-    follower = new CANSparkMax(ElectricalLayout.HANGER_MOTOR_RIGHT, CANSparkMax.MotorType.kBrushless); 
+    follower =
+        new CANSparkMax(ElectricalLayout.HANGER_MOTOR_RIGHT, CANSparkMax.MotorType.kBrushless);
 
     encoder_left = leader.getEncoder();
     encoder_right = follower.getEncoder();
@@ -53,10 +47,6 @@ public class HangerIOSparkMax implements HangerIO {
     leader.burnFlash();
     follower.burnFlash();
 
-    
-
-    
-
     velocityPID = leader.getPIDController();
   }
 
@@ -68,7 +58,6 @@ public class HangerIOSparkMax implements HangerIO {
     inputs.tempCelcius = new double[] {leader.getMotorTemperature()};
     inputs.velocityRadsPerSec = encoder_left.getVelocity();
     inputs.speedSetpoint = desiredSpeed;
-    inputs.breakBeam = photoelectricSensor.get();
   }
 
   /** sets voltage to run leader if necessary */
@@ -85,7 +74,7 @@ public class HangerIOSparkMax implements HangerIO {
 
   @Override
   public boolean isHanging() {
-    return photoelectricSensor.get();
+    return false;
   }
 
   @Override
