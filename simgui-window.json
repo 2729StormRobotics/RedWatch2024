@@ -5,17 +5,22 @@
   "MainWindow": {
     "GLOBAL": {
       "fps": "60",
-      "height": "861",
+      "height": "916",
       "maximized": "1",
       "style": "1",
       "userScale": "2",
-      "width": "1512",
-      "xpos": "0",
-      "ypos": "34"
+      "width": "1509",
+      "xpos": "-398",
+      "ypos": "979"
     }
   },
   "Table": {
     "0x495EAA44,2": {
+      "Column 0  Width": "130",
+      "Column 1  Weight": "1.0000",
+      "RefScale": "13"
+    },
+    "0x72457711,2": {
       "Column 0  Width": "130",
       "Column 1  Weight": "1.0000",
       "RefScale": "13"
@@ -40,7 +45,7 @@
     },
     "###/SmartDashboard/Field": {
       "Collapsed": "0",
-      "Pos": "1371,88",
+      "Pos": "1023,59",
       "Size": "400,200"
     },
     "###/SmartDashboard/Pathfind to Pickup Pos": {
