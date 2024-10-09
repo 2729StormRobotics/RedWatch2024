@@ -5,16 +5,21 @@
   "MainWindow": {
     "GLOBAL": {
       "fps": "60",
-      "height": "974",
+      "height": "861",
       "maximized": "1",
       "style": "1",
       "userScale": "2",
-      "width": "1920",
+      "width": "1512",
       "xpos": "0",
       "ypos": "34"
     }
   },
   "Table": {
+    "0x495EAA44,2": {
+      "Column 0  Width": "130",
+      "Column 1  Weight": "1.0000",
+      "RefScale": "13"
+    },
     "0xE56EC1C2,4": {
       "Column 0  Weight": "1.0000",
       "Column 1  Weight": "1.0000",
@@ -25,13 +30,13 @@
   "Window": {
     "###/SmartDashboard/Arm Mechanism": {
       "Collapsed": "0",
-      "Pos": "400,400",
+      "Pos": "365,563",
       "Size": "200,200"
     },
     "###/SmartDashboard/Auto Choices": {
       "Collapsed": "0",
-      "Pos": "60,60",
-      "Size": "361,66"
+      "Pos": "152,53",
+      "Size": "254,54"
     },
     "###/SmartDashboard/Field": {
       "Collapsed": "0",
@@ -40,23 +45,33 @@
     },
     "###/SmartDashboard/Pathfind to Pickup Pos": {
       "Collapsed": "0",
-      "Pos": "60,60",
-      "Size": "218,83"
+      "Pos": "645,38",
+      "Size": "154,65"
     },
     "###/SmartDashboard/Pivot Sysid": {
       "Collapsed": "0",
-      "Pos": "60,60",
-      "Size": "154,83"
+      "Pos": "455,50",
+      "Size": "110,65"
     },
     "###FMS": {
       "Collapsed": "0",
-      "Pos": "22,651",
-      "Size": "235,244"
+      "Pos": "81,551",
+      "Size": "169,184"
     },
     "###Joysticks": {
       "Collapsed": "0",
       "Pos": "474,566",
-      "Size": "1156,91"
+      "Size": "796,155"
+    },
+    "###Keyboard 0 Settings": {
+      "Collapsed": "0",
+      "Pos": "11,50",
+      "Size": "300,560"
+    },
+    "###Keyboard 1 Settings": {
+      "Collapsed": "0",
+      "Pos": "320,50",
+      "Size": "300,560"
     },
     "###NetworkTables": {
       "Collapsed": "0",
@@ -76,12 +91,12 @@
     "###System Joysticks": {
       "Collapsed": "0",
       "Pos": "17,299",
-      "Size": "273,290"
+      "Size": "192,218"
     },
     "###Timing": {
       "Collapsed": "0",
-      "Pos": "5,150",
-      "Size": "298,186"
+      "Pos": "11,135",
+      "Size": "210,150"
     },
     "Debug##Default": {
       "Collapsed": "0",
@@ -91,7 +106,7 @@
     "Robot State": {
       "Collapsed": "0",
       "Pos": "5,20",
-      "Size": "126,152"
+      "Size": "92,116"
     }
   }
 }

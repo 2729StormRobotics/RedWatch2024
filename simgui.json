@@ -89,6 +89,9 @@
     }
   },
   "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
     "Retained Values": {
       "open": false
     },
@@ -119,7 +122,9 @@
         "open": true
       },
       "Shuffleboard": {
-        "open": true
+        ".recording": {
+          "open": true
+        }
       },
       "SmartDashboard": {
         "Pathfind to Pickup Pos": {
@@ -134,6 +139,9 @@
   },
   "NetworkTables Info": {
     "Clients": {
+      "open": true
+    },
+    "DartClient_59392802@1": {
       "open": true
     },
     "visible": true
