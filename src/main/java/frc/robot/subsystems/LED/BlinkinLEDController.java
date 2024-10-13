@@ -223,6 +223,15 @@ public class BlinkinLEDController {
     setPattern(m_allianceColors.get(getAlliance())[4]);
   }
 
+  /* Set LEDs to Orange  */
+  public void orangeHeartbeat() {
+    setPattern(BlinkinPattern.CP1_HEARTBEAT_MEDIUM);
+  }
+
+  public void orange() {
+    setPattern(BlinkinPattern.ORANGE);
+  }
+
   /** Set LEDs to team color */
   public void setTeamColor() {
     setPattern(BlinkinPattern.DARK_GREEN);
