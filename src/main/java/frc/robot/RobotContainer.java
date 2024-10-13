@@ -25,12 +25,17 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.commandgroups.*;
+import frc.robot.commands.AutoPivotNoEnd;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.ShootingCommands;
 import frc.robot.subsystems.LED.BlinkinLEDController;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOReal;
@@ -45,6 +50,10 @@ import frc.robot.subsystems.groundIntake.GroundIntake;
 import frc.robot.subsystems.groundIntake.GroundIntakeIO;
 import frc.robot.subsystems.groundIntake.GroundIntakeIOSim;
 import frc.robot.subsystems.groundIntake.GroundIntakeIOSparkMax;
+import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.indexer.IndexerIO;
+import frc.robot.subsystems.indexer.IndexerIOSim;
+import frc.robot.subsystems.indexer.IndexerIOSparkMax;
 import frc.robot.subsystems.pivotArm.PivotArm;
 import frc.robot.subsystems.pivotArm.PivotArmIO;
 import frc.robot.subsystems.pivotArm.PivotArmIOSim;
@@ -73,6 +82,11 @@ public class RobotContainer {
   private final GroundIntake groundIntake;
   private final Shooter shooter;
   private final PivotArm pivot;
+  private final Indexer indexer;
+
+  private final Vision vision;
+
+  private boolean brakeMode = true;
 
   // LEDs
   private final BlinkinLEDController ledController = BlinkinLEDController.getInstance();
@@ -118,6 +132,8 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIOSparkMax());
         groundIntake = new GroundIntake(new GroundIntakeIOSparkMax());
         pivot = new PivotArm(new PivotArmIOSparkMax());
+        indexer = new Indexer(new IndexerIOSparkMax());
+        vision = new Vision();
         // drive = new Drive(
         // new GyroIOPigeon2(true),
         // new ModuleIOTalonFX(0),
@@ -140,6 +156,8 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIOSim());
         groundIntake = new GroundIntake(new GroundIntakeIOSim() {});
         pivot = new PivotArm(new PivotArmIOSim());
+        indexer = new Indexer(new IndexerIOSim());
+        vision = new Vision();
 
         break;
 
@@ -156,6 +174,8 @@ public class RobotContainer {
         shooter = new Shooter(new ShooterIO() {});
         groundIntake = new GroundIntake(new GroundIntakeIO() {});
         pivot = new PivotArm(new PivotArmIO() {});
+        indexer = new Indexer(new IndexerIO() {});
+        vision = new Vision();
 
         break;
     }
@@ -234,6 +254,11 @@ public class RobotContainer {
     shooter.setDefaultCommand(shooter.runVoltage(SHOOTER_SPEED));
     pivot.setDefaultCommand(pivot.ManualCommand(PIVOT_ROTATE));
 
+    INTAKE_THEN_LOAD.onTrue(ShootingCommands.IntakeThenLoad(indexer, groundIntake, pivot));
+    PIVOT_TO_SPEAKER.whileTrue(new AutoPivotNoEnd(vision, pivot, true));
+    PIVOT_AND_REV.whileTrue(
+        new ParallelCommandGroup(new AutoPivotNoEnd(vision, pivot, true), shooter.runRPM(4800.0)));
+
     // Drive setting commands
     // DRIVE_SLOW.onTrue(new InstantCommand(DriveCommands::toggleSlowMode));
 
@@ -253,11 +278,9 @@ public class RobotContainer {
     //         drive));
 
     // // Drive Modes
-    // DRIVE_ROBOT_RELATIVE.whileTrue(
-    //     DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
 
-    // DRIVE_SPEAKER_AIM.whileTrue(
-    //     DriveCommands.joystickSpeakerPoint(drive, DRIVE_FORWARD, DRIVE_STRAFE));
+    DRIVE_SPEAKER_AIM.whileTrue(
+        DriveCommands.joystickSpeakerPoint(drive, DRIVE_FORWARD, DRIVE_STRAFE));
 
     // Drive Angle Locks
     // LOCK_BACK.whileTrue(

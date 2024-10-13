@@ -46,6 +46,7 @@ public class DriveControls {
   public static Trigger PIVOT_PODIUM;
   public static Trigger PIVOT_ANYWHERE;
   public static Trigger PIVOT_HOLD;
+  public static Trigger PIVOT_AND_REV;
 
   // Intake Controls
   public static Trigger INTAKE_IN;
@@ -81,7 +82,7 @@ public class DriveControls {
 
         // Driver Modes
         DRIVE_ROBOT_RELATIVE = m_translator.button(4); // TBA
-        // DRIVE_SPEAKER_AIM = m_translator.leftBumper(); // uses vision
+        DRIVE_SPEAKER_AIM = m_translator.button(1); // uses vision
 
         // ALL BELOW TBD
         // Driver Angle Locks
@@ -128,11 +129,11 @@ public class DriveControls {
         // Pivot things
         PIVOT_AMP = m_weaponsController.b();
         PIVOT_ZERO = m_weaponsController.a();
-        PIVOT_TO_SPEAKER = m_weaponsController.button(2);
+        PIVOT_TO_SPEAKER = m_weaponsController.y();
         PIVOT_PODIUM = m_weaponsController.y();
         PIVOT_ANYWHERE = m_weaponsController.button(1); // uses vision
         PIVOT_HOLD = m_weaponsController.start();
-
+        PIVOT_AND_REV = new Trigger(() -> (m_weaponsController.getRightTriggerAxis() > 0.5));
         // intaking things
         INTAKE_IN = m_weaponsController.rightBumper();
         INTAKE_OUT = m_weaponsController.leftBumper();
