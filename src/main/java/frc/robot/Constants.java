@@ -105,7 +105,6 @@ public final class Constants {
   }
 
   public static class OperatorConstants {
-    
 
     // joystick settings
     public static final double kDriveDeadband = 0.025;

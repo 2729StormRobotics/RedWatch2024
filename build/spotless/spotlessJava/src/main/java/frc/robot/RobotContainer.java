@@ -19,7 +19,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -55,7 +54,6 @@ import frc.robot.subsystems.indexer.IndexerIO;
 import frc.robot.subsystems.indexer.IndexerIOSim;
 import frc.robot.subsystems.indexer.IndexerIOSparkMax;
 import frc.robot.subsystems.pivotArm.PivotArm;
-import frc.robot.subsystems.pivotArm.PivotArmConstants;
 import frc.robot.subsystems.pivotArm.PivotArmIO;
 import frc.robot.subsystems.pivotArm.PivotArmIOSim;
 import frc.robot.subsystems.pivotArm.PivotArmIOSparkMax;
@@ -347,33 +345,6 @@ public class RobotContainer {
     //     )
     //   );
     // }
-  }
-
-  public void LEDPeriodic() {
-    BlinkinLEDController.isEndgame = DriverStation.getMatchTime() <= 30;
-    BlinkinLEDController.isEnabled = DriverStation.isEnabled();
-    // BlinkinLEDController.noteInIntake = intake.isIntaked();
-    BlinkinLEDController.pivotArmDown =
-        pivot.getAngle().getRadians() < (PivotArmConstants.PIVOT_ARM_MIN_ANGLE + Math.PI / 6);
-    BlinkinLEDController.shooting = shooter.getLeftSpeedMetersPerSecond() > 5_000;
-    ledController.periodic();
-  }
-
-  public void disabledPeriodic() {
-    LEDPeriodic();
-    if (brakeModeDashboard.get() != brakeMode) {
-      brakeMode = !brakeMode;
-      pivot.setBrake(brakeMode);
-    }
-
-    if (setStartPosition.get()) {
-      drive.updateDeadzoneChooser();
-      setStartPosition.set(false);
-    }
-
-    field.setRobotPose(drive.getPose());
-    Logger.recordOutput("DriveAimed", DriveCommands.pointedAtSpeaker(drive));
-    Logger.recordOutput("PivotAimed", pivot.atSetpoint());
   }
 
   /**

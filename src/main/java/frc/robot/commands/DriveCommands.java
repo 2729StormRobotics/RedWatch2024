@@ -365,4 +365,12 @@ public class DriveCommands {
     }
     return true;
   }
+
+  //   public static Command AprilTagAlign(Joystick m_translator, Drive m_drivetrain, Vision
+  // m_vision){
+  //     final PIDController m_controller = new PIDController(Constants.VisionConstants.kPTurn,
+  // Constants.VisionConstants.kITurn, Constants.VisionConstants.kDTurn);
+  //     double m_turnError;
+  //     double m_turnPower;
+  //   }
 }

@@ -104,6 +104,14 @@ public final class Constants {
     public static final double kFreeSpeedRpm = 5676;
   }
 
+  public static class OperatorConstants {
+
+    // joystick settings
+    public static final double kDriveDeadband = 0.025;
+    public static final double translationMultiplier = 1;
+    public static final double rotationMultiplier = 1;
+  }
+
   public static class ElectricalLayout {
     // Controllers
     public static final int CONTROLLER_DRIVER_ID = 0;

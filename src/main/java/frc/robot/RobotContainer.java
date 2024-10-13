@@ -28,7 +28,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commandgroups.*;
 import frc.robot.commands.AutoPivotNoEnd;
@@ -250,7 +249,7 @@ public class RobotContainer {
     DriveControls.configureControls();
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
-            
+
     shooter.setDefaultCommand(shooter.runVoltage(SHOOTER_SPEED));
     pivot.setDefaultCommand(pivot.ManualCommand(PIVOT_ROTATE));
 

@@ -411,9 +411,4 @@ public class Drive extends SubsystemBase {
   public Command pathfindToTrajectory(PathPlannerPath path) {
     return AutoBuilder.pathfindThenFollowPath(path, kPathConstraints);
   }
-
-  
-
- 
-
 }
