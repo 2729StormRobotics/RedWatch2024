@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import frc.robot.commandgroups.*;
+import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.LED.BlinkinLEDController;
 import frc.robot.subsystems.drive.Drive;
@@ -74,7 +76,6 @@ public class RobotContainer {
   private final GroundIntake groundIntake;
   private final Shooter shooter;
   private final PivotArm pivot;
-
 
   private boolean brakeMode = true;
 
@@ -238,6 +239,8 @@ public class RobotContainer {
     shooter.setDefaultCommand(shooter.runVoltage(SHOOTER_SPEED));
     pivot.setDefaultCommand(pivot.ManualCommand(PIVOT_ROTATE));
 
+    INTAKE_THEN_LOAD.onTrue(new IntakeThenLoad(groundIntake));
+
     // Drive setting commands
     // DRIVE_SLOW.onTrue(new InstantCommand(DriveCommands::toggleSlowMode));
 
@@ -328,11 +331,13 @@ public class RobotContainer {
     //   );
     // }
   }
+
   public void LEDPeriodic() {
     BlinkinLEDController.isEndgame = DriverStation.getMatchTime() <= 30;
     BlinkinLEDController.isEnabled = DriverStation.isEnabled();
     // BlinkinLEDController.noteInIntake = intake.isIntaked();
-    BlinkinLEDController.pivotArmDown = pivot.getAngle().getRadians() < (PivotArmConstants.PIVOT_ARM_MIN_ANGLE + Math.PI / 6);
+    BlinkinLEDController.pivotArmDown =
+        pivot.getAngle().getRadians() < (PivotArmConstants.PIVOT_ARM_MIN_ANGLE + Math.PI / 6);
     BlinkinLEDController.shooting = shooter.getLeftSpeedMetersPerSecond() > 5_000;
     ledController.periodic();
   }

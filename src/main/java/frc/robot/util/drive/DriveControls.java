@@ -50,6 +50,7 @@ public class DriveControls {
   // Intake Controls
   public static Trigger INTAKE_IN;
   public static Trigger INTAKE_OUT;
+  public static Trigger INTAKE_THEN_LOAD;
 
   // Ground Intake
   public static Trigger GROUND_INTAKE_IN;
@@ -127,7 +128,7 @@ public class DriveControls {
         // Pivot things
         PIVOT_AMP = m_weaponsController.b();
         PIVOT_ZERO = m_weaponsController.a();
-        PIVOT_TO_SPEAKER = m_weaponsController.x();
+        PIVOT_TO_SPEAKER = m_weaponsController.button(2);
         PIVOT_PODIUM = m_weaponsController.y();
         PIVOT_ANYWHERE = m_weaponsController.button(1); // uses vision
         PIVOT_HOLD = m_weaponsController.start();
@@ -136,7 +137,7 @@ public class DriveControls {
         INTAKE_IN = m_weaponsController.rightBumper();
         INTAKE_OUT = m_weaponsController.leftBumper();
         INTAKE_UNTIL_INTAKED = EMPTY_TRIGGER;
-
+        INTAKE_THEN_LOAD = m_weaponsController.x();
         // ground intake things
         GROUND_INTAKE_IN = m_weaponsController.rightBumper();
         GROUND_INTAKE_OUT = m_weaponsController.leftBumper();
