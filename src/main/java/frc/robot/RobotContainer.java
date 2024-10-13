@@ -19,7 +19,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -28,9 +27,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-import frc.robot.commandgroups.*;
-import frc.robot.commandgroups.IntakeThenLoad;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.LED.BlinkinLEDController;
 import frc.robot.subsystems.drive.Drive;
@@ -48,7 +46,6 @@ import frc.robot.subsystems.groundIntake.GroundIntakeIO;
 import frc.robot.subsystems.groundIntake.GroundIntakeIOSim;
 import frc.robot.subsystems.groundIntake.GroundIntakeIOSparkMax;
 import frc.robot.subsystems.pivotArm.PivotArm;
-import frc.robot.subsystems.pivotArm.PivotArmConstants;
 import frc.robot.subsystems.pivotArm.PivotArmIO;
 import frc.robot.subsystems.pivotArm.PivotArmIOSim;
 import frc.robot.subsystems.pivotArm.PivotArmIOSparkMax;
@@ -76,8 +73,6 @@ public class RobotContainer {
   private final GroundIntake groundIntake;
   private final Shooter shooter;
   private final PivotArm pivot;
-
-  private boolean brakeMode = true;
 
   // LEDs
   private final BlinkinLEDController ledController = BlinkinLEDController.getInstance();
@@ -235,11 +230,9 @@ public class RobotContainer {
     DriveControls.configureControls();
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
-
+            
     shooter.setDefaultCommand(shooter.runVoltage(SHOOTER_SPEED));
     pivot.setDefaultCommand(pivot.ManualCommand(PIVOT_ROTATE));
-
-    INTAKE_THEN_LOAD.onTrue(new IntakeThenLoad(groundIntake));
 
     // Drive setting commands
     // DRIVE_SLOW.onTrue(new InstantCommand(DriveCommands::toggleSlowMode));
@@ -330,33 +323,6 @@ public class RobotContainer {
     //     )
     //   );
     // }
-  }
-
-  public void LEDPeriodic() {
-    BlinkinLEDController.isEndgame = DriverStation.getMatchTime() <= 30;
-    BlinkinLEDController.isEnabled = DriverStation.isEnabled();
-    // BlinkinLEDController.noteInIntake = intake.isIntaked();
-    BlinkinLEDController.pivotArmDown =
-        pivot.getAngle().getRadians() < (PivotArmConstants.PIVOT_ARM_MIN_ANGLE + Math.PI / 6);
-    BlinkinLEDController.shooting = shooter.getLeftSpeedMetersPerSecond() > 5_000;
-    ledController.periodic();
-  }
-
-  public void disabledPeriodic() {
-    LEDPeriodic();
-    if (brakeModeDashboard.get() != brakeMode) {
-      brakeMode = !brakeMode;
-      pivot.setBrake(brakeMode);
-    }
-
-    if (setStartPosition.get()) {
-      drive.updateDeadzoneChooser();
-      setStartPosition.set(false);
-    }
-
-    field.setRobotPose(drive.getPose());
-    Logger.recordOutput("DriveAimed", DriveCommands.pointedAtSpeaker(drive));
-    Logger.recordOutput("PivotAimed", pivot.atSetpoint());
   }
 
   /**
