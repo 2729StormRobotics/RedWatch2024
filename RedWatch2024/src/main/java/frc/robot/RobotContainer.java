@@ -181,7 +181,7 @@ public class RobotContainer {
   * WEAPONS~
   */
   // PIVOT SOFT STOP
-    new Trigger(()-> (m_pivot.getPivotAngle() >=103.7)).whileTrue(new AutoPivot(103.7-2, m_pivot, false));
+    new Trigger(()-> (m_pivot.getPivotAngle() >=90)).whileTrue(new AutoPivot(90-4, m_pivot, false));
 
     //MANUAL REV - LT
     new Trigger(() -> (m_weaponsController.getLeftTriggerAxis() > 0.5)).whileTrue(new AutoPivotAndRevNoEnd(100000, 100000));
