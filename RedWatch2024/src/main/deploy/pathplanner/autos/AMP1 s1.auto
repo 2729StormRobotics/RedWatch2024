@@ -12,21 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "FirstShot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "OffsetGyro60"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "OffsetGyro60"
+            "pathName": "MID s2-n1"
           }
         }
       ]
