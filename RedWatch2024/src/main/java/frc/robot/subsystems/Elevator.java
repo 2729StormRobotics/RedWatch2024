@@ -11,7 +11,7 @@ public class Elevator {
 
     private enum State {
 
-        STOP, UP, RELEASE, DOWN, TOTE
+        STOP, UP, RELEASE, DOWN
     }
 
     public final CANSparkMax m_IndexerMotor;
@@ -23,7 +23,7 @@ public class Elevator {
     private DigitalInput bottom;
     private boolean safetyScale;
 
-    private static double MAX = 47.0
+    private static double MAX = 47.0;
 
     public Elevator {
         bottom = new DigitalInput(Ports.Digital.LIFT_INDEX);
@@ -39,7 +39,7 @@ public class Elevator {
     }
 
 public void setSpeed (double s) {
-    if (s==0 && state != State.TOTE) {
+    if (s==0) {
         state = State.STOP;
     }
     else if (s > 0) {
@@ -68,32 +68,66 @@ public void tick() {
                 speed = 0;
             }
             else if (place.getDistance() >= MAX - 12) {
-                if (safetyScale) {
+                if (safetyScale) { // Value to ensure that the elevator does not overreach 
                     speed = Math.min(0.4, speed);
                 }
                 else {
                     speed *= 0.7; //This value can be changed
                 }
             }
-        
+            break;
+        case RELEASE: 
+            stopper.set(Value.kReverse);
+            if (System.currentTimeMillis() - start > Ports.DELAY) {
+                state = state.DOWN;
+            }
+            break;
         case STOP: 
-            elevator.set(-speed);
+            elevator.set(0);
             stopper.set(Value.kForward); // set the constant value for kForward
             break;
-        case TOTE:
-            if (place.getDistance() < 2.75) {
-                speed = -0.5;
-            }
-            else if (place.getDistance() > 3.25) {
-                stopper.set(Value.kReverse);  // Set the constant value for kReverse
-                speed = 0.5;
-            }
-            else {
-                speed = 0; 
-                state = State.STOP;
+        case DOWN:
+            if (!bottom.get()) {
+                elevator.set(speed);  
+            break;          
             }
     }
 }
 
+    public double getSpeed() {
+        return elevator.get();
+    }
+
+    public double getGoalSpeed() {
+        return speed;
+    }
+
+    public boolean isStopped() {
+        return stopper.get() == Value.kForward;
+    }
+
+    public double getHeight() {
+        return place.getDistance();
+    }
+
+    public void Stop() {
+        state = state.STOP;
+    }
+
+    public boolean isBottom() {
+        return bottom.get();
+    }
+
+    public void debug() {
+		SmartDashboard.putNumber("Elevator Place", getHeight());
+		SmartDashboard.putBoolean("Elevator Bottom", isBottom());
+	}
+
+	public void setSafetyScale(boolean b) {
+		safetyScale = b;
+	}
+
+
+    
 
 }
