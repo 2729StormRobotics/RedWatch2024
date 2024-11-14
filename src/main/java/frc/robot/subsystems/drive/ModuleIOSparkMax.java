@@ -275,6 +275,11 @@ public class ModuleIOSparkMax implements ModuleIO {
   }
 
   @Override
+  public double getDriveVoltage() {
+    return driveSparkMax.getBusVoltage() * driveSparkMax.getAppliedOutput();
+  }
+
+  @Override
   public double getAbsoluteEncoderOffset() {
     return absoluteEncoderOffset;
   }

@@ -65,6 +65,11 @@ public class ModuleIOSim implements ModuleIO {
   }
 
   @Override
+  public double getDriveVoltage() {
+    return driveAppliedVolts;
+  }
+
+  @Override
   public void setTurnVoltage(double volts) {
     turnAppliedVolts = MathUtil.clamp(volts, -12.0, 12.0);
     turnSim.setInputVoltage(turnAppliedVolts);

@@ -13,6 +13,8 @@
 
 package frc.robot.subsystems.drive;
 
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Volts;
 import static frc.robot.Constants.useVision;
 import static frc.robot.subsystems.drive.DriveConstants.kMaxSpeedMetersPerSecond;
@@ -54,6 +56,13 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardBoolean;
 public class Drive extends SubsystemBase {
   // private static final double DRIVE_BASE_RADIUS = Math.hypot(kTrackWidthX / 2.0, kTrackWidthY /
   // 2.0);
+
+  // Mutable holder for unit-safe voltage values, persisted to avoid reallocation.
+  // private final MutVoltage m_appliedVoltage = Volts.mutable(0);
+  // // Mutable holder for unit-safe linear distance values, persisted to avoid reallocation.
+  // private final MutDistance m_distance = Meters.mutable(0);
+  // // Mutable holder for unit-safe linear velocity values, persisted to avoid reallocation.
+  // private final MutLinearVelocity m_velocity = MetersPerSecond.mutable(0);
   private static final double DRIVE_BASE_RADIUS =
       Math.hypot(kTrackWidthX / 2.0, kTrackWidthY / 2.0);
   private static final double MAX_ANGULAR_SPEED = kMaxSpeedMetersPerSecond / DRIVE_BASE_RADIUS;
@@ -147,6 +156,48 @@ public class Drive extends SubsystemBase {
                   }
                 },
                 null,
+                this));
+
+    sysId =
+        new SysIdRoutine(
+            // Empty config defaults to 1 volt/second ramp rate and 7 volt step voltage.
+            new SysIdRoutine.Config(),
+            new SysIdRoutine.Mechanism(
+                // Tell SysId how to plumb the driving voltage to the motors.
+                voltage -> {
+                  for (Module module : modules) {
+                    module.runCharacterization(voltage.in(Volts));
+                  }
+                },
+                // Tell SysId how to record a frame of data for each motor on the mechanism being
+                // characterized.
+                log -> {
+                  // Record a frame for the left motors.  Since these share an encoder, we consider
+                  // the entire group to be one motor.
+                  log.motor("drive-front-left")
+                      .voltage(modules[0].getDriveVoltage())
+                      .linearPosition(Meters.of(modules[0].getPositionMeters()))
+                      .linearVelocity(MetersPerSecond.of(modules[0].getVelocityMetersPerSec()));
+                  // Record a frame for the right motors.  Since these share an encoder, we consider
+                  // the entire group to be one motor.
+                  log.motor("drive-front-right")
+                      .voltage(modules[1].getDriveVoltage())
+                      .linearPosition(Meters.of(modules[1].getPositionMeters()))
+                      .linearVelocity(MetersPerSecond.of(modules[1].getVelocityMetersPerSec()));
+
+                  log.motor("drive-back-left")
+                      .voltage(modules[2].getDriveVoltage())
+                      .linearPosition(Meters.of(modules[2].getPositionMeters()))
+                      .linearVelocity(MetersPerSecond.of(modules[2].getVelocityMetersPerSec()));
+
+                  log.motor("drive-back-right")
+                      .voltage(modules[3].getDriveVoltage())
+                      .linearPosition(Meters.of(modules[3].getPositionMeters()))
+                      .linearVelocity(MetersPerSecond.of(modules[3].getVelocityMetersPerSec()));
+                },
+                // Tell SysId to make generated commands require this subsystem, suffix test state
+                // in
+                // WPILog with this subsystem's name ("drive")
                 this));
 
     turnRoutine =
