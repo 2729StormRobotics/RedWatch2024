@@ -98,7 +98,48 @@ public class Drive extends SubsystemBase {
           getPose().getRotation(),
           lastModulePositions);
 
-  private SysIdRoutine sysId;
+  private final SysIdRoutine sysId =
+      new SysIdRoutine(
+          // Empty config defaults to 1 volt/second ramp rate and 7 volt step voltage.
+          new SysIdRoutine.Config(),
+          new SysIdRoutine.Mechanism(
+              // Tell SysId how to plumb the driving voltage to the motors.
+              voltage -> {
+                for (Module module : modules) {
+                  module.runCharacterization(voltage.in(Volts));
+                }
+              },
+              // Tell SysId how to record a frame of data for each motor on the mechanism being
+              // characterized.
+              log -> {
+                // Record a frame for the left motors.  Since these share an encoder, we consider
+                // the entire group to be one motor.
+                log.motor("drive-front-left")
+                    .voltage(modules[0].getDriveVoltage())
+                    .linearPosition(Meters.of(modules[0].getPositionMeters()))
+                    .linearVelocity(MetersPerSecond.of(modules[0].getVelocityMetersPerSec()));
+                // Record a frame for the right motors.  Since these share an encoder, we consider
+                // the entire group to be one motor.
+                log.motor("drive-front-right")
+                    .voltage(modules[1].getDriveVoltage())
+                    .linearPosition(Meters.of(modules[1].getPositionMeters()))
+                    .linearVelocity(MetersPerSecond.of(modules[1].getVelocityMetersPerSec()));
+
+                log.motor("drive-back-left")
+                    .voltage(modules[2].getDriveVoltage())
+                    .linearPosition(Meters.of(modules[2].getPositionMeters()))
+                    .linearVelocity(MetersPerSecond.of(modules[2].getVelocityMetersPerSec()));
+
+                log.motor("drive-back-right")
+                    .voltage(modules[3].getDriveVoltage())
+                    .linearPosition(Meters.of(modules[3].getPositionMeters()))
+                    .linearVelocity(MetersPerSecond.of(modules[3].getVelocityMetersPerSec()));
+              },
+              // Tell SysId to make generated commands require this subsystem, suffix test state
+              // in
+              // WPILog with this subsystem's name ("drive")
+              this));
+  ;
   private SysIdRoutine turnRoutine;
 
   private Rotation2d simRotation = new Rotation2d();
@@ -144,61 +185,6 @@ public class Drive extends SubsystemBase {
         (targetPose) -> {
           Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
         });
-
-    // Configure SysId
-    sysId =
-        new SysIdRoutine(
-            new SysIdRoutine.Config(),
-            new SysIdRoutine.Mechanism(
-                volts -> {
-                  for (Module module : modules) {
-                    module.runCharacterization(volts.in(Volts));
-                  }
-                },
-                null,
-                this));
-
-    sysId =
-        new SysIdRoutine(
-            // Empty config defaults to 1 volt/second ramp rate and 7 volt step voltage.
-            new SysIdRoutine.Config(),
-            new SysIdRoutine.Mechanism(
-                // Tell SysId how to plumb the driving voltage to the motors.
-                voltage -> {
-                  for (Module module : modules) {
-                    module.runCharacterization(voltage.in(Volts));
-                  }
-                },
-                // Tell SysId how to record a frame of data for each motor on the mechanism being
-                // characterized.
-                log -> {
-                  // Record a frame for the left motors.  Since these share an encoder, we consider
-                  // the entire group to be one motor.
-                  log.motor("drive-front-left")
-                      .voltage(modules[0].getDriveVoltage())
-                      .linearPosition(Meters.of(modules[0].getPositionMeters()))
-                      .linearVelocity(MetersPerSecond.of(modules[0].getVelocityMetersPerSec()));
-                  // Record a frame for the right motors.  Since these share an encoder, we consider
-                  // the entire group to be one motor.
-                  log.motor("drive-front-right")
-                      .voltage(modules[1].getDriveVoltage())
-                      .linearPosition(Meters.of(modules[1].getPositionMeters()))
-                      .linearVelocity(MetersPerSecond.of(modules[1].getVelocityMetersPerSec()));
-
-                  log.motor("drive-back-left")
-                      .voltage(modules[2].getDriveVoltage())
-                      .linearPosition(Meters.of(modules[2].getPositionMeters()))
-                      .linearVelocity(MetersPerSecond.of(modules[2].getVelocityMetersPerSec()));
-
-                  log.motor("drive-back-right")
-                      .voltage(modules[3].getDriveVoltage())
-                      .linearPosition(Meters.of(modules[3].getPositionMeters()))
-                      .linearVelocity(MetersPerSecond.of(modules[3].getVelocityMetersPerSec()));
-                },
-                // Tell SysId to make generated commands require this subsystem, suffix test state
-                // in
-                // WPILog with this subsystem's name ("drive")
-                this));
 
     turnRoutine =
         new SysIdRoutine(

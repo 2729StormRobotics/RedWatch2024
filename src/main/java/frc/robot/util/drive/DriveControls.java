@@ -81,6 +81,11 @@ public class DriveControls {
         DYNAMIC_FORWARD = m_translator.button(6).and(m_translator.button(1));
         DYNAMIC_REVERSE = m_translator.button(4).and(m_translator.button(1));
 
+        QUASISTATIC_FORWARD = m_weaponsController.y().and(m_weaponsController.rightBumper());
+        QUASISTATIC_REVERSE = m_weaponsController.x().and(m_weaponsController.rightBumper());
+        DYNAMIC_FORWARD = m_weaponsController.b().and(m_weaponsController.rightBumper());
+        DYNAMIC_REVERSE = m_weaponsController.a().and(m_weaponsController.rightBumper());
+
         // Driver controls
         DRIVE_FORWARD = () -> (-m_translator.getY());
         DRIVE_STRAFE = () -> (-m_translator.getX());

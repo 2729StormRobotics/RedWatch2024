@@ -239,11 +239,11 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // default subsystem commands
     DriveControls.configureControls();
-    drive.setDefaultCommand(
-        DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
+    // drive.setDefaultCommand(
+    //     DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
 
-    shooter.setDefaultCommand(shooter.runVoltage(SHOOTER_SPEED));
-    pivot.setDefaultCommand(pivot.ManualCommand(PIVOT_ROTATE));
+    // shooter.setDefaultCommand(shooter.runVoltage(SHOOTER_SPEED));
+    // pivot.setDefaultCommand(pivot.ManualCommand(PIVOT_ROTATE));
     QUASISTATIC_FORWARD.whileTrue(drive.sysIdQuasistatic(Direction.kForward));
     QUASISTATIC_REVERSE.whileTrue(drive.sysIdQuasistatic(Direction.kReverse));
     DYNAMIC_FORWARD.whileTrue(drive.sysIdDynamic(Direction.kForward));
