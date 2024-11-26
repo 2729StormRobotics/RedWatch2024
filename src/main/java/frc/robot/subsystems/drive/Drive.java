@@ -288,8 +288,9 @@ public class Drive extends SubsystemBase {
     runVelocity(new ChassisSpeeds());
   }
 
-  public void resetYaw() {
+  public Command resetYaw() {
     gyroIO.zeroAll();
+    return null;
   }
 
   /**
