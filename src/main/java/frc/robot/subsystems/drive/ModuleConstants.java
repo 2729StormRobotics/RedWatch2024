@@ -41,7 +41,7 @@ public final class ModuleConstants {
   public static final double kTurningEncoderPositionPIDMaxInput =
       kTurningEncoderPositionFactor; // radians
 
-  public static final double kDrivingP = .35;
+  public static final double kDrivingP = .1;
   public static final double kDrivingI = 0;
   public static final double kDrivingD = 0;
   public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
@@ -49,7 +49,7 @@ public final class ModuleConstants {
   public static final double kDrivingMaxOutput = 1;
 
   // Turning PID will have to be changed for robot relative, use sysid one day
-  public static final double kTurningP = 2.6;
+  public static final double kTurningP = 1.5;
   public static final double kTurningI = 0;
   public static final double kTurningD = 0.025;
   public static final double kTurningFF = 0;

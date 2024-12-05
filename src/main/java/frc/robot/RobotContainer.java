@@ -243,13 +243,13 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(drive, DRIVE_FORWARD, DRIVE_STRAFE, DRIVE_ROTATE));
 
-    RESET_GRYO.onTrue(
+    RESET_GYRO.onTrue(
         new InstantCommand(
             () -> {
               drive.resetYaw();
             },
             drive));
-    // RESET_GRYO.whileTrue(
+    // RESET_GYRO.whileTrue(
     //     new InstantCommand(
     //         () -> {
     //           drive.resetYaw();

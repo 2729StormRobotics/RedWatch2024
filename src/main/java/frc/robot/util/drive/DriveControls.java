@@ -66,7 +66,7 @@ public class DriveControls {
   public static Trigger SHOOTER_UNJAM;
   public static Trigger SHOOTER_PREPARE_THEN_SHOOT;
 
-  public static Trigger RESET_GRYO;
+  public static Trigger RESET_GYRO;
   // SYSID Controls
   public static Trigger QUASISTATIC_FORWARD;
   public static Trigger QUASISTATIC_REVERSE;
@@ -90,8 +90,8 @@ public class DriveControls {
         // Driver controls
         DRIVE_FORWARD = () -> (-m_translator.getY());
         DRIVE_STRAFE = () -> (-m_translator.getX());
-        DRIVE_ROTATE = () -> (-m_translator.getTwist());
-        RESET_GRYO = m_translator.button(12);
+        DRIVE_ROTATE = () -> (-m_translator.getTwist() * 0.65);
+        RESET_GYRO = m_translator.button(12);
         // Driver Settings
         DRIVE_SLOW = m_translator.button(1); // TBA
         DRIVE_STOP = m_translator.button(2); // TBA
@@ -116,7 +116,7 @@ public class DriveControls {
         DRIVE_FORWARD = () -> (-m_translator.getY());
         DRIVE_STRAFE = () -> (-m_translator.getX());
         DRIVE_ROTATE = () -> (-m_translator.getTwist());
-        RESET_GRYO = m_translator.button(12);
+        RESET_GYRO = m_translator.button(12);
 
         // Driver Settings
         DRIVE_SLOW = m_translator.button(1); // TBA
