@@ -94,8 +94,8 @@ public class Drive extends SubsystemBase {
   private SwerveDriveOdometry odometry =
       new SwerveDriveOdometry(
           kinematics,
-          // rawGyroRotation,
-          getPose().getRotation(),
+          rawGyroRotation,
+          // getPose().getRotation(),
           lastModulePositions);
 
   private final SysIdRoutine sysId =

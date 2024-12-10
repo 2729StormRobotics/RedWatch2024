@@ -164,7 +164,7 @@ public class DriveControls {
         // Shooter things
         SHOOTER_SPEED = () -> m_weaponsController.getRightX();
         SHOOTER_FULL_SEND_INTAKE = m_weaponsController.leftStick();
-        SHOOTER_FULL_SEND = m_weaponsController.button(1);
+        SHOOTER_FULL_SEND = m_translator.button(1);
         SHOOTER_UNJAM = m_weaponsController.button(1);
         SHOOTER_PREPARE_THEN_SHOOT = m_weaponsController.back();
         break;
