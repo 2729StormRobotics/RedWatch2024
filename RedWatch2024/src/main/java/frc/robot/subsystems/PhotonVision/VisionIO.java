@@ -48,35 +48,36 @@ import edu.wpi.first.math.numbers.N3;
     public default void updateInputs(VisionIOInputs inputs, Pose2d estimate) {
     }
 
-    // Find a replacement of getLatestResult()
+    // getAllUnreadResults was a replacement for getLatestResult(), casted to fix error ******_______******
     public default PhotonPipelineResult getLatestResult(PhotonCamera camera) {
-      return camera.getLatestResult();
+      return (PhotonPipelineResult) camera.getAllUnreadResults();
     }
 
+    // Checks if the results from PhotonPipelineResult are valid
     public default boolean goodResult(PhotonPipelineResult result) {
       return result.hasTargets();
     }
     // FIX THE METHODS AND FIND WHERE THEY ARE (INITIALIZING)
-    // public default Optional<Pose2d>[] getEstimates(PhotonPipelineResult[] results,
-    //   PhotonPoseEstimator[] photonEstimator) {
-    //     ArrayList<Optional<Pose2d>> estimates = new ArrayList<>();
-    //     for (int i = 0; i < results.length; i++) {
-    //       PhotonPipelineResult result = results[i];
-    //       if (result.hasTargets()) {
-    //         var est = photonEstimator[i].update();
-    //         if (est.isPresent() && goodResult(result)) {
-    //           estimates.add(Optional.of(est.get().estimatedPose.toPose2d()));
-    //         } else {
-    //           estimates.add(Optional.empty());
-    //         }
-    //       } else {
-    //         estimates.add(Optional.empty());
-    //       }
-    //   }
+    public default Optional<Pose2d>[] getEstimates(PhotonPipelineResult[] results,
+      PhotonPoseEstimator[] photonEstimator) {
+        ArrayList<Optional<Pose2d>> estimates = new ArrayList<>();
+        for (int i = 0; i < results.length; i++) {
+          PhotonPipelineResult result = results[i];
+          if (result.hasTargets()) {
+            var est = photonEstimator[i].update(results[i]);
+            if (est.isPresent() && goodResult(result)) {
+              estimates.add(Optional.of(est.get().estimatedPose.toPose2d()));
+            } else {
+              estimates.add(Optional.empty());
+            }
+          } else {
+            estimates.add(Optional.empty());
+          }
+      }
 
-    // Optional<Pose2d>[] estimatesArray = estimates.toArray(new Optional[0]);
-    // return estimatesArray;
-    // }
+    Optional<Pose2d>[] estimatesArray = estimates.toArray(new Optional[0]);
+    return estimatesArray;
+    }
       
     // Cleans up the data for pose estimation
     public default Pose2d[] getEstimatesArray(PhotonPipelineResult[] results, PhotonPoseEstimator[] photonEstimator) {
@@ -125,20 +126,127 @@ import edu.wpi.first.math.numbers.N3;
       return new int[][] { inputs.cameraTargets};
     }
 
+    //  Calculates average timestamp and returns it for the latest timestamp
+    public default double estimateLatestTimestamp(PhotonPipelineResult[] results) {
+      double latestTimestamp = 0;
+      int count = 0;
+      for (PhotonPipelineResult result : results) {
+        latestTimestamp = result.getTimestampSeconds();
+        count++;
+      }
+      return latestTimestamp / count;
+    }
+    
+    
+    // Reads the target positions and returns an array of Pose3d objects representing the positions
+    public default Pose3d[] getTargetsPositions(PhotonPipelineResult[] results) {
+      int total_targets = 0;
+      for (int i = 0; i < results.length; i++) {
+        if (goodResult(results[i])) {
+          total_targets += results[i].getTargets().size();
+        }
+      }
+      Pose3d[] targets = new Pose3d[total_targets];
+      int index = 0;
+      for (int i = 0; i < results.length; i++) {
+        if (goodResult(results[i])) {
+          for (PhotonTrackedTarget target : results[i].getTargets()) {
+            targets[index] = kTagLayout.getTagPose(target.getFiducialId()).get();
+            index++;
+          }
+        }
+      }
+      return targets;
+    }
     
 
+    // Converts Pose3d array to Pose2d
+    public default Pose2d[] Pose3dToPose2d(Pose3d[] poses) {
+      Pose2d[] pose2ds = new Pose2d[poses.length];
+      for (int i = 0; i < poses.length; i++) {
+        pose2ds[i] = poses[i].toPose2d();
+      }
+      return pose2ds;
+    }
+  
+    /**
+     * The standard deviations of the estimated pose from
+     * {@link #getEstimatedGlobalPose()}, for use
+     * with {@link edu.wpi.first.math.estimator.SwerveDrivePoseEstimator
+     * SwerveDrivePoseEstimator}.
+     * This should only be used when there are targets visible.
+     *
+     * @param estimatedPose The estimated pose to guess standard deviations for.
+     */
 
+     // Estimates the standard deviations for the pose based on visible targets
+    public default Matrix<N3, N1> getEstimationStdDevs(VisionIOInputs inputs, Pose2d pose, int camera) {
+      var estStdDevs = kSingleTagStdDevs;
+      int numTags = 0;
+      double avgDist = 0;
+      int[] targets = getCameraTargets(inputs)[camera];
+      for (var tgt : targets) {
+        Optional<Pose3d> tagPose = kTagLayout.getTagPose(tgt);
+        if (tagPose.isEmpty())
+          continue;
+        numTags++;
+        avgDist += tagPose.get().toPose2d().getTranslation().getDistance(pose.getTranslation());
+      }
+      if (numTags == 0)
+        return estStdDevs;
+      avgDist /= numTags;
+      // Decrease std devs if multiple targets are visible
+      if (numTags > 1)
+        estStdDevs = kMultiTagStdDevs;
+      // Increase std devs based on (average) distance
+      if (numTags == 1 && avgDist > 4)
+        estStdDevs = VecBuilder.fill(Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE);
+      else
+        estStdDevs = estStdDevs.times(1 + (avgDist * avgDist / 30));
+  
+      return estStdDevs;
+    }
+    
+    // Extracts targets (april tags) IDs from the results of the pipeline for the cameras
+    public default int[][] getCameraTargets(PhotonPipelineResult[] results) {
+      int[][] targets = new int[results.length][];
+  
+      for (int i = 0; i < results.length; i++) {
+        targets[i] = new int[results[i].targets.size()];
+        for (int j = 0; j < results[i].targets.size(); j++) {
+          targets[i][j] = results[i].targets.get(j).getFiducialId();
+        }
+      }
+  
+      return targets;
+    }
+    
 
+    // Counts the number of tags detected on the cameras
+    public default int tagCounts(PhotonPipelineResult[] results) {
+      int tags = 0;
+      for (PhotonPipelineResult result : results) {
+        tags += result.targets.size();
+      }
+      return tags;
+    }
+    
+    // Turns the timestamps from the pipeline into an array and returns it
+    public default double[] getTimestampArray(PhotonPipelineResult[] results) {
+      double[] timestamps = new double[results.length];
+      for (int i = 0; i < results.length; i++) {
+        timestamps[i] = results[i].getTimestampSeconds();
+      }
+      return timestamps;
+    }
 
-}
-
-
-// public class VisionIO extends SubsystemBase {
-//   /** Creates a new VisionIO. */
- 
-
-//   @Override
-//   public void periodic() {
-//     // This method will be called once per scheduler run
-//   }
-// }
+    // Check if any of the PhotonPipelineResult objects have a detected target
+    public default boolean hasEstimate(PhotonPipelineResult[] results) {
+      for (PhotonPipelineResult result : results) {
+        if (result.hasTargets()) {
+          return true;
+        }
+      }
+      return false;
+    }
+ }

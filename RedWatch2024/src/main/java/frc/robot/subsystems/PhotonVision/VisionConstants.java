@@ -49,6 +49,7 @@ public class VisionConstants extends SubsystemBase {
   public static final Matrix<N3, N1> kSingleTagStdDevs = VecBuilder.fill(2, 2, 8);
   public static final Matrix<N3, N1> kMultiTagStdDevs = VecBuilder.fill(0.2, 0.2, 1);
 
+  // Provides a simulated version of a given Transform3d by removing rotations about the X and Y axes.
   public static Transform3d getSimVersion(Transform3d real) {
     return new Transform3d(
       real.getTranslation(),
