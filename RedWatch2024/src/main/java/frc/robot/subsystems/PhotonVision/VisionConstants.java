@@ -26,7 +26,7 @@ public class VisionConstants extends SubsystemBase {
   public static final String camName = "Main_Camera";
 
   // Change values to the actual distance from the center of the robot, change rotation if needed.
-  public static final Transform3d cam1RobotToCam = new Transform3d(
+  public static final Transform3d camRobotToCam = new Transform3d(
                         new Translation3d(
                                         Units.inchesToMeters(-9),
                                         Units.inchesToMeters(7),
