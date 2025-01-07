@@ -39,7 +39,7 @@ public class VisionConstants extends SubsystemBase {
   // The layout of the AprilTags on the field
   public static final AprilTagFieldLayout kTagLayout = AprilTagFields.kDefaultField.loadAprilTagLayoutField();
 
-  // Change values as needed
+  // Change values as needed **CHANGE**
   public static final double AMBIGUITY_THRESHOLD = 0.5;
   public static final double MAX_DISTANCE = 4; // meters
 
